@@ -4,8 +4,8 @@ import { isPathWithin } from "./pathContainment";
 export const VAULT_RUNTIME_LIMITS = Object.freeze({ maxArgs: 16, maxArgBytes: 1024, maxArgumentBytes: 8192,
     maxSelections: 32, maxDescriptors: 16, maxJobs: 4, maxRuntimeMs: 300000, stopGraceMs: 1000, maxDescriptorBytes: 32768 });
 export interface VaultAppDescriptor {
-    readonly schemaVersion: 1; readonly id: string; readonly root: string; readonly program: string; readonly cwd: string;
-    readonly source: string; readonly programDigest: string; readonly args: readonly string[];
+    readonly schemaVersion: 2; readonly id: string; readonly root: string; readonly program: string; readonly cwd: string;
+    readonly source: string; readonly programDigest: string; readonly artifactDigest: string; readonly args: readonly string[];
     readonly selections: readonly Readonly<{ name: string; placeholder: string }>[];
 }
 const UUID = /^[a-f0-9]{8}-[a-f0-9]{4}-4[a-f0-9]{3}-[89ab][a-f0-9]{3}-[a-f0-9]{12}$/i;
@@ -45,10 +45,11 @@ function localPath(value: unknown): string {
  * Canonical ownership and entry identity are checked by the launcher at I/O. */
 export function parseVaultAppDescriptor(value: unknown): VaultAppDescriptor | undefined {
     try {
-        const d = record(value, ["schemaVersion", "id", "root", "program", "cwd", "source", "programDigest", "args", "selections"]);
-        if (d.schemaVersion !== 1 || !UUID.test(text(d.id, 36)) || !/^[a-f0-9]{64}$/.test(text(d.programDigest, 64))) throw new Error();
+        const d = record(value, ["schemaVersion", "id", "root", "program", "cwd", "source", "programDigest", "artifactDigest", "args", "selections"]);
+        if (d.schemaVersion !== 2 || !UUID.test(text(d.id, 36)) || !/^[a-f0-9]{64}$/.test(text(d.programDigest, 64))
+            || !/^[a-f0-9]{64}$/.test(text(d.artifactDigest, 64))) throw new Error();
         const root = localPath(d.root), program = localPath(d.program), cwd = localPath(d.cwd), source = localPath(d.source);
-        if (![program, cwd, source].every(p => isPathWithin(root, p)) || !/\.(?:js|cjs|mjs)$/.test(program)) throw new Error();
+        if (![program, cwd, source].every(p => isPathWithin(root, p)) || !/\.(?:js|cjs)$/.test(program)) throw new Error();
         let bytes = 0;
         const args = array(d.args, VAULT_RUNTIME_LIMITS.maxArgs).map(value => {
             const arg = text(value, VAULT_RUNTIME_LIMITS.maxArgBytes), size = Buffer.byteLength(arg, "utf8"); bytes += size;
@@ -62,8 +63,8 @@ export function parseVaultAppDescriptor(value: unknown): VaultAppDescriptor | un
             names.add(name.toUpperCase()); placeholders.add(placeholder); return Object.freeze({ name, placeholder });
         });
         if (!selections.length) throw new Error();
-        const result: VaultAppDescriptor = { schemaVersion: 1, id: d.id as string, root, program, cwd, source,
-            programDigest: d.programDigest as string, args: Object.freeze(args), selections: Object.freeze(selections) };
+        const result: VaultAppDescriptor = { schemaVersion: 2, id: d.id as string, root, program, cwd, source,
+            programDigest: d.programDigest as string, artifactDigest: d.artifactDigest as string, args: Object.freeze(args), selections: Object.freeze(selections) };
         // Serialize only bounded, copied own-data primitives; never input.toJSON.
         if (Buffer.byteLength(JSON.stringify(result), "utf8") > VAULT_RUNTIME_LIMITS.maxDescriptorBytes) throw new Error();
         return Object.freeze(result);

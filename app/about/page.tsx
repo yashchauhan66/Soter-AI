@@ -1,234 +1,199 @@
-import Link from "next/link";
-import type { Metadata } from "next";
-import { ArrowRight, ShieldCheck } from "lucide-react";
-import { buildMetadata } from "@/lib/seo/metadata";
-import { JsonLd } from "@/components/seo/JsonLd";
-import { breadcrumbList, ORGANIZATION_ID, SITE_URL } from "@/lib/seo/schema";
-import { safeJsonLd } from "@/lib/seo/jsonLd";
+import type { Metadata } from 'next';
+import Link from 'next/link';
+import { PLAYGROUND_CTA_LABEL } from '@/lib/marketing/cta';
+import { SaLinkButton } from '@/components/sa/primitives';
+import { SaRoot } from '@/components/sa/SaRoot';
+import { JsonLd } from '@/components/seo/JsonLd';
+import { safeJsonLd } from '@/lib/seo/jsonLd';
+import { buildMetadata } from '@/lib/seo/metadata';
+import { breadcrumbList, ORGANIZATION_ID, SITE_URL } from '@/lib/seo/schema';
 
+/**
+ * About. Facts only. The old page described the founder as "an Indian technologist and
+ * cybersecurity researcher" who builds "zero-compromise runtime firewalls", said IDE Guard
+ * works with Cursor and Windsurf (the repo's own claims document says other editors are
+ * untested), and made India the product's headline. None of that is kept.
+ *
+ * Title: 38 characters with the brand suffix. Description: 134.
+ */
 export const metadata: Metadata = buildMetadata({
-  title: "About SoterAI: Founder Yash Chauhan & The AI Guard Layer",
+  title: 'About: Built and Run by One Person',
   description:
-    "SoterAI was founded by Yash Chauhan in India to protect LLM apps, AI agents, and developer workflows from prompt injection, data leakage, and unsafe AI output.",
-  path: "/about",
-  keywords: [
-    "yash chauhan",
-    "yash chauhan soterai",
-    "soterai owner",
-    "soterai founder",
-    "about soterai",
-    "soterai company",
-    "soterai mission",
-    "ai security company india",
-    "soterai guard platform",
-  ],
+    'SoterAI is built and run by Yash Chauhan, a solo founder in India. What it does, how it is made, and what it does not do yet.',
+  path: '/about',
 });
 
 const aboutJsonLd = {
-  "@context": "https://schema.org",
-  "@type": "AboutPage",
-  "url": `${SITE_URL}/about`,
-  "name": "About SoterAI",
-  "description": "SoterAI was founded by Yash Chauhan in India. Builds AI security infrastructure for LLM applications, AI agents, and developer workflows.",
-  // Reference the canonical Organization node from schema.ts by @id instead of
-  // restating it. The inlined copy had drifted: 3 of its 4 sameAs URLs 404ed
-  // (private repo, unregistered @soterai/sdk, non-existent X handle), which
-  // weakens entity consolidation rather than strengthening it.
-  "mainEntity": { "@id": ORGANIZATION_ID },
+  '@context': 'https://schema.org',
+  '@type': 'AboutPage',
+  url: `${SITE_URL}/about`,
+  name: 'About SoterAI',
+  description: 'SoterAI is built and run by Yash Chauhan, a solo founder in India.',
+  // The canonical Organization node (with the founder and sameAs) lives in schema.ts.
+  mainEntity: { '@id': ORGANIZATION_ID },
 };
 
-const principles = [
+const PRINCIPLES: Array<{ title: string; body: string }> = [
   {
-    title: "Honest about limitations",
-    body: "We publish what our detection cannot catch. Every product page includes an honest limitations section because trust starts with transparency, not marketing claims.",
+    title: 'Say what it misses',
+    body: 'Every number on the site sits beside its test and its limits, and the limits page lists known gaps with dates. If a gap is fixed it moves to the changelog.',
   },
   {
-    title: "Local-first by default",
-    body: "Sensitive data should not have to leave your machine to be protected. Our IDE Guard extension runs all scanning locally. Cloud features are always opt-in.",
+    title: 'Let people try it first',
+    body: 'The playground runs the real engine with no signup, and the Free plan works anywhere. You should see a verdict on your own text before you talk to anyone.',
   },
   {
-    title: "Built for the Indian developer ecosystem",
-    body: "India has unique data formats — Aadhaar, PAN, GSTIN, UPI, IFSC. We built native detection for these from day one because Indian developers and enterprises deserve security tooling that understands their regulatory context.",
+    title: 'Regional depth, not a regional product',
+    body: 'It is built for teams anywhere. India is where it is made, and it names Indian identifiers such as PAN, GSTIN, UPI IDs, IFSC codes and Aadhaar-like numbers. Other regions are added only when the engine and the evidence support them.',
   },
   {
-    title: "Defense in depth, not snake oil",
-    body: "No single tool eliminates AI security risk. We build layered controls — input guard, output guard, RAG security, agent firewall — and tell users clearly where each layer ends.",
+    title: 'Layers, not a promise',
+    body: 'No single tool removes AI risk. SoterAI checks prompts, replies and agent actions, and says where each layer ends.',
   },
 ];
 
-export default function Page() {
-  const breadcrumb = breadcrumbList([
-    { name: "Home", path: "/" },
-    { name: "About", path: "/about" },
-  ]);
-
+export default function AboutPage() {
   return (
-    <main className="container-page py-16">
-      <JsonLd data={breadcrumb} />
+    <SaRoot>
+      <JsonLd
+        data={breadcrumbList([
+          { name: 'Home', path: '/' },
+          { name: 'About', path: '/about' },
+        ])}
+      />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: safeJsonLd(aboutJsonLd) }} />
-
-      {/* Hero */}
-      <section className="max-w-3xl">
-        <p className="eyebrow">About SoterAI</p>
-        <h1 className="mt-3 text-4xl font-bold tracking-tight sm:text-5xl">
-          AI security built by developers, for developers
-        </h1>
-        <p className="mt-5 text-lg leading-8 text-slate-200">
-          SoterAI builds AI security infrastructure for teams deploying LLM applications,
-          AI agents, and agentic developer tools. Founded by <strong>Yash Chauhan</strong> in <strong>India</strong>,
-          our platform — SoterAI Guard — protects against prompt injection, data leakage, jailbreaks,
-          unsafe AI outputs, and agent tool abuse across chatbots, RAG pipelines, IDE workflows, and automated processes.
-        </p>
-      </section>
-
-      {/* Leadership & Founder */}
-      <section className="mt-16 max-w-3xl">
-        <h2 className="text-2xl font-bold">Leadership &amp; Founder</h2>
-        <div className="mt-6 rounded-xl border border-slate-800 bg-panel/40 p-6 sm:p-8">
-          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 border-b border-slate-800 pb-5">
-            <div>
-              <h3 className="text-xl font-bold text-slate-100">Yash Chauhan</h3>
-              <p className="text-sm font-semibold text-cyan mt-0.5">Founder &amp; CEO · SoterAI</p>
-            </div>
-            <span className="inline-flex items-center gap-1.5 rounded-full border border-cyan/30 bg-cyan/10 px-3.5 py-1 text-xs font-semibold text-cyan w-fit">
-              📍 India
-            </span>
-          </div>
-          <p className="mt-4 text-base leading-7 text-slate-200">
-            SoterAI is founded and owned by <strong>Yash Chauhan</strong>, an Indian technologist and cybersecurity researcher dedicated to securing the global generative AI ecosystem. Yash architects SoterAI Guard to provide observable, zero-compromise runtime firewalls for LLMs, autonomous agents, and enterprise workflows — including pioneering native support for Indian data privacy (DPDP Act, Aadhaar Verhoeff checksums, PAN, GSTIN, UPI) as well as global secret and prompt injection defenses.
+      <main className="sa-page" style={{ paddingBlock: 'var(--sa-space-7) var(--sa-space-9)' }}>
+        <header>
+          <p className="sa-eyebrow">About</p>
+          <h1 className="sa-h1" style={{ marginTop: 'var(--sa-space-3)' }}>
+            Built and run by one person.
+          </h1>
+          <p className="sa-lede" style={{ marginTop: 'var(--sa-space-4)' }}>
+            SoterAI is the AI security command layer. It is made by Yash Chauhan, a solo founder in India. There is no team page
+            because there is no team.
           </p>
-        </div>
-      </section>
+        </header>
 
-      {/* Mission */}
-      <section className="mt-16 max-w-3xl">
-        <h2 className="text-2xl font-bold">Our mission</h2>
-        <p className="mt-4 leading-7 text-slate-200">
-          AI adoption is outpacing security. Every week, teams ship chatbots, RAG systems,
-          and autonomous agents without the controls that production software demands:
-          observable security decisions, enforceable policies, honest audit trails.
-        </p>
-        <p className="mt-4 leading-7 text-slate-200">
-          SoterAI&apos;s mission is to make runtime AI security practical and accessible —
-          starting with a free tier for individual developers, scaling to enterprise
-          deployments with SSO, RBAC, and full data sovereignty.
-        </p>
-        <p className="mt-4 leading-7 text-slate-200">
-          We are especially focused on the Indian market because India has unique AI security
-          challenges: Aadhaar, PAN, GSTIN detection requirements; DPDP Act compliance;
-          a fast-growing developer community building AI products at scale; and limited
-          tooling designed for this regulatory context. We built SoterAI to fix that.
-        </p>
-      </section>
-
-      {/* Principles */}
-      <section className="mt-16">
-        <h2 className="text-2xl font-bold">How we build</h2>
-        <div className="mt-6 grid gap-5 sm:grid-cols-2">
-          {principles.map((p) => (
-            <div key={p.title} className="rounded-xl border border-slate-800 bg-panel/40 p-5">
-              <div className="flex items-center gap-2">
-                <ShieldCheck className="h-5 w-5 text-cyan" aria-hidden="true" />
-                <h3 className="font-semibold text-slate-100">{p.title}</h3>
-              </div>
-              <p className="mt-2 text-sm leading-6 text-slate-200">{p.body}</p>
+        <section className="sa-section" aria-labelledby="facts">
+          <div className="sa-section__head">
+            <h2 className="sa-h2" id="facts">
+              The facts
+            </h2>
+          </div>
+          <dl className="sa-facts">
+            <div>
+              <dt>Founder</dt>
+              <dd>Yash Chauhan, Founder and CEO</dd>
             </div>
-          ))}
-        </div>
-      </section>
+            <div>
+              <dt>Based in</dt>
+              <dd>India</dd>
+            </div>
+            <div>
+              <dt>Product</dt>
+              <dd>
+                An AI security command layer: it checks prompts and replies, redacts secrets and personal data, flags prompt injection,
+                and holds risky agent actions for approval.
+              </dd>
+            </div>
+            <div>
+              <dt>Surfaces</dt>
+              <dd>
+                API and SDKs (Stable). VS Code extension, Chrome and Edge extension, and n8n, Make and Zapier guards (Beta). MCP and
+                agent guard (Labs). Details on the <Link className="sa-link" href="/integrations">integrations page</Link>.
+              </dd>
+            </div>
+            <div>
+              <dt>Customers</dt>
+              <dd>None are named here. No logos, quotes or case studies are shown unless they are real and agreed.</dd>
+            </div>
+            <div>
+              <dt>Certifications</dt>
+              <dd>
+                None held. See the <Link className="sa-link" href="/trust">trust center</Link>.
+              </dd>
+            </div>
+            <div>
+              <dt>Contact</dt>
+              <dd>
+                <a className="sa-link" href="mailto:support@soterai.in">support@soterai.in</a>
+              </dd>
+            </div>
+          </dl>
+        </section>
 
-      {/* Product */}
-      <section className="mt-16 max-w-3xl">
-        <h2 className="text-2xl font-bold">The product</h2>
-        <p className="mt-4 leading-7 text-slate-200">
-          SoterAI Guard is a runtime AI security platform with two deployment surfaces:
-        </p>
-        <ul className="mt-4 space-y-3 text-slate-200">
-          <li className="flex gap-3 text-sm leading-6">
-            <span className="mt-1 text-cyan font-semibold">API / SDK</span>
-            <span>
-              A cloud or self-hosted API that intercepts every LLM input and output,
-              enforces configurable security policies, and produces signed audit logs.
-              Integrates with JavaScript, Python, LangChain, Vercel AI SDK, Express,
-              FastAPI, n8n, Zapier, and Make.
-            </span>
-          </li>
-          <li className="flex gap-3 text-sm leading-6">
-            <span className="mt-1 text-cyan font-semibold">IDE Guard</span>
-            <span>
-              A VS Code extension (also compatible with Cursor and Windsurf) that
-              scans workspace context locally before it reaches any AI coding assistant.
-              Secret detection, PII scanning, prompt injection detection, MCP config
-              review, and a local AI memory inspector — no cloud connection required
-              for core features.
-            </span>
-          </li>
-        </ul>
-      </section>
+        <section className="sa-section" aria-labelledby="why">
+          <div className="sa-section__head">
+            <h2 className="sa-h2" id="why">
+              Why it exists
+            </h2>
+          </div>
+          <div className="sa-prose">
+            <p>
+              Teams ship chatbots, retrieval systems and agents faster than they add controls. The controls that production software
+              expects are visible decisions, enforceable rules and a record of what happened. SoterAI puts those in one place, and
+              starts with a free tier so a developer can try it without a sales call.
+            </p>
+            <p>
+              Larger plans add team controls such as SSO, SCIM, retention settings and SIEM export. Every plan runs the same detection
+              engine.
+            </p>
+          </div>
+        </section>
 
-      {/* Transparency */}
-      <section className="mt-16 max-w-3xl">
-        <h2 className="text-2xl font-bold">Transparency and trust</h2>
-        <p className="mt-4 leading-7 text-slate-200">
-          Security vendors have an obligation to be honest about what their products do and
-          do not do. We publish our{" "}
-          <Link href="/benchmark" className="text-cyan underline underline-offset-2">public benchmark</Link>{" "}
-          with its methodology, dataset, and explicit disclaimer that it is self-maintained
-          and not an independent audit. We maintain a{" "}
-          <Link href="/limitations" className="text-cyan underline underline-offset-2">limitations page</Link>{" "}
-          that describes exactly what SoterAI cannot catch. We have a{" "}
-          <Link href="/responsible-disclosure" className="text-cyan underline underline-offset-2">responsible disclosure policy</Link>{" "}
-          for security researchers.
-        </p>
-        <p className="mt-4 leading-7 text-slate-200">
-          We do not claim certifications we do not hold, benchmarks we did not run, or
-          customers we do not have. Our{" "}
-          <Link href="/security" className="text-cyan underline underline-offset-2">security page</Link>{" "}
-          documents our own security posture honestly.
-        </p>
-      </section>
+        <section className="sa-section" aria-labelledby="principles">
+          <div className="sa-section__head">
+            <h2 className="sa-h2" id="principles">
+              How it is built
+            </h2>
+          </div>
+          <ul className="sa-rules sa-rules--2">
+            {PRINCIPLES.map((p) => (
+              <li key={p.title}>
+                <h3>{p.title}</h3>
+                <p>{p.body}</p>
+              </li>
+            ))}
+          </ul>
+        </section>
 
-      {/* Contact / Links */}
-      <section className="mt-16 max-w-3xl">
-        <h2 className="text-2xl font-bold">Contact and community</h2>
-        <div className="mt-4 grid gap-4 sm:grid-cols-2">
-          {[
-            { label: "General enquiries", value: "support@soterai.in", href: "mailto:support@soterai.in" },
-            { label: "Enterprise sales", value: "Contact Sales", href: "/contact-sales" },
-            { label: "Security disclosures", value: "Responsible Disclosure", href: "/responsible-disclosure" },
-            // The GitHub repo went private on 2026-09-04 and now 404s, so it is
-            // replaced with a distribution channel that actually resolves.
-            { label: "VS Code Marketplace", value: "SoterAI IDE Guard", href: "https://marketplace.visualstudio.com/items?itemName=soterai.soterai-ide-guard" },
-          ].map((c) => (
-            <div key={c.label} className="rounded-xl border border-slate-800 p-4">
-              <p className="text-xs font-medium uppercase tracking-wide text-slate-300">{c.label}</p>
-              <a
-                href={c.href}
-                className="mt-1 text-sm font-medium text-cyan hover:opacity-80"
-                {...(c.href.startsWith("http") ? { target: "_blank", rel: "noopener noreferrer" } : {})}
-              >
-                {c.value}
+        <section className="sa-section" aria-labelledby="evidence">
+          <div className="sa-section__head">
+            <h2 className="sa-h2" id="evidence">
+              Where to check us
+            </h2>
+          </div>
+          <ul className="sa-linklist sa-linklist--cols">
+            <li><Link href="/benchmarks">Numbers with their limits</Link></li>
+            <li><Link href="/limitations">What it misses today</Link></li>
+            <li><Link href="/changelog">Changelog</Link></li>
+            <li><Link href="/status">Service status</Link></li>
+            <li><Link href="/responsible-disclosure">Responsible disclosure</Link></li>
+            <li>
+              <a href="https://marketplace.visualstudio.com/items?itemName=soterai.soterai-ide-guard" target="_blank" rel="noopener noreferrer">
+                IDE Guard on the VS Code Marketplace
               </a>
-            </div>
-          ))}
-        </div>
-      </section>
+            </li>
+          </ul>
+        </section>
 
-      {/* CTA */}
-      <section className="mt-16 rounded-2xl border border-cyan/20 bg-cyan/5 p-8 text-center">
-        <h2 className="text-2xl font-bold">Start protecting your AI applications</h2>
-        <p className="mx-auto mt-3 max-w-xl text-sm leading-6 text-slate-200">
-          Free tier available. No credit card required to get started.
-        </p>
-        <div className="mt-6 flex flex-wrap justify-center gap-3">
-          <Link href="/signup" className="inline-flex items-center gap-2 rounded-lg bg-cyan px-5 py-3 text-sm font-semibold text-white transition hover:opacity-90">
-            Create free account <ArrowRight className="h-4 w-4" aria-hidden="true" />
-          </Link>
-          <Link href="/docs/quickstart" className="inline-flex items-center gap-2 rounded-lg border border-slate-700 px-5 py-3 text-sm font-semibold text-slate-200 transition hover:border-slate-500">
-            Read the docs
-          </Link>
-        </div>
-      </section>
-    </main>
+        <section className="sa-closing" aria-labelledby="closing">
+          <h2 className="sa-h2" id="closing">
+            Try it before you decide.
+          </h2>
+          <div className="sa-hero__actions">
+            <SaLinkButton href="/playground" large>
+              {PLAYGROUND_CTA_LABEL}
+            </SaLinkButton>
+            <SaLinkButton href="/signup" variant="secondary">
+              Create a free account
+            </SaLinkButton>
+            <SaLinkButton href="/contact-sales" variant="ghost">
+              Book a security review
+            </SaLinkButton>
+          </div>
+        </section>
+      </main>
+    </SaRoot>
   );
 }

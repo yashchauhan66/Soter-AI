@@ -1,7 +1,7 @@
-import type { DetectorResult, RegexDetectorSpec } from "../types";
+import type { DetectorMatch, DetectorResult, RegexDetectorSpec } from "../types";
 import { runRegexDetectors } from "./utils";
 
-export const SECRET_DETECTOR_VERSION = "1.5.0";
+export const SECRET_DETECTOR_VERSION = "1.5.1";
 
 /**
  * The keyword→value bridge shared by every keyword-anchored rule below.
@@ -581,6 +581,7 @@ function extractAssignedValue(match: string): string {
  */
 function isSecretReference(value: string): boolean {
     return (
+        /^\[REDACTED_[A-Z][A-Z0-9_]{0,63}\]$/.test(value) ||          // exact generated redaction marker
         /^(?:process\.env|import\.meta\.env|os\.environ|Deno\.env|System\.getenv|ENV|process\[)\b/i.test(value) ||
         /^\$\{?\{?\s*(?:secrets|env|vars|inputs)\./i.test(value) ||   // ${{ secrets.X }}
         /^\$\{[A-Za-z_][A-Za-z0-9_]*\}$/.test(value) ||               // ${VAR}
@@ -734,6 +735,13 @@ function isFalsePositive(match: string): boolean {
  */
 export const SECRET_DETECTOR_CLASSES: readonly string[] = [...new Set(SECRET_SPECS.map((s) => s.type))];
 
+/** Public pattern data for conservative foreign-runtime projections. No regex
+ * instances or mutable specs escape. This does not include false-positive
+ * suppression and therefore is not a substitute for detectSecrets(). */
+export const SECRET_PATTERN_SNAPSHOT: readonly Readonly<{ type: string; source: string; flags: string }>[] = Object.freeze(
+    SECRET_SPECS.map(spec => Object.freeze({ type: spec.type, source: spec.pattern.source, flags: spec.pattern.flags })),
+);
+
 export function detectSecrets(text: string): DetectorResult {
     const raw = runRegexDetectors(text, SECRET_SPECS);
     // Phase 4 FP control: drop known placeholders / docs examples so they do
@@ -744,6 +752,15 @@ export function detectSecrets(text: string): DetectorResult {
         detectorVersion: SECRET_DETECTOR_VERSION,
         matches,
     };
+}
+
+const ASSIGNMENT_SPECS = SECRET_SPECS.filter(spec => spec.type === "password_assignment" || spec.type === "generic_api_key");
+
+/** The same accepted assignment spans as detectSecrets, without re-running
+ * unrelated vendor patterns on every outbound JSON string. These heuristic
+ * classes require redaction for sharing, not promotion into the block vocabulary. */
+export function detectSecretAssignments(text: string): DetectorMatch[] {
+    return runRegexDetectors(text, ASSIGNMENT_SPECS).filter(match => !isFalsePositive(match.match));
 }
 
 

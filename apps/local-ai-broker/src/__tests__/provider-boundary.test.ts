@@ -84,6 +84,31 @@ test("responses block recognized raw and encoded credentials in content or passt
     }
 });
 
+const prefixedPassword = "BlueMango7!";
+for (const [name, providerBody] of [
+    ["prefixed password in message text", { choices: [{ message: { content: "DB_PASSWORD=" + prefixedPassword } }] }],
+    ["prefixed password in metadata", { choices: [{ message: { content: "Public response" } }], metadata: { DB_PASSWORD: prefixedPassword } }],
+    ["prefixed password split across SSE events", frame("DB_PASSWORD=Blue") + frame("Mango7!") + "data: [DONE]\r\n\r\n"],
+] as const) {
+    test(`provider response withholds ${name} before any body is released`, async () => {
+        let calls = 0;
+        const streaming = typeof providerBody === "string";
+        await withBroker({ openAIProviderUrl: "https://provider.invalid/v1", providerApiKey: "fake-test-provider-key",
+            fetchImpl: async () => {
+                calls++;
+                return streaming ? new Response(providerBody, { headers: { "content-type": "text/event-stream" } }) : Response.json(providerBody);
+            },
+        }, async url => {
+            const response = await post(url, input(streaming)), body = await response.text();
+            assert.equal(response.status, 422);
+            assert.equal(response.headers.get("x-soterai-response-decision"), "block");
+            assert.match(body, /gateway_output_withheld/);
+            assert.ok(!body.includes(prefixedPassword) && !body.includes("DB_PASSWORD=Blue"));
+        });
+        assert.equal(calls, 1, "The test must inspect a real response, not pass because the request was refused.");
+    });
+}
+
 test("a canary in non-message request metadata is stopped at the final wire gate", async () => {
     const token = "ONLY-LOCAL-FIXTURE-MEMO-73921-ABCD";
     let calls = 0;

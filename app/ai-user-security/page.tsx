@@ -3,9 +3,9 @@ import { FeatureLanding, type FeatureLandingData } from "@/components/marketing/
 import { buildMetadata } from "@/lib/seo/metadata";
 
 export const metadata: Metadata = buildMetadata({
-  title: "AI User Security for ChatGPT and Employee AI Tools",
+  title: "AI User Security: ChatGPT and Employee AI Tools",
   description:
-    "Secure employee use of ChatGPT, Claude, Gemini and AI coding tools. Detect data leaks, enforce usage policies, discover shadow AI and retain redacted evidence.",
+    "Set rules for how your team uses ChatGPT, Claude, Gemini and AI coding tools. Detect data leaks, discover shadow AI and keep redacted evidence.",
   path: "/ai-user-security",
   keywords: [
     "AI user security",

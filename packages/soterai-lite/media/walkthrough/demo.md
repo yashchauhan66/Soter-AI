@@ -1,12 +1,9 @@
-# Run your first scan (safe demo)
+# Try a local scan
 
-See SoterAI Guard in action with a **safe, built-in demo**. It scans a sample prompt that contains a prompt-injection attempt and a fake secret — nothing real leaves your machine.
+Run SoterAI Secret Guard's built-in sample before using a real project. The sample contains synthetic prompt-injection text and a fake secret.
 
-Press the button to run the demo scan. You'll see:
+1. Choose **Run Safe Demo**.
+2. Read the verdict and the reasons for the finding.
+3. Use **Copy Safe Version** only if you want the sample's redacted text on your clipboard.
 
-- a **verdict** — Allow / Warn / Block / Human Review
-- a **risk score** out of 100
-- the **reasons** it flagged
-- a one-click **Copy Safe Version** with secrets redacted
-
-This is exactly what happens when you scan your own text.
+The demo does not require a provider account or real credentials. Its result describes this sample, not another AI tool's traffic or your whole project's security.

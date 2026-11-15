@@ -233,7 +233,9 @@ test("manifest copies and mutations are rejected; original plan data is immutabl
     assert.ok(Object.isFrozen(plan.entries));
     assert.ok(Object.isFrozen(plan.entries[0]));
     await assert.rejects(owner.publish({ ...plan, isolation: "NO ISOLATION" }, path.join(root, "copy")), /invalid/);
-    assert.throws(() => { (plan.entries[0] as { path: string }).path = "outside.ts"; });
+    // Mutation must fail in both strict and non-strict transpilation modes.
+    assert.equal(Reflect.set(plan.entries[0], "path", "outside.ts"), false);
+    assert.equal(plan.entries[0].path, "src/index.ts");
 });
 
 test("existing destinations, source children/ancestors and protected stores are never overwritten", async () => {

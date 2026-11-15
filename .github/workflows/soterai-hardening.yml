@@ -1,0 +1,29 @@
+name: SoterAI hardening verification
+on:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  source-verification:
+    runs-on: windows-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020
+        with:
+          node-version: '22'
+          cache: npm
+      - run: npm ci
+      - run: npm --prefix packages/guard-core run build
+      - run: node scripts/check-soterai-hardening.cjs output/ci-hardening
+      - run: node scripts/soterai-security-eval.cjs --out output/ci-security-eval --iterations 3
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        if: always()
+        with:
+          name: scoped-security-evidence
+          path: |
+            output/ci-hardening
+            output/ci-security-eval
+          if-no-files-found: error

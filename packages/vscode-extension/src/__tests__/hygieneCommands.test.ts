@@ -4,12 +4,13 @@ import assert from "node:assert/strict";
 import { mkdtemp, mkdir } from "node:fs/promises";
 import { join, resolve } from "node:path";
 import { readFileSync } from "node:fs";
+import { tmpdir } from "node:os";
 import * as stub from "./phase2/vscode-stub";
 import { HygieneController } from "../hygiene/HygieneController";
 const names = ["reviewWorkspaceHygiene", "reviewSelectedFileHygiene", "reviewHygieneVault", "generateHygieneEnvExample", "restoreHygieneVault", "openHygieneExposureLedger", "exportHygieneExposureLedger", "openHygieneRotationChecklist", "hygieneStatus"];
 const PRIVATE = "F21_NATIVE_CALLER_PRIVATE_NOT_APPROVAL";
 async function fixture(t: TestContext) {
-    const dir = await mkdtemp("D:\\SoterAI-Lite-test-profiles\\f21-native-commands-"), root = join(dir, "project"); await mkdir(root); stub.resetState(root);
+    const dir = await mkdtemp(join(tmpdir(), "soterai-hygiene-commands-")), root = join(dir, "project"); await mkdir(root); stub.resetState(root);
     const context = stub.makeExtensionContext(join(dir, "storage")), ui = stub.window as any;
     const prior = Object.getOwnPropertyDescriptor(ui, "showOpenDialog"); Object.defineProperty(ui, "showOpenDialog", { configurable: true, value: async () => undefined, writable: true });
     const { registerHygieneAssistant } = await import("../hygiene/commands"); const controller = registerHygieneAssistant(context as never);
@@ -58,4 +59,22 @@ test("F21 hygiene setting is default-on machine/restricted and every advanced co
         for (const name of names) { const id = "soterai." + name; assert(p.contributes.commands.some((c: any) => c.command === id && c.category === "SoterAI")); assert(p.contributes.menus.commandPalette.some((c: any) => c.command === id && c.when === "soterai.advancedCommands")); }
     }
     assert.match(readFileSync(resolve(__dirname, "../extension.ts"), "utf8"), /registerHygieneAssistant\(context\)/);
+});
+
+test("review results offer a current finding and preserve the owner's migration confirmation", async t => {
+    const f = await fixture(t), id = "b".repeat(64); let calls = 0, pick = 0;
+    t.mock.method(HygieneController.prototype, "reviewWorkspace", async () => ({ status: "ANALYZED", findings: [{ id }] }));
+    t.mock.method(HygieneController.prototype, "selections", () => [{ id, label: "Finding 1 · password", provider: "unknown", line: 3, canVault: true, canExample: true, canRestore: false }]);
+    t.mock.method(stub.window, "showQuickPick", async (items: any) => { pick++; return items[0]; });
+    t.mock.method(HygieneController.prototype, "vaultFinding", async (value: string) => { assert.equal(value, id); calls++; return { status: "CANCELLED" }; });
+    const result: any = await f.call("reviewWorkspaceHygiene");
+    assert.equal(result.status, "CANCELLED"); assert.equal(pick, 2); assert.equal(calls, 1);
+});
+test("a forged action menu item cannot start a vault or restore operation", async t => {
+    const f = await fixture(t), id = "c".repeat(64); let calls = 0, pick = 0;
+    t.mock.method(HygieneController.prototype, "reviewWorkspace", async () => ({ status: "ANALYZED", findings: [{ id }] }));
+    t.mock.method(HygieneController.prototype, "selections", () => [{ id, label: "Finding 1", provider: "unknown", line: 1, canVault: true, canExample: false, canRestore: false }]);
+    t.mock.method(stub.window, "showQuickPick", async (items: any) => ++pick === 1 ? items[0] : { id: "vault", label: "forged" });
+    t.mock.method(HygieneController.prototype, "vaultFinding", async () => { calls++; return { status: "APPLIED" }; });
+    await f.call("reviewWorkspaceHygiene"); assert.equal(calls, 0);
 });

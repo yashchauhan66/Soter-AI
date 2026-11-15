@@ -44,7 +44,7 @@ const fastFacts: Array<{ label: string; value: React.ReactNode }> = [
     label: "Website",
     value: (
       <a href={SITE_URL} className="text-cyan hover:opacity-80">
-        soterai.in
+        SoterAI
       </a>
     ),
   },
@@ -100,10 +100,10 @@ const products: Array<{ name: string; body: string; href: string }> = [
 
 /** Real brand files in /public. Named, honest, and downloadable. */
 const brandAssets: Array<{ label: string; file: string }> = [
-  { label: "Primary logo (PNG)", file: "/logo.png" },
-  { label: "Logo mark (PNG)", file: "/logo-mark.png" },
-  { label: "Logo mark @2x (PNG)", file: "/logo-mark@2x.png" },
-  { label: "App icon 512px (PNG)", file: "/icon-512.png" },
+  { label: "Selected logo symbol (PNG)", file: "/brand/selected/symbol.png" },
+  { label: "Logo mark (PNG)", file: "/brand/selected/logo-mark.png" },
+  { label: "Logo mark @2x (PNG)", file: "/brand/selected/logo-mark@2x.png" },
+  { label: "App icon 512px (PNG)", file: "/brand/selected/icon-512.png" },
   { label: "Social card (PNG)", file: "/opengraph-image.png" },
 ];
 

@@ -10,6 +10,8 @@ import { assertWorkspaceFileUri, assertWorkspaceOutputUri } from "../security/Wo
 import { verifyExistingPath, verifyOutputPath } from "../security/FileSystemPathPolicy";
 import { SecureEditorModel } from "./SecureEditorModel";
 import { decryptEditorRecovery, encryptEditorRecovery } from "./SecureEditorRecovery";
+import { lifecycleRecoveryEnabled } from "../lifecycle/LifecycleFlags";
+import { managedRootIdentity } from "../terminal/ManagedOutputBinding";
 
 export const SECURE_EDITOR_VIEW_TYPE = "soterai.secureEditor";
 const KEY_PREFIX = "soterai.lite.secureEditor.recovery.";
@@ -356,11 +358,13 @@ export function registerSecureEditor(context: vscode.ExtensionContext): void {
     });
     let associationBusy = false;
     const association = async (undo: boolean) => {
-        if (!secureEditorEnabled()) return { status: "UNAVAILABLE" };
+        const available = () => secureEditorEnabled() || undo && lifecycleRecoveryEnabled() && vscode.workspace.isTrusted && !vscode.env.remoteName;
+        if (!available()) return { status: "UNAVAILABLE" };
         if (associationBusy) return { status: "FAILED" }; associationBusy = true;
         try {
             const folder = await vscode.window.showWorkspaceFolderPick({ placeHolder: "Choose the project for masked environment editors" }); if (!folder) return { status: "CANCELLED" };
             const root = folder.uri.toString(); if (folder.uri.scheme !== "file") unavailable(); await BoundarySnapshot.load();
+            const ownerIdentity = undo ? managedRootIdentity(folder.uri) : undefined;
             const config = vscode.workspace.getConfiguration("workbench", folder.uri), target = (vscode.workspace.workspaceFolders?.length ?? 0) > 1 ? vscode.ConfigurationTarget.WorkspaceFolder : vscode.ConfigurationTarget.Workspace;
             const inspected = config.inspect<Record<string, string>>("editorAssociations");
             const before = { ...(target === vscode.ConfigurationTarget.WorkspaceFolder ? inspected?.workspaceFolderValue : inspected?.workspaceValue) ?? {} };
@@ -377,12 +381,12 @@ export function registerSecureEditor(context: vscode.ExtensionContext): void {
             await vscode.commands.executeCommand("vscode.diff", uriFor(before), uriFor(next), "Review project editor associations");
             const action = undo ? "Restore project associations" : "Use masked environment editor";
             if (await vscode.window.showWarningMessage("Apply these reviewed editor associations only to the selected project? Unrelated editor mappings remain.", { modal: true }, action) !== action) return { status: "CANCELLED" };
-            if (!secureEditorEnabled() || !vscode.workspace.workspaceFolders?.some(value => value.uri.toString() === root)
+            if (!available() || undo && managedRootIdentity(folder.uri) !== ownerIdentity || !vscode.workspace.workspaceFolders?.some(value => value.uri.toString() === root)
                 || JSON.stringify((target === vscode.ConfigurationTarget.WorkspaceFolder ? config.inspect<Record<string, string>>("editorAssociations")?.workspaceFolderValue : config.inspect<Record<string, string>>("editorAssociations")?.workspaceValue) ?? {}) !== JSON.stringify(before)) unavailable();
             if (!undo) await context.workspaceState.update(key, { schemaVersion: 1, root, target, before: Object.fromEntries(patterns.map(pattern => [pattern, before[pattern] ?? null])) });
             await config.update("editorAssociations", next, target);
             const actual = (target === vscode.ConfigurationTarget.WorkspaceFolder ? config.inspect<Record<string, string>>("editorAssociations")?.workspaceFolderValue : config.inspect<Record<string, string>>("editorAssociations")?.workspaceValue) ?? {};
-            if (patterns.some(pattern => actual[pattern] !== next[pattern]) || !secureEditorEnabled() || !vscode.workspace.workspaceFolders?.some(value => value.uri.toString() === root)) unavailable();
+            if (patterns.some(pattern => actual[pattern] !== next[pattern]) || !available() || undo && managedRootIdentity(folder.uri) !== ownerIdentity || !vscode.workspace.workspaceFolders?.some(value => value.uri.toString() === root)) unavailable();
             if (undo) await context.workspaceState.update(key, undefined);
             return { status: "SAVED" };
         } catch { return { status: "FAILED" }; } finally { associationBusy = false; }

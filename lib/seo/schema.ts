@@ -9,7 +9,15 @@
  */
 
 export const SITE_URL = process.env.NEXT_PUBLIC_APP_URL ?? "https://soterai.in";
+/**
+ * Public display name. Canonical URLs and entity IDs continue to use soterai.in.
+ * The existing package and extension identifiers
+ * (soterai.soterai-ide-guard, n8n-nodes-soterai, @soterai/core, PyPI "soter")
+ * are unchanged.
+ */
 export const SITE_NAME = "SoterAI";
+/** Keep the website address as an alternate name for earlier domain-name mentions. */
+export const SITE_ALTERNATE_NAME = "soterai.in";
 
 export const ORGANIZATION_ID = `${SITE_URL}#organization`;
 export const WEBSITE_ID = `${SITE_URL}#website`;
@@ -24,7 +32,7 @@ export const WEBSITE_ID = `${SITE_URL}#website`;
  *
  * Kept in sync with `packages/sdk/package.json#name` ("@soterai/core") and
  * `packages/python-sdk/pyproject.toml#name` ("soter"). The source repository is
- * private, so it is deliberately absent.
+ * deliberately absent; see the NOTE below.
  */
 const ORG_SAME_AS = [
   // Open VSX — the IDE Guard extension is published here (see README SDK table)
@@ -37,9 +45,10 @@ const ORG_SAME_AS = [
   "https://pypi.org/project/soter/",
   // n8n community node — automation-ecosystem entity signal
   "https://www.npmjs.com/package/n8n-nodes-soterai",
-  // NOTE: the GitHub repository is intentionally NOT listed. It went private on
-  // 2026-09-04, so the URL now 404s for crawlers — which per the rule above
-  // would weaken entity consolidation rather than strengthen it.
+  // NOTE: the GitHub repository is intentionally NOT listed. An earlier version
+  // of this comment said it went private on 2026-09-04; as of 2026-11-09 the
+  // URL still resolves for anonymous visitors. Do not add it until the owner has
+  // settled the repository's visibility and licence.
   //
   // NOTE: twitter.com/soterai is also absent — verified 404 on 2026-09-08 (both
   // twitter.com and x.com; a known-good handle returned 200 in the same run, so
@@ -81,6 +90,7 @@ export const organizationNode = {
   "@type": "Organization",
   "@id": ORGANIZATION_ID,
   name: SITE_NAME,
+  alternateName: SITE_ALTERNATE_NAME,
   url: SITE_URL,
   logo: {
     "@type": "ImageObject",
@@ -88,9 +98,9 @@ export const organizationNode = {
     width: 512,
     height: 512,
   },
-  image: `${SITE_URL}/opengraph-image.png`,
+  image: `${SITE_URL}/og-card/default.png`,
   description:
-    "SoterAI is an AI security command layer for chatbots, RAG apps, and autonomous agents, protecting teams from prompt injection, data leakage, unsafe outputs, and agent abuse.",
+    "SoterAI is an AI security command layer for chatbots, RAG apps and AI agents. For each prompt, reply and agent action it decides whether to allow, redact, rewrite, block or hold for review, and keeps a record of the decision.",
   foundingDate: "2024",
   founder: founderNode,
   foundingLocation: {
@@ -121,9 +131,9 @@ export const websiteNode = {
   url: SITE_URL,
   name: `${SITE_NAME} - AI Security Command Layer`,
   description:
-    "AI security guardrail platform protecting against prompt injection, jailbreaks, PII leakage, and unsafe outputs.",
+    "Check prompts and AI replies, redact secrets and personal data, flag prompt injection, and hold risky agent actions.",
   publisher: { "@id": ORGANIZATION_ID },
-  inLanguage: "en",
+  inLanguage: "en-IN",
 } as const;
 
 /**

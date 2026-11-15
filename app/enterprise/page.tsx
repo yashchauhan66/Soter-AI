@@ -10,6 +10,7 @@ export const metadata: Metadata = {
   keywords: ["enterprise ai security", "ai security platform india", "enterprise llm security", "aadhaar compliance ai", "self-hosted ai guardrails", "enterprise ai firewall"],
   alternates: { canonical: "/enterprise" },
   openGraph: {
+    images: [{ url: "/og-card/default.png", width: 1200, height: 630, alt: "SoterAI, the AI security command layer" }],
     title: "Enterprise AI Security Platform | SoterAI",
     description: "Enterprise-grade AI security for Indian businesses: SSO, SCIM, SIEM, Aadhaar PII detection, tenant isolation, and self-hosted guardrails for high-stakes AI applications.",
   },
@@ -29,8 +30,9 @@ const enterpriseJsonLd = {
       url: `${SITE_URL}/enterprise`,
       offers: {
         "@type": "Offer",
-        price: "Custom",
-        priceCurrency: "INR",
+        // Enterprise pricing is quoted per customer, so no numeric price is published. A
+        // schema.org Offer price must be a number, and "Custom" is not one.
+        priceSpecification: { "@type": "PriceSpecification", priceCurrency: "INR", description: "Quoted per customer" },
       },
       featureList: "SSO, SCIM, SIEM, Tenant Isolation, Self-Hosted, Audit Trails, India PII Detection, Agent Firewall, RAG Security",
     },

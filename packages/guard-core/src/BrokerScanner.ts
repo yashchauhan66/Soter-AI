@@ -1,6 +1,6 @@
 import type { Finding, GuardAction, ScanOptions } from "./types";
 import { DecisionEngine } from "./DecisionEngine";
-import { redactForSharing, findSurvivingSecrets } from "./Redactor";
+import { redactForSharing, findUnredactedSecrets } from "./Redactor";
 import { scanAIOutput, type OutputScanResult } from "./OutputLeakScanner";
 import { applySafeMode, strictest, type SafeModeLevel } from "./SafeMode";
 import { matchCanaries, type Canary } from "./Canary";
@@ -129,7 +129,7 @@ export async function scanBrokerRequest(
     }));
     const redacted = redactedMessages.some((m, i) => m.content !== (messages[i].content ?? ""));
 
-    const survivors = findSurvivingSecrets(joinMessages(redactedMessages));
+    const survivors = findUnredactedSecrets(joinMessages(redactedMessages));
     const safe = survivors.length === 0;
 
     return {

@@ -9,6 +9,7 @@ import type * as vscode from "vscode";
 import * as stub from "./phase2/vscode-stub";
 import { initializeBoundaryState, BoundarySnapshot } from "../ai-boundary/BoundarySnapshot";
 import { VaultManager } from "../firewall/VaultManager";
+import { captureRuntimeArtifact } from "../vault-runtime/RuntimeBinding";
 
 // Synthetic-only actual-manager lease fixture. No owner review is requested,
 // no owner session is granted, no app is spawned and no drift monitor is needed:
@@ -38,9 +39,10 @@ const workspaceOriginals = Object.getOwnPropertyDescriptors(stub.workspace);
 const uri = () => stub.Uri.file(join(root, ".env")) as unknown as vscode.Uri;
 
 async function descriptor(): Promise<Record<string, unknown>> {
-    return { schemaVersion: 1, id: "2680da6f-815e-4f2c-97ad-5f00a72b3609", root,
+    return { schemaVersion: 2, id: "2680da6f-815e-4f2c-97ad-5f00a72b3609", root,
         source: uri().fsPath, program: join(root, "app.cjs"), cwd: root,
-        programDigest: sha(ENTRY), args: [], selections: await manager.runtimeSelections(uri()) };
+        programDigest: sha(ENTRY), artifactDigest: captureRuntimeArtifact(root, join(root, "app.cjs")).digest,
+        args: [], selections: await manager.runtimeSelections(uri()) };
 }
 async function unavailable(work: () => Promise<unknown>): Promise<void> {
     await assert.rejects(work, error => {

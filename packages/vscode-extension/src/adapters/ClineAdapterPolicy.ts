@@ -1,11 +1,15 @@
 import { createHash } from "node:crypto";
 import * as path from "node:path";
+import { types } from "node:util";
 import { decodeBoundedJson } from "../../../../apps/local-ai-broker/src/BoundedJson";
 import type { BackupSink } from "../broker/IntegrationAdapter";
 
 export interface ClinePin { publisher: string; name: string; version: string; manifestSha256: string; runtimeSha256: string }
-export const CLINE_PIN: Readonly<ClinePin> = Object.freeze({ publisher: "saoudrizwan", name: "claude-dev", version: "4.1.25",
-    manifestSha256: "4a91298536329c8987b77223c06d3a6778af3a7e3678ed7173dd430f3636d7eb", runtimeSha256: "a3e8eda18b38547df9c614e62d04106cdf3bf2df2cb16241af3f7b3770088022" });
+export const CLINE_SUPPORTED_PINS: readonly Readonly<ClinePin>[] = Object.freeze([
+    Object.freeze({ publisher: "saoudrizwan", name: "claude-dev", version: "4.1.25", manifestSha256: "4a91298536329c8987b77223c06d3a6778af3a7e3678ed7173dd430f3636d7eb", runtimeSha256: "a3e8eda18b38547df9c614e62d04106cdf3bf2df2cb16241af3f7b3770088022" }),
+    Object.freeze({ publisher: "saoudrizwan", name: "claude-dev", version: "4.1.26", manifestSha256: "4c9213753c57e7d651b09be215853e4555238718b4974413b7e63993a42b219e", runtimeSha256: "ae4cec19fd74dc97681dcfcfe5a6644cae4a5f5f19396f1424dcd9eada659559" }),
+]);
+export const CLINE_PIN: Readonly<ClinePin> = CLINE_SUPPORTED_PINS[1];
 const digest = (value: string | Uint8Array) => createHash("sha256").update(value).digest("hex");
 const unavailable = (): never => { throw new Error("Cline adapter schema unavailable or unsupported."); };
 const record = (value: unknown): value is Record<string, any> => !!value && typeof value === "object" && !Array.isArray(value);
@@ -18,16 +22,37 @@ function json(value: string | undefined): Record<string, any> {
         return JSON.parse(parsed.canonical) as Record<string, any>;
     } catch { return unavailable(); }
 }
-export function verifyClineArtifact(manifest: Uint8Array, runtime: Uint8Array, pin: Readonly<ClinePin> = CLINE_PIN): boolean {
+export function verifyClineArtifact(manifest: Uint8Array, runtime: Uint8Array, pin?: Readonly<ClinePin>): boolean {
     try {
+        if (!pin) return CLINE_SUPPORTED_PINS.some(candidate => verifyClineArtifact(manifest, runtime, candidate));
         if (manifest.byteLength > 65536 || runtime.byteLength > 32 * 1024 * 1024 || digest(manifest) !== pin.manifestSha256 || digest(runtime) !== pin.runtimeSha256) return false;
         const item = json(Buffer.from(manifest).toString("utf8")); return item.publisher === pin.publisher && item.name === pin.name && item.version === pin.version && item.main === "./dist/extension.js";
     } catch { return false; }
 }
+export function resolveClineArtifact(manifest: Uint8Array, runtime: Uint8Array): Readonly<ClinePin> | undefined {
+    return CLINE_SUPPORTED_PINS.find(pin => verifyClineArtifact(manifest, runtime, pin));
+}
+/** The adapter owns the default profile only; overrides must not redirect its writes. */
+export function clineDefaultPathsEnvironment(environment: NodeJS.ProcessEnv): boolean {
+    try {
+        return ["CLINE_DIR", "CLINE_DATA_DIR", "CLINE_PROVIDER_SETTINGS_PATH", "CLINE_GLOBAL_SETTINGS_PATH", "CLINE_MCP_SETTINGS_PATH"].every(key => {
+            const field = Object.getOwnPropertyDescriptor(environment, key);
+            return !field || "value" in field && typeof field.value === "string" && !field.value.trim();
+        });
+    } catch { return false; }
+}
+/** Pinned Cline resolves its cached legacy URL before the managed provider file. */
+export function clineLegacyRouteSupported(state: unknown): boolean {
+    try {
+        if (!record(state) || types.isProxy(state) || ![Object.prototype, null].includes(Object.getPrototypeOf(state))) return false;
+        const field = Object.getOwnPropertyDescriptor(state, "openAiBaseUrl");
+        return !field || "value" in field && typeof field.value === "string" && !field.value.trim();
+    } catch { return false; }
+}
 export type ClineFileKey = "providers" | "mcp" | "globals" | "hook" | "taskHook";
 export type ClineFiles = Record<ClineFileKey, string | undefined>;
-export interface ClineBinding { url: string; credential: string; codePath: string; mcpPath: string; ticketPath: string; workspace: string; session: string }
-export interface ClinePreview { version: "4.1.25"; operation: "configure" | "restore"; changes: ClineFileKey[]; diff: string[]; treatment: string }
+export interface ClineBinding { url: string; credential: string; codePath: string; mcpPath: string; ticketPath: string; workspace: string; session: string; model?: string }
+export interface ClinePreview { version: string; operation: "configure" | "restore"; changes: ClineFileKey[]; diff: string[]; treatment: string }
 export interface ClineDependencies {
     enabled(): boolean; fingerprint(): string;
     read(key: ClineFileKey): Promise<string | undefined>;
@@ -116,8 +141,9 @@ try {
 `;
 }
 /** Exact current schema only; credentials and source config remain private. */
-export function createClinePlan(input: ClineFiles, binding: ClineBinding): ClineConfigPlan {
+export function createClinePlan(input: ClineFiles, binding: ClineBinding, vendorVersion = CLINE_PIN.version): ClineConfigPlan {
     try {
+        if (!CLINE_SUPPORTED_PINS.some(pin => pin.version === vendorVersion)) return unavailable();
         const url = new URL(binding.url);
         if (url.href !== binding.url || url.protocol !== "http:" || url.hostname !== "127.0.0.1" || !url.port || Number(url.port) > 65535 || url.pathname !== "/v1/ai/openai-compatible" || url.search || url.hash || url.username || url.password) return unavailable();
         if (typeof binding.credential !== "string" || binding.credential.length < 8 || binding.credential.length > 1024 || /[\x00-\x20\x7f]/.test(binding.credential)) return unavailable();
@@ -131,6 +157,7 @@ export function createClinePlan(input: ClineFiles, binding: ClineBinding): Cline
         for (const key of ["hook", "taskHook"] as const) if (input[key] !== undefined && !input[key]!.startsWith(CLINE_HOOK_MARKER + "\n")) return unavailable();
         const previous = providers.providers["openai-compatible"];
         if (!record(previous) || !record(previous.settings) || previous.settings.provider !== "openai-compatible" || typeof previous.settings.model !== "string" || !previous.settings.model || previous.settings.model.length > 256) return unavailable();
+        if (binding.model !== undefined && previous.settings.model !== binding.model) return unavailable();
         const headers = previous.settings.headers ?? {};
         if (!record(headers) || Object.keys(headers).length > 16 || Object.entries(headers).some(([key, value]) => !/^[!#$%&'*+.^_`|~0-9A-Za-z-]{1,64}$/.test(key)
             || typeof value !== "string" || Buffer.byteLength(value) > 2048 || /[\x00-\x1f\x7f]/.test(value))) return unavailable();
@@ -143,14 +170,14 @@ export function createClinePlan(input: ClineFiles, binding: ClineBinding): Cline
         providers.lastUsedProvider = "openai-compatible";
         mcp.mcpServers.soterai_safe_read = { command: binding.codePath, args: [binding.mcpPath], env: { ELECTRON_RUN_AS_NODE: "1", SOTERAI_SAFE_READ_TICKET_PATH: binding.ticketPath }, disabled: false, autoApprove: [] };
         globals.autoUpdateEnabled = false; globals.telemetryOptOut = true;
-        return new ClineConfigPlan({ ...input }, { providers: encode(providers), mcp: encode(mcp), globals: encode(globals), hook: clineHook(binding), taskHook: clineHook(binding) });
+        return new ClineConfigPlan({ ...input }, { providers: encode(providers), mcp: encode(mcp), globals: encode(globals), hook: clineHook(binding), taskHook: clineHook(binding) }, vendorVersion);
     } catch { return unavailable(); }
 }
 export class ClineConfigPlan {
     #consumed = false;
-    constructor(before: ClineFiles, after: ClineFiles) { this.#before = before; this.#after = after; }
+    constructor(before: ClineFiles, after: ClineFiles, private readonly vendorVersion = CLINE_PIN.version) { this.#before = before; this.#after = after; }
     #before: ClineFiles; #after: ClineFiles;
-    preview(): ClinePreview { return { version: "4.1.25", operation: "configure", changes: [...keys], diff: [
+    preview(): ClinePreview { return { version: this.vendorVersion, operation: "configure", changes: [...keys], diff: [
         "providers.json / openai-compatible.baseUrl: [current route withheld] -> current owned loopback broker",
         "providers.json / openai-compatible.apiKey: [MASKED] -> [MASKED current-session credential]",
         "providers.json / openai-compatible.headers.Authorization: [MASKED if present] -> [MASKED current-session bearer]",
@@ -191,13 +218,14 @@ async function restoreValue(entry: ClineReceipt["entries"][number], backups: Bac
     if (value.version !== 1 || typeof value.present !== "boolean" || value.present && typeof value.before !== "string") return unavailable();
     return value.present ? value.before : undefined;
 }
-export async function undoClineFiles(receipt: ClineReceipt | undefined, deps: ClineDependencies): Promise<ClineResult> {
+export async function undoClineFiles(receipt: ClineReceipt | undefined, deps: ClineDependencies, vendorVersion = CLINE_PIN.version): Promise<ClineResult> {
     try {
+        if (!CLINE_SUPPORTED_PINS.some(pin => pin.version === vendorVersion)) return { status: "UNAVAILABLE" };
         if (!receipt || receipt.version !== 1 || receipt.entries.length !== keys.length || !deps.enabled() || deps.fingerprint() !== receipt.owner) return { status: "UNAVAILABLE" };
         if (new Set(receipt.entries.map(entry => entry.key)).size !== keys.length || receipt.entries.some(entry => !keys.includes(entry.key) || typeof entry.backup !== "string" || !/^[a-f0-9]{64}$/.test(entry.afterDigest) || !/^[a-f0-9]{64}$/.test(entry.beforeDigest))) return { status: "UNAVAILABLE" };
         for (const entry of receipt.entries) { const current = fileDigest(await deps.read(entry.key)); if (current !== entry.afterDigest && current !== entry.beforeDigest) return { status: "CHANGED" }; }
         const originals = new Map<ClineFileKey, string | undefined>(); for (const entry of receipt.entries) originals.set(entry.key, await restoreValue(entry, deps.backups));
-        if (await deps.confirm({ version: "4.1.25", operation: "restore", changes: [...keys], diff: ["Five unchanged owned entries -> their exact encrypted previous state", "Managed provider, MCP reader and session hooks -> previous configuration; vendor routes become unverified"], treatment: "Restore the exact encrypted previous Cline config. The managed session will be withdrawn; direct vendor routes are outside SoterAI. Saved project denies remain." }) !== true) return { status: "CANCELLED" };
+        if (await deps.confirm({ version: vendorVersion, operation: "restore", changes: [...keys], diff: ["Five unchanged owned entries -> their exact encrypted previous state", "Managed provider, MCP reader and session hooks -> previous configuration; vendor routes become unverified"], treatment: "Restore the exact encrypted previous Cline config. The managed session will be withdrawn; direct vendor routes are outside SoterAI. Saved project denies remain." }) !== true) return { status: "CANCELLED" };
         if (!deps.enabled() || deps.fingerprint() !== receipt.owner) return { status: "UNAVAILABLE" };
         for (const entry of receipt.entries) { const current = fileDigest(await deps.read(entry.key)); if (current !== entry.afterDigest && current !== entry.beforeDigest) return { status: "CHANGED" }; }
         let written = 0;

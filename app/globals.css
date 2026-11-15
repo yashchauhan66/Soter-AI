@@ -33,8 +33,8 @@
 
      surface-0 is off-white, not #fff, so a white card reads as a distinct object
      when it sits on the page background. Cards themselves are pure white. */
-  --surface-0: 255 255 255;  /* page background        #ffffff */
-  --surface-1: 248 250 252;  /* sunken well            #f8fafc  slate-50 */
+  --surface-0: 251 250 247;  /* page background        #fbfaf7  warm paper */
+  --surface-1: 244 241 234;  /* sunken well            #f4f1ea */
   --surface-2: 255 255 255;  /* card                   #ffffff */
   --surface-3: 255 255 255;  /* raised card / popover  #ffffff (shadow does the work) */
   --surface-4: 255 255 255;  /* menu / tooltip         #ffffff */
@@ -56,7 +56,7 @@
 
      Do not use --brand-graphic for text. */
   --brand: 178 59 11;          /* #b23b0b */
-  --brand-graphic: 249 100 3;  /* #f96403 — logo mark */
+  --brand-graphic: 234 94 3;   /* #ea5e03 — graphics. The logo file itself stays #f96403 (logotypes are exempt) */
   --brand-strong: 154 52 18;   /* #9a3412 — pressed state */
   --accent: 21 128 61;         /* #15803d — "safe" green, was acid lime */
 
@@ -78,8 +78,8 @@
      boxes. `--hairline-strong` (slate-400, 3.0:1) is for boundaries a user is
      meant to *act on* — inputs, secondary buttons, table sort controls — where
      the border is the only thing announcing the control. */
-  --hairline: 226 232 240;         /* slate-200 */
-  --hairline-strong: 148 163 184;  /* slate-400 — interactive controls */
+  --hairline: 227 222 211;         /* #e3ded3 warm-200 */
+  --hairline-strong: 133 127 116;  /* #857f74 warm-500, 3.81:1 on paper — interactive controls */
 
   /* ── Radii ───────────────────────────────────────────────────────
      Large radii are a consumer-app signal. On a console where cards nest inside
@@ -111,10 +111,10 @@
      white goes grey and slightly dead next to a blue-grey hairline.
 
      Kept in sync with the `boxShadow` scale in tailwind.config.ts. */
-  --shadow-1: 0 1px 2px rgba(15, 23, 42, 0.05);
-  --shadow-2: 0 1px 2px rgba(15, 23, 42, 0.05), 0 2px 8px rgba(15, 23, 42, 0.05);
-  --shadow-3: 0 2px 4px rgba(15, 23, 42, 0.05), 0 8px 24px rgba(15, 23, 42, 0.07);
-  --shadow-4: 0 4px 8px rgba(15, 23, 42, 0.06), 0 16px 48px rgba(15, 23, 42, 0.10);
+  --shadow-1: 0 1px 2px rgba(20, 17, 15, 0.06);
+  --shadow-2: 0 1px 2px rgba(20, 17, 15, 0.06), 0 2px 8px rgba(20, 17, 15, 0.05);
+  --shadow-3: 0 2px 4px rgba(20, 17, 15, 0.05), 0 8px 24px rgba(20, 17, 15, 0.07);
+  --shadow-4: 0 4px 8px rgba(20, 17, 15, 0.06), 0 16px 48px rgba(20, 17, 15, 0.10);
 
   /* Kept as a no-op so the ~6 `var(--hairline-top)` call sites in the component
      layer stay valid. It was `inset 0 1px 0 rgba(255,255,255,0.04)` — a white
@@ -150,7 +150,7 @@
   }
 
   body {
-    @apply bg-white text-slate-200 antialiased;
+    @apply bg-ink text-slate-200 antialiased;
     font-feature-settings: "cv02", "cv03", "cv04", "cv11";
     /**
      * No ambient gradient.
@@ -193,7 +193,7 @@
   [data-numeric], .tabular { font-variant-numeric: tabular-nums; }
 
   code, pre, .font-mono {
-    font-family: var(--font-jetbrains-mono), Consolas, Monaco, monospace;
+    font-family: var(--font-sa-mono), ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
     font-feature-settings: "calt" 1, "liga" 1;
   }
 
@@ -228,7 +228,7 @@
       outline-offset var(--dur-fast) var(--ease-smooth);
   }
 
-  ::selection { background: rgb(var(--brand) / 0.16); color: rgb(15 23 42); }
+  ::selection { background: rgb(var(--brand) / 0.16); color: rgb(20 17 15); }
 
   /* Native disclosure markers are inconsistent across engines and every
      <details> in this codebase supplies its own chevron. */
@@ -252,7 +252,7 @@
     background-clip: content-box;
   }
   ::-webkit-scrollbar-thumb:hover {
-    background: rgb(100 116 139);
+    background: rgb(91 87 80);
     background-clip: content-box;
   }
   ::-webkit-scrollbar-corner { background: transparent; }
@@ -433,6 +433,17 @@
   .container-docs { @apply mx-auto w-full max-w-4xl px-4 sm:px-6 lg:px-8; }
   .container-wide { @apply mx-auto w-full max-w-[1440px] px-4 sm:px-6 lg:px-8; }
 
+  /* Docs are a workspace, not a narrow marketing container. Align the brand,
+     taxonomy and toolbar; keep the reading canvas behind opaque chrome. */
+  .site-header { background: rgb(var(--surface-0)); }
+  .site-docs-header-inner { width: 100%; max-width: 1800px; margin-inline: auto; padding-inline: 32px; }
+  .site-header--docs nav[aria-label="Main"] :is(a, button),
+  .site-header--docs a[href="/signin"] {
+    font-family: "Segoe UI", -apple-system, BlinkMacSystemFont, Arial, sans-serif;
+    font-size: 14px; font-weight: 500; letter-spacing: normal;
+  }
+  @media (max-width: 767px) { .site-docs-header-inner { padding-inline: 16px; } }
+
   /* Vertical rhythm. Sections previously hand-rolled py-20 / py-24 per file,
      which drifted apart; these keep spacing consistent and fluid. */
   .section { @apply py-16 sm:py-20 lg:py-24; }
@@ -492,7 +503,7 @@
      so nesting reads as containment instead of a second stacked card.
 
      This is the one place the ladder still changes fill — `--surface-1`
-     (#f8fafc) against the card's #ffffff. Down is the only direction available
+     (#f4f1ea) against the card's #ffffff. Down is the only direction available
      on a white page. */
   .surface {
     @apply rounded-card border;
@@ -512,7 +523,7 @@
   }
 
   .glass-panel {
-    background: rgb(255 255 255 / 0.85);
+    background: rgb(251 250 247 / 0.85);
     backdrop-filter: blur(16px);
     border: 1px solid rgb(var(--hairline));
     box-shadow: var(--shadow-3);
@@ -587,10 +598,10 @@
     background: rgb(var(--surface-2));
   }
   .button-secondary:hover:not(:disabled) {
-    border-color: rgb(100 116 139);
+    border-color: rgb(91 87 80);
     background: rgb(var(--surface-1));
   }
-  .button-secondary:active:not(:disabled) { background: rgb(241 245 249); }
+  .button-secondary:active:not(:disabled) { background: rgb(244 241 234); }
 
   /* Tertiary: text-only affordance for a third action, where another bordered
      button would create a "which one do I press" problem. */
@@ -641,7 +652,7 @@
      - **The border is `--hairline-strong`, not `--hairline`.** An input is the one
        boundary that must clear 3:1 (WCAG 1.4.11) — it is the only thing telling
        the user a control is there. slate-200 would fail.
-     - **Placeholder is named slate-400** (#64748b, 4.76:1) to document that this
+     - **Placeholder is named slate-400** (#5b5750, 6.88:1) to document that this
        is the legibility floor, not a free choice: placeholder text is real text. */
   .input {
     @apply w-full rounded-md border px-3.5 py-2.5 text-slate-100 placeholder:text-slate-400;
@@ -653,7 +664,7 @@
       box-shadow var(--dur-fast) var(--ease-smooth),
       background-color var(--dur-fast) var(--ease-smooth);
   }
-  .input:hover:not(:disabled):not(:focus) { border-color: rgb(100 116 139); }
+  .input:hover:not(:disabled):not(:focus) { border-color: rgb(91 87 80); }
   .input:focus {
     outline: none;
     border-color: rgb(var(--brand));
@@ -702,13 +713,13 @@
    *
    * `heading-hero` is untouched — a marketing hero *should* be large.
    */
-  .heading-hero { @apply text-display-lg font-bold text-slate-100; }
-  .heading-1 { @apply text-display-md font-bold text-slate-100; }
-  .heading-2 { @apply text-display-sm font-bold text-slate-100; }
-  .heading-3 { @apply text-display-xs font-bold text-slate-100; }
+  .heading-hero { @apply font-display text-display-lg font-semibold text-slate-100; }
+  .heading-1 { @apply font-display text-display-md font-semibold text-slate-100; }
+  .heading-2 { @apply font-display text-display-sm font-semibold text-slate-100; }
+  .heading-3 { @apply font-display text-display-xs font-semibold text-slate-100; }
 
   /* Long-form copy capped at a comfortable reading measure.
-     `text-slate-300` = #334155 (10.35:1) — the "light black" body voice: clearly
+     `text-slate-300` = #3f3b35 (10.65:1 on paper) — the "light black" body voice: clearly
      subordinate to a #0f172a heading, still far above the 4.5:1 floor. */
   .lede { @apply max-w-prose text-lg leading-8 text-slate-300; }
   .body-copy { @apply max-w-prose leading-7 text-slate-300; }
@@ -793,8 +804,8 @@
      `HEADING_OFFSET` in DocsToc.tsx uses the same 96px to decide which section is
      current. Change one and the rail highlights the section above the one the
      reader just clicked. */
-  .docs-h2 { @apply mt-0 scroll-mt-24 text-display-xs font-bold text-slate-100; }
-  .docs-h3 { @apply mt-8 scroll-mt-24 text-lg font-bold text-slate-100; }
+  .docs-h2 { @apply mt-0 scroll-mt-24 font-display text-display-xs font-semibold text-slate-100; }
+  .docs-h3 { @apply mt-8 scroll-mt-24 font-display text-xl font-semibold text-slate-100; }
 
   /* Section anchor. Hidden below `lg` — it would cost ~23px on every heading at a
      width where headings already wrap, and a touch user shares a page URL rather
@@ -864,14 +875,14 @@
      less to work with over white than over near-black. */
   .grid-fade {
     background-image:
-      linear-gradient(rgb(15 23 42 / 0.06) 1px, transparent 1px),
-      linear-gradient(90deg, rgb(15 23 42 / 0.06) 1px, transparent 1px);
+      linear-gradient(rgb(20 17 15 / 0.06) 1px, transparent 1px),
+      linear-gradient(90deg, rgb(20 17 15 / 0.06) 1px, transparent 1px);
     background-size: 44px 44px;
   }
   .grid-fade-anim {
     background-image:
-      linear-gradient(rgb(15 23 42 / 0.08) 1px, transparent 1px),
-      linear-gradient(90deg, rgb(15 23 42 / 0.08) 1px, transparent 1px);
+      linear-gradient(rgb(20 17 15 / 0.08) 1px, transparent 1px),
+      linear-gradient(90deg, rgb(20 17 15 / 0.08) 1px, transparent 1px);
     background-size: 44px 44px;
     animation: gridDrift 9s linear infinite;
   }
@@ -1010,5 +1021,21 @@
   details > *:not(summary) { display: block !important; }
 
   a { text-decoration: underline; }
+}
+
+/* The Sentinel-S lockup keeps live editorial lettering; AI is a compact mono
+   signature, not a separate label. No animation, remote font or page-wide theme. */
+.soter-wordmark-ai {
+  display: inline-block;
+  margin-inline-start: 0.18em;
+  padding: 0.22em 0.28em;
+  border: 1px solid currentColor;
+  border-radius: 0.25em;
+  font-family: var(--font-sa-mono), ui-monospace, monospace;
+  font-size: 0.55em;
+  font-weight: 600;
+  line-height: 1.15;
+  letter-spacing: -0.03em;
+  vertical-align: 0.12em;
 }
 

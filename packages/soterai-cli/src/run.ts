@@ -2,6 +2,9 @@ import { readFile } from "node:fs/promises";
 import { spawn } from "node:child_process";
 import { execFile } from "node:child_process";
 import { promisify } from "node:util";
+import { runCiCommand } from "./ci/command";
+import { runIsolationCommand } from "./isolation/command";
+import { runAcceptanceCommand } from "./acceptance/assess";
 import { createInterface } from "node:readline";
 import path from "node:path";
 import { homedir, constants as osConstants } from "node:os";
@@ -13,7 +16,6 @@ import {
     parseEnvFile,
     passphrasesMatch,
     rewriteEnvWithoutValues,
-    type Secrets,
     type VaultFile,
 } from "./vault";
 import {
@@ -72,7 +74,7 @@ export interface CliDeps {
     >;
     resolveToken: (explicit?: string) => Promise<string>;
     readFileText: (file: string) => Promise<string>;
-    readStdin: () => Promise<string>;
+    readStdin: (maxBytes?: number) => Promise<string>;
     gitDiff: (cwd: string) => Promise<string>;
     findMcpConfigs: (cwd: string) => Promise<string[]>;
     startBroker: () => Promise<number>;
@@ -165,6 +167,9 @@ export function defaultDeps(overrides: Partial<CliDeps> = {}): CliDeps {
 const HELP = `soterai — local-first AI security guard CLI
 
 Usage:
+  soterai ci scan --root <dir>   Deterministic metadata-only local CI gate
+  soterai isolate plan|run       Review and run a finite isolated Node snapshot
+  soterai acceptance assess      Validate signed evidence for the exact candidate
   soterai scan file <path>        Scan a file through the Local AI Broker
   soterai scan text               Scan text from stdin
   soterai redact file <path>      Print a redacted, AI-safe version of a file
@@ -247,6 +252,9 @@ export function parseArgs(argv: string[]): ParsedArgs {
 
 /** Run the CLI. Returns a process exit code (0 = success). */
 export async function run(argv: string[], deps: CliDeps): Promise<number> {
+    if (argv[0] === "ci") return runCiCommand(argv.slice(1), deps);
+    if (argv[0] === "isolate") return runIsolationCommand(argv.slice(1), deps);
+    if (argv[0] === "acceptance") return runAcceptanceCommand(argv.slice(1), deps);
     // `run` is parsed BEFORE the generic flag parser: everything after it is the
     // child command line, and the child's own flags (`--port 3000`) must not be
     // read as soterai flags. A leading `--` separator is optional and stripped.
@@ -825,9 +833,13 @@ function coerceLevel(level?: string): SafeModeLevel {
     return level === "strict" || level === "enterprise" ? level : "developer";
 }
 
-async function readStdin(): Promise<string> {
-    const chunks: Buffer[] = [];
-    for await (const chunk of process.stdin) chunks.push(Buffer.isBuffer(chunk) ? chunk : Buffer.from(chunk));
+async function readStdin(maxBytes = Infinity): Promise<string> {
+    const chunks: Buffer[] = []; let bytes = 0;
+    for await (const chunk of process.stdin) {
+        const buffer = Buffer.isBuffer(chunk) ? chunk : Buffer.from(chunk);
+        bytes += buffer.length; if (bytes > maxBytes) throw Error("INPUT_LIMIT_EXCEEDED");
+        chunks.push(buffer);
+    }
     return Buffer.concat(chunks).toString("utf8");
 }
 

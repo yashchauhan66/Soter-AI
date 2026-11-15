@@ -1,0 +1,8 @@
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {"Effect": "Allow", "Action": "s3:GetBucketVersioning", "Resource": "arn:aws:s3:::OWNER_VERSIONED_BUCKET"},
+    {"Effect": "Allow", "Action": "s3:PutObject", "Resource": "arn:aws:s3:::OWNER_VERSIONED_BUCKET/approved/*",
+      "Condition": {"StringEquals": {"s3:x-amz-server-side-encryption": "AES256"}}}
+  ]
+}

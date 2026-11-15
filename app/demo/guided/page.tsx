@@ -6,9 +6,10 @@ import { GuidedDemoFlow } from "@/components/marketing/GuidedDemoFlow";
 export const metadata: Metadata = {
   title: "2-Minute Guided Demo",
   description:
-    "Watch one attack walk through SoterAI's full control loop: prompt injection attempt → tool action blocked → human approval → evidence report → SIEM/audit trace.",
+    "Watch one attack move through the control loop: a prompt injection attempt, a blocked tool action, human approval, an evidence report and an audit trace.",
   alternates: { canonical: "/demo/guided" },
   openGraph: {
+    images: [{ url: "/og-card/default.png", width: 1200, height: 630, alt: "SoterAI, the AI security command layer" }],
     title: "2-Minute Guided Demo | SoterAI",
     description:
       "Injection → blocked tool call → human approval → evidence report → SIEM trace. The full agent-security loop in two minutes.",

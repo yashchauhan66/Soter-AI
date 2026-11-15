@@ -635,11 +635,11 @@ function matchPageContext(pathname: string): PageContext {
 }
 
 // ── Component ─────────────────────────────────────────────────────────────
-export function AiAssistant() {
+export function AiAssistant({ initialOpen = false }: { initialOpen?: boolean } = {}) {
   const pathname = usePathname();
   const pageContext = matchPageContext(pathname);
 
-  const [isOpen, setIsOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(initialOpen);
   // Lazy initializer: read persisted messages from localStorage on first render.
   // Using a lazy initializer (function passed to useState) avoids calling setState
   // inside an effect, which causes cascading renders and a build error.
@@ -950,6 +950,7 @@ export function AiAssistant() {
               <input
                 ref={inputRef}
                 type="text"
+                aria-label="Question for the AI assistant"
                 value={input}
                 onChange={(e) => setInput(e.target.value)}
                 placeholder="Ask me anything..."

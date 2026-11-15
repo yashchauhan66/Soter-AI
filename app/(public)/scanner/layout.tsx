@@ -6,6 +6,7 @@ export const metadata: Metadata = {
     "Scan any prompt for injection, jailbreak, PII leakage, and unsafe-output risk in seconds with SoterAI's free AI security scanner. No signup required.",
   alternates: { canonical: "/scanner" },
   openGraph: {
+    images: [{ url: "/og-card/default.png", width: 1200, height: 630, alt: "SoterAI, the AI security command layer" }],
     title: "Free AI Prompt Injection Scanner | SoterAI",
     description:
       "Test any prompt for injection, jailbreaks, and data-leak risk with SoterAI's free scanner.",

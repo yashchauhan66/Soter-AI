@@ -24,7 +24,7 @@ export default async function SignInPage({
       <div className="mx-auto w-full max-w-md">
         <div className="mb-8 flex items-center gap-2 font-semibold tracking-wide">
           <span className="rounded-md border border-cyan/25 bg-cyan/10 p-2 text-cyan"><ShieldCheck size={18} aria-hidden="true" /></span>
-          Soter<span className="text-cyan">AI</span>
+          <Link href="/" className="font-mono">Soter<span className="text-cyan">AI</span></Link>
         </div>
         <div className="card p-7">
           <p className="eyebrow">Sign in</p>
@@ -36,7 +36,7 @@ export default async function SignInPage({
             initialNotice={params.verified === "1" ? "Email verified successfully. You can sign in now." : undefined}
           />
           <p className="mt-6 text-sm text-slate-300">
-            New to SoterAI? <Link href="/signup" className="text-cyan hover:text-cyan/80">Create an account</Link>
+            New to SoterAI? <Link href="/signup" className="text-cyan underline underline-offset-2 hover:text-cyan/80">Create an account</Link>
           </p>
         </div>
         <p className="mt-6 text-xs leading-5 text-slate-300">

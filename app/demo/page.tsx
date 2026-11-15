@@ -2,6 +2,7 @@
 
 import { useEffect } from "react";
 import Link from "next/link";
+import { PLAYGROUND_CTA_LABEL } from "@/lib/marketing/cta";
 import { Film } from "lucide-react";
 import { DemoVideo } from "@/components/marketing/DemoVideo";
 import { VideoPlayer } from "@/components/marketing/VideoPlayer";
@@ -16,7 +17,7 @@ export default function DemoPage(){
         <p className="eyebrow text-center">Live walkthrough</p>
         <h2 className="mt-2 text-center text-3xl font-bold">See SoterAI in action</h2>
         <p className="mx-auto mt-3 max-w-2xl text-center text-slate-200">
-          Watch how SoterAI detects and blocks prompt injection, redacts India PII, stops secrets leakage, and more — all in under 50ms.
+          Watch how SoterAI flags prompt injection, redacts Indian identifiers such as Aadhaar-like numbers and PAN, and catches leaked secrets. The animation is a scripted illustration, not live engine output.
         </p>
 
         {/* Tabs: Animated Demo | Recorded Video */}
@@ -65,10 +66,10 @@ export default function DemoPage(){
               </div>
               <p className="text-lg font-semibold text-slate-200">Prefer hands-on?</p>
               <p className="mt-2 max-w-md text-sm text-slate-200">
-                Skip the video — try SoterAI yourself. Fire a prompt-injection or PII attack in the live playground and watch it get blocked in under 50ms.
+                Skip the video and try it yourself. Paste a prompt-injection or PII example into the live playground and see the verdict and how long the check took.
               </p>
               <div className="mt-6 flex flex-wrap items-center justify-center gap-3">
-                <Link href="/playground" className="button-primary inline-flex items-center gap-2">Open live playground</Link>
+                <Link href="/playground" className="button-primary inline-flex items-center gap-2">{PLAYGROUND_CTA_LABEL}</Link>
                 <button
                   onClick={() => document.getElementById("demo-animated")?.scrollIntoView({ behavior: "smooth", block: "start" })}
                   className="button-secondary inline-flex items-center gap-2"

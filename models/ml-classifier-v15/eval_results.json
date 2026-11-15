@@ -1,0 +1,127 @@
+{
+  "product_version": "v14",
+  "split": "group_aware_validation",
+  "base_model": "sentence-transformers/all-MiniLM-L6-v2",
+  "accuracy": 0.9774200887271073,
+  "f1_macro": 0.9658352961762612,
+  "f1_weighted": 0.9772815468022557,
+  "attack_recall": 0.9941510553530558,
+  "attack_precision": 0.996346954379407,
+  "benign_fpr": 0.007433016421780467,
+  "temperature": 1.0378932476634424,
+  "ece_calibration": 0.015370429080443764,
+  "per_label": {
+    "SAFE": {
+      "precision": 0.9881259679917398,
+      "recall": 0.9925669835782195,
+      "f1": 0.9903414970679545,
+      "support": 5785.0,
+      "threshold": 0.0,
+      "threshold_inert": false
+    },
+    "PROMPT_INJECTION": {
+      "precision": 0.9621867881548974,
+      "recall": 0.9639434048379736,
+      "f1": 0.9630642954856361,
+      "support": 2191.0,
+      "threshold": 0.26266148686408997,
+      "threshold_inert": false
+    },
+    "JAILBREAK": {
+      "precision": 0.96415770609319,
+      "recall": 0.9460726846424384,
+      "f1": 0.9550295857988166,
+      "support": 853.0,
+      "threshold": 0.055580031126737595,
+      "threshold_inert": true
+    },
+    "SYSTEM_PROMPT_LEAK_ATTEMPT": {
+      "precision": 0.9440507273405446,
+      "recall": 0.9697318007662835,
+      "f1": 0.9567189567189567,
+      "support": 2610.0,
+      "threshold": 0.5,
+      "threshold_inert": false
+    },
+    "PII": {
+      "precision": 0.9951690821256038,
+      "recall": 0.9951690821256038,
+      "f1": 0.9951690821256038,
+      "support": 1035.0,
+      "threshold": 0.05,
+      "threshold_inert": true
+    },
+    "SECRET": {
+      "precision": 0.9948586118251928,
+      "recall": 0.9974226804123711,
+      "f1": 0.9961389961389961,
+      "support": 776.0,
+      "threshold": 0.05,
+      "threshold_inert": true
+    },
+    "UNSAFE_OUTPUT": {
+      "precision": 0.9893355209187858,
+      "recall": 0.9934102141680395,
+      "f1": 0.9913686806411838,
+      "support": 1214.0,
+      "threshold": 0.05,
+      "threshold_inert": true
+    },
+    "RAG_POISONING": {
+      "precision": 0.9867924528301887,
+      "recall": 0.9703153988868275,
+      "f1": 0.9784845650140318,
+      "support": 539.0,
+      "threshold": 0.05,
+      "threshold_inert": true
+    },
+    "DATA_EXFILTRATION_ATTEMPT": {
+      "precision": 0.9887983706720977,
+      "recall": 0.9808080808080808,
+      "f1": 0.9847870182555781,
+      "support": 990.0,
+      "threshold": 0.05,
+      "threshold_inert": true
+    },
+    "TOOL_CALL_ABUSE": {
+      "precision": 0.9743589743589743,
+      "recall": 0.991304347826087,
+      "f1": 0.9827586206896551,
+      "support": 230.0,
+      "threshold": 0.05,
+      "threshold_inert": true
+    },
+    "ENCODING_OBFUSCATION": {
+      "precision": 0.9904306220095693,
+      "recall": 0.7992277992277992,
+      "f1": 0.8846153846153846,
+      "support": 259.0,
+      "threshold": 0.05,
+      "threshold_inert": true
+    },
+    "MULTI_TURN_ESCALATION": {
+      "precision": 0.8712871287128713,
+      "recall": 0.946236559139785,
+      "f1": 0.9072164948453608,
+      "support": 93.0,
+      "threshold": 0.05,
+      "threshold_inert": true
+    },
+    "MODEL_EXTRACTION": {
+      "precision": 0.9908814589665653,
+      "recall": 0.888283378746594,
+      "f1": 0.9367816091954023,
+      "support": 367.0,
+      "threshold": 0.05,
+      "threshold_inert": true
+    },
+    "TOXICITY_HARASSMENT": {
+      "precision": 0.9984399375975039,
+      "recall": 1.0,
+      "f1": 0.9992193598750976,
+      "support": 640.0,
+      "threshold": 0.05,
+      "threshold_inert": true
+    }
+  }
+}

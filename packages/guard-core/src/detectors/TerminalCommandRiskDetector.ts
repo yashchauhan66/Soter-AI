@@ -15,11 +15,12 @@ const DANGEROUS_COMMANDS: CommandPattern[] = [
     // ── Destructive operations ────────────────────────────────────────────
     { pattern: /\brm\s+(-[a-z]*r[a-z]*\s+)?(-[a-z]*f[a-z]*\s+)?(?:\/|~|\$HOME|\$\{HOME\}|\.\.)(?:\b|\s|$)/gi, type: "destructive_rm", label: "Destructive rm", score: 40, confidence: 0.95, message: "Potentially destructive rm command." },
     { pattern: /\brm\s+(-rf|-fr)\s+/gi, type: "force_delete", label: "Force delete", score: 35, confidence: 0.9, message: "Force recursive delete command." },
-    { pattern: /\bmkfs\b|\bdd\s+if=.*of=\/dev\//gi, type: "disk_wipe", label: "Disk wipe", score: 50, confidence: 0.95, message: "Disk formatting/wiping command." },
+    { pattern: /\b(?:Remove-Item|rmdir|del|erase)\b[^\n]*(?:-Recurse|-r|\/s)\b[^\n]*(?:-Force|-f|\/q)?/gi, type: "force_delete", label: "Force delete", score: 35, confidence: 0.9, message: "Force recursive delete command." },
+    { pattern: /\bmkfs\b|\bdd\s+if=.*of=\/dev\/|\b(?:Format-Volume|Clear-Disk)\b/gi, type: "disk_wipe", label: "Disk wipe", score: 50, confidence: 0.95, message: "Disk formatting/wiping command." },
     { pattern: /:\(\)\s*\{\s*:\s*\|\s*:\s*&\s*\}\s*;?\s*:/g, type: "fork_bomb", label: "Fork bomb", score: 50, confidence: 0.99, message: "Fork bomb detected." },
 
     // ── Remote code execution ─────────────────────────────────────────────
-    { pattern: /\b(?:curl|wget)\s+[^\n]*\|\s*(?:sudo\s+)?(?:bash|sh|zsh|python|perl|ruby)\b/gi, type: "remote_exec", label: "Remote code execution", score: 40, confidence: 0.95, message: "Piping remote content to shell." },
+    { pattern: /\b(?:curl|wget|iwr|Invoke-WebRequest|Invoke-RestMethod)\s+[^\n]*\|\s*(?:iex|Invoke-Expression|(?:sudo\s+)?(?:bash|sh|zsh|python|perl|ruby))\b/gi, type: "remote_exec", label: "Remote code execution", score: 40, confidence: 0.95, message: "Piping remote content to shell or expression evaluator." },
     { pattern: /\b(?:curl|wget)\s+[^\n]*\|\s*(?:sudo\s+)?tee\b/gi, type: "remote_write", label: "Remote write", score: 30, confidence: 0.85, message: "Writing remote content to file system." },
 
     // ── Reverse shells ────────────────────────────────────────────────────

@@ -28,11 +28,11 @@ export class VaultTaskTerminal implements vscode.Pseudoterminal {
             if (this.#controller.signal.aborted) this.runtime.stop(this.#job.snapshot().id);
             const { snapshot, output } = await this.#job.completion; code = snapshot.exitCode ?? 1;
             if (output.status === "COMPLETE" && !this.#controller.signal.aborted) {
-                if (output.stdout) this.#writes.fire(output.stdout.replace(/\n/g, "\r\n"));
-                if (output.stderr) this.#writes.fire(output.stderr.replace(/\n/g, "\r\n"));
+                if (output.stdout) { if (!this.#job.canRelease(output)) throw Error(); this.#writes.fire(output.stdout.replace(/\n/g, "\r\n")); }
+                if (output.stderr) { if (this.#controller.signal.aborted || !this.#job.canRelease(output)) throw Error(); this.#writes.fire(output.stderr.replace(/\n/g, "\r\n")); }
             } else this.#writes.fire(WITHHELD);
         } catch { this.#writes.fire(WITHHELD); }
-        finally { this.#finished = true; if (this.#waiting) clearTimeout(this.#waiting); this.#closes.fire(code); this.#writes.dispose(); this.#closes.dispose(); }
+        finally { this.#finished = true; if (this.#waiting) clearTimeout(this.#waiting); this.#job?.dispose(); this.#closes.fire(code); this.#writes.dispose(); this.#closes.dispose(); }
     }
 }
 interface Request { seq: number; type: "request"; command: string; arguments?: Record<string, unknown> }
@@ -98,12 +98,12 @@ export class VaultDebugAdapter implements vscode.DebugAdapter {
             if (!this.#disposed) this.#event("process", { name: "Vault app (lifecycle only)", systemProcessId: this.#job.snapshot().pid, isLocalProcess: true, startMethod: "launch" });
             const { snapshot, output } = await this.#job.completion; code = snapshot.exitCode ?? 1;
             if (!this.#disposed && output.status === "COMPLETE" && !this.#controller.signal.aborted) {
-                if (output.stdout) this.#event("output", { category: "stdout", output: output.stdout });
-                if (output.stderr) this.#event("output", { category: "stderr", output: output.stderr });
+                if (output.stdout) { if (!this.#job.canRelease(output)) throw Error(); this.#event("output", { category: "stdout", output: output.stdout }); }
+                if (output.stderr) { if (this.#disposed || this.#controller.signal.aborted || !this.#job.canRelease(output)) throw Error(); this.#event("output", { category: "stderr", output: output.stderr }); }
             }
         } catch { /* No raw exception, environment or app output fallback. */ }
         finally {
-            this.#finished = true; if (this.#waiting) clearTimeout(this.#waiting);
+            this.#finished = true; if (this.#waiting) clearTimeout(this.#waiting); this.#job?.dispose();
             if (!this.#disposed) { this.#event("exited", { exitCode: code }); this.#event("terminated"); }
             if (this.#disposed) this.#events.dispose();
         }

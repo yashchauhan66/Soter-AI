@@ -40,17 +40,21 @@ concurrency:
 env:
   NODE_VERSION: "22"
 
+defaults:
+  run:
+    shell: bash
+
 jobs:
   # ───────────────────────────────────────────────────────────────────────────
   # Build #1 — canonical build, tests, provenance + checksums
   # ───────────────────────────────────────────────────────────────────────────
   build-primary:
     name: build (primary) + provenance
-    runs-on: ubuntu-latest
+    runs-on: windows-latest
     timeout-minutes: 25
     outputs:
-      vsix-sha256: ${{ steps.hash.outputs.sha256 }}
-      version: ${{ steps.meta.outputs.version }}
+      vsix-sha256: ${{ steps.release.outputs.artifact_sha256 }}
+      version: ${{ steps.release.outputs.version }}
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -58,31 +62,40 @@ jobs:
           node-version: ${{ env.NODE_VERSION }}
           cache: npm
       - run: npm ci
-
+      - run: npm ci --prefix tools/soterai-lite-packager
+      - run: npm --prefix packages/guard-core run build
       - name: Typecheck extension
-        run: npm --prefix packages/vscode-extension run typecheck
+        run: npm --prefix packages/soterai-lite run typecheck
       - name: Test extension
-        run: npm --prefix packages/vscode-extension test
+        run: npm --prefix packages/soterai-lite test
       - name: Test guard-core
         run: npm --prefix packages/guard-core test
+      - name: Test Lite release receipts and package checks
+        run: node --test packages/soterai-lite/scripts/__tests__/*.test.cjs
 
       - name: Package VSIX
-        run: npm run vscode:package
+        run: |
+          mkdir -p artifacts
+          node packages/soterai-lite/scripts/package.cjs --receipt-out artifacts/lite-primary-pointer.json
       - name: Verify VSIX contents and hash
-        run: npm --prefix packages/vscode-extension run verify:vsix
+        id: release
+        run: node packages/soterai-lite/scripts/release-artifact.cjs resolve --pointer artifacts/lite-primary-pointer.json --github-output "$GITHUB_OUTPUT"
+      - name: Exercise the packaged broker with synthetic loopback requests
+        run: node packages/soterai-lite/scripts/smoke-broker.cjs --pointer artifacts/lite-primary-pointer.json --evidence-out artifacts/lite-primary-smoke
 
       - name: Read version
         id: meta
-        run: echo "version=$(node -p "require('./packages/vscode-extension/package.json').version")" >> "$GITHUB_OUTPUT"
+        run: echo "version=${{ steps.release.outputs.version }}" >> "$GITHUB_OUTPUT"
 
       - name: Generate provenance + checksums
-        run: npm run release:vscode:provenance
+        run: npm run release:vscode:provenance -- --pointer artifacts/lite-primary-pointer.json
 
       - name: Record VSIX hash
         id: hash
-        working-directory: packages/vscode-extension
+        env:
+          VERIFIED_VSIX: ${{ steps.release.outputs.artifact_path }}
         run: |
-          FILE="soterai-ide-guard-${{ steps.meta.outputs.version }}.vsix"
+          FILE="$VERIFIED_VSIX"
           SHA=$(sha256sum "$FILE" | cut -d' ' -f1)
           echo "sha256=$SHA" >> "$GITHUB_OUTPUT"
           echo "Primary VSIX sha256: $SHA"
@@ -92,12 +105,10 @@ jobs:
         with:
           name: signed-release-primary
           path: |
-            packages/vscode-extension/*.vsix
-            reports/release-provenance-attestation.json
-            reports/release-provenance-attestation.md
-            reports/vscode-release-checksums.sha256
-            artifacts/security/vscode-extension.cdx.json
-            artifacts/security/vsix-integrity.json
+            artifacts/lite-primary-pointer.json
+            artifacts/lite-primary-smoke/result.json
+            ${{ steps.release.outputs.artifact_path }}
+            ${{ steps.release.outputs.build_attempt_path }}
           if-no-files-found: error
 
   # ───────────────────────────────────────────────────────────────────────────
@@ -105,7 +116,7 @@ jobs:
   # ───────────────────────────────────────────────────────────────────────────
   build-repro:
     name: build (reproducibility check)
-    runs-on: ubuntu-latest
+    runs-on: windows-latest
     timeout-minutes: 25
     needs: [build-primary]
     outputs:
@@ -117,14 +128,23 @@ jobs:
           node-version: ${{ env.NODE_VERSION }}
           cache: npm
       - run: npm ci
+      - run: npm ci --prefix tools/soterai-lite-packager
       - name: Package VSIX (second build)
-        run: npm run vscode:package
+        run: |
+          mkdir -p artifacts
+          node packages/soterai-lite/scripts/package.cjs --receipt-out artifacts/lite-repro-pointer.json
       - name: Verify second VSIX contents and hash
-        run: npm --prefix packages/vscode-extension run verify:vsix
+        id: release
+        run: node packages/soterai-lite/scripts/release-artifact.cjs resolve --pointer artifacts/lite-repro-pointer.json --github-output "$GITHUB_OUTPUT"
       - name: Compare hash to primary
         id: compare
+        env:
+          VERIFIED_VSIX: ${{ steps.release.outputs.artifact_path }}
+          VERIFIED_VERSION: ${{ steps.release.outputs.version }}
+          PRIMARY_VERSION: ${{ needs.build-primary.outputs.version }}
         run: |
-          FILE="packages/vscode-extension/soterai-ide-guard-${{ needs.build-primary.outputs.version }}.vsix"
+          test "$VERIFIED_VERSION" = "$PRIMARY_VERSION"
+          FILE="$VERIFIED_VSIX"
           SHA=$(sha256sum "$FILE" | cut -d' ' -f1)
           echo "Repro VSIX sha256:   $SHA"
           echo "Primary VSIX sha256: ${{ needs.build-primary.outputs.vsix-sha256 }}"
@@ -141,7 +161,7 @@ jobs:
   # ───────────────────────────────────────────────────────────────────────────
   sign-and-finalize:
     name: sign (if cert present) + finalize provenance
-    runs-on: ubuntu-latest
+    runs-on: windows-latest
     timeout-minutes: 20
     needs: [build-primary, build-repro]
     steps:
@@ -151,29 +171,34 @@ jobs:
           node-version: ${{ env.NODE_VERSION }}
           cache: npm
       - run: npm ci
+      - run: npm ci --prefix tools/soterai-lite-packager
       - name: Download primary artifacts
         uses: actions/download-artifact@v4
         with:
           name: signed-release-primary
-          path: incoming
+          path: .
+
+      - name: Revalidate transferred Lite artifact and receipts
+        id: release
+        run: node packages/soterai-lite/scripts/release-artifact.cjs resolve --pointer artifacts/lite-primary-pointer.json --github-output "$GITHUB_OUTPUT"
 
       - name: Stage primary release evidence
         shell: bash
+        env:
+          PRIMARY_SHA: ${{ needs.build-primary.outputs.vsix-sha256 }}
+          VERIFIED_SHA: ${{ steps.release.outputs.artifact_sha256 }}
+          BUILD_ATTEMPT: ${{ steps.release.outputs.build_attempt_path }}
+          SBOM_PATH: ${{ steps.release.outputs.sbom_path }}
+          INVENTORY_PATH: ${{ steps.release.outputs.inventory_path }}
         run: |
           set -euo pipefail
+          test "$PRIMARY_SHA" = "$VERIFIED_SHA"
           mkdir -p reports artifacts/security signing-evidence
-          copy_one() {
-            local pattern="$1" destination="$2"
-            local source
-            source=$(find incoming -type f -path "$pattern" -print -quit)
-            test -n "$source" || { echo "Missing downloaded artifact matching $pattern" >&2; exit 1; }
-            cp "$source" "$destination"
-          }
-          copy_one '*/reports/release-provenance-attestation.json' reports/release-provenance-attestation.json
-          copy_one '*/reports/release-provenance-attestation.md' reports/release-provenance-attestation.md
-          copy_one '*/reports/vscode-release-checksums.sha256' reports/vscode-release-checksums.sha256
-          copy_one '*/artifacts/security/vscode-extension.cdx.json' artifacts/security/vscode-extension.cdx.json
-          copy_one '*/artifacts/security/vsix-integrity.json' artifacts/security/vsix-integrity.json
+          cp -- "$BUILD_ATTEMPT/release-provenance-attestation.json" reports/release-provenance-attestation.json
+          cp -- "$BUILD_ATTEMPT/release-provenance-attestation.md" reports/release-provenance-attestation.md
+          cp -- "$BUILD_ATTEMPT/vscode-release-checksums.sha256" reports/vscode-release-checksums.sha256
+          cp -- "$SBOM_PATH" artifacts/security/vscode-extension.cdx.json
+          cp -- "$INVENTORY_PATH" artifacts/security/vsix-integrity.json
 
       - name: Detect signing capability
         id: cap
@@ -188,19 +213,19 @@ jobs:
         id: sign
         if: steps.cap.outputs.can_sign == 'true'
         env:
+          VSIX: ${{ steps.release.outputs.artifact_path }}
           CERT_B64: ${{ secrets.VSIX_SIGNING_CERT_BASE64 }}
           CERT_PW: ${{ secrets.VSIX_SIGNING_CERT_PASSWORD }}
         run: |
           set -euo pipefail
-          VSIX=$(find incoming -type f -name '*.vsix' -print -quit)
-          test -n "$VSIX" || { echo "Downloaded primary VSIX not found" >&2; exit 1; }
-          echo "$CERT_B64" | base64 -d > /tmp/signing-cert.pfx
-          npx @vscode/vsce generate-manifest -i "$VSIX" -o signing-evidence/manifest.json
-          npx @vscode/vsce sign signing-evidence/manifest.json /tmp/signing-cert.pfx --pfxPassword "$CERT_PW" -o signing-evidence/signature.p7s
+          node tools/soterai-lite-packager/node_modules/@vscode/vsce/vsce generate-manifest -i "$VSIX" -o signing-evidence/manifest.json
+          pwsh -NoProfile -NonInteractive -File packages/soterai-lite/scripts/sign-manifest.ps1 -ManifestPath signing-evidence/manifest.json -SignaturePath signing-evidence/signature.p7s
           # Verify the produced signature against the artifact. Non-zero exits fail the job.
-          npx @vscode/vsce verify-signature -i "$VSIX" -m signing-evidence/manifest.json -s signing-evidence/signature.p7s
-          rm -f /tmp/signing-cert.pfx
+          node tools/soterai-lite-packager/node_modules/@vscode/vsce/vsce verify-signature -i "$VSIX" -m signing-evidence/manifest.json -s signing-evidence/signature.p7s
           echo "verified=true" >> "$GITHUB_OUTPUT"
+
+      - name: Verify the artifact is unchanged after signing
+        run: node packages/soterai-lite/scripts/release-artifact.cjs resolve --pointer artifacts/lite-primary-pointer.json
 
       - name: Finalize provenance (honest flags)
         env:

@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { PLAYGROUND_CTA_LABEL } from "@/lib/marketing/cta";
 import { ArrowRight, ArrowUpRight, CheckCircle2, ShieldCheck } from "lucide-react";
 import { JsonLd } from "@/components/seo/JsonLd";
 import { buildMetadata, faqPageLd, softwareApplicationLd } from "@/lib/seo/metadata";
@@ -16,7 +17,7 @@ const JS_SDK_URL = "https://www.npmjs.com/package/@soterai/core";
 export const metadata: Metadata = buildMetadata({
   title: "AI Security for VS Code, IDEs, Browsers and n8n",
   description:
-    "One local security layer for VS Code, Cursor, Windsurf, Chrome, Edge, and n8n: stop secret leaks, prompt injection, and risky MCP tools before AI uses them.",
+    "Where SoterAI runs: VS Code, Chrome, Edge and n8n. Find secret leaks and prompt injection, and review risky MCP tools before AI uses them. Beta.",
   path: "/ai-platform-security",
   keywords: [
     "ai security platforms",
@@ -149,8 +150,8 @@ const USEFUL = [
     body: "The AI Memory Inspector records what context was shared per session, so exposure can be reviewed and credentials rotated quickly.",
   },
   {
-    title: "Fast enough for real work",
-    body: "Local analyzer checks complete in under 50ms at p95 on CPU, so scanning happens inline instead of becoming a separate review step.",
+    title: "Scanning runs on your machine",
+    body: "The extension scans in your editor before text reaches a model. We have published timing for the server engine on the benchmarks page, but not yet for the extension itself.",
   },
   {
     title: "Free where developers live",
@@ -273,7 +274,7 @@ export default function Page() {
             Install the IDE extension <ArrowRight size={16} aria-hidden="true" />
           </a>
           <Link href="/playground" className="button-secondary">
-            Try the playground first
+            {PLAYGROUND_CTA_LABEL}
           </Link>
         </div>
       </section>

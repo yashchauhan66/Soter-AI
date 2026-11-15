@@ -1,0 +1,100 @@
+import { types, TextDecoder } from "node:util";
+import { SECRET_PATTERN_SNAPSHOT } from "../../../guard-core/src/detectors/SecretDetector";
+
+export const PSREADLINE_HISTORY_MODULE_VERSION = "2.0.0";
+const marker = "# SoterAI Lite PSReadLine history v1 ";
+const bufferLength = Object.getOwnPropertyDescriptor(Object.getPrototypeOf(Uint8Array.prototype), "byteLength")!.get!;
+const quote = (value: string) => "'" + value.replaceAll("'", "''") + "'";
+function options(value: unknown): string | undefined {
+    if (!value || typeof value !== "object" || types.isProxy(value) || Array.isArray(value) || Object.getPrototypeOf(value) !== Object.prototype) return;
+    const descriptors = Object.getOwnPropertyDescriptors(value);
+    if (Object.keys(descriptors).sort().join(",") !== "enabled,generation" || Object.values(descriptors).some(row => !Object.hasOwn(row, "value"))) return;
+    const enabled = descriptors.enabled.value, generation = descriptors.generation.value;
+    if (enabled !== true || typeof generation !== "string" || !/^[a-f0-9]{8}-[a-f0-9]{4}-4[a-f0-9]{3}-[89ab][a-f0-9]{3}-[a-f0-9]{12}$/.test(generation)) return;
+    return generation;
+}
+function profileText(value: unknown): string | undefined {
+    if (!types.isUint8Array(value) || !Buffer.isBuffer(value) || bufferLength.call(value) > 65536) return;
+    const copy = new Uint8Array(bufferLength.call(value)); Uint8Array.prototype.set.call(copy, value);
+    return new TextDecoder("utf-8", { fatal: true, ignoreBOM: true }).decode(copy);
+}
+
+/** Pure conservative builder. It does not read a profile/history, install a
+ * callback, grant ownership, or claim complete canonical matcher equivalence. */
+export function buildPowerShellHistoryText(value: unknown): string | undefined {
+    try {
+        const generation = options(value); if (!generation) return;
+        if (!SECRET_PATTERN_SNAPSHOT.length || SECRET_PATTERN_SNAPSHOT.length > 128) return;
+        const patterns: string[] = [];
+        for (const spec of SECRET_PATTERN_SNAPSHOT) {
+            if (!/^(?:g|gi)$/.test(spec.flags) || spec.source.length > 4096 || /[^\x20-\x7e]/.test(spec.source)
+                || /\\[pPuU]|\(\?<|\(\?\(/.test(spec.source)) return;
+            // .NET ECMAScript preserves ASCII JS word/space classes. IgnoreCase
+            // is derived from each original rule; culture never changes it.
+            patterns.push("        [regex]::new(" + quote(spec.source) + ",[Text.RegularExpressions.RegexOptions]" + (768 + (spec.flags.includes("i") ? 1 : 0)) + ",[TimeSpan]::FromMilliseconds(20))");
+        }
+        return marker + generation + "\n" + `# Uses conservative credential-shape history exclusion; public history stays enabled.
+# Does not inspect existing history or dynamically load registered vault values.
+# Unknown short values/encodings and later handler replacements remain outside this hook.
+& {
+    $taskModule = @(Get-Module -Name PSReadLine)
+    if ($PSVersionTable.PSVersion.Major -ne 5 -or $PSVersionTable.PSVersion.Minor -ne 1 -or $taskModule.Count -ne 1 -or $taskModule[0].Version.ToString() -cne ${quote(PSREADLINE_HISTORY_MODULE_VERSION)}) { throw 'SoterAI history hook unavailable for this runtime.' }
+    $taskPrior = (Get-PSReadLineOption).AddToHistoryHandler
+    $taskPatterns = @(
+${patterns.join("\n")}
+    )
+    $taskCallback = {
+        param([string]$line)
+        try {
+            if ([string]::IsNullOrWhiteSpace($line) -or $line.Length -gt 4096 -or $line -match '[\\x00-\\x08\\x0b\\x0c\\x0e-\\x1f\\x7f]') { return [Microsoft.PowerShell.AddToHistoryOption]::SkipAdding }
+            $taskClock = [Diagnostics.Stopwatch]::StartNew()
+            foreach ($taskPattern in $taskPatterns) {
+                if ($taskClock.ElapsedMilliseconds -ge 250 -or $taskPattern.IsMatch($line)) { return [Microsoft.PowerShell.AddToHistoryOption]::SkipAdding }
+            }
+            if ($taskClock.ElapsedMilliseconds -ge 250) { return [Microsoft.PowerShell.AddToHistoryOption]::SkipAdding }
+            if ($null -eq $taskPrior) { return [Microsoft.PowerShell.AddToHistoryOption]::MemoryAndFile }
+            $taskPrevious = $taskPrior.Invoke($line)
+            if ($taskPrevious -is [bool]) {
+                if ($taskPrevious) { return [Microsoft.PowerShell.AddToHistoryOption]::MemoryAndFile }
+                return [Microsoft.PowerShell.AddToHistoryOption]::SkipAdding
+            }
+            if ($taskPrevious -is [Microsoft.PowerShell.AddToHistoryOption]) {
+                if ($taskPrevious -eq [Microsoft.PowerShell.AddToHistoryOption]::MemoryAndFile -or $taskPrevious -eq [Microsoft.PowerShell.AddToHistoryOption]::MemoryOnly -or $taskPrevious -eq [Microsoft.PowerShell.AddToHistoryOption]::SkipAdding) { return $taskPrevious }
+                return [Microsoft.PowerShell.AddToHistoryOption]::SkipAdding
+            }
+            if ($taskPrevious -is [string]) {
+                switch -CaseSensitive ($taskPrevious) {
+                    'MemoryAndFile' { return [Microsoft.PowerShell.AddToHistoryOption]::MemoryAndFile }
+                    'MemoryOnly' { return [Microsoft.PowerShell.AddToHistoryOption]::MemoryOnly }
+                    'SkipAdding' { return [Microsoft.PowerShell.AddToHistoryOption]::SkipAdding }
+                }
+            }
+            return [Microsoft.PowerShell.AddToHistoryOption]::SkipAdding
+        } catch { return [Microsoft.PowerShell.AddToHistoryOption]::SkipAdding }
+    }.GetNewClosure()
+    Set-PSReadLineOption -AddToHistoryHandler $taskCallback
+}
+# End SoterAI Lite PSReadLine history v1
+`;
+    } catch { return; }
+}
+
+/** Only finite inert line-comment profiles may be automatically proposed.
+ * Arbitrary existing PowerShell/signed files require a different reviewed flow. */
+export function supportedHistoryProfile(before: Buffer | undefined): boolean {
+    if (before === undefined) return true;
+    try {
+        const source = profileText(before); if (source === undefined || /[\x00-\x08\x0b\x0c\x0e-\x1f\x7f-\x9f\p{Cf}]/u.test(source.replace(/^\ufeff/, ""))) return false;
+        const text = source.replace(/^\ufeff/, "");
+        if (text.toLowerCase().includes(marker.toLowerCase()) || /^[ \t]*#\s*(?:requires\b|SIG\s*#)/im.test(text) || /\r(?!\n)/.test(text)) return false;
+        return text.split(/\r?\n/).every(line => /^[ \t]*(?:#.*)?$/.test(line));
+    } catch { return false; }
+}
+
+export function buildHistoryProfile(before: Buffer | undefined, value: unknown): Buffer | undefined {
+    try {
+        if (!supportedHistoryProfile(before)) return;
+        const script = buildPowerShellHistoryText(value); if (!script) return;
+        return Buffer.concat([before ?? Buffer.alloc(0), Buffer.from("\n" + script, "utf8")]);
+    } catch { return; }
+}

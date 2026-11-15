@@ -1,263 +1,69 @@
-import type { Metadata } from "next";
-import Link from "next/link";
-import {
-  ArrowRight,
-  ArrowUpRight,
-  Chrome,
-  Eye,
-  EyeOff,
-  Globe,
-  Lock,
-  MonitorSmartphone,
-  ScanSearch,
-  ShieldCheck,
-  Sparkles,
-  Workflow,
-} from "lucide-react";
+import type { Metadata } from 'next';
+import Link from 'next/link';
+import { Callout, DataTable, SaLinkButton, StatusBadge } from '@/components/sa/primitives';
+import { SaRoot } from '@/components/sa/SaRoot';
+import { buildMetadata } from '@/lib/seo/metadata';
+import { STATUS_MEANING, SURFACES } from '@/lib/sa/surfaces';
 
-export const metadata: Metadata = {
-  title: { absolute: "SoterAI Browser Guard — Secure AI Browsing for Chrome & Edge" },
-  description:
-    "Install SoterAI Browser Guard for Chrome and Microsoft Edge: real-time prompt scanning, secret & PII redaction and org policy enforcement for 20+ AI tools.",
-  alternates: { canonical: "/extensions/browser" },
-  openGraph: {
-    title: "SoterAI Browser Guard — Secure AI Browsing",
-    description:
-      "Real-time AI protection in your browser. Scan prompts, redact secrets and PII, and enforce org policy across ChatGPT, Claude, Gemini, Copilot, and more.",
-    url: "/extensions/browser",
-    type: "website",
-  },
-};
+const browserSurface = SURFACES.find((surface) => surface.href === '/extensions/browser')!;
 
+export const metadata: Metadata = buildMetadata({
+  title: 'Browser Guard for Chrome and Edge',
+  description: 'Browser Guard (Beta) checks supplied AI text in Chrome and Edge. Review supported pages, redaction, privacy settings and coverage limits before use.',
+  path: '/extensions/browser',
+});
 const CAPABILITIES = [
-  {
-    icon: ScanSearch,
-    title: "Real-time prompt scanning",
-    copy: "Every prompt is inspected locally for injection, jailbreaks, and data leakage before it reaches the AI model.",
-  },
-  {
-    icon: EyeOff,
-    title: "Automatic redaction",
-    copy: "Secrets, API keys, and PII like Aadhaar and PAN are redacted in-place, with a safe rewrite you can copy.",
-  },
-  {
-    icon: Lock,
-    title: "Policy enforcement",
-    copy: "Organization policies are cached locally and enforced even offline, with approval workflows for risky sends.",
-  },
-  {
-    icon: Eye,
-    title: "Shadow AI discovery",
-    copy: "Detect unapproved AI tools and track data lineage so you always know where sensitive context flows.",
-  },
+  { title: 'Prompt scanning', copy: 'Review recognized injection, jailbreak and sensitive-data patterns on supported AI pages. Checks depend on the page adapter and the text it can inspect.' },
+  { title: 'Redaction preview', copy: 'Review detected secrets and PII, then use the available cleaned text. Detection can miss sensitive values or flag benign text.' },
+  { title: 'Policy status', copy: 'Inspect cached policy and decision state in the side panel. Test the approval and send paths in your own configuration.' },
+  { title: 'AI-use visibility', copy: 'Review supported AI activity and unapproved-tool signals. This is visibility within extension coverage, not a record of every application or browser action.' },
 ];
-
 const PRIVACY_PROOF = [
-  { label: "Raw prompt to SoterAI", value: "No by default" },
-  { label: "Scanning location", value: "In your browser first" },
-  { label: "Stored locally", value: "Redacted preview, safe rewrite, hashes, policy cache" },
-  { label: "Backend audit event", value: "Metadata, decision, risk score, redacted preview" },
+  { label: 'Raw prompt to SoterAI', value: 'Not sent by default' },
+  { label: 'Scanning location', value: 'In your browser first' },
+  { label: 'Stored locally', value: 'Redacted preview, safe rewrite, hashes, policy cache' },
+  { label: 'Backend audit event', value: 'Metadata, decision, risk score, redacted preview' },
 ];
 
 export default function BrowserExtensionPage() {
   return (
-    <main className="bg-white">
-      {/* ── Hero ── */}
-      <section className="border-b border-slate-800 bg-slate-950">
-        <div className="container-page py-14 sm:py-20">
-          <nav className="flex items-center gap-2 text-xs font-medium text-slate-300" aria-label="Breadcrumb">
-            <Link href="/" className="transition hover:text-slate-300">SoterAI</Link>
-            <span aria-hidden="true">/</span>
-            <span className="text-slate-300">Browser Guard</span>
-          </nav>
+    <SaRoot>
+      <main className="sa-page" style={{ paddingBlock: 'var(--sa-space-7) var(--sa-space-9)' }}>
+        <nav className="sa-label" aria-label="Breadcrumb" style={{ marginBottom: 'var(--sa-space-5)' }}><Link href="/" className="sa-link">SoterAI</Link> / Browser Guard</nav>
+        <header>
+          <p className="sa-eyebrow">Browser Guard <StatusBadge status={browserSurface.status} /> · Local-first</p>
+          <h1 className="sa-h1" style={{ marginTop: 'var(--sa-space-3)' }}>Check AI text before you send it.</h1>
+          <p className="sa-lede" style={{ marginTop: 'var(--sa-space-4)' }}>Browser Guard adds prompt checks, redaction previews and policy visibility on supported AI pages. Runtime testing is for Chrome and Edge only. It is not universal interception of every AI conversation.</p>
+          <div className="sa-hero__actions"><SaLinkButton href="/extensions/browser/chrome" large>Install for Chrome →</SaLinkButton><SaLinkButton href="/extensions/browser/edge" variant="secondary">Install for Microsoft Edge</SaLinkButton></div>
+          <p className="sa-body sa-muted" style={{ marginTop: 'var(--sa-space-4)' }}>{STATUS_MEANING.find((item) => item.status === browserSurface.status)?.meaning}</p>
+        </header>
 
-          <div className="mt-8 max-w-4xl">
-            <div className="flex flex-wrap items-center gap-2 text-xs font-semibold">
-              <span className="border border-cyan/30 bg-cyan/10 px-2 py-1 text-cyan">Local-first scanning</span>
-              <span className="border border-slate-700 bg-slate-900 px-2 py-1 text-slate-300">Chrome & Edge</span>
-              <span className="border border-emerald-400/30 bg-emerald-400/10 px-2 py-1 text-emerald-300">Free to start</span>
-            </div>
-            <h1 className="mt-5 text-3xl font-bold leading-tight text-slate-100 sm:text-4xl lg:text-5xl">
-              Guard every AI conversation in your browser
-            </h1>
-            <p className="mt-5 max-w-3xl text-base leading-7 text-slate-300 sm:text-lg sm:leading-8">
-              SoterAI Browser Guard protects you while you use ChatGPT, Claude, Gemini, Copilot, and 20+ other
-              AI tools. Prompts are scanned locally for injection and data leakage, secrets and PII are redacted
-              before they leave your machine, and your organization's policy is enforced — even offline.
-            </p>
-            <div className="mt-7 flex flex-col gap-3 sm:flex-row">
-              <Link href="/extensions/browser/chrome" className="button-primary gap-2 text-sm">
-                <Chrome className="h-4 w-4" aria-hidden="true" /> Install for Chrome <ArrowRight className="h-4 w-4" aria-hidden="true" />
-              </Link>
-              <Link href="/extensions/browser/edge" className="button-secondary gap-2 text-sm">
-                <Globe className="h-4 w-4" aria-hidden="true" /> Install for Microsoft Edge
-              </Link>
-            </div>
-          </div>
+        <section className="sa-section" aria-labelledby="browsers">
+          <div className="sa-section__head"><h2 className="sa-h2" id="browsers">Choose your browser</h2><p className="sa-body">Open the install guide and store listing for your browser. Review permissions and use non-sensitive content for your first check.</p></div>
+          <ul className="sa-rules sa-rules--2">
+            <li><Link href="/extensions/browser/chrome" className="sa-link" style={{ display: 'block', textDecoration: 'none' }}><h3>Google Chrome</h3><p className="sa-label">Chrome Web Store</p><p className="sa-body" style={{ marginTop: 'var(--sa-space-3)' }}>Use the Chrome install guide for store installation or the unpacked deployment option.</p><p className="sa-label" style={{ marginTop: 'var(--sa-space-4)' }}>Install for Chrome →</p></Link></li>
+            <li><Link href="/extensions/browser/edge" className="sa-link" style={{ display: 'block', textDecoration: 'none' }}><h3>Microsoft Edge</h3><p className="sa-label">Edge Add-ons</p><p className="sa-body" style={{ marginTop: 'var(--sa-space-3)' }}>Use the Edge install guide for store installation or the unpacked deployment option.</p><p className="sa-label" style={{ marginTop: 'var(--sa-space-4)' }}>Install for Edge →</p></Link></li>
+          </ul>
+        </section>
 
-          <div className="mt-10 grid border border-slate-800 bg-slate-950 sm:grid-cols-3">
-            <div className="flex items-start gap-3 border-b border-slate-800 p-4 sm:border-b-0 sm:border-r">
-              <ShieldCheck className="mt-0.5 h-4 w-4 shrink-0 text-lime" aria-hidden="true" />
-              <div>
-                <p className="text-sm font-semibold text-slate-100">20+ AI tools covered</p>
-                <p className="mt-1 text-xs leading-5 text-slate-300">ChatGPT, Claude, Gemini, Copilot & more</p>
-              </div>
-            </div>
-            <div className="flex items-start gap-3 border-b border-slate-800 p-4 sm:border-b-0 sm:border-r">
-              <Lock className="mt-0.5 h-4 w-4 shrink-0 text-cyan" aria-hidden="true" />
-              <div>
-                <p className="text-sm font-semibold text-slate-100">Raw prompts stay local</p>
-                <p className="mt-1 text-xs leading-5 text-slate-300">No raw text sent to SoterAI by default</p>
-              </div>
-            </div>
-            <div className="flex items-start gap-3 p-4">
-              <MonitorSmartphone className="mt-0.5 h-4 w-4 shrink-0 text-cyan" aria-hidden="true" />
-              <div>
-                <p className="text-sm font-semibold text-slate-100">Side panel control plane</p>
-                <p className="mt-1 text-xs leading-5 text-slate-300">Scan history, policy status, self-test</p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
+        <section className="sa-section" aria-labelledby="checks">
+          <div className="sa-section__head"><h2 className="sa-h2" id="checks">Checks and controls you can inspect</h2><p className="sa-body">Use the side panel to review scan history, policy status and self-test results. Check the actual send path on each AI page you plan to use.</p></div>
+          <ul className="sa-rules sa-rules--2">{CAPABILITIES.map((item) => <li key={item.title}><h3>{item.title}</h3><p className="sa-body">{item.copy}</p></li>)}</ul>
+          <div style={{ marginTop: 'var(--sa-space-5)' }}><Callout kind="limit" title="Limited browser and page coverage">{browserSurface.gap} Page changes, unsupported tools and paths that bypass the extension can leave text unchecked. A scan result does not guarantee that a prompt is harmless or that a secret cannot leave the machine.</Callout></div>
+        </section>
 
-      {/* ── Choose browser ── */}
-      <section className="container-page py-14 sm:py-20">
-        <div className="max-w-3xl">
-          <p className="eyebrow">Pick your browser</p>
-          <h2 className="mt-3 text-2xl font-bold text-slate-100 sm:text-3xl">One extension, both browsers</h2>
-          <p className="mt-3 text-sm leading-6 text-slate-200 sm:text-base">
-            The same guarded experience ships for Chrome and Microsoft Edge. Choose your browser to open the
-            install guide and store listing.
-          </p>
-        </div>
+        <section className="sa-section" aria-labelledby="privacy">
+          <div className="sa-section__head"><h2 className="sa-h2" id="privacy">What does SoterAI receive by default?</h2><p className="sa-body">The extension starts with browser-local scanning and avoids retaining raw prompt text by default. Review your policy and any optional cloud settings before handling sensitive data.</p></div>
+          <DataTable caption="Browser Guard default data boundary" columns={[{ key: 'label', header: 'Data path' }, { key: 'value', header: 'Default behavior' }]} rows={PRIVACY_PROOF} />
+          <p className="sa-body" style={{ marginTop: 'var(--sa-space-5)' }}>This describes the extension&apos;s SoterAI data path, not the AI provider&apos;s. Sending a prompt to an AI tool still shares it with that tool. The extension does not replace the provider&apos;s privacy controls or your access policy.</p>
+          <div className="sa-hero__actions"><SaLinkButton href="/privacy" variant="secondary">Read privacy policy ↗</SaLinkButton></div>
+        </section>
 
-        <div className="mt-8 grid gap-6 md:grid-cols-2">
-          <Link
-            href="/extensions/browser/chrome"
-            className="group flex flex-col rounded-2xl border border-slate-800 bg-white p-6 transition-all duration-200 hover:border-cyan/45 hover:shadow-lg hover:shadow-cyan/5"
-          >
-            <div className="flex items-center gap-4">
-              <span className="flex h-12 w-12 items-center justify-center rounded-xl bg-cyan/10 text-cyan">
-                <Chrome className="h-6 w-6" aria-hidden="true" />
-              </span>
-              <div>
-                <h3 className="text-lg font-semibold text-slate-100 group-hover:text-cyan">Google Chrome</h3>
-                <p className="text-xs text-slate-300">Chrome Web Store</p>
-              </div>
-            </div>
-            <p className="mt-4 flex-1 text-sm leading-6 text-slate-300">
-              Install from the Chrome Web Store or load the unpacked extension for enterprise deployment.
-            </p>
-            <span className="mt-5 inline-flex items-center gap-1.5 text-sm font-semibold text-cyan">
-              Install for Chrome <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" aria-hidden="true" />
-            </span>
-          </Link>
-
-          <Link
-            href="/extensions/browser/edge"
-            className="group flex flex-col rounded-2xl border border-slate-800 bg-white p-6 transition-all duration-200 hover:border-cyan/45 hover:shadow-lg hover:shadow-cyan/5"
-          >
-            <div className="flex items-center gap-4">
-              <span className="flex h-12 w-12 items-center justify-center rounded-xl bg-cyan/10 text-cyan">
-                <Globe className="h-6 w-6" aria-hidden="true" />
-              </span>
-              <div>
-                <h3 className="text-lg font-semibold text-slate-100 group-hover:text-cyan">Microsoft Edge</h3>
-                <p className="text-xs text-slate-300">Edge Add-ons</p>
-              </div>
-            </div>
-            <p className="mt-4 flex-1 text-sm leading-6 text-slate-300">
-              Install from Edge Add-ons or load the unpacked extension for managed workstations.
-            </p>
-            <span className="mt-5 inline-flex items-center gap-1.5 text-sm font-semibold text-cyan">
-              Install for Edge <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" aria-hidden="true" />
-            </span>
-          </Link>
-        </div>
-      </section>
-
-      {/* ── Capabilities ── */}
-      <section className="border-y border-slate-800 bg-slate-950">
-        <div className="container-page py-14 sm:py-20">
-          <div className="max-w-3xl">
-            <p className="eyebrow">What you get</p>
-            <h2 className="mt-3 text-2xl font-bold text-slate-100 sm:text-3xl">Enterprise protection while you browse</h2>
-            <p className="mt-3 text-sm leading-6 text-slate-200 sm:text-base">
-              Protection activates the moment you land on a supported AI tool. No configuration required for local scanning.
-            </p>
-          </div>
-          <div className="mt-8 grid gap-px border border-slate-800 bg-slate-800 sm:grid-cols-2 lg:grid-cols-4">
-            {CAPABILITIES.map((item) => {
-              const Icon = item.icon;
-              return (
-                <article key={item.title} className="bg-white p-5">
-                  <Icon className="h-5 w-5 text-cyan" aria-hidden="true" />
-                  <h3 className="mt-4 text-sm font-semibold text-slate-100">{item.title}</h3>
-                  <p className="mt-2 text-xs leading-5 text-slate-200">{item.copy}</p>
-                </article>
-              );
-            })}
-          </div>
-        </div>
-      </section>
-
-      {/* ── Privacy proof ── */}
-      <section className="container-page py-14 sm:py-20">
-        <div className="grid gap-10 lg:grid-cols-[0.9fr_1.1fr] lg:gap-16">
-          <div>
-            <p className="eyebrow">Privacy model</p>
-            <h2 className="mt-3 text-2xl font-bold text-slate-100 sm:text-3xl">What leaves your browser?</h2>
-            <p className="mt-4 text-sm leading-6 text-slate-200">
-              Prompt scanning happens in the browser first, and extension storage avoids keeping raw prompt text
-              by default. This is the same contract surfaced inside the extension's side panel.
-            </p>
-            <div className="mt-6 flex flex-col gap-3 sm:flex-row">
-              <Link href="/privacy" className="button-secondary gap-2 text-sm">
-                Read privacy policy <ArrowUpRight className="h-4 w-4" aria-hidden="true" />
-              </Link>
-            </div>
-          </div>
-          <div className="rounded-2xl border border-slate-800 bg-white p-6">
-            <dl className="divide-y divide-slate-800">
-              {PRIVACY_PROOF.map((row) => (
-                <div key={row.label} className="flex items-start justify-between gap-4 py-3.5 first:pt-0 last:pb-0">
-                  <dt className="text-sm text-slate-300">{row.label}</dt>
-                  <dd className="max-w-[55%] text-right text-sm font-semibold text-slate-100">{row.value}</dd>
-                </div>
-              ))}
-            </dl>
-          </div>
-        </div>
-      </section>
-
-      {/* ── Cross-surface CTA ── */}
-      <section className="border-t border-slate-800 bg-slate-950">
-        <div className="container-page py-14 sm:py-16">
-          <div className="flex flex-col items-start justify-between gap-6 md:flex-row md:items-center">
-            <div>
-              <div className="flex items-center gap-2">
-                <Sparkles className="h-5 w-5 text-cyan" aria-hidden="true" />
-                <h2 className="text-xl font-bold text-slate-100 sm:text-2xl">Protect every surface, not just the browser</h2>
-              </div>
-              <p className="mt-2 max-w-2xl text-sm leading-6 text-slate-300">
-                Pair Browser Guard with IDE Guard, workflow automation, and the REST API for complete coverage.
-              </p>
-            </div>
-            <div className="flex flex-wrap gap-3">
-              <Link href="/extensions/ide" className="button-secondary gap-2 text-sm">
-                IDE Guard <ArrowRight className="h-4 w-4" aria-hidden="true" />
-              </Link>
-              <Link href="/integrations" className="button-secondary gap-2 text-sm">
-                <Workflow className="h-4 w-4" aria-hidden="true" /> Integrations
-              </Link>
-              <Link href="/docs/rest-api" className="button-secondary gap-2 text-sm">
-                REST API
-              </Link>
-            </div>
-          </div>
-        </div>
-      </section>
-    </main>
+        <section className="sa-section" aria-labelledby="other-surfaces">
+          <div className="sa-section__head"><h2 className="sa-h2" id="other-surfaces">Put checks on the other paths you use</h2><p className="sa-body">IDE Guard, workflow guards and the REST API have different maturity and coverage boundaries. Combining them does not create complete protection.</p></div>
+          <div className="sa-hero__actions"><SaLinkButton href="/extensions/ide" variant="secondary">IDE Guard</SaLinkButton><SaLinkButton href="/integrations" variant="secondary">Integrations</SaLinkButton><SaLinkButton href="/docs/rest-api" variant="secondary">REST API</SaLinkButton></div>
+        </section>
+      </main>
+    </SaRoot>
   );
 }

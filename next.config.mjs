@@ -27,22 +27,45 @@ const nextConfig = {
   },
   async redirects() {
     return [
+      // Keep method and body preservation for API traffic. Marketing GETs use
+      // the brief's explicit 301, while API mutations retain the existing 308.
+      {
+        source: "/api/:path*",
+        has: [{ type: "host", value: "www.soterai.in" }],
+        destination: "https://soterai.in/api/:path*",
+        permanent: true,
+      },
       {
         source: "/:path*",
         has: [{ type: "host", value: "www.soterai.in" }],
         destination: "https://soterai.in/:path*",
-        permanent: true,
+        statusCode: 301,
       },
       {
         source: "/windsurf-ai-security",
         destination: "/ai-platform-security",
         permanent: true,
       },
+      // Retain the approved index destinations for trimmed deep links.
+      { source: "/extensions", destination: "/integrations", statusCode: 301 },
+      { source: "/partners", destination: "/partners/agency", statusCode: 301 },
       {
         source: "/integrations/:path*",
         has: [{ type: "host", value: "api.soterai.in" }],
         destination: "https://soterai.in/integrations/:path*",
         permanent: true,
+      },
+      // Redirect GitHub-style blob paths → /docs (bot/scraper traffic from aocr.org referrer spam)
+      {
+        source: "/docs/blob/:path*",
+        destination: "/docs",
+        permanent: false,
+      },
+      // Redirect bare /blob/* → actual GitHub repo (in case someone links directly)
+      {
+        source: "/blob/:path*",
+        destination: "https://github.com/yashchauhan66/Soter-AI/blob/:path*",
+        permanent: false,
       },
     ];
   },

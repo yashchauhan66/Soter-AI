@@ -5,6 +5,7 @@ import {
     KEY_PREFIX,
     OPAQUE_CREDENTIAL_KEYWORDS,
     OPAQUE_CREDENTIAL_VALUE,
+    detectSecretAssignments,
 } from "./detectors/SecretDetector";
 
 /**
@@ -25,6 +26,20 @@ import {
  * leaks a live credential.
  */
 const OPAQUE_CREDENTIAL_SOURCE = `\\b${KEY_PREFIX}${OPAQUE_CREDENTIAL_KEYWORDS}${ASSIGN}${OPAQUE_CREDENTIAL_VALUE}["']?`;
+const GENERIC_ASSIGNMENT_KEYS = String.raw`(?:api[_-]?key|secret[_-]?key|access[_-]?token|client[_-]?secret|password|passwd|pwd)`;
+const GENERIC_ASSIGNMENT_PATTERN = new RegExp(`\\b${GENERIC_ASSIGNMENT_KEYS}\\b\\s*[:=]\\s*["']?[^"'\\s]{8,}["']?`, "gi");
+// Quoting changes a property read into a literal value. Keep this conservative
+// rule separate from detector heuristics, which strip quotes before filtering
+// references. The alternatives consume escaped characters without evaluating them.
+const QUOTED_ENV_ASSIGNMENT_SOURCE = String.raw`(\b${KEY_PREFIX}${GENERIC_ASSIGNMENT_KEYS}["']?\s*[:=]\s*)("process\.env\.(?:[^"\\\r\n]|\\[^\r\n])*"|'process\.env\.(?:[^'\\\r\n]|\\[^\r\n])*')`;
+
+function isBareEnvironmentRead(match: string, offset: number, source: string): boolean {
+    // Exempt only one unquoted property read and its statement terminator.
+    // Calls, extra properties, concatenation, literal quotes and case variants
+    // retain the old safety-net treatment. Do not skip other text on the line.
+    if (!/^[^"'`:=\r\n]+[:=][ \t]*process\.env\.[A-Za-z_$][A-Za-z0-9_$]{0,127};?$/.test(match)) return false;
+    return match.endsWith(";") || /^[ \t]*(?:;|$)/.test(source.slice(offset + match.length));
+}
 
 /**
  * Redactor — strips sensitive content and replaces with safe tokens.
@@ -92,7 +107,7 @@ const REDACTION_RULES: Array<[RegExp, string]> = [
     // `auth`, `credentials`) and it reads the JSON/YAML form, which is the shape
     // every agent config file on disk actually uses.
     [new RegExp(OPAQUE_CREDENTIAL_SOURCE, "gi"), "[REDACTED_CREDENTIAL]"],
-    [/\b(?:api[_-]?key|secret[_-]?key|access[_-]?token|client[_-]?secret|password|passwd|pwd)\b\s*[:=]\s*["']?[^"'\s]{8,}["']?/gi, "[REDACTED_SECRET]"],
+    [GENERIC_ASSIGNMENT_PATTERN, "[REDACTED_SECRET]"],
     // ── PII ───────────────────────────────────────────────────────────────
     [/\b[2-9]\d{3}\s?\d{4}\s?\d{4}\b/g, "[REDACTED_AADHAAR]"],
     [/\b[A-Z]{5}[0-9]{4}[A-Z]\b/g, "[REDACTED_PAN]"],
@@ -229,9 +244,41 @@ export function redactText(text: string, findings?: DetectorMatch[]): string {
         }
     }
 
+    // Preserve the surrounding assignment syntax while removing quoted
+    // reference lookalikes, including prefixed JSON credential fields.
+    output = output.replace(new RegExp(QUOTED_ENV_ASSIGNMENT_SOURCE, "gi"),
+        (_match, prefix: string, quoted: string) => prefix + quoted[0] + "[REDACTED_SECRET]" + quoted[0]);
+
     // 2. ALWAYS-ON pattern safety-net pass (idempotent over redacted tokens).
     for (const [pattern, replacement] of REDACTION_RULES) {
-        output = output.replace(pattern, replacement);
+        output = pattern === GENERIC_ASSIGNMENT_PATTERN
+            ? output.replace(pattern, (match: string, offset: number, source: string) => isBareEnvironmentRead(match, offset, source) ? match : replacement)
+            : output.replace(pattern, replacement);
+    }
+
+    // The detector owns key recognition and false-positive handling. Independent
+    // fallback regexes previously missed DB_PASSWORD while reporting it as safe.
+    // Replace only the value inside an accepted assignment so JSON argument keys
+    // and quotes survive. Assignment keys cannot contain ':' or '='.
+    const assignmentRanges: Array<{ start: number; end: number }> = [];
+    for (const match of detectSecretAssignments(output)) {
+        const separator = match.match.search(/[:=]/);
+        let start = separator + 1;
+        while (/\s/.test(match.match[start] ?? "") && start < match.match.length) start++;
+        if (match.match[start] === '"' || match.match[start] === "'") start++;
+        let end = match.match.length;
+        if (match.match[end - 1] === '"' || match.match[end - 1] === "'") end--;
+        if (separator < 1 || start >= end) return "[REDACTED_LINE_CONTAINED_SECRET]";
+        assignmentRanges.push({ start: match.start + start, end: match.start + end });
+    }
+    const merged: Array<{ start: number; end: number }> = [];
+    for (const range of assignmentRanges.sort((a, b) => a.start - b.start || b.end - a.end)) {
+        const previous = merged.at(-1);
+        if (previous && range.start <= previous.end) previous.end = Math.max(previous.end, range.end);
+        else merged.push({ ...range });
+    }
+    for (const range of merged.reverse()) {
+        output = output.slice(0, range.start) + "[REDACTED_SECRET]" + output.slice(range.end);
     }
     return output;
 }
@@ -246,6 +293,14 @@ export function findSurvivingSecrets(text: string): string[] {
         if (pattern.test(text)) survivors.push(name);
     }
     return survivors;
+}
+
+/** Outbound confidentiality is stricter than the detector's global blocking
+ * score. Recognized password/API assignments must not survive a safe copy. */
+export function findUnredactedSecrets(text: string): string[] {
+    const literalAssignments = [...text.matchAll(new RegExp(QUOTED_ENV_ASSIGNMENT_SOURCE, "gi"))].map(match =>
+        /(?:password|passwd|pwd)["']?\s*[:=]/i.test(match[1]) ? "password_assignment" : "generic_api_key");
+    return [...new Set([...findSurvivingSecrets(text), ...detectSecretAssignments(text).map(match => match.type), ...literalAssignments])];
 }
 
 /** True if any high-risk secret pattern survives in `text`. */
@@ -264,12 +319,12 @@ export function containsRawSecret(text: string): boolean {
  */
 export function redactForSharing(text: string, findings?: DetectorMatch[]): string {
     const redacted = redactText(text, findings);
-    const survivors = findSurvivingSecrets(redacted);
+    const survivors = findUnredactedSecrets(redacted);
     if (survivors.length === 0) return redacted;
     // Fail closed — strip the offending lines entirely.
     return redacted
         .split("\n")
-        .map((line) => (containsRawSecret(line) ? "[REDACTED_LINE_CONTAINED_SECRET]" : line))
+        .map((line) => (findUnredactedSecrets(line).length ? "[REDACTED_LINE_CONTAINED_SECRET]" : line))
         .join("\n");
 }
 

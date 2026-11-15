@@ -18,9 +18,13 @@
     "!packages/vscode-extension"
   ],
   "scripts": {
+    "predev": "npm run docs:index",
     "dev": "next dev --turbopack",
     "clean": "node scripts/cleanNextBuild.mjs",
+    "prebuild": "npm run docs:index",
     "build": "next build",
+    "docs:index": "tsx scripts/docs/build-search-index.ts",
+    "docs:check-index": "tsx scripts/docs/build-search-index.ts --check",
     "start": "next start",
     "lint": "node scripts/runLint.mjs",
     "typecheck": "tsc --noEmit",
@@ -83,7 +87,7 @@
     "validate:security-100": "tsx scripts/validate-security-100-evidence.ts",
     "validate:security-100:strict": "tsx scripts/validate-security-100-evidence.ts --strict",
     "validate:strongest-local": "tsx scripts/validate-strongest-local-release.ts",
-    "release:vscode:provenance": "node scripts/generate-vscode-release-provenance.mjs",
+    "release:vscode:provenance": "node packages/soterai-lite/scripts/release-artifact.cjs provenance",
     "test:integrations": "npm run test:sdk:js && tsx --test tests/integrations.test.ts",
     "test:integration-ease": "tsx --test tests/integration-ease.test.ts && node scripts/validate-marketplace-packages.mjs",
     "verify:integrations": "npm --prefix packages/sdk run typecheck && npm run test:sdk:js && npm run build:sdk:js",

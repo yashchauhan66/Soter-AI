@@ -29,6 +29,7 @@ import { SAFE_READ_TOOL, SAFE_READ_DEFINITION, safeReadPath, safeReadResult, req
 import type { AccessResult } from "../project-privacy/ProjectFileAccess";
 import { loadBridgeTicket } from "./SealedBridgeTicket";
 import { runClineHook } from "../adapters/ClineHookProtocol";
+import { ownedFailureMessage } from "../../../core/src/OwnedSinkMetadata";
 
 /** Protocol revision this server implements. */
 const PROTOCOL_VERSION = "2024-11-05";
@@ -163,7 +164,7 @@ export function handleMcpMessage(message: unknown): McpReply {
         case "tools/call": {
             const call = params as { name?: unknown; arguments?: unknown } | undefined;
             const tool = AGENT_TOOLS.find((candidate) => candidate.name === call?.name);
-            if (!tool) return fail(id, -32602, `Unknown tool: ${String(call?.name)}`);
+            if (!tool) return fail(id, -32602, ownedFailureMessage("unknown_tool"));
             try {
                 const result = tool.run(call?.arguments ?? {});
                 return ok(id, {
@@ -174,15 +175,15 @@ export function handleMcpMessage(message: unknown): McpReply {
                     // which invites a retry or a shrug.
                     isError: false,
                 });
-            } catch (error) {
+            } catch {
                 // A detector throwing must not take the server down: the agent
                 // would lose every subsequent check, silently.
-                return fail(id, -32603, `SoterAI check failed: ${error instanceof Error ? error.message : String(error)}`);
+                return fail(id, -32603, ownedFailureMessage("check_failed"));
             }
         }
 
         default:
-            return isNotification ? undefined : fail(id, -32601, `Method not found: ${String(method)}`);
+            return isNotification ? undefined : fail(id, -32601, ownedFailureMessage("unknown_method"));
     }
 }
 
@@ -302,5 +303,5 @@ if (require.main === module) {
         delete process.env.SOTERAI_SAFE_READ_TOKEN;
         if (process.argv.slice(2).includes("--cline-hook")) await runClineHook(connection);
         else await runMcpServer(process.stdin, process.stdout, { read: (args, signal) => requestSafeRead(connection, args, signal) });
-    })();
+    })().catch(() => { process.exitCode = 1; }); // No raw startup exception or stack is emitted.
 }

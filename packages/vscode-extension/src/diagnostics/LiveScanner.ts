@@ -1,6 +1,11 @@
 import * as vscode from "vscode";
+import { createHash, randomUUID } from "node:crypto";
 import { ExtensionState } from "../state";
 import type { Finding, GuardDecision } from "@soterai/guard-core";
+import { BoundarySnapshot, onDidChangeBoundaryRules, onDidChangeOwnerPolicySession } from "../ai-boundary/BoundarySnapshot";
+import { onDidChangeManualRestriction } from "../ai-boundary/RestrictionOperation";
+import { prepareReviewedText, reviewContext } from "../secret-broker/ReviewedContext";
+import { secretBrokerRuntime } from "../secret-broker/runtime";
 import {
     collapseSpacedLetters,
     decodeBase64Blobs,
@@ -195,6 +200,13 @@ export class LiveScanner implements vscode.CodeActionProvider {
     private readonly diagnostics: vscode.DiagnosticCollection;
     private readonly timers = new Map<string, ReturnType<typeof setTimeout>>();
     private readonly disposables: vscode.Disposable[] = [];
+    private disposed = false;
+    private revision = 0;
+    private generation = 0;
+    private pendingFix = false;
+    private readonly scans = new Map<string, number>();
+    private readonly published = new Map<string, PublishedScan>();
+    private readonly fixes = new Map<string, OwnedFix>();
 
     // Custom decoration types — subtle inline markers + soft line backgrounds.
     // Kept as instance state so they are properly disposed when the scanner is.
@@ -223,12 +235,19 @@ export class LiveScanner implements vscode.CodeActionProvider {
             vscode.workspace.onDidOpenTextDocument((doc) => this.schedule(doc)),
             vscode.workspace.onDidChangeTextDocument((e) => this.schedule(e.document)),
             vscode.workspace.onDidCloseTextDocument((doc) => {
+                this.withdraw(doc.uri);
+                const timer = this.timers.get(doc.uri.toString()); if (timer) clearTimeout(timer);
+                this.timers.delete(doc.uri.toString());
                 this.diagnostics.delete(doc.uri);
                 this.clearDecorations(doc.uri);
             }),
             vscode.workspace.onDidChangeConfiguration((e) => {
-                if (e.affectsConfiguration("soterai.liveScan")) this.rescanVisible();
+                if (e.affectsConfiguration("soterai")) this.invalidate();
             }),
+            vscode.workspace.onDidChangeWorkspaceFolders(() => this.invalidate()),
+            onDidChangeBoundaryRules(() => this.invalidate()),
+            onDidChangeOwnerPolicySession(() => this.invalidate()),
+            onDidChangeManualRestriction(() => this.invalidate()),
             // Re-apply decorations whenever a different editor becomes active —
             // VS Code does NOT persist custom decorations across editor switches.
             vscode.window.onDidChangeActiveTextEditor((editor) => {
@@ -241,14 +260,30 @@ export class LiveScanner implements vscode.CodeActionProvider {
             vscode.languages.registerCodeActionsProvider("*", this, {
                 providedCodeActionKinds: [vscode.CodeActionKind.QuickFix],
             }),
-            vscode.commands.registerCommand("soterai.applyFindingFix", (args: FindingFixArgs) => this.applyFix(args)),
+            vscode.commands.registerCommand("soterai.applyFindingFix", (args: unknown) => this.applyFix(args)),
         );
 
         this.rescanVisible();
     }
 
     private isEnabled(): boolean {
-        return vscode.workspace.getConfiguration("soterai").get<boolean>("liveScan.enabled", true);
+        return !this.disposed && vscode.workspace.getConfiguration("soterai").get<boolean>("liveScan.enabled", true);
+    }
+    private withdraw(uri: vscode.Uri): void {
+        const key = uri.toString(); this.published.delete(key); this.scans.delete(key);
+        for (const [id, fix] of this.fixes) if (fix.scan.document.uri.toString() === key) this.fixes.delete(id);
+    }
+    private invalidate(): void {
+        this.revision++; this.scans.clear(); this.published.clear(); this.fixes.clear();
+        this.diagnostics.clear(); this.decorRanges.clear(); this.rescanVisible();
+    }
+    private current(scan: PublishedScan): boolean {
+        try {
+            return !scan.document.isClosed && this.isEnabled() && this.isScannable(scan.document)
+                && scan.document.version === scan.version && scan.revision === this.revision
+                && this.scans.get(scan.document.uri.toString()) === scan.generation
+                && createHash("sha256").update(scan.document.getText()).digest("hex") === scan.digest;
+        } catch { return false; }
     }
 
     /** Decide whether a document is eligible for inline scanning. */
@@ -270,6 +305,9 @@ export class LiveScanner implements vscode.CodeActionProvider {
     }
 
     private schedule(doc: vscode.TextDocument): void {
+        this.withdraw(doc.uri);
+        this.diagnostics.delete(doc.uri);
+        this.clearDecorations(doc.uri);
         if (!this.isEnabled() || !this.isScannable(doc)) {
             this.diagnostics.delete(doc.uri);
             this.clearDecorations(doc.uri);
@@ -289,13 +327,19 @@ export class LiveScanner implements vscode.CodeActionProvider {
         if (doc.isClosed || !this.isEnabled() || !this.isScannable(doc)) return;
         const state = ExtensionState.getInstance();
         const raw = doc.getText();
+        this.withdraw(doc.uri);
+        const snapshot: PublishedScan = { document: doc, version: doc.version, revision: this.revision, generation: ++this.generation,
+            digest: createHash("sha256").update(raw).digest("hex"), diagnostics: [] };
+        this.scans.set(doc.uri.toString(), snapshot.generation);
+        const current = () => this.current(snapshot);
         let decision: GuardDecision;
         try {
             decision = await state.engine.scan(raw, { context: "file" });
         } catch {
-            // Never let a scan failure surface as a user-facing error.
+            if (current()) this.reportIncomplete(doc);
             return;
         }
+        if (!current()) return;
 
         // ── Obfuscated-secret sweep ───────────────────────────────────────────
         // The single-pass scan above only sees the literal text. A secret that is
@@ -315,6 +359,7 @@ export class LiveScanner implements vscode.CodeActionProvider {
                 // text into something a detector could match. `reversed` variants
                 // are almost always noise; keep them but they rarely fire.
                 const folded = await state.engine.scan(variant.text, { context: "file", skipCache: true });
+                if (!current()) return;
                 for (const f of folded.findings) {
                     if (!/secret|credential|key|token|password|pii/i.test(f.category ?? "")) continue;
                     if (decision.findings.some((existing) => existing.title === f.title)) continue;
@@ -330,6 +375,8 @@ export class LiveScanner implements vscode.CodeActionProvider {
             // The variant sweep is additive. If it throws, the primary scan result
             // above still stands — never lose real findings to an optional pass.
         }
+
+        if (!current()) return;
 
         const diags: vscode.Diagnostic[] = [];
         const ranges: { critical: vscode.Range[]; medium: vscode.Range[]; low: vscode.Range[] } = {
@@ -363,6 +410,9 @@ export class LiveScanner implements vscode.CodeActionProvider {
         }
 
         // Commit diagnostics (Problems panel)
+        if (!current()) return;
+        snapshot.diagnostics = diags;
+        this.published.set(doc.uri.toString(), snapshot);
         this.diagnostics.set(doc.uri, diags);
 
         // Commit decorations (in-editor soft highlight + inline marker)
@@ -372,6 +422,11 @@ export class LiveScanner implements vscode.CodeActionProvider {
                 this.applyDecorationsToEditor(editor, ranges);
             }
         }
+    }
+    private reportIncomplete(doc: vscode.TextDocument): void {
+        const diagnostic = new vscode.Diagnostic(doc.lineAt(0).range, "SoterAI could not complete live scanning. Review this file or retry the scan.", vscode.DiagnosticSeverity.Information);
+        diagnostic.source = SOURCE; diagnostic.code = "scan-incomplete";
+        this.diagnostics.set(doc.uri, [diagnostic]); this.clearDecorations(doc.uri);
     }
 
     /**
@@ -467,74 +522,107 @@ export class LiveScanner implements vscode.CodeActionProvider {
         context: vscode.CodeActionContext,
     ): vscode.CodeAction[] {
         const actions: vscode.CodeAction[] = [];
+        const snapshot = this.published.get(document.uri.toString());
+        if (!snapshot || snapshot.document !== document || !this.current(snapshot)) return actions;
+        const issue = (kind: OwnedFix["kind"], diag: vscode.Diagnostic): { id: string } => {
+            if (this.fixes.size >= 256) this.fixes.delete(this.fixes.keys().next().value!);
+            const id = randomUUID(); this.fixes.set(id, { kind, scan: snapshot, range: diag.range }); return { id };
+        };
         for (const diag of context.diagnostics) {
             if (diag.source !== SOURCE) continue;
-            const category = String(diag.code ?? "");
-            const evidence = document.getText(diag.range);
+            // VS Code may deserialize diagnostics. Match the current owned record,
+            // then use only its fields; caller-supplied ranges never grant a target.
+            const owned = snapshot.diagnostics.find(item => sameDiagnostic(item, diag));
+            if (!owned) continue;
+            const category = String(owned.code ?? "");
+            const secret = /secret|credential|key|token|password/i.test(category);
 
             // 1) Redact in place (undoable WorkspaceEdit; user-initiated via lightbulb).
-            const redact = new vscode.CodeAction(`SoterAI: Redact this ${category || "finding"}`, vscode.CodeActionKind.QuickFix);
+            if (!secret) {
+            const redact = new vscode.CodeAction("SoterAI: Review replacing this finding", vscode.CodeActionKind.QuickFix);
             redact.diagnostics = [diag];
             redact.command = {
                 command: LiveScanner.fixableCommand,
                 title: "Redact finding",
-                arguments: [{ kind: "redact", uri: document.uri.toString(), range: serializeRange(diag.range), category } as FindingFixArgs],
+                arguments: [issue("redact", owned)],
             };
             actions.push(redact);
+            }
 
             // 2) Copy a safe version of the line to the clipboard (non-destructive).
-            const copy = new vscode.CodeAction("SoterAI: Copy safe version of this line", vscode.CodeActionKind.QuickFix);
+            const copy = new vscode.CodeAction("SoterAI: Preview sanitized lines before copying", vscode.CodeActionKind.QuickFix);
             copy.diagnostics = [diag];
             copy.command = {
                 command: LiveScanner.fixableCommand,
                 title: "Copy safe line",
-                arguments: [{ kind: "copySafeLine", uri: document.uri.toString(), range: serializeRange(diag.range), category } as FindingFixArgs],
+                arguments: [issue("copySafeLine", owned)],
             };
             actions.push(copy);
 
             // 3) Category-specific escalation into an existing safe flow.
-            if (/secret|credential|key|token/i.test(category)) {
-                const vault = new vscode.CodeAction("SoterAI: Move secrets to protected vault…", vscode.CodeActionKind.QuickFix);
+            if (secret) {
+                const vault = new vscode.CodeAction("SoterAI: Review vault protection for this file…", vscode.CodeActionKind.QuickFix);
                 vault.diagnostics = [diag];
-                vault.command = { command: "soterai.migrateSecretsToVault", title: "Move to vault" };
+                vault.command = { command: LiveScanner.fixableCommand, title: "Review vault protection", arguments: [issue("reviewVault", owned)] };
                 actions.push(vault);
             }
-            // Avoid unused-var lint on evidence; it documents intent for future fixes.
-            void evidence;
         }
         return actions;
     }
 
-    private async applyFix(args?: FindingFixArgs): Promise<void> {
-        // The command is registered with the CodeAction-provider path always
-        // passing arguments, but a direct palette invocation (or any caller
-        // without a specific finding) lands here with none. Fail with a
-        // user-actionable message instead of a raw undefined access.
-        if (!args || typeof args.uri !== "string" || !args.kind) {
-            vscode.window.showWarningMessage("SoterAI: No fix target. Use the lightbulb on a SoterAI finding to apply a fix.");
-            return;
-        }
-        const uri = vscode.Uri.parse(args.uri);
-        const doc = await vscode.workspace.openTextDocument(uri);
-        const range = deserializeRange(args.range);
-        if (args.kind === "redact") {
-            const edit = new vscode.WorkspaceEdit();
-            edit.replace(uri, range, `«REDACTED:${args.category || "sensitive"}»`);
-            await vscode.workspace.applyEdit(edit);
-            vscode.window.showInformationMessage("SoterAI redacted the finding (Ctrl/Cmd+Z to undo).");
-            return;
-        }
-        if (args.kind === "copySafeLine") {
-            const line = doc.lineAt(range.start.line);
-            const masked = line.text.slice(0, range.start.character - line.range.start.character)
-                + `«REDACTED:${args.category || "sensitive"}»`
-                + line.text.slice(range.end.character - line.range.start.character);
-            await vscode.env.clipboard.writeText(masked.trim());
-            vscode.window.showInformationMessage("Safe version of the line copied to clipboard.");
-        }
+    private async applyFix(args?: unknown): Promise<void> {
+        const unavailable = () => { void vscode.window.showInformationMessage("This finding changed or is unavailable. Wait for a fresh scan and use its lightbulb action."); };
+        if (this.pendingFix) return;
+        try {
+            if (!args || typeof args !== "object" || Array.isArray(args)) return unavailable();
+            const fields = Object.getOwnPropertyDescriptors(args), id = fields.id?.value;
+            if (Reflect.ownKeys(fields).length !== 1 || typeof id !== "string" || !/^[a-f0-9-]{36}$/.test(id)) return unavailable();
+            const fix = this.fixes.get(id); this.fixes.delete(id);
+            if (!fix) return unavailable();
+            const { document: doc } = fix.scan;
+            const current = () => vscode.workspace.isTrusted && !!vscode.workspace.getWorkspaceFolder(doc.uri) && this.current(fix.scan)
+                && this.published.get(doc.uri.toString()) === fix.scan;
+            if (!current()) return unavailable();
+            this.pendingFix = true;
+            if (fix.kind === "reviewVault") {
+                if (doc.isDirty) { void vscode.window.showInformationMessage("Vault migration reviews saved files. Cancel sharing or use a sanitized preview while these edits are unsaved."); return; }
+                await vscode.commands.executeCommand("soterai.migrateSecretsToVault", doc.uri);
+                return;
+            }
+            if (fix.kind === "redact") {
+                const choice = await vscode.window.showWarningMessage("Replace this finding in the current document?", { modal: true, detail: "This changes the editor buffer. Review the edit and use Undo if needed." }, "Replace finding");
+                if (choice !== "Replace finding" || !current()) return;
+                const editor = vscode.window.visibleTextEditors.find(item => item.document === doc);
+                if (!editor) return unavailable();
+                await editor.edit(edit => { if (!current()) throw Error(); edit.replace(fix.range, "«REDACTED:sensitive»"); });
+                return;
+            }
+            const start = doc.lineAt(fix.range.start.line).range.start, end = doc.lineAt(fix.range.end.line).range.end;
+            const boundary = await BoundarySnapshot.load();
+            if (!current()) return unavailable();
+            if (boundary.blocks(doc.uri)) { void vscode.window.showInformationMessage("This file is excluded from AI context. Use its reviewed vault or safe-read workflow; a rescan does not remove that restriction."); return; }
+            await boundary.read(doc.uri);
+            if (!current()) return unavailable();
+            const selected = boundary.selection(doc.uri, doc.getText(), doc.offsetAt(start), doc.offsetAt(end));
+            const draft = prepareReviewedText(selected, text => secretBrokerRuntime.outputFilter.filter(text));
+            if (!current()) return unavailable();
+            if (draft.status !== "PREPARED") { void vscode.window.showInformationMessage("These lines could not be sanitized completely. Keep secret matching and output filtering enabled, or review vault protection before sharing."); return; }
+            const result = await reviewContext(draft.text, { current,
+                preview: async text => {
+                    const preview = await vscode.workspace.openTextDocument({ content: text, language: "plaintext" }), version = preview.version;
+                    if (!current()) throw Error(); await vscode.window.showTextDocument(preview, { preview: true });
+                    return { current: () => !preview.isClosed && preview.version === version && preview.getText() === text };
+                },
+                choose: async () => { const picked = await vscode.window.showInformationMessage("Review these sanitized lines for remaining private information before sharing.", "Copy reviewed text", "Keep preview"); return picked === "Copy reviewed text" ? "copy" : picked === "Keep preview" ? "keep" : undefined; },
+                copy: text => Promise.resolve(vscode.env.clipboard.writeText(text)),
+            });
+            if (result.status === "UNAVAILABLE") unavailable();
+        } catch { unavailable(); }
+        finally { this.pendingFix = false; }
     }
 
     public dispose(): void {
+        this.disposed = true; this.revision++; this.scans.clear(); this.published.clear(); this.fixes.clear();
         for (const timer of this.timers.values()) clearTimeout(timer);
         this.timers.clear();
         this.decorRanges.clear();
@@ -542,19 +630,12 @@ export class LiveScanner implements vscode.CodeActionProvider {
     }
 }
 
-type FindingFixArgs = {
-    kind: "redact" | "copySafeLine";
-    uri: string;
-    range: SerializedRange;
-    category: string;
-};
-
-type SerializedRange = { sl: number; sc: number; el: number; ec: number };
-function serializeRange(r: vscode.Range): SerializedRange {
-    return { sl: r.start.line, sc: r.start.character, el: r.end.line, ec: r.end.character };
-}
-function deserializeRange(r: SerializedRange): vscode.Range {
-    return new vscode.Range(r.sl, r.sc, r.el, r.ec);
+interface PublishedScan { document: vscode.TextDocument; version: number; revision: number; generation: number; digest: string; diagnostics: vscode.Diagnostic[] }
+interface OwnedFix { kind: "redact" | "copySafeLine" | "reviewVault"; scan: PublishedScan; range: vscode.Range }
+function sameDiagnostic(left: vscode.Diagnostic, right: vscode.Diagnostic): boolean {
+    return left.source === right.source && left.message === right.message && left.code === right.code
+        && left.range.start.line === right.range.start.line && left.range.start.character === right.range.start.character
+        && left.range.end.line === right.range.end.line && left.range.end.character === right.range.end.character;
 }
 
 /**

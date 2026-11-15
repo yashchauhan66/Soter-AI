@@ -8,11 +8,12 @@ import { basename, dirname, join, resolve } from "node:path";
 import type * as vscode from "vscode";
 import type { VaultManager } from "../firewall/VaultManager";
 import { VaultRuntime } from "../vault-runtime/VaultRuntime";
+import { captureRuntimeArtifact } from "../vault-runtime/RuntimeBinding";
 import * as stub from "./phase2/vscode-stub";
 
 // Read-only public recovery metadata fixtures. The lease always rejects before
 // its trusted callback, so no child is created and no vault value is accessed.
-const DESCRIPTORS = "soterai.lite.vaultApps.v1";
+const DESCRIPTORS = "soterai.lite.vaultApps.v2";
 const OWNERSHIP = "soterai.lite.vaultJobs.v1";
 const ENTRY = "exports.start = () => {};\n";
 const id = (index: number) => `89cd22c0-cde1-42c6-b6a9-${String(index).padStart(12, "0")}`;
@@ -45,15 +46,15 @@ async function blocked(saved: unknown, unreadable = false): Promise<void> {
 }
 
 beforeEach(async () => {
-    const base = process.platform === "win32" ? "D:\\SoterAI-Lite-test-profiles" : tmpdir();
+    const base = tmpdir();
     await mkdir(base, { recursive: true }); parent = await realpath(base);
     directory = await mkdtemp(join(parent, "f09-ownership-review-")); root = join(directory, "project"); await mkdir(root);
     await writeFile(join(root, "app.cjs"), ENTRY);
     await writeFile(join(root, ".env"), "DATABASE_URL=[SOTERAI_PROTECTED_A3427B3646BA4D8482E5C5DFB5BA5DD1_0]\n");
     stub.resetState(root); context = stub.makeExtensionContext(directory); runtimes = []; leaseCalls = 0; pidCalls = 0; writes = [];
-    context._inspect.workspaceStore.set(DESCRIPTORS, [{ schemaVersion: 1, id: id(999), root,
+    context._inspect.workspaceStore.set(DESCRIPTORS, [{ schemaVersion: 2, id: id(999), root,
         program: join(root, "app.cjs"), cwd: root, source: join(root, ".env"),
-        programDigest: createHash("sha256").update(ENTRY).digest("hex"), args: [],
+        programDigest: createHash("sha256").update(ENTRY).digest("hex"), artifactDigest: captureRuntimeArtifact(root, join(root, "app.cjs")).digest, args: [],
         selections: [{ name: "DATABASE_URL", placeholder: "[SOTERAI_PROTECTED_A3427B3646BA4D8482E5C5DFB5BA5DD1_0]" }] }]);
     const original = context.workspaceState.update.bind(context.workspaceState);
     mock.method(context.workspaceState, "update", async (key: string, value: unknown) => {

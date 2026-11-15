@@ -1,0 +1,22 @@
+{
+  "schemaVersion": "2.2",
+  "description": "Deploy one owner-signed finite Node artifact through the installed trusted receiver.",
+  "parameters": {
+    "Approval": {
+      "type": "String",
+      "description": "Base64 public signed approval envelope; contains no credential.",
+      "interpolationType": "ENV_VAR",
+      "allowedPattern": "^[A-Za-z0-9+/]{1,8190}={0,2}$"
+    }
+  },
+  "mainSteps": [
+    {
+      "action": "aws:runShellScript",
+      "name": "installApprovedArtifact",
+      "inputs": {
+        "timeoutSeconds": "120",
+        "runCommand": ["/usr/bin/node /opt/soterai-owner/ec2-install.cjs"]
+      }
+    }
+  ]
+}

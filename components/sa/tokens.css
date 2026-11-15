@@ -1,0 +1,217 @@
+/*
+ * soterai.in design system: tokens.
+ *
+ * Scope: everything here is under the `.sa` class, and every custom property is
+ * prefixed `--sa-`. Nothing in this file touches `:root`, `body` or a Tailwind
+ * utility, so pages that do not render a `.sa` ancestor cannot change. That is
+ * deliberate. The existing site inverts the whole Tailwind colour ramp (see the
+ * header of tailwind.config.ts), which makes utility names like `text-slate-300`
+ * mean something different from what they say. New code uses these tokens
+ * instead of those utilities.
+ *
+ * Every text/background pair below was measured with WCAG 2.x relative luminance.
+ * The ratio is written beside each token. Pairs were measured on every surface
+ * the colour is allowed to sit on, including its own 10% tint, because a colour
+ * that passes on plain paper can still fail on its own stamp background.
+ */
+
+.sa {
+  /* ---- Surfaces ------------------------------------------------------ */
+  --sa-paper: 251 250 247; /* #FBFAF7 page */
+  --sa-surface: 255 255 255; /* #FFFFFF card */
+  --sa-sunken: 244 241 234; /* #F4F1EA well, code, table header */
+
+  /* ---- Text ---------------------------------------------------------- */
+  --sa-ink: 20 17 15; /* #14110F  18.01:1 on paper */
+  --sa-muted: 91 87 80; /* #5B5750   6.88:1 on paper, 6.37:1 on sunken */
+  --sa-on-brand: 255 255 255; /* on --sa-brand: 5.96:1 */
+
+  /* ---- Brand (same hue as the live site's #B23B0B) -------------------- */
+  --sa-brand: 178 59 11; /* #B23B0B  5.71:1 on paper */
+  --sa-brand-press: 154 52 18; /* #9A3412  7.00:1 on paper */
+
+  /* ---- Verdicts ------------------------------------------------------- *
+   * Light values are the darker set chosen after measuring. The first set
+   * (#15803D / #B45309) passed on paper at 4.81:1 but fell to 4.22 / 4.20:1 on
+   * their own 10% tint, which is where the stamp sits. These do not.
+   *   allow   #166534  paper 6.83  tint 5.87
+   *   redact  #92400E  paper 6.79  tint 5.82
+   *   rewrite #0369A1  paper 5.68  tint 4.94
+   *   block   #BE123C  paper 6.02  tint 5.09
+   *   review  #5B5750  paper 6.88  tint 5.97
+   */
+  --sa-allow: 22 101 52;
+  --sa-redact: 146 64 14;
+  --sa-rewrite: 3 105 161;
+  --sa-block: 190 18 60;
+  --sa-review: 91 87 80;
+
+  /* ---- Lines ---------------------------------------------------------- *
+   * Hairline separates areas and is decorative (1.29:1). Control border
+   * outlines inputs and buttons, so it must reach 3:1 (WCAG 1.4.11).
+   */
+  --sa-hairline: 227 222 211; /* #E3DED3 decorative only */
+  --sa-control: 133 127 116; /* #857F74  3.81:1 on paper, 3.97:1 on surface */
+
+  /* ---- Focus ---------------------------------------------------------- */
+  --sa-focus: 3 105 161; /* #0369A1  5.68:1 on paper; distinct from brand */
+
+  /* ---- Type ----------------------------------------------------------- */
+  --sa-font-display:
+    var(--font-sa-display), 'Iowan Old Style', 'Palatino Linotype', Palatino, Georgia, serif;
+  --sa-font-mono:
+    var(--font-sa-mono), ui-monospace, 'SFMono-Regular', Menlo, Consolas, monospace;
+  /* Visitor-supplied text can be in any script. This stack lets the OS pick a
+   * font with coverage (Devanagari, CJK, Arabic) instead of showing boxes. */
+  --sa-font-user:
+    var(--font-sa-mono), ui-monospace, 'SFMono-Regular', Menlo, Consolas, 'Noto Sans Devanagari',
+    'Noto Sans CJK SC', 'Noto Sans Arabic', 'Segoe UI', system-ui, sans-serif;
+
+  /* Fluid scale. Min and max are rem so user font-size settings still apply. */
+  --sa-text-xs: 0.75rem; /* 12 */
+  --sa-text-sm: 0.875rem; /* 14 */
+  --sa-text-base: 1rem; /* 16 */
+  --sa-text-lg: clamp(1.0625rem, 1.02rem + 0.2vw, 1.1875rem);
+  --sa-text-xl: clamp(1.25rem, 1.15rem + 0.5vw, 1.5rem);
+  --sa-text-2xl: clamp(1.5rem, 1.3rem + 1vw, 2rem);
+  --sa-text-3xl: clamp(1.875rem, 1.5rem + 1.8vw, 2.75rem);
+  --sa-text-4xl: clamp(2.125rem, 1.6rem + 2.8vw, 3.75rem);
+
+  /* ---- Space (4px base) ---------------------------------------------- */
+  --sa-space-1: 0.25rem;
+  --sa-space-2: 0.5rem;
+  --sa-space-3: 0.75rem;
+  --sa-space-4: 1rem;
+  --sa-space-5: 1.5rem;
+  --sa-space-6: 2rem;
+  --sa-space-7: 3rem;
+  --sa-space-8: 4.5rem;
+  --sa-space-9: 6rem;
+
+  /* ---- Shape and depth ------------------------------------------------ */
+  --sa-radius-sm: 0.25rem;
+  --sa-radius-md: 0.375rem;
+  --sa-radius-lg: 0.625rem;
+  --sa-shadow-1: 0 1px 2px rgb(20 17 15 / 0.06);
+  --sa-shadow-2: 0 1px 2px rgb(20 17 15 / 0.06), 0 6px 20px rgb(20 17 15 / 0.07);
+
+  /* ---- Motion --------------------------------------------------------- *
+   * 150 to 300 ms, purposeful, never blocks interaction. */
+  --sa-dur-fast: 150ms;
+  --sa-dur-base: 220ms;
+  --sa-dur-slow: 300ms;
+  --sa-ease: cubic-bezier(0.2, 0, 0, 1);
+
+  /* ---- Layout --------------------------------------------------------- */
+  --sa-measure: 62ch;
+  --sa-page-max: 72rem;
+  --sa-page-pad: clamp(1rem, 0.5rem + 2vw, 2rem);
+  --sa-tap: 2.75rem; /* 44px minimum touch target */
+
+  color-scheme: light;
+  background: rgb(var(--sa-paper));
+  color: rgb(var(--sa-ink));
+  font-family: var(--sa-font-display);
+  font-size: var(--sa-text-lg);
+  line-height: 1.6;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+}
+
+/*
+ * Dark theme. Opt in with data-sa-theme="dark" on any `.sa` element, or let the
+ * visitor's system choose with data-sa-theme="auto". The site default stays
+ * light, as specified.
+ *
+ * Measured on dark paper #13110F:
+ *   ink #F4F0E8 16.57:1 · muted #B8B1A6 8.86:1 · brand #F29A6F 8.64:1
+ *   allow #4ADE80 10.81 · redact #FBBF24 11.28 · rewrite #7DD3FC 11.30
+ *   block #FB7185 7.00 · review #B8B1A6 8.86
+ *   (on each colour's own 16% tint the lowest is block at 5.58:1)
+ * Primary button in dark: dark ink #13110F on #F29A6F = 8.64:1.
+ */
+.sa[data-sa-theme='dark'] {
+  --sa-paper: 19 17 15;
+  --sa-surface: 28 25 22;
+  --sa-sunken: 14 12 10;
+  --sa-ink: 244 240 232;
+  --sa-muted: 184 177 166;
+  --sa-on-brand: 19 17 15;
+  --sa-brand: 242 154 111;
+  --sa-brand-press: 247 177 142;
+  --sa-allow: 74 222 128;
+  --sa-redact: 251 191 36;
+  --sa-rewrite: 125 211 252;
+  --sa-block: 251 113 133;
+  --sa-review: 184 177 166;
+  --sa-hairline: 58 53 46;
+  --sa-control: 138 131 121; /* 5.03:1 on paper, 4.67:1 on surface */
+  --sa-focus: 125 211 252;
+  color-scheme: dark;
+}
+
+@media (prefers-color-scheme: dark) {
+  .sa[data-sa-theme='auto'] {
+    --sa-paper: 19 17 15;
+    --sa-surface: 28 25 22;
+    --sa-sunken: 14 12 10;
+    --sa-ink: 244 240 232;
+    --sa-muted: 184 177 166;
+    --sa-on-brand: 19 17 15;
+    --sa-brand: 242 154 111;
+    --sa-brand-press: 247 177 142;
+    --sa-allow: 74 222 128;
+    --sa-redact: 251 191 36;
+    --sa-rewrite: 125 211 252;
+    --sa-block: 251 113 133;
+    --sa-review: 184 177 166;
+    --sa-hairline: 58 53 46;
+    --sa-control: 138 131 121;
+    --sa-focus: 125 211 252;
+    color-scheme: dark;
+  }
+}
+
+/* ---- Base behaviour --------------------------------------------------- */
+
+.sa *,
+.sa *::before,
+.sa *::after {
+  box-sizing: border-box;
+}
+
+/* One visible focus style for everything interactive. Never removed. */
+.sa :where(a, button, input, textarea, select, summary, [tabindex]):focus-visible {
+  outline: 3px solid rgb(var(--sa-focus));
+  outline-offset: 2px;
+  border-radius: var(--sa-radius-sm);
+}
+
+.sa ::selection {
+  background: rgb(var(--sa-brand) / 0.22);
+}
+
+/* Reduced motion: no transitions, no animation, anywhere under .sa. */
+@media (prefers-reduced-motion: reduce) {
+  .sa *,
+  .sa *::before,
+  .sa *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Visually hidden but available to assistive tech. */
+.sa .sa-sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}

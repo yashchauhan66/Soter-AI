@@ -2,6 +2,7 @@ import type { IncomingMessage, ServerResponse } from "node:http";
 import { GatewayBoundary, GatewayPolicyError, GATEWAY_LIMITS, type GatewayProvider } from "./GatewayBoundary";
 import { validateProviderTarget } from "./ProviderTarget";
 import { geminiProviderTarget } from "./GeminiProviderTarget";
+import { assertSafeOutboundJson } from "./OutboundSecretPolicy";
 type Mode = { enabled: boolean; level: string };
 interface GatewayChecks {
     canaries?(): readonly string[];
@@ -110,9 +111,10 @@ export class GatewayPolicy {
             if (req.aborted || req.destroyed && !req.complete || res.destroyed) return fail("gateway_unavailable");
             req.once("aborted", cancelled);res.once("close", cancelled);this.#active.add(controller);
             deadline = setTimeout(() => controller.abort(), Math.min(30000, Math.max(1, this.options.requestTimeoutMs ?? 30000)));
-            this.audit("request_allowed");
             let providerBody = inspected.canonical;
             if (provider === "gemini") { const native = { ...inspected.body }; delete native.model; delete native.stream; providerBody = JSON.stringify(native); }
+            assertSafeOutboundJson(providerBody);
+            this.audit("request_allowed");
             const response = await (this.options.fetchImpl ?? fetch)(url.href, { method: "POST", headers, body: providerBody, redirect: "error", signal: controller.signal });
             const media = response.headers.get("content-type") ?? "";
             if (!response.ok || !response.body || !(streaming ? /^text\/event-stream(?:[ \t]*;[ \t]*charset=utf-8)?$/i : /^application\/json(?:[ \t]*;[ \t]*charset=utf-8)?$/i).test(media)) { await response.body?.cancel();return fail("gateway_provider_error"); }

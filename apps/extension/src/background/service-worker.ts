@@ -38,7 +38,7 @@ void initializeEnrollment();
 chrome.runtime.onInstalled.addListener(() => {
   registerContextMenu();
   configurePolicySyncAlarm(15 * 60);
-  chrome.alarms?.create("soter-heartbeat", { periodInMinutes: 5, delayInMinutes: 1 });
+  chrome.alarms?.create("soter-heartbeat", { periodInMinutes: 10, delayInMinutes: 1 });
   void syncPolicy();
 });
 

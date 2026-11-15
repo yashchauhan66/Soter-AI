@@ -33,6 +33,7 @@ export const metadata: Metadata = {
   ],
   alternates: { canonical: "/student-discount" },
   openGraph: {
+    images: [{ url: "/og-card/default.png", width: 1200, height: 630, alt: "SoterAI, the AI security command layer" }],
     title: "SoterAI IDE Guard — Free for Everyone",
     description:
       "SoterAI IDE Guard is free for everyone. Your AI coding assistant stops leaking your code and data. No credit card, no trial, no catch.",
@@ -155,8 +156,8 @@ export default function StudentDiscountPage() {
             <p className="mt-4 inline-flex max-w-2xl flex-wrap items-center justify-center gap-2 rounded-2xl border border-emerald-400/30 bg-emerald-400/10 px-5 py-3 text-base font-semibold text-slate-100">
               <Zap size={18} className="text-emerald-300" aria-hidden="true" />
               <span>
-                Risk-free <span className="text-emerald-300">vibe coding</span> — your secrets never
-                get revealed to the AI
+                Catch <span className="text-emerald-300">secrets</span> before they reach your AI
+                assistant. Detection is not perfect.
               </span>
             </p>
             <div className="mt-8 flex flex-col items-center gap-4 sm:flex-row">

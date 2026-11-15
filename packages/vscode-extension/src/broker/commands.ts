@@ -328,9 +328,12 @@ export function registerBrokerCommands(context: vscode.ExtensionContext, manager
     reg("soterai.configureAIBroker", async () => {
         if (!vscode.workspace.isTrusted) return void vscode.window.showWarningMessage("Provider routing configuration requires a trusted workspace. Local scanning remains available.");
         const config = vscode.workspace.getConfiguration("soterai");
-        const openAI = await vscode.window.showInputBox({ title: "OpenAI-compatible upstream endpoint", value: config.get("broker.openAIProviderUrl", ""), placeHolder: "https://api.openai.com/v1/chat/completions" });
-        const anthropic = await vscode.window.showInputBox({ title: "Anthropic-compatible upstream endpoint", value: config.get("broker.anthropicProviderUrl", ""), placeHolder: "https://api.anthropic.com/v1/messages" });
-        const key = await vscode.window.showInputBox({ title: "Provider API key (stored in SecretStorage)", password: true });
+        const openAI = await vscode.window.showInputBox({ title: "OpenAI-compatible upstream endpoint", value: config.get("broker.openAIProviderUrl", ""), placeHolder: "https://api.openai.com/v1/chat/completions", ignoreFocusOut: true });
+        if (openAI === undefined) return;
+        const anthropic = await vscode.window.showInputBox({ title: "Anthropic-compatible upstream endpoint", value: config.get("broker.anthropicProviderUrl", ""), placeHolder: "https://api.anthropic.com/v1/messages", ignoreFocusOut: true });
+        if (anthropic === undefined) return;
+        const key = await vscode.window.showInputBox({ title: "Provider API key (stored in SecretStorage)", password: true, ignoreFocusOut: true });
+        if (key === undefined) return;
         await config.update("broker.openAIProviderUrl", openAI ?? "", vscode.ConfigurationTarget.Global);
         await config.update("broker.anthropicProviderUrl", anthropic ?? "", vscode.ConfigurationTarget.Global);
         if (key) await context.secrets.store("soterai.providerApiKey", key);

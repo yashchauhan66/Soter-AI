@@ -9,8 +9,9 @@
  * If each side derived its own slug, a heading containing an emoji or an
  * apostrophe would produce a link that scrolls nowhere — and it would only break
  * on the specific pages that use those characters, which is the failure mode
- * least likely to be noticed in review. `🚫 Common beginner mistakes` and
- * `What you'll build` are both real headings in these docs.
+ * least likely to be noticed in review. `What you'll build` is a real heading in
+ * these docs, and the quickstart's "Common beginner mistakes" heading used to
+ * start with an emoji.
  */
 
 /**

@@ -5,7 +5,7 @@ import { FeatureLanding, type FeatureLandingData } from "@/components/marketing/
 export const metadata: Metadata = buildMetadata({
   title: "AI Data Leakage Prevention: Stop Secret Leaks",
   description:
-    "Scan and redact secrets, API keys, and PII locally before they reach an AI coding assistant. SoterAI IDE Guard reduces accidental data leakage at the source.",
+    "Redact secrets, API keys and personal data before they reach an AI model or coding assistant. The IDE extension is in Beta; limits are listed.",
   path: "/ai-data-leakage-prevention",
   keywords: [
     "ai data leakage prevention",

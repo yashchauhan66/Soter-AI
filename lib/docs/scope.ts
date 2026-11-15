@@ -33,6 +33,11 @@ export const DOCS_SCOPE: Record<string, string[]> = {
     "Availability depends on your plan; the directory lists every service regardless of tier.",
   ],
 
+  "/docs/soterai-lite": [
+    "Documents the Windows x64 0.7.0 release candidate, not final acceptance on other operating systems or remote environments.",
+    "Protection covers supported managed AI routes, not unmanaged file reads, uploads, or bypasses by code running as the same user. Review recovery and retained-data limits before uninstalling.",
+  ],
+
   "/docs/js": [
     "Server-side only. The SDK must never run in a browser bundle, because that would expose your API key.",
     "Does not cover React, Vue, or any client framework directly — call your own backend route from the client.",

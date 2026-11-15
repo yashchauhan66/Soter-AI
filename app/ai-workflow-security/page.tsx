@@ -1,9 +1,10 @@
 import type { Metadata } from "next";
 import { buildMetadata } from "@/lib/seo/metadata";
 import { FeatureLanding, type FeatureLandingData } from "@/components/marketing/FeatureLanding";
+import { LATENCY_SENTENCE } from "@/lib/sa/claims";
 
 export const metadata: Metadata = buildMetadata({
-  title: "AI Workflow Security: Protect n8n, Zapier & Make",
+  title: "AI Workflow Security for n8n, Zapier and Make",
   description:
     "Secure AI workflows in n8n, Zapier, Make.com and custom agent pipelines. SoterAI Guard prevents prompt injection, data leakage and tool abuse.",
   path: "/ai-workflow-security",
@@ -22,10 +23,10 @@ export const metadata: Metadata = buildMetadata({
 const data: FeatureLandingData = {
   path: "/ai-workflow-security",
   eyebrow: "AI Workflow Security",
-  h1: "Secure AI-powered automations and workflows",
+  h1: "Secure automations and workflows that call an AI model",
   productName: "SoterAI Workflow Security",
   intro:
-    "AI-powered workflows connect LLMs, tools, and data sources into automated pipelines — creating new attack surfaces. A single compromised step can exfiltrate data, execute unauthorized actions, or cascade failures. SoterAI Guard secures every node in your AI workflow: scanning inputs, authorizing tool calls, monitoring data flow, and providing audit trails for n8n, Zapier, Make.com, and custom agent pipelines.",
+    "Workflows that call an AI model connect LLMs, tools, and data sources into automated pipelines — creating new attack surfaces. A single compromised step can exfiltrate data, execute unauthorized actions, or cascade failures. SoterAI Guard secures every node in your AI workflow: scanning inputs, authorizing tool calls, monitoring data flow, and providing audit trails for n8n, Zapier, Make.com, and custom agent pipelines.",
   features: [
     {
       title: "Workflow input scanning",
@@ -86,7 +87,7 @@ const data: FeatureLandingData = {
     },
     {
       q: "Will it slow down my workflows?",
-      a: "SoterAI adds under 100ms per inspection step. For most workflows this is negligible compared to LLM call latency.",
+      a: `Each inspection step is one API call, so it adds that call's time. ${LATENCY_SENTENCE} Measure your own workflow before you rely on any figure.`,
     },
   ],
   related: [

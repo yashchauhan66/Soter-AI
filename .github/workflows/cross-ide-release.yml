@@ -141,9 +141,15 @@ jobs:
   # ───────────────────────────────────────────────────────────────────────────
   vscode-package:
     name: vscode package (vsce)
-    runs-on: ubuntu-latest
+    runs-on: windows-latest
     timeout-minutes: 20
     needs: [guard-core-tests, canary-privacy-test, secret-scan]
+    defaults:
+      run:
+        shell: bash
+    outputs:
+      artifact-name: ${{ steps.release.outputs.artifact_name }}
+      artifact-sha256: ${{ steps.release.outputs.artifact_sha256 }}
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -151,26 +157,37 @@ jobs:
           node-version: ${{ env.NODE_VERSION }}
           cache: npm
       - run: npm ci
+      - name: Install locked Lite packaging toolchain
+        run: npm ci --prefix tools/soterai-lite-packager
+      - name: Build shared type declarations
+        run: npm --prefix packages/guard-core run build
       - name: Typecheck extension
-        run: npm --prefix packages/vscode-extension run typecheck
+        run: npm --prefix packages/soterai-lite run typecheck
+      - name: Test Lite release receipts and package checks
+        run: node --test packages/soterai-lite/scripts/__tests__/*.test.cjs
       - name: Package VSIX
-        run: npm run vscode:package
-      - name: Verify VSIX contents and hash
-        run: npm --prefix packages/vscode-extension run verify:vsix
-      - name: Validate marketplace packages
-        run: npm run validate:marketplaces
-      - name: Collect VSIX
         run: |
-          mkdir -p dist/cross-ide
-          cp packages/vscode-extension/*.vsix dist/cross-ide/
+          mkdir -p artifacts
+          node packages/soterai-lite/scripts/package.cjs --receipt-out artifacts/lite-cross-pointer.json
+      - name: Verify VSIX contents and hash
+        id: release
+        run: node packages/soterai-lite/scripts/release-artifact.cjs resolve --pointer artifacts/lite-cross-pointer.json --github-output "$GITHUB_OUTPUT"
+      - name: Exercise the packaged broker with synthetic loopback requests
+        run: node packages/soterai-lite/scripts/smoke-broker.cjs --pointer artifacts/lite-cross-pointer.json --evidence-out artifacts/lite-cross-smoke
       - name: Upload VSIX
         uses: actions/upload-artifact@v4
         with:
           name: vscode-vsix
+          path: ${{ steps.release.outputs.artifact_path }}
+          if-no-files-found: error
+      - name: Upload exact Lite build evidence
+        uses: actions/upload-artifact@v4
+        with:
+          name: vscode-vsix-evidence
           path: |
-            dist/cross-ide/*.vsix
-            artifacts/security/vsix-integrity.json
-            artifacts/security/vscode-extension.cdx.json
+            artifacts/lite-cross-pointer.json
+            artifacts/lite-cross-smoke/result.json
+            ${{ steps.release.outputs.build_attempt_path }}
           if-no-files-found: error
 
   # ───────────────────────────────────────────────────────────────────────────
@@ -252,9 +269,17 @@ jobs:
         with:
           path: artifacts
       - name: Flatten artifacts
+        env:
+          LITE_ARTIFACT_NAME: ${{ needs.vscode-package.outputs.artifact-name }}
+          LITE_ARTIFACT_SHA256: ${{ needs.vscode-package.outputs.artifact-sha256 }}
         run: |
+          set -euo pipefail
           mkdir -p release
-          find artifacts -type f \( -name "*.vsix" -o -name "*.zip" \) -exec cp {} release/ \;
+          test -n "$LITE_ARTIFACT_NAME" && test -n "$LITE_ARTIFACT_SHA256"
+          LITE_SOURCE="artifacts/vscode-vsix/$LITE_ARTIFACT_NAME"
+          echo "$LITE_ARTIFACT_SHA256  $LITE_SOURCE" | sha256sum --check --status
+          cp -- "$LITE_SOURCE" "release/$LITE_ARTIFACT_NAME"
+          find artifacts -type f -name "*.zip" -exec cp {} release/ \;
           # broker build is a directory; archive it for the release
           if [ -d artifacts/local-ai-broker-dist ]; then
             tar -czf release/local-ai-broker-dist.tar.gz -C artifacts/local-ai-broker-dist .

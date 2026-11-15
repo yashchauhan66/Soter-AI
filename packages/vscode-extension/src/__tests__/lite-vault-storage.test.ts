@@ -11,8 +11,7 @@ import { VaultStorage, VAULT_LIMIT, readVaultFile, vaultJson, vaultObject, sameP
 // Post-implementation F06 storage regressions, not a claimed failing baseline.
 // Every created file/link is owned by one synthetic temporary fixture. The
 // workspace stub supplies folder metadata only; all I/O/locks use the real module.
-const TEMP_ROOT = process.platform === "win32" ? "D:\\SoterAI-Lite-test-profiles\\f06-storage-tests"
-    : join(tmpdir(), "soterai-f06-storage-tests");
+const TEMP_ROOT = join(tmpdir(), "soterai-f06-storage-tests");
 const PRIVATE = "SYNTHETIC_F06_STORAGE_PRIVATE_VALUE_20261014";
 const SENTINEL = "SYNTHETIC_UNRELATED_DIRECTORY_MUST_REMAIN_UNCHANGED";
 const KEY = Buffer.alloc(32, 7).toString("base64");

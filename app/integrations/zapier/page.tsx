@@ -1,204 +1,83 @@
-import Link from "next/link";
-import type { Metadata } from "next";
-import { ArrowRight, CheckCircle2, ShieldCheck } from "lucide-react";
-import { buildMetadata } from "@/lib/seo/metadata";
-import { JsonLd } from "@/components/seo/JsonLd";
-import { breadcrumbList } from "@/lib/seo/schema";
-import { faqPageLd } from "@/lib/seo/metadata";
-import { safeJsonLd } from "@/lib/seo/jsonLd";
+import type { Metadata } from 'next';
+import Link from 'next/link';
+import { CodeBlock } from '@/components/sa/CodeBlock';
+import { Faq, faqJsonLd } from '@/components/sa/Faq';
+import { Callout, SaLinkButton, StatusBadge } from '@/components/sa/primitives';
+import { SaRoot } from '@/components/sa/SaRoot';
+import { JsonLd } from '@/components/seo/JsonLd';
+import { buildMetadata } from '@/lib/seo/metadata';
+import { breadcrumbList } from '@/lib/seo/schema';
+import { STATUS_MEANING, SURFACES } from '@/lib/sa/surfaces';
 
+const workflowSurface = SURFACES.find((surface) => surface.href === '/integrations')!;
 export const metadata: Metadata = buildMetadata({
-  title: "Zapier AI Security: Prompt Injection Protection",
-  description:
-    "Add prompt injection protection and PII redaction to Zapier AI actions. SoterAI Guard scans every AI step via webhooks, before and after execution.",
-  path: "/integrations/zapier",
-  keywords: [
-    "zapier ai security",
-    "zapier prompt injection",
-    "zapier llm security",
-    "zapier ai automation security",
-    "secure zapier ai actions",
-    "zapier data leakage prevention",
-    "soterai zapier integration",
-  ],
+  title: 'Zapier AI security: webhook integration',
+  description: 'A Beta guide to checking Zapier AI inputs and replies through webhooks. Configure credentials and Filter steps; unguarded branches stay out of scope.',
+  path: '/integrations/zapier',
+  keywords: ['zapier ai security', 'zapier prompt injection', 'zapier llm security', 'zapier ai automation security', 'secure zapier ai actions', 'zapier data leakage prevention', 'soterai zapier integration'],
 });
-
 const faqs = [
-  {
-    q: "How does SoterAI integrate with Zapier?",
-    a: "SoterAI integrates with Zapier via the Webhooks by Zapier action (available on paid plans). Add a POST webhook step before your AI action to scan inputs, and another after to inspect AI output before passing it downstream.",
-  },
-  {
-    q: "Can SoterAI stop a Zapier workflow if it detects an attack?",
-    a: "Yes. When SoterAI returns action: 'block', use a Zapier Filter step to halt the workflow. In Monitor mode, the workflow continues but the event is logged for review.",
-  },
-  {
-    q: "Does SoterAI detect India-specific PII in Zapier workflows?",
-    a: "Yes. SoterAI detects Aadhaar-pattern numbers, PAN, GSTIN, UPI IDs, IFSC codes, and Indian mobile numbers in addition to global PII types like email addresses and credit card numbers.",
-  },
-  {
-    q: "Is there a Zapier native app for SoterAI?",
-    a: "Not yet. Integration is via the Webhooks by Zapier action today. A native Zapier app is on the roadmap — contact us to be notified when it launches.",
-  },
+  { q: 'How does SoterAI integrate with Zapier?', a: 'Use Webhooks by Zapier to POST the mapped input or model reply to SoterAI, then configure a Filter or explicit decision branch. This is a guide, not a native app. Check your Zapier plan for webhook availability.' },
+  { q: 'Can SoterAI stop a Zapier workflow if it detects an attack?', a: 'A Filter by Zapier step can stop the Zap when the result does not meet your allow conditions. The API verdict alone does not stop downstream actions; you must configure and test the Filter and HTTP error paths.' },
+  { q: 'Does SoterAI detect India-specific PII in Zapier workflows?', a: 'The guard checks supplied text for recognized patterns, including Aadhaar-pattern numbers, PAN, GSTIN, UPI IDs, IFSC codes and Indian mobile numbers. Pattern detection can miss real data or flag benign text; evaluate it on non-sensitive examples from your use case.' },
+  { q: 'Is there a Zapier native app for SoterAI?', a: 'No native app is offered by this guide. The integration uses Webhooks by Zapier today. No native-app release date is promised here.' },
 ];
-
 const steps = [
-  {
-    step: "Get your SoterAI API key",
-    body: "Sign up at soterai.in, create a project, and copy your API key from the project settings.",
-  },
-  {
-    step: "Add a Webhooks step before your AI action",
-    body: "In your Zapier workflow, add a Webhooks by Zapier > POST action before your AI step. URL: https://api.soterai.in/v1/guard/input",
-  },
-  {
-    step: "Configure the webhook payload",
-    body: 'Set Payload Type to JSON. Data: { "input": "<map the user input field>", "project": "YOUR_PROJECT_ID" }. Header: Authorization: Bearer YOUR_API_KEY',
-  },
-  {
-    step: "Add a Filter to halt blocked requests",
-    body: "Add a Filter by Zapier step after the webhook. Condition: the webhook response field action Exactly matches allow. This stops the workflow when SoterAI detects a threat.",
-  },
-  {
-    step: "Guard the AI output",
-    body: "After your AI action, add another Webhooks POST to /v1/guard/output with the AI response body. Use a second Filter to halt if the output guard returns block.",
-  },
+  { step: 'Get your SoterAI API key', body: 'Sign up at soterai.in and create a project. Keep the API key in secure configuration. Use the REST guide configuration names SOTER_BASE_URL and SOTER_API_KEY.' },
+  { step: 'Add a Webhooks step before your AI action', body: 'Add Webhooks by Zapier > POST before the AI action. Set the URL to your SOTER_BASE_URL followed by /api/guard/input.' },
+  { step: 'Configure the webhook payload', body: 'Set Payload Type to JSON. Map the incoming text into the message field. Add the x-api-key header using your securely stored SOTER_API_KEY value. Do not send the placeholder name as the key.' },
+  { step: 'Add a Filter to halt blocked requests', body: 'Configure Filter by Zapier to continue only when a valid response has allowed exactly true and action exactly ALLOW. For action ALLOW_WITH_REDACTION, require allowed exactly true and a non-empty redactedText or safeText; pass only that cleaned text through an explicit branch. For action REWRITE, require allowed exactly true and a non-empty safeText; pass only that rewritten text through an explicit branch. Stop on BLOCK or HUMAN_REVIEW. Stop when allowed is false or missing, the action is unknown or missing, required cleaned text is absent, or the result is invalid or unavailable.' },
+  { step: 'Guard the AI output', body: 'After the AI action, POST to /api/guard/output with the reply mapped into aiResponse. Add the same verdict checks before downstream actions. Ensure an HTTP failure cannot fall through to the AI or delivery step.' },
 ];
-
-const howToLd = {
-  "@context": "https://schema.org",
-  "@type": "HowTo",
-  "name": "How to add SoterAI AI security to Zapier workflows",
-  "description": "Step-by-step guide to integrate SoterAI Guard with Zapier AI actions using the Webhooks by Zapier action.",
-  "step": steps.map((s, i) => ({
-    "@type": "HowToStep",
-    "position": i + 1,
-    "name": s.step,
-    "text": s.body,
-  })),
-};
-
+const inputRequest = `curl -X POST "$SOTER_BASE_URL/api/guard/input" \\
+  -H "x-api-key: $SOTER_API_KEY" \\
+  -H "Content-Type: application/json" \\
+  -d '{"message":"Non-sensitive test prompt"}'`;
+const outputRequest = `curl -X POST "$SOTER_BASE_URL/api/guard/output" \\
+  -H "x-api-key: $SOTER_API_KEY" \\
+  -H "Content-Type: application/json" \\
+  -d '{"aiResponse":"Non-sensitive test reply"}'`;
+const features = [
+  { title: 'Input guard', body: 'Review the mapped input for known prompt-injection and jailbreak patterns before the AI action.' },
+  { title: 'PII detection', body: 'Find recognized sensitive identifiers in text supplied through the webhook. Detection is not a data-authorization boundary.' },
+  { title: 'Output guard', body: 'Inspect a mapped model reply before sending it to another Zapier action.' },
+  { title: 'Decision evidence', body: 'Review guard decisions in SoterAI. Retention and export availability depend on your plan and configuration.' },
+];
 export default function Page() {
-  const breadcrumb = breadcrumbList([
-    { name: "Home", path: "/" },
-    { name: "Integrations", path: "/integrations" },
-    { name: "Zapier AI Security", path: "/integrations/zapier" },
-  ]);
-
   return (
-    <main className="container-page py-16">
-      <JsonLd data={breadcrumb} />
-      <JsonLd data={faqPageLd(faqs)} />
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: safeJsonLd(howToLd) }} />
-
-      <section className="max-w-3xl">
-        <p className="eyebrow">Integration · Zapier</p>
-        <h1 className="mt-3 text-4xl font-bold tracking-tight sm:text-5xl">
-          AI security for Zapier workflows
-        </h1>
-        <p className="mt-5 text-lg leading-8 text-slate-200">
-          Zapier&apos;s AI actions automate tasks across thousands of apps — but prompt injection,
-          PII leakage, and unsafe AI outputs can propagate silently through every downstream step.
-          SoterAI Guard adds a real-time security layer to your Zapier AI automations.
-        </p>
-        <div className="mt-8 flex flex-wrap gap-4">
-          <Link href="/signup" className="button-primary gap-2">
-            Get your API key <ArrowRight size={16} aria-hidden="true" />
-          </Link>
-          <Link href="/docs/rest-api" className="button-secondary">
-            REST API docs
-          </Link>
-        </div>
-      </section>
-
-      <section className="mt-16">
-        <h2 className="text-2xl font-bold">What SoterAI protects in Zapier</h2>
-        <div className="mt-6 grid gap-4 sm:grid-cols-2">
+    <SaRoot>
+      <JsonLd data={breadcrumbList([
+        { name: 'Home', path: '/' }, { name: 'Integrations', path: '/integrations' },
+        { name: 'Zapier AI Security', path: '/integrations/zapier' },
+      ])} />
+      <JsonLd data={faqJsonLd(faqs)} />
+      <JsonLd data={{
+        '@context': 'https://schema.org', '@type': 'HowTo', name: 'How to add SoterAI AI security to Zapier workflows',
+        description: 'Configure webhook requests, authentication and explicit Filter steps for supplied AI text.',
+        step: steps.map((item, i) => ({ '@type': 'HowToStep', position: i + 1, name: item.step, text: item.body })),
+      }} />
+      <main className="sa-page" style={{ paddingBlock: 'var(--sa-space-7) var(--sa-space-9)' }}>
+        <header>
+          <p className="sa-eyebrow">Integration · Zapier <StatusBadge status={workflowSurface.status} /></p>
+          <h1 className="sa-h1" style={{ marginTop: 'var(--sa-space-3)' }}>Put a check around the AI step in your Zap.</h1>
+          <p className="sa-lede" style={{ marginTop: 'var(--sa-space-4)' }}>Use Webhooks by Zapier to check a prompt before the model and a reply before delivery. This is a guide, not a native app. You configure the credentials, mapped text and Filter steps.</p>
+          <div className="sa-hero__actions"><SaLinkButton href="/signup">Get your API key</SaLinkButton><SaLinkButton href="/docs/rest-api" variant="secondary">REST API docs</SaLinkButton></div>
+          <p className="sa-body sa-muted" style={{ marginTop: 'var(--sa-space-4)' }}>{STATUS_MEANING.find((item) => item.status === workflowSurface.status)?.meaning}</p>
+        </header>
+        <section className="sa-section" aria-labelledby="checks"><div className="sa-section__head"><h2 className="sa-h2" id="checks">What the webhook steps check</h2></div><ul className="sa-rules sa-rules--2">{features.map((item) => <li key={item.title}><h3>{item.title}</h3><p className="sa-body">{item.body}</p></li>)}</ul></section>
+        <section className="sa-section" aria-labelledby="setup"><div className="sa-section__head"><h2 className="sa-h2" id="setup">How to integrate with Zapier</h2></div><ol className="sa-steps">{steps.map((item) => <li key={item.step}><div><h3>{item.step}</h3><p className="sa-body">{item.body}</p></div></li>)}</ol></section>
+        <section className="sa-section" aria-labelledby="requests"><div className="sa-section__head"><h2 className="sa-h2" id="requests">The documented HTTP requests</h2><p className="sa-body">These curl equivalents use the REST documentation&apos;s environment-variable names. In Zapier, substitute configured values and map the input or reply field. They are request examples, not captured engine responses.</p></div><div className="sa-cols sa-cols--2"><CodeBlock label="Input request" language="bash" code={inputRequest} /><CodeBlock label="Output request" language="bash" code={outputRequest} /></div></section>
+        <section className="sa-section" aria-labelledby="limits"><div className="sa-section__head"><h2 className="sa-h2" id="limits">Limitations</h2></div><Callout kind="limit" title="The Filter is not optional">Steps that bypass the guard are not covered. Detection can miss attacks or flag benign text. Webhooks by Zapier may require a paid plan. Each guard adds an API call; test latency, ALLOW, ALLOW_WITH_REDACTION, REWRITE, BLOCK and HUMAN_REVIEW, missing or empty cleaned text, allowed false or missing, invalid or unavailable responses and API failures in your own Zap.</Callout></section>
+        <section className="sa-section" aria-labelledby="faq"><div className="sa-section__head"><h2 className="sa-h2" id="faq">Frequently asked questions</h2></div><Faq items={faqs} /></section>
+        <nav className="sa-section" aria-label="Related integrations" style={{ display: 'flex', flexWrap: 'wrap', gap: 'var(--sa-space-4)' }}>
           {[
-            { title: "Input guard", body: "Scan data entering your Zapier AI action for prompt injection, jailbreak attempts, and hidden instruction overrides before the AI model sees it." },
-            { title: "PII detection", body: "Detect and surface Aadhaar patterns, PAN, GSTIN, credit card numbers, emails, and other sensitive identifiers flowing through workflow steps." },
-            { title: "Output guard", body: "Inspect AI-generated responses for leaked instructions, unsafe content, or sensitive data before it reaches downstream Zapier actions." },
-            { title: "Audit logging", body: "Every guard decision is logged with timestamp, threat type, and confidence score — available via the SoterAI dashboard and SIEM export." },
-          ].map((f) => (
-            <div key={f.title} className="rounded-xl border border-slate-800 bg-panel/40 p-5">
-              <div className="flex items-center gap-2">
-                <ShieldCheck className="h-5 w-5 text-cyan" aria-hidden="true" />
-                <h3 className="font-semibold text-slate-100">{f.title}</h3>
-              </div>
-              <p className="mt-2 text-sm leading-6 text-slate-200">{f.body}</p>
-            </div>
-          ))}
-        </div>
-      </section>
-
-      <section className="mt-16">
-        <h2 className="text-2xl font-bold">How to integrate SoterAI with Zapier</h2>
-        <ol className="mt-6 space-y-6">
-          {steps.map((s, i) => (
-            <li key={s.step} className="flex gap-4">
-              <span className="flex h-7 w-7 flex-none items-center justify-center rounded-full bg-cyan/10 text-sm font-bold text-cyan">
-                {i + 1}
-              </span>
-              <div>
-                <p className="font-semibold text-slate-100">{s.step}</p>
-                <p className="mt-1 text-sm leading-6 text-slate-200">{s.body}</p>
-              </div>
-            </li>
-          ))}
-        </ol>
-      </section>
-
-      <section className="mt-16">
-        <h2 className="text-2xl font-bold">Limitations</h2>
-        <ul className="mt-5 space-y-3">
-          {[
-            "Integration requires Webhooks by Zapier, available on Zapier paid plans.",
-            "SoterAI inspects data routed through the webhook steps. Zapier steps that bypass the guard are not covered.",
-            "Detection is heuristic. Novel or heavily obfuscated injection attempts may not be flagged.",
-          ].map((l) => (
-            <li key={l} className="flex gap-3 text-sm leading-6 text-slate-200">
-              <span className="mt-2 h-1.5 w-1.5 flex-none rounded-full bg-amber-500" />
-              {l}
-            </li>
-          ))}
-        </ul>
-      </section>
-
-      <section className="mt-16">
-        <h2 className="text-2xl font-bold">Frequently asked questions</h2>
-        <div className="mt-6 space-y-6">
-          {faqs.map((f) => (
-            <div key={f.q}>
-              <h3 className="font-semibold text-slate-100">{f.q}</h3>
-              <p className="mt-2 text-sm leading-6 text-slate-200">{f.a}</p>
-            </div>
-          ))}
-        </div>
-      </section>
-
-      <section className="mt-16 flex flex-wrap gap-3">
-        {[
-          ["AI Workflow Security", "/ai-workflow-security"],
-          ["n8n Integration", "/integrations/n8n"],
-          ["Make.com Integration", "/integrations/make"],
-          ["AI Agent Security", "/ai-agent-security"],
-          ["Limitations", "/limitations"],
-        ].map(([label, href]) => (
-          <Link key={href} href={href} className="inline-flex items-center gap-1.5 rounded-full border border-slate-700/60 px-4 py-2 text-sm text-slate-300 transition hover:border-cyan/50 hover:text-cyan">
-            <CheckCircle2 className="h-3.5 w-3.5" aria-hidden="true" /> {label}
-          </Link>
-        ))}
-      </section>
-
-      <section className="mt-16 rounded-2xl border border-cyan/20 bg-cyan/5 p-8 text-center">
-        <h2 className="text-2xl font-bold">Secure your Zapier AI automations</h2>
-        <p className="mx-auto mt-3 max-w-xl text-sm leading-6 text-slate-200">
-          Create a free SoterAI project, add two webhook steps to your Zap, and every AI action is protected.
-        </p>
-        <Link href="/signup" className="mt-6 inline-flex items-center gap-2 rounded-lg bg-cyan px-6 py-3 text-sm font-semibold text-white transition hover:opacity-90">
-          Get started free <ArrowRight className="h-4 w-4" aria-hidden="true" />
-        </Link>
-      </section>
-    </main>
+            ['AI Workflow Security', '/ai-workflow-security'], ['n8n Integration', '/integrations/n8n'],
+            ['Make.com Integration', '/integrations/make'], ['AI Agent Security', '/ai-agent-security'], ['Limitations', '/limitations'],
+          ].map(([label, href]) => <Link className="sa-link" key={href} href={href}>{label}</Link>)}
+        </nav>
+        <section className="sa-section" aria-labelledby="pilot"><div className="sa-section__head"><h2 className="sa-h2" id="pilot">Pilot one guarded path first</h2><p className="sa-body">Use non-sensitive text and verify that each Filter stops rejected or unavailable results. Two webhooks do not automatically cover other AI actions or branches.</p></div><SaLinkButton href="/signup">Get started free</SaLinkButton></section>
+      </main>
+    </SaRoot>
   );
 }
+

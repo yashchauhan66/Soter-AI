@@ -6,15 +6,17 @@ import type { ChildProcess, spawn } from "node:child_process";
 import { join, resolve } from "node:path";
 import { tmpdir } from "node:os";
 import type { VaultAppDescriptor } from "../../../core/src/VaultAppDescriptor";
+import { createVaultAppArtifact } from "../../../core/src/VaultAppArtifact";
 
 // F09 short-value consumer policy only. F07/F08's short-value classifier and
 // public prose semantics remain separately covered by their retained suites.
 const MASK = "[REDACTED_SECRET_OUTPUT]";
 const tick = async () => { await new Promise<void>(done => setImmediate(done)); };
+const artifact = createVaultAppArtifact("public.cjs", [{ path: "public.cjs", kind: "commonjs", source: "", imports: [] }]);
 function descriptor(): VaultAppDescriptor {
     const root = resolve(tmpdir(), "synthetic-f09-short-not-created");
-    return { schemaVersion: 1, id: "f585ebef-9bc9-46bb-81f9-08cfef6513c3", root, program: join(root, "public.cjs"), cwd: root,
-        source: join(root, ".env.synthetic"), programDigest: "c".repeat(64), args: [],
+    return { schemaVersion: 2, id: "f585ebef-9bc9-46bb-81f9-08cfef6513c3", root, program: join(root, "public.cjs"), cwd: root,
+        source: join(root, ".env.synthetic"), programDigest: "c".repeat(64), artifactDigest: artifact.digest, args: [],
         selections: [{ name: "TOKEN", placeholder: "[SOTERAI_PROTECTED_0123456789ABCDEF0123456789ABCDEF_0]" }] };
 }
 class Child extends EventEmitter {
@@ -25,7 +27,7 @@ class Child extends EventEmitter {
 }
 async function result(value: string, stdout: string, stderr = "") {
     const { VaultAppJob } = await import("../vault-runtime/VaultAppJob"), child = new Child();
-    const job = new VaultAppJob({ descriptor: descriptor(), values: { TOKEN: value }, runtime: { executable: process.execPath, electron: false }, parentEnvironment: {} }, {
+    const job = new VaultAppJob({ descriptor: descriptor(), artifact, values: { TOKEN: value }, runtime: { executable: process.execPath, electron: false }, parentEnvironment: {} }, {
         spawn: (() => { queueMicrotask(() => { child.emit("spawn"); child.emit("message", { type: "READY" }); }); return child as unknown as ChildProcess; }) as unknown as typeof spawn,
         setTimer() { return {}; }, clearTimer() {},
     });

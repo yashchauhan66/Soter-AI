@@ -1,10 +1,12 @@
 /**
  * Local, tamper-evident audit ledger with signed retention checkpoints.
  * Signatures detect edits to retained data, not a complete storage rollback or
- * compromise of the extension host/OS user. Callers provide redacted evidence.
+ * compromise of the extension host/OS user. Caller diagnostic text is withheld.
  */
 import * as vscode from "vscode";
 import * as crypto from "node:crypto";
+import { ownedSinkMetadata } from "../../../core/src/OwnedSinkMetadata";
+import { selfHygieneEnabled } from "../self-hygiene/SelfHygieneFlags";
 
 
 export interface AuditEntry {
@@ -22,6 +24,22 @@ export interface AuditEntry {
 const STORE_KEY = "soterai.auditLedger";
 const SIGN_KEY_ID = "soterai.auditLedger.signingKey";
 const MAX_ENTRIES = 2000;
+function canonicalTimestamp(value: unknown): value is string {
+    return typeof value === "string" && value.length === 24 && Number.isFinite(Date.parse(value))
+        && new Date(value).toISOString() === value;
+}
+const PUBLIC_AUDIT_FAILURES = new Set([
+    "Owned audit sink is disabled.", "Owned audit data exceeds the retained-entry limit.", "Invalid audit ledger storage.",
+    "Audit signing key is unavailable.", "Audit sequence exhausted.",
+    "Audit ledger verification failed. Export and inspect it before explicitly clearing the ledger.",
+]);
+function auditFailure(error: unknown): Error {
+    try {
+        const message: unknown = error && typeof error === "object" ? Object.getOwnPropertyDescriptor(error, "message")?.value : undefined;
+        if (typeof message === "string" && PUBLIC_AUDIT_FAILURES.has(message)) return new Error(message);
+    } catch { /* A caller exception cannot supply diagnostic text or accessors. */ }
+    return new Error("Owned audit operation unavailable.");
+}
 
 interface Anchor { seq: number; hash: string; signature: string }
 interface LedgerData {
@@ -34,7 +52,17 @@ interface Verification { ok: boolean; entries: number; brokenAt?: number }
 
 export class AuditLedger {
     private queue: Promise<unknown> = Promise.resolve();
-    private constructor(private readonly context: vscode.ExtensionContext) {}
+    private generation = 0;
+    private disposed = false;
+    private constructor(private readonly context: vscode.ExtensionContext) {
+        const listener = vscode.workspace.onDidChangeConfiguration(event => {
+            if (event.affectsConfiguration("soterai.lite.selfHygiene")) this.generation++;
+        });
+        context.subscriptions.push({ dispose: () => { this.disposed = true; this.generation++; listener.dispose(); } });
+    }
+    private available(generation: number): boolean {
+        return !this.disposed && this.generation === generation && selfHygieneEnabled();
+    }
     private static readonly instances = new WeakMap<vscode.ExtensionContext, AuditLedger>();
     public static get(context: vscode.ExtensionContext): AuditLedger {
         let ledger = this.instances.get(context);
@@ -43,7 +71,7 @@ export class AuditLedger {
     }
 
     private serialized<T>(operation: () => Promise<T>): Promise<T> {
-        const result = this.queue.then(operation);
+        const result = this.queue.then(operation).catch(error => { throw auditFailure(error); });
         this.queue = result.catch(() => undefined);
         return result;
     }
@@ -51,15 +79,21 @@ export class AuditLedger {
     private load(): LedgerData {
         const raw = this.context.globalState.get<AuditEntry[] | LedgerData>(STORE_KEY, []);
         // Legacy arrays remain untouched until a successful, verified append.
-        if (Array.isArray(raw)) return { entries: [...raw] };
+        if (Array.isArray(raw)) {
+            if (raw.length > MAX_ENTRIES) throw new Error("Owned audit data exceeds the retained-entry limit.");
+            return { entries: [...raw] };
+        }
         if (!raw || raw.version !== 2 || !Array.isArray(raw.entries)) throw new Error("Invalid audit ledger storage.");
+        if (raw.entries.length > MAX_ENTRIES) throw new Error("Owned audit data exceeds the retained-entry limit.");
         return { ...raw, entries: [...raw.entries] };
     }
 
-    private async getSigningKey(allowCreate = false): Promise<string> {
+    private async getSigningKey(allowCreate = false, generation?: number): Promise<string> {
         const existing = await this.context.secrets.get(SIGN_KEY_ID);
+        if (generation !== undefined && !this.available(generation)) throw new Error("Owned audit sink is disabled.");
         if (existing) return existing;
         if (!allowCreate) throw new Error("Audit signing key is unavailable.");
+        if (!selfHygieneEnabled()) throw new Error("Owned audit sink is disabled.");
         const key = crypto.randomBytes(32).toString("hex");
         await this.context.secrets.store(SIGN_KEY_ID, key);
         return key;
@@ -103,9 +137,14 @@ export class AuditLedger {
 
     /** Append atomically with the signed retention checkpoint and expected head. */
     public append(eventType: string, decision: string, riskScore?: number, redactedEvidence?: string): Promise<AuditEntry> {
+        const generation = this.generation;
+        if (!this.available(generation)) return Promise.reject(new Error("Owned audit sink is disabled."));
+        // Minimize synchronously, before a queued closure can retain caller text.
+        const metadata = ownedSinkMetadata(eventType, decision, riskScore);
         return this.serialized(async () => {
+            if (!this.available(generation)) throw new Error("Owned audit sink is disabled.");
             const data = this.load();
-            const key = await this.getSigningKey(!data.version && data.entries.length === 0);
+            const key = await this.getSigningKey(!data.version && data.entries.length === 0, generation);
             if (!this.verify(data, key).ok) {
                 throw new Error("Audit ledger verification failed. Export and inspect it before explicitly clearing the ledger.");
             }
@@ -113,10 +152,10 @@ export class AuditLedger {
             const base = {
                 seq: (previous?.seq ?? 0) + 1,
                 timestamp: new Date().toISOString(),
-                eventType,
-                decision,
-                riskScore,
-                redactedEvidence: (redactedEvidence ?? "").slice(0, 400),
+                eventType: metadata.code === "event" ? "event_" + ((previous?.seq ?? 0) + 1) : metadata.code,
+                decision: metadata.decision,
+                riskScore: metadata.riskScore,
+                redactedEvidence: "",
                 prevHash: previous?.hash ?? "GENESIS",
             };
             if (!Number.isSafeInteger(base.seq)) throw new Error("Audit sequence exhausted.");
@@ -128,6 +167,7 @@ export class AuditLedger {
                 const removed = entries[entries.length - MAX_ENTRIES - 1];
                 checkpoint = this.anchor(key, "checkpoint", removed.seq, removed.hash);
             }
+            if (!this.available(generation)) throw new Error("Owned audit sink is disabled.");
             await this.context.globalState.update(STORE_KEY, {
                 version: 2, entries: entries.slice(-MAX_ENTRIES), checkpoint,
                 head: this.anchor(key, "head", entry.seq, entry.hash),
@@ -142,22 +182,58 @@ export class AuditLedger {
             try {
                 const data = this.load();
                 count = data.entries.length;
-                const key = await this.getSigningKey(!data.version && count === 0);
+                if (!data.version && count === 0) return { ok: true, entries: 0 };
+                const key = await this.getSigningKey(false);
                 return this.verify(data, key);
             } catch { return { ok: false, entries: count }; }
         });
     }
 
     public exportRedacted(): Promise<string> {
+        const generation = this.generation;
+        if (!this.available(generation)) return Promise.resolve(JSON.stringify({ verified: false, entries: 0, chain: [], status: "WITHHELD" }));
         return this.serialized(async () => {
+            if (!this.available(generation)) return JSON.stringify({ verified: false, entries: 0, chain: [], status: "WITHHELD" });
             const data = this.load();
             let verified = false;
-            try { verified = this.verify(data, await this.getSigningKey(!data.version && data.entries.length === 0)).ok; }
+            let key: string | undefined;
+            try { key = await this.getSigningKey(false); verified = this.verify(data, key).ok; }
             catch { /* Export remains available when the signing key is missing. */ }
+            const historyMetadataOnly = data.entries.every(entry => {
+                const metadata = ownedSinkMetadata(entry.eventType, entry.decision, entry.riskScore);
+                return (metadata.code === entry.eventType || entry.eventType === "event_" + entry.seq)
+                    && metadata.decision === entry.decision && metadata.riskScore === entry.riskScore
+                    && canonicalTimestamp(entry.timestamp)
+                    && (entry.redactedEvidence === "" || entry.redactedEvidence === undefined);
+            });
+            // An expired or missing prefix may have contained private legacy text.
+            const exportVerificationMaterial = verified && historyMetadataOnly && (data.checkpoint?.seq ?? 0) === 0
+                && (data.entries.length === 0 || data.entries[0].seq === 1 && data.entries[0].prevHash === "GENESIS");
+            const chain = data.entries.slice(-MAX_ENTRIES).map(entry => {
+                const metadata = ownedSinkMetadata(entry.eventType, entry.decision, entry.riskScore);
+                const authenticated = exportVerificationMaterial && key !== undefined && this.computeHash(entry) === entry.hash && entry.signature === this.sign(key, entry.hash);
+                const seq = Number.isSafeInteger(entry.seq) && entry.seq > 0 ? entry.seq : 0;
+                return {
+                    seq,
+                    timestamp: canonicalTimestamp(entry.timestamp) ? entry.timestamp : "WITHHELD",
+                    eventType: metadata.code === "event" ? "event_" + seq : metadata.code,
+                    decision: metadata.decision,
+                    riskScore: metadata.riskScore,
+                    redactedEvidence: "",
+                    prevHash: authenticated ? entry.prevHash : "WITHHELD",
+                    hash: authenticated ? entry.hash : "WITHHELD",
+                    signature: authenticated ? entry.signature : undefined,
+                };
+            });
+            if (!this.available(generation)) return JSON.stringify({ verified: false, entries: 0, chain: [], status: "WITHHELD" });
             return JSON.stringify({
-                verified, entries: data.entries.length, chain: data.entries,
-                checkpoint: data.checkpoint, head: data.head,
-                verificationScope: "Retained entries only; complete storage rollback is not detectable.",
+                verified, entries: data.entries.length, chain,
+                checkpoint: historyMetadataOnly && key && this.validAnchor(key, "checkpoint", data.checkpoint)
+                    ? { seq: data.checkpoint.seq, hash: exportVerificationMaterial ? data.checkpoint.hash : "WITHHELD", signature: exportVerificationMaterial ? data.checkpoint.signature : "WITHHELD" } : undefined,
+                head: historyMetadataOnly && key && this.validAnchor(key, "head", data.head)
+                    ? { seq: data.head.seq, hash: exportVerificationMaterial ? data.head.hash : "WITHHELD", signature: exportVerificationMaterial ? data.head.signature : "WITHHELD" } : undefined,
+                sanitizedProjection: true,
+                verificationScope: "Original retained entries only, not the sanitized export projection; complete storage rollback is not detectable.",
             }, null, 2);
         });
     }

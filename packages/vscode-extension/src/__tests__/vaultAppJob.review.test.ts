@@ -6,6 +6,7 @@ import type { ChildProcess, spawn } from "node:child_process";
 import { resolve, join } from "node:path";
 import { tmpdir } from "node:os";
 import type { VaultAppDescriptor } from "../../../core/src/VaultAppDescriptor";
+import { createVaultAppArtifact } from "../../../core/src/VaultAppArtifact";
 
 // LOW review regressions: synthetic metadata and in-memory children only.
 // Bounded races fail visibly without leaving native processes or real timers.
@@ -17,14 +18,15 @@ async function bounded<T>(promise: Promise<T>, label: string): Promise<T> {
     try { return await Promise.race([promise, new Promise<never>((_, reject) => { timer = setTimeout(() => reject(new Error(label)), 250); })]); }
     finally { if (timer) clearTimeout(timer); }
 }
+const artifact = createVaultAppArtifact("public.cjs", [{ path: "public.cjs", kind: "commonjs", source: "", imports: [] }]);
 function descriptor(): VaultAppDescriptor {
     const root = resolve(tmpdir(), "synthetic-f09-review-not-created");
-    return { schemaVersion: 1, id: ID, root, program: join(root, "public.cjs"), cwd: root, source: join(root, ".env.synthetic"),
-        programDigest: "b".repeat(64), args: [], selections: [{ name: "DB_URL", placeholder: "[SOTERAI_PROTECTED_0123456789ABCDEF0123456789ABCDEF_0]" }] };
+    return { schemaVersion: 2, id: ID, root, program: join(root, "public.cjs"), cwd: root, source: join(root, ".env.synthetic"),
+        programDigest: "b".repeat(64), artifactDigest: artifact.digest, args: [], selections: [{ name: "DB_URL", placeholder: "[SOTERAI_PROTECTED_0123456789ABCDEF0123456789ABCDEF_0]" }] };
 }
 function noPrivate(value: unknown): void { assert.ok(!JSON.stringify(value).includes(PRIVATE), "Safe metadata must not copy unvalidated input text."); }
 function options(desc = descriptor()) {
-    return { descriptor: desc, values: { DB_URL: PRIVATE }, runtime: { executable: process.execPath, electron: false }, parentEnvironment: {} };
+    return { descriptor: desc, artifact, values: { DB_URL: PRIVATE }, runtime: { executable: process.execPath, electron: false }, parentEnvironment: {} };
 }
 class IncompleteChild extends EventEmitter {
     readonly pid = 45123; readonly stdin = null; readonly stdout: PassThrough | null; readonly stderr: PassThrough | null;

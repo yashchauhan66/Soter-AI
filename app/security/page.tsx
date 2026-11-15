@@ -7,6 +7,7 @@ export const metadata: Metadata = {
     "SoterAI security controls: tenant isolation, RBAC, encrypted API tokens, redacted logs, webhook signing, KMS-backed secrets, SAML SSO and SCIM v2.",
   alternates: { canonical: "/security" },
   openGraph: {
+    images: [{ url: "/og-card/default.png", width: 1200, height: 630, alt: "SoterAI, the AI security command layer" }],
     title: "Security Overview | SoterAI",
     description: "Defense-in-depth security controls for AI chatbots, RAG apps, and autonomous agents. Tenant isolation, RBAC, audit exports, and SIEM delivery.",
   },

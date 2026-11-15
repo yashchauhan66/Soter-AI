@@ -174,6 +174,10 @@ export class Position { constructor(public readonly line: number, public readonl
 export class Range {
     constructor(public readonly start: Position, public readonly end: Position) {}
     get isEmpty(): boolean { return this.start.line === this.end.line && this.start.character === this.end.character; }
+    isEqual(other: Range): boolean {
+        return this.start.line === other.start.line && this.start.character === other.start.character
+            && this.end.line === other.end.line && this.end.character === other.end.character;
+    }
 }
 export class Selection extends Range {
     constructor(anchor: Position, active: Position) { super(anchor, active); }

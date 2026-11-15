@@ -6,7 +6,6 @@ import { HeaderNav } from "@/components/auth/HeaderNav";
 import { AiAssistantLoader } from "@/components/dashboard/AiAssistantLoader";
 import { Breadcrumbs } from "@/components/layout/Breadcrumbs";
 import { Logo } from "@/components/layout/Logo";
-import { IdeExtensionBanner } from "@/components/marketing/IdeExtensionBanner";
 
 type SiteChromeProps = {
   children: React.ReactNode;
@@ -23,7 +22,7 @@ type SiteChromeProps = {
 };
 
 /**
- * Global page chrome: announcement bar, header, breadcrumbs, footer.
+ * Global page chrome: header, breadcrumbs, footer.
  *
  * Two behavioural changes worth knowing about:
  *
@@ -42,6 +41,7 @@ export function SiteChrome({ children, footer }: SiteChromeProps) {
   const pathname = usePathname() ?? "/";
   const adminRoute = pathname === "/admin" || pathname.startsWith("/admin/");
   const dashboardRoute = pathname === "/dashboard" || pathname.startsWith("/dashboard/");
+  const docsRoute = pathname === "/docs" || pathname.startsWith("/docs/");
 
   // Admin ships its own full-bleed shell.
   if (adminRoute) {
@@ -54,24 +54,26 @@ export function SiteChrome({ children, footer }: SiteChromeProps) {
 
   return (
     <>
-      {/* Marketing chrome only. Inside the product, a promo bar competes with the
-          work the user came to do. */}
-      {!dashboardRoute && <IdeExtensionBanner />}
-
-      <header className="sticky top-0 z-header border-b border-slate-800 bg-white/85 backdrop-blur-xl">
-        <div className="container-page flex h-16 items-center gap-4">
+      {/* No announcement bar. The old one said "risk-free vibe coding", a security
+          claim nothing supports, and it pushed the first screen down by 45px. The
+          IDE extension has its own page and a place in the Integrations menu. */}
+      <header className={`site-header sticky top-0 z-header border-b border-slate-800 ${docsRoute ? "site-header--docs" : ""}`}>
+        <div className={`${docsRoute ? "site-docs-header-inner" : "container-page"} flex h-16 items-center gap-4`}>
           <Link
             href="/"
-            aria-label="SoterAI home"
-            className="flex shrink-0 items-center rounded-lg"
+            aria-label="soterai.in home"
+            aria-labelledby="site-header-wordmark site-header-home"
+            className="flex min-h-11 shrink-0 items-center rounded-lg"
           >
-            <Logo size={30} priority />
+            <Logo size={36} priority wordmarkId="site-header-wordmark" />
+            <span id="site-header-home" className="sr-only">home</span>
           </Link>
           <HeaderNav />
         </div>
       </header>
 
-      {!dashboardRoute && <Breadcrumbs pathname={pathname} />}
+      {!dashboardRoute && !docsRoute && <Breadcrumbs pathname={pathname} />}
+      {/* Docs pages own their breadcrumb schema alongside their content. */}
 
       <div id="main-content" tabIndex={-1}>
         {children}

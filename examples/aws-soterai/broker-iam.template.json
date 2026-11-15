@@ -1,0 +1,11 @@
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {"Effect": "Allow", "Action": "s3:GetObjectVersion", "Resource": "arn:aws:s3:::OWNER_VERSIONED_BUCKET/approved/*"},
+    {"Effect": "Allow", "Action": ["ssm:GetDocument", "ssm:DescribeDocument"], "Resource": "arn:aws:ssm:ap-southeast-2:OWNER_ACCOUNT_ID:document/SoteraiApprovedDeploy"},
+    {"Effect": "Allow", "Action": "ssm:SendCommand", "Resource": [
+      "arn:aws:ssm:ap-southeast-2:OWNER_ACCOUNT_ID:document/SoteraiApprovedDeploy",
+      "arn:aws:ec2:ap-southeast-2:OWNER_ACCOUNT_ID:instance/OWNER_INSTANCE_ID"
+    ]}
+  ]
+}

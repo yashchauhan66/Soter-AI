@@ -12,10 +12,14 @@
  * references the canonical Organization/WebSite nodes from `schema.ts`.
  */
 import type { Metadata } from "next";
-import { SITE_URL, SITE_NAME, ORGANIZATION_ID } from "@/lib/seo/schema";
+import { SITE_URL, SITE_NAME, ORGANIZATION_ID, FOUNDER_ID } from "@/lib/seo/schema";
+import { ogCardUrl } from "@/lib/og/cards";
+
+/** True when a title already names the brand in the current or the earlier spelling. */
+const BRAND_IN_TITLE = /soterai/i;
 
 /** Default social share image (1200×630). Overridable per page. */
-export const DEFAULT_OG_IMAGE = "/og/soterai-og.png";
+export const DEFAULT_OG_IMAGE = "/og-card/default.png";
 
 /**
  * Trim a description to a SERP-safe length without cutting mid-word.
@@ -28,7 +32,7 @@ export const DEFAULT_OG_IMAGE = "/og/soterai-og.png";
 export function clampDescription(text: string, max = 155): string {
   const clean = text.replace(/\s+/g, " ").trim();
   if (clean.length <= max) return clean;
-  const cut = clean.slice(0, max);
+  const cut = clean.slice(0, Math.max(0, max - 1));
   const lastSpace = cut.lastIndexOf(" ");
   // Strip trailing punctuation so we don't produce "… ,…" or "word.…".
   return `${(lastSpace > max * 0.6 ? cut.slice(0, lastSpace) : cut).replace(/[\s,;:.!-]+$/, "")}…`;
@@ -36,8 +40,9 @@ export function clampDescription(text: string, max = 155): string {
 
 export interface PageMetaInput {
   /**
-   * Page <title>. The root layout appends " | SoterAI" via its template, unless
-   * the title already names the brand — then it is emitted as-is.
+   * Page <title>. The root layout appends the current display brand via its
+   * template, unless the title already names the brand, in which case it is
+   * emitted as-is. Keep the complete rendered title within 60 characters.
    */
   title: string;
   /** Meta description (aim for 150–160 chars). */
@@ -58,6 +63,13 @@ export interface PageMetaInput {
   isArticle?: boolean;
   /** ISO date string, e.g. "2026-07-06". Used when isArticle is true. */
   datePublished?: string;
+  /**
+   * Optional share-card headline for Open Graph and Twitter, when it should read
+   * differently from the search title. Defaults to `title`.
+   */
+  ogTitle?: string;
+  /** Optional share-card description. Defaults to `description`. */
+  ogDescription?: string;
 }
 
 /**
@@ -70,21 +82,26 @@ export function buildMetadata({
   title,
   description,
   path,
-  ogImage = DEFAULT_OG_IMAGE,
+  // Each known page has its own share card (lib/og/cards.ts). Others get the default card.
+  ogImage = ogCardUrl(path),
   noindex = false,
   keywords,
   isArticle = false,
   datePublished,
+  ogTitle,
+  ogDescription,
 }: PageMetaInput): Metadata {
   const url = path.startsWith("http") ? path : `${SITE_URL}${path}`;
-  const images = [{ url: ogImage, width: 1200, height: 630, alt: title }];
+  const cardTitle = ogTitle ?? title;
+  const cardDescription = ogDescription ?? description;
+  const images = [{ url: ogImage, width: 1200, height: 630, alt: cardTitle }];
 
-  // The root layout's title template appends " | SoterAI" to every plain-string
-  // title. When the title already names the brand — "SoterAI vs Lakera",
-  // "About SoterAI" — that renders it twice and wastes SERP pixel budget, so
-  // mark it absolute to opt out of the template. There is no case where showing
-  // the brand twice in one title is preferable.
-  const titleMeta: Metadata["title"] = title.includes(SITE_NAME)
+  // The root layout's title template appends the current display brand to every plain-string
+  // title. When the title already names the brand, in either spelling
+  // ("SoterAI" or the domain "soterai.in"), the
+  // suffix would show the brand twice and waste SERP pixel budget, so mark the
+  // title absolute to opt out of the template.
+  const titleMeta: Metadata["title"] = BRAND_IN_TITLE.test(title)
     ? { absolute: title }
     : title;
 
@@ -98,8 +115,8 @@ export function buildMetadata({
       type: isArticle ? "article" : "website",
       url,
       siteName: SITE_NAME,
-      title,
-      description,
+      title: cardTitle,
+      description: cardDescription,
       images,
       // Emit publication timestamp for article-type pages so social platforms
       // and search engines recognise the content as editorial with a date.
@@ -107,12 +124,12 @@ export function buildMetadata({
     },
     twitter: {
       card: "summary_large_image",
-      title,
-      description,
+      title: cardTitle,
+      description: cardDescription,
       images: [ogImage],
-      site: "@soterai",
-      // twitter:creator signals editorial authorship for article-type pages.
-      ...(isArticle ? { creator: "@soterai" } : {}),
+      // No twitter:site or twitter:creator. There is no verified @soterai account on X
+      // (twitter.com/soterai returned 404 on 2026-09-08), and pointing the tag at a handle
+      // someone else may own would credit them with our pages.
     },
   };
 }
@@ -126,6 +143,7 @@ export function softwareApplicationLd(opts: {
   description: string;
   path: string;
   category?: string;
+  operatingSystem?: string;
 }) {
   return {
     "@context": "https://schema.org",
@@ -134,11 +152,14 @@ export function softwareApplicationLd(opts: {
     description: opts.description,
     url: `${SITE_URL}${opts.path}`,
     applicationCategory: opts.category ?? "SecurityApplication",
-    operatingSystem: "Windows, macOS, Linux",
+    operatingSystem: opts.operatingSystem ?? "Windows, macOS, Linux",
     offers: {
       "@type": "Offer",
+      // The Free plan. Paid plans are billed in INR only, so INR is the one
+      // currency this site can honestly state (see lib/billing/razorpay.ts).
       price: "0",
-      priceCurrency: "USD",
+      priceCurrency: "INR",
+      url: `${SITE_URL}/pricing`,
     },
     publisher: { "@id": ORGANIZATION_ID },
   };
@@ -168,7 +189,8 @@ export function articleLd(opts: {
 }) {
   return {
     "@context": "https://schema.org",
-    "@type": "Article",
+    // BlogPosting is the schema.org subtype of Article for blog posts and case notes.
+    "@type": "BlogPosting",
     headline: opts.headline,
     description: opts.description,
     url: `${SITE_URL}${opts.path}`,
@@ -176,7 +198,8 @@ export function articleLd(opts: {
     datePublished: opts.datePublished,
     dateModified: opts.dateModified ?? opts.datePublished,
     image: opts.image ? `${SITE_URL}${opts.image}` : `${SITE_URL}${DEFAULT_OG_IMAGE}`,
-    author: { "@type": "Organization", name: SITE_NAME, url: SITE_URL },
+    // A named person, not the organisation: the founder writes and runs the product.
+    author: { "@type": "Person", "@id": FOUNDER_ID, name: "Yash Chauhan", url: `${SITE_URL}/about` },
     publisher: { "@id": ORGANIZATION_ID },
   };
 }

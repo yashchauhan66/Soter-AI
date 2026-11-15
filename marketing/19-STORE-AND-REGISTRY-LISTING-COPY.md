@@ -1,5 +1,10 @@
 # 19 — Store & Registry Listing Copy
 
+**IDE-extension update, 13 November 2026:** use the
+[SoterAI Secret Guard launch kit](extension-launch-2026-11-13/README.md).
+Section 3 below is historical copy and must not be used to claim that the current
+candidate intercepts every AI client or prevents all code from leaving the editor.
+
 **Why this file matters more than it looks.** npm, PyPI, and the extension marketplaces are search engines with buying intent. Someone typing "prompt injection" into npm search is one command away from installing. That is a warmer lead than anyone who ever liked a LinkedIn post — and unlike social, the listing keeps ranking after you stop working on it.
 
 **Every listing needs three things:** a first line that survives truncation, keywords that match how people actually search, and a link to `/playground` rather than the homepage.

@@ -3,13 +3,14 @@ import assert from "node:assert/strict";
 import { test } from "node:test";
 import { createHash, createHmac } from "node:crypto";
 import * as os from "node:os";
-import { makeExtensionContext } from "./phase2/vscode-stub";
+import { makeExtensionContext, state } from "./phase2/vscode-stub";
 import { AuditLedger, type AuditEntry } from "../advanced/auditLedger";
 
 const STORE = "soterai.auditLedger";
 const KEY = "soterai.auditLedger.signingKey";
 
 function fixture() {
+    state.configInspect.set("soterai.lite.selfHygiene", { defaultValue: false, globalValue: true });
     const context = makeExtensionContext(os.tmpdir());
     // Keep the real storage semantics; avoid retaining thousands of test sink copies.
     context.globalState.update = async (key, value) => { context._inspect.globalStore.set(key, value); };
@@ -51,7 +52,9 @@ test("legacy data migrates on append and retention checkpoints survive multiple 
     const exported = JSON.parse(await ledger.exportRedacted());
     assert.equal(exported.chain[0].seq, 3);
     assert.equal(exported.checkpoint.seq, 2);
-    assert.equal(exported.checkpoint.hash, legacy[1].hash);
+    const retained = context._inspect.globalStore.get(STORE) as any;
+    assert.equal(retained.checkpoint.hash, legacy[1].hash);
+    assert.equal(exported.checkpoint.hash, "WITHHELD"); // Unknown expired prefixes cannot export content-derived material.
     assert.equal(exported.head.seq, 2002);
 });
 
@@ -87,7 +90,9 @@ test("already-truncated legacy data is preserved for inspection, not silently tr
     await assert.rejects(ledger.append("new", "allow"), /verification failed/);
     const exported = JSON.parse(await ledger.exportRedacted());
     assert.equal(exported.verified, false);
-    assert.deepEqual(exported.chain, brokenLegacy);
+    assert.deepEqual(context._inspect.globalStore.get(STORE), brokenLegacy);
+    assert.deepEqual(exported.chain.map((entry: AuditEntry) => entry.seq), brokenLegacy.map(entry => entry.seq));
+    assert(exported.chain.every((entry: AuditEntry) => entry.hash === "WITHHELD"));
     await ledger.clear();
     assert.deepEqual(await ledger.verifyChain(), { ok: true, entries: 0 });
     assert.equal((await ledger.append("new_chain", "allow")).seq, 1);

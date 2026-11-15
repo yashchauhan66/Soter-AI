@@ -191,13 +191,19 @@ describe("Local AI Broker server", () => {
 
     it("stores and exports sanitized memory events", async () => {
         const raw = "sk-proj-1234567890abcdefghijklmnopqrstuv";
-        await withBroker({}, async (url) => {
-            await request(url, "/v1/memory/session/start", { method: "POST", body: JSON.stringify({ sessionId: "session-1" }) });
-            await request(url, "/v1/memory/session/event", { method: "POST", body: JSON.stringify({ sessionId: "session-1", event: { kind: "broker_request_scanned", decision: "redact", riskScore: 80, categories: ["ai_api_key"], redactedEvidence: raw } }) });
+        await withBroker({ selfHygiene: true }, async (url) => {
+            const started = await request(url, "/v1/memory/session/start", { method: "POST", body: JSON.stringify({ sessionId: "session-1" }) });
+            assert.equal(started.status, 201);
+            const { session } = await started.json() as { session: { sessionId: string } };
+            assert.notEqual(session.sessionId, "session-1");
+            const added = await request(url, "/v1/memory/session/event", { method: "POST", body: JSON.stringify({ sessionId: session.sessionId, event: { kind: "broker_request_scanned", decision: "redact", riskScore: 80, categories: ["ai_api_key"], redactedEvidence: raw } }) });
+            assert.equal(added.status, 201);
             const exported = await request(url, "/v1/events/export-redacted", { method: "POST" });
             const text = await exported.text();
             assert.equal(text.includes(raw), false);
-            assert.match(text, /session-1/);
+            assert.ok(text.includes(session.sessionId));
+            assert.match(text, /broker_request_scanned/);
+            assert.equal(text.includes("session-1"), false);
         });
     });
 
@@ -450,9 +456,10 @@ describe("OpenAI-compatible proxy", () => {
     it("never logs a provider key", async () => {
         const logs: string[] = [];
         const fetchImpl: typeof fetch = async () => new Response(JSON.stringify({ choices: [{ message: { content: "ok" } }] }), { headers: { "content-type": "application/json" } });
-        await withBroker({ openAIProviderUrl: "https://provider.invalid", fetchImpl, logger: (message, metadata) => logs.push(JSON.stringify({ message, metadata })) }, async (url) => {
+        await withBroker({ selfHygiene: true, openAIProviderUrl: "https://provider.invalid", fetchImpl, logger: (message, metadata) => logs.push(JSON.stringify({ message, metadata })) }, async (url) => {
             await request(url, "/v1/ai/openai-compatible/chat/completions", { method: "POST", headers: { "x-soterai-provider-key": "never-log-this-provider-key" }, body: JSON.stringify({ messages: [{ role: "user", content: "hello" }] }) });
             assert.equal(logs.join("\n").includes("never-log-this-provider-key"), false);
+            assert(logs.length > 0, "The negative control must observe an active public diagnostic sink.");
         });
     });
 

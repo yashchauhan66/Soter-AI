@@ -1,0 +1,16 @@
+'use strict';
+const fs = require('node:fs');
+const path = require('node:path');
+const assert = require('node:assert/strict');
+const { prepareReviewedText, buildEnvironmentContract } = require('../../../packages/vscode-extension/src/secret-broker/ReviewedContext.ts');
+const { OutputFilter } = require('../../../packages/vscode-extension/src/secret-broker/OutputFilter.ts');
+const filter = new OutputFilter();
+const line = fs.readFileSync(path.join(__dirname, 'secrets-demo.txt'), 'utf8').split(/\r?\n/).find(value => value.startsWith('const cfg'));
+const preview = prepareReviewedText(line, text => filter.filter(text));
+assert.equal(preview.status, 'PREPARED');
+for (const secret of ['BlueMango7!', 'OrangeRiver9!']) assert.ok(!preview.text.includes(secret));
+assert.ok(preview.text.includes('const cfg'));
+assert.ok(preview.text.includes('HTTP 503'));
+const contract = buildEnvironmentContract(fs.readFileSync(path.join(__dirname, 'environment-example.txt'), 'utf8'), text => filter.filter(text));
+assert.equal(contract.status, 'PREPARED'); assert.ok(!contract.text.includes('BlueMango7!'));
+console.log(JSON.stringify({ status: 'PASS_SOURCE_FIXTURES', syntheticOnly: true, usefulContextRetained: true, recognizedValuesRemoved: 2, installedUiRecorded: false, realProviderTested: false }));

@@ -1,8 +1,7 @@
-import { TextDecoder } from "node:util";
+import { StreamingOutputNormalizer, STREAM_OUTPUT_LIMITS } from "./StreamingOutputNormalizer";
+export { STREAM_OUTPUT_LIMITS } from "./StreamingOutputNormalizer";
 import { RegisteredSecretMatcher } from "./RegisteredSecretMatcher";
 
-export const STREAM_OUTPUT_LIMITS = Object.freeze({ maxInputBytes: 131072, maxOutputBytes: 131072,
-    maxChunks: 4096, maxSgrLength: 128, maxControlLength: 4096, maxExpansion: 32 });
 export type OutputChannel = "stdout" | "stderr";
 export interface OutputResult {
     readonly status: "COMPLETE" | "WITHHELD";
@@ -12,37 +11,30 @@ export interface OutputResult {
     readonly exitCode?: number;
     readonly reason?: string;
 }
-type ChannelState = { decoder: TextDecoder; mode: "text" | "cr" | "esc" | "csi" | "osc" | "oscEsc"; controlLength: number };
-const channelState = (): ChannelState => ({ decoder: new TextDecoder("utf-8", { fatal: true, ignoreBOM: true }), mode: "text", controlLength: 0 });
 const MASK = "[REDACTED_SECRET_OUTPUT]";
 
 /** Incremental byte input with an atomic completed-result release. This does
  * not provide interactive passthrough or inspect another process's uploads. */
 export class StreamingOutputRedactor {
     #matcher: RegisteredSecretMatcher | undefined;
-    #states: Record<OutputChannel, ChannelState> | undefined = { stdout: channelState(), stderr: channelState() };
-    #pieces: Array<{ channel: OutputChannel; text: string }> = [];
+    #normalizer: StreamingOutputNormalizer | undefined = new StreamingOutputNormalizer();
     #enabled: () => boolean;
     #closed = false;
     #reason = "stream_closed";
-    #rawBytes = 0;
-    #normalizedBytes = 0;
-    #chunks = 0;
-    constructor(values: readonly string[], options: { enabled?: () => boolean } = {}) {
+    #completedLogFraming = false;
+    constructor(values: readonly string[], options: { enabled?: () => boolean; completedLogFraming?: "original-lines-v1" } = {}) {
         this.#matcher = new RegisteredSecretMatcher(values);
         this.#enabled = options?.enabled ?? (() => true);
+        if (options?.completedLogFraming !== undefined) {
+            if (options.completedLogFraming !== "original-lines-v1") this.#fail("stream_log_framing_unavailable");
+            else this.#completedLogFraming = true;
+        }
     }
 
     push(channel: OutputChannel, bytes: Uint8Array): Readonly<{ status: "BUFFERED" | "WITHHELD" }> {
         if (!this.#available()) return Object.freeze({ status: "WITHHELD" });
         try {
-            if (channel !== "stdout" && channel !== "stderr" || !(bytes instanceof Uint8Array)) throw new Error();
-            if (++this.#chunks > STREAM_OUTPUT_LIMITS.maxChunks) throw new Error();
-            this.#rawBytes += bytes.byteLength;
-            if (this.#rawBytes > STREAM_OUTPUT_LIMITS.maxInputBytes) throw new Error();
-            const state = this.#states![channel];
-            const decoded = state.decoder.decode(Buffer.from(bytes), { stream: true });
-            this.#append(channel, this.#normalize(state, decoded));
+            this.#normalizer!.push(channel, bytes);
             return Object.freeze({ status: "BUFFERED" });
         } catch {
             this.#fail("stream_input_unavailable");
@@ -54,19 +46,28 @@ export class StreamingOutputRedactor {
         if (!this.#available()) return this.#withheld();
         try {
             if (!Number.isInteger(exitCode) || exitCode < -2147483648 || exitCode > 2147483647) throw new Error();
-            for (const channel of ["stdout", "stderr"] as const) {
-                const state = this.#states![channel];
-                this.#append(channel, this.#normalize(state, state.decoder.decode()));
-                if (state.mode !== "text") throw new Error();
-            }
-            let stdout = this.#pieces.filter(piece => piece.channel === "stdout").map(piece => piece.text).join("");
-            let stderr = this.#pieces.filter(piece => piece.channel === "stderr").map(piece => piece.text).join("");
-            const arrival = this.#pieces.map(piece => piece.text).join("");
+            const normalized = this.#normalizer!.finish();
+            let { stdout, stderr } = normalized;
+            const arrival = normalized.arrival;
             let redacted = false;
             for (const view of new Set([stdout, stderr, arrival, stdout + stderr])) {
                 const result = this.#matcher!.inspectRequest([view]);
                 if (result.status === "WITHHELD") throw new Error();
                 if (result.status === "MATCHED") redacted = true;
+                // Finite owned-log mode only. Match original completed line
+                // bodies with the existing one-layer matcher in every view,
+                // including normalized interleaved arrival order. No decoded
+                // view is fed back into a decoder or released to a callback.
+                if (this.#completedLogFraming && view.includes("\\") && view.includes("\n")) {
+                    let candidates = 0;
+                    for (const line of view.split("\n")) {
+                        if (!line.includes("\\")) continue;
+                        if (++candidates > 32) throw new Error();
+                        const framed = this.#matcher!.inspectRequest([line]);
+                        if (framed.status === "WITHHELD") throw new Error();
+                        if (framed.status === "MATCHED") redacted = true;
+                    }
+                }
             }
             if (redacted) {
                 stdout = stdout ? MASK : ""; stderr = stderr ? MASK : "";
@@ -75,7 +76,7 @@ export class StreamingOutputRedactor {
                 if (!this.#matcher!.isSafeReplacement(stdout + stderr)) throw new Error();
             }
             const outputBytes = Buffer.byteLength(stdout + stderr, "utf8");
-            if (outputBytes > STREAM_OUTPUT_LIMITS.maxOutputBytes || outputBytes > Math.max(64, this.#rawBytes * STREAM_OUTPUT_LIMITS.maxExpansion)) throw new Error();
+            if (outputBytes > STREAM_OUTPUT_LIMITS.maxOutputBytes || outputBytes > Math.max(64, normalized.inputBytes * STREAM_OUTPUT_LIMITS.maxExpansion)) throw new Error();
             if (!this.#available()) return this.#withheld();
             this.#fail("stream_closed");
             return Object.freeze({ status: "COMPLETE", stdout, stderr, redacted, exitCode });
@@ -95,51 +96,7 @@ export class StreamingOutputRedactor {
         this.#fail("stream_protection_unavailable"); return false;
     }
     #fail(reason: string): void {
-        this.#closed = true; this.#reason = reason; this.#pieces = []; this.#states = undefined; this.#matcher = undefined;
-        this.#rawBytes = 0; this.#normalizedBytes = 0; this.#chunks = 0;
+        this.#closed = true; this.#reason = reason; this.#normalizer?.dispose(); this.#normalizer = undefined; this.#matcher = undefined;
     }
-    #append(channel: OutputChannel, text: string): void {
-        if (!text) return;
-        this.#normalizedBytes += Buffer.byteLength(text, "utf8");
-        if (this.#normalizedBytes > STREAM_OUTPUT_LIMITS.maxOutputBytes) throw new Error();
-        this.#pieces.push({ channel, text });
-    }
-    #normalize(state: ChannelState, input: string): string {
-        const output: string[] = [];
-        for (const char of input) {
-            if (state.mode === "cr") {
-                if (char !== "\n") throw new Error();
-                output.push("\n"); state.mode = "text"; continue;
-            }
-            if (state.mode !== "text") {
-                state.controlLength += char.length;
-                if (state.controlLength > (state.mode === "csi" ? STREAM_OUTPUT_LIMITS.maxSgrLength : STREAM_OUTPUT_LIMITS.maxControlLength)) throw new Error();
-                if (state.mode === "esc") {
-                    if (char === "[") state.mode = "csi";
-                    else if (char === "]") state.mode = "osc";
-                    else throw new Error();
-                } else if (state.mode === "csi") {
-                    if (char === "m") { state.mode = "text"; state.controlLength = 0; }
-                    else if (!/^[0-9:;]$/.test(char)) throw new Error();
-                } else if (state.mode === "oscEsc") {
-                    if (char !== "\\") throw new Error();
-                    state.mode = "text"; state.controlLength = 0;
-                } else if (state.mode === "osc") {
-                    if (char === "\x07" || char === "\u009c") {
-                        state.mode = "text"; state.controlLength = 0;
-                    } else if (char === "\x1b") state.mode = "oscEsc";
-                    else if (/[\x00-\x1f\x7f-\x9f]/u.test(char) || /\p{Bidi_Control}/u.test(char)) throw new Error();
-                }
-                continue;
-            }
-            if (char === "\r") state.mode = "cr";
-            else if (char === "\x1b") { state.mode = "esc"; state.controlLength = 1; }
-            else if (char === "\u009b") { state.mode = "csi"; state.controlLength = 1; }
-            else if (char === "\u009d") { state.mode = "osc"; state.controlLength = 1; }
-            else if (char === "\t" || char === "\n") output.push(char);
-            else if (/[\x00-\x1f\x7f-\x9f]/u.test(char) || /\p{Bidi_Control}/u.test(char)) throw new Error();
-            else output.push(char);
-        }
-        return output.join("");
-    }
+
 }

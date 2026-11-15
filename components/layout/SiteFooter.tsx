@@ -1,45 +1,48 @@
 import Link from "next/link";
 import { Activity, ArrowUpRight, Mail } from "lucide-react";
 import { Logo } from "@/components/layout/Logo";
+import { FooterNavGroup } from "@/components/layout/FooterNavGroup";
 import { FOOTER_NAV, LEGAL_NAV } from "@/lib/navigation";
 
 /**
- * Site footer.
+ * Server-rendered footer: navigation data and link markup stay on the server.
+ * A small client wrapper enhances native disclosures on mobile; all links are
+ * present and usable in the first HTML response, including without JavaScript.
  *
- * Extracted from `SiteChrome` and converted to a **server** component. The
- * footer is ~60 static links; it has no state, no effects, and no event
- * handlers, so shipping it inside the client-side chrome bundle bought nothing.
- * Rendering it on the server also guarantees crawlers see the full internal
- * link graph in the initial HTML.
+ * Link data comes from `lib/navigation.ts`, so the header, the mobile drawer and
+ * this footer cannot disagree about what the site contains.
  *
- * Link data comes from `lib/navigation.ts`, so the footer, header, and mobile
- * drawer can no longer disagree about what the site contains.
+ * The status indicator links to /status instead of asserting a state. A hard-coded
+ * "All systems operational" badge would have kept saying "operational" through the
+ * 2026-08-21 outage.
  *
- * The status indicator intentionally *links* to /status rather than asserting a
- * state. A hard-coded "All systems operational" badge would have kept claiming
- * "operational" straight through the 2026-08-21 outage, and a per-request health
- * fetch would cost every page a round trip. Same rule as the capability
- * registry: no claim without a runtime source behind it.
+ * The honest-claims line stays in the footer so the disclaimer travels with every
+ * page that makes a claim, and it links to the pages that hold the detail.
+ *
+ * The support link keeps its aria-label ("Email SoterAI support"): an e2e test
+ * relies on it to tell it apart from the sign-in form's own email field.
  */
 export function SiteFooter({ currentYear }: { currentYear: number }) {
   return (
-    <footer className="border-t border-slate-800 bg-slate-950 text-sm text-slate-300">
+    <footer className="border-t border-slate-800 bg-slate-900 text-sm text-slate-300">
       <div className="container-page py-14">
-        <div className="grid gap-10 lg:grid-cols-[minmax(0,18rem)_1fr]">
-          {/* Brand column */}
+        <div className="grid gap-10 lg:grid-cols-[minmax(0,19rem)_1fr]">
           <div>
             <Link href="/" aria-label="SoterAI home" className="inline-flex items-center">
               <Logo size={28} />
             </Link>
 
-            <p className="mt-4 max-w-xs leading-6 text-slate-400">
-              The control layer that stops sensitive data and risky AI-agent actions across browsers, IDEs, workflows,
-              and APIs.
+            <p className="mt-4 max-w-xs font-display text-lg leading-snug text-slate-100">
+              Decide what your AI can see, say and do.
+            </p>
+            <p className="mt-2 max-w-xs leading-6 text-slate-400">
+              The AI security command layer. It checks prompts and replies, redacts secrets and personal data, and holds
+              risky agent actions for approval.
             </p>
 
             <Link
               href="/status"
-              className="mt-5 inline-flex items-center gap-2 rounded-full border border-slate-700/70 bg-slate-900/60 px-3 py-1.5 text-xs font-medium text-slate-300 transition-colors hover:border-cyan/40 hover:text-cyan"
+              className="mt-5 inline-flex items-center gap-2 rounded-full border border-slate-700 bg-white px-3 py-1.5 font-mono text-xs font-semibold text-slate-300 transition-colors hover:border-slate-600 hover:text-slate-100"
             >
               <Activity size={13} aria-hidden="true" />
               System status
@@ -47,42 +50,36 @@ export function SiteFooter({ currentYear }: { currentYear: number }) {
             </Link>
 
             <div className="mt-5 flex items-center gap-3">
-              <a
-                href="mailto:support@soterai.in"
-                aria-label="Email SoterAI support"
-                className="button-icon"
-              >
+              <a href="mailto:support@soterai.in" aria-label="Email SoterAI support" className="button-icon">
                 <Mail size={16} aria-hidden="true" />
               </a>
             </div>
           </div>
 
-          {/* Link columns */}
-          <nav aria-label="Footer" className="grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
+          <nav aria-label="Footer" className="grid gap-0 border-t border-slate-800 md:grid-cols-2 md:gap-8 md:border-0 lg:grid-cols-4">
             {FOOTER_NAV.map((group) => (
-              <div key={group.label}>
-                <h2 className="text-xs font-bold uppercase tracking-micro text-slate-200">{group.label}</h2>
-                <ul className="mt-4 space-y-2.5">
+              <FooterNavGroup key={group.label} title={group.label}>
+                <ul className="space-y-1 pb-3 md:mt-4 md:space-y-2.5 md:pb-0">
                   {group.links.map((link) => (
                     <li key={link.href}>
-                      <Link href={link.href} className="text-slate-400 transition-colors hover:text-slate-100">
+                      <Link href={link.href} className="inline-flex min-h-11 w-full items-center text-slate-400 transition-colors hover:text-slate-100 md:min-h-0">
                         {link.label}
                       </Link>
                     </li>
                   ))}
                 </ul>
-              </div>
+              </FooterNavGroup>
             ))}
           </nav>
         </div>
 
         <div className="mt-12 flex flex-col gap-4 border-t border-slate-800 pt-6 sm:flex-row sm:items-center sm:justify-between">
           <p className="text-xs text-slate-400">
-            &copy; {currentYear} SoterAI. Founded by{" "}
-            <Link href="/about" className="font-medium text-slate-300 hover:text-cyan">
+            &copy; {currentYear} SoterAI. Built and run by{" "}
+            <Link href="/about" className="font-medium text-slate-300 underline-offset-2 hover:text-cyan hover:underline">
               Yash Chauhan
-            </Link>{" "}
-            in India. Security intelligence for AI systems in production.
+            </Link>
+            , a solo founder in India.
           </p>
 
           <ul className="flex flex-wrap items-center gap-x-5 gap-y-2 text-xs">
@@ -96,17 +93,15 @@ export function SiteFooter({ currentYear }: { currentYear: number }) {
           </ul>
         </div>
 
-        {/* Honest-claims line. Kept in the footer rather than buried on /limitations
-            so the disclaimer travels with every page that makes a claim. */}
-        <p className="mt-6 max-w-3xl text-xs leading-5 text-slate-500">
-          SoterAI reduces risk through defense in depth. It does not provide complete security, and published benchmarks
-          are self-maintained rather than independently audited. See{" "}
-          <Link href="/limitations" className="font-medium text-slate-400 underline hover:text-slate-100">
+        <p className="mt-6 max-w-3xl text-xs leading-5 text-slate-400">
+          SoterAI lowers risk and misses things. It does not provide complete security, and the published benchmarks
+          are self-maintained, not independently audited. See{" "}
+          <Link href="/limitations" className="font-medium text-slate-300 underline hover:text-slate-100">
             known limitations
           </Link>{" "}
           and{" "}
-          <Link href="/benchmark" className="font-medium text-slate-400 underline hover:text-slate-100">
-            benchmark methodology
+          <Link href="/benchmarks" className="font-medium text-slate-300 underline hover:text-slate-100">
+            the benchmark method
           </Link>
           .
         </p>

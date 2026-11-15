@@ -15,7 +15,7 @@ test("AI user security pillar targets the intended query without absolute claims
 });
 
 test("AI user security pillar is discoverable from crawl and authority surfaces", () => {
-  const sitemap = read("app/sitemap.ts");
+  const sitemap = read("lib/seo/sitemapData.ts");
   const homepage = read("app/page.tsx");
   const homepageSolutions = read("components/marketing/TwoProducts.tsx");
   // Footer links moved out of SiteChrome into a dedicated server component and
@@ -76,7 +76,7 @@ test("www host permanently redirects to the canonical apex host", () => {
 });
 
 test("sitemap includes high-value public tools and extension landing pages", () => {
-  const sitemap = read("app/sitemap.ts");
+  const sitemap = read("lib/seo/sitemapData.ts");
 
   for (const route of [
     "/scanner",

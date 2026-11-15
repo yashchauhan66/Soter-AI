@@ -1,0 +1,19 @@
+.code-block {
+  min-width: 0; margin-top: 20px; overflow: hidden; border: 1px solid rgb(var(--hairline, 227 222 211));
+  border-radius: 6px; background: rgb(var(--surface-2, 255 255 255)); color: #29251f;
+  font-family: "Segoe UI", -apple-system, BlinkMacSystemFont, Arial, sans-serif;
+}
+.code-block-header { display: flex; align-items: center; justify-content: space-between; gap: 16px; min-height: 48px; padding: 5px 10px 5px 18px; border-bottom: 1px solid rgb(var(--hairline, 227 222 211)); background: rgb(var(--surface-1, 244 241 234)); }
+.code-block-labels { display: flex; align-items: center; gap: 14px; min-width: 0; }
+.code-block-filename { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-family: var(--font-sa-mono, ui-monospace), monospace; font-size: 12px; font-weight: 500; }
+.code-block-language { color: #625d54; font-size: 11px; white-space: nowrap; }
+.code-block-copy { display: inline-flex; flex-shrink: 0; align-items: center; justify-content: center; gap: 6px; min-width: 72px; min-height: 36px; padding: 6px 10px; border: 1px solid transparent; border-radius: 4px; color: #514c43; font-family: inherit; font-size: 12px; line-height: 1.5; }
+.code-block-copy:hover { border-color: rgb(var(--hairline-strong, 133 127 116)); background: rgb(var(--surface-2, 255 255 255)); }
+.code-block-copy:focus-visible, .code-block-pre:focus-visible { outline: 2px solid rgb(var(--brand, 178 59 11)); outline-offset: -2px; }
+.code-block-copy[data-state="copied"] { color: #166534; }
+.code-block .code-block-pre { margin: 0; padding: 20px; overflow-x: auto; border: 0; border-radius: 0; background: transparent; color: #29251f; font-family: var(--font-sa-mono, ui-monospace), monospace; font-size: 13px; line-height: 1.85; }
+.code-block .code-block-pre > code { padding: 0; border: 0; background: transparent; color: inherit; font-size: inherit; line-height: inherit; }
+.code-block-line-number { display: inline-block; width: 2.5em; margin-right: 1.25em; color: #746e63; text-align: right; user-select: none; }
+.code-block-error { padding: 10px 18px; border-bottom: 1px solid rgb(var(--hairline, 227 222 211)); background: #fff4e8; color: #7c2d12; font-size: 13px; line-height: 1.5; }
+.code-block-status:not(.code-block-error) { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0; }
+@media (max-width: 639px) { .code-block-copy { min-height: 44px; } .code-block .code-block-pre { padding: 16px; } .code-block-language { display: none; } }

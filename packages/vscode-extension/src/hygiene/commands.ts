@@ -18,18 +18,43 @@ export function registerHygieneAssistant(context: vscode.ExtensionContext): Hygi
     }));
     const selected = async (action: "vault" | "restore" | "example") => {
         const choices = controller.selections();
-        if (!choices.length) return { status: "REVIEW_FILES_FIRST" };
+        if (!choices.length) { void vscode.window.showInformationMessage("Run Review Workspace Hygiene first, then select a current finding for this action."); return { status: "REVIEW_FILES_FIRST" }; }
         const choice = await vscode.window.showQuickPick(choices, { title: "Review local hygiene finding", placeHolder: "Select a finding from the last reviewed saved-file analysis" });
         if (!available()) return { status: "UNAVAILABLE" };
         if (!choice || !choices.includes(choice)) return { status: "CANCELLED" };
         return action === "vault" ? controller.vaultFinding(choice.id) : action === "restore" ? controller.restoreFinding(choice.id) : controller.writeExample(choice.id);
     };
-    reg("soterai.reviewWorkspaceHygiene", async () => { const result = await controller.reviewWorkspace(); await metadata(result); return result; });
+    const reviewResult = async (result: any): Promise<unknown> => {
+        if (!available() || !["ANALYZED", "PARTIAL"].includes(result.status)) return result;
+        const count = Array.isArray(result.findings) ? result.findings.length : 0;
+        if (!count) {
+            void vscode.window.showInformationMessage(result.status === "PARTIAL" ? "Review incomplete: some files could not be checked. No findings in the analyzed files." : "No candidate secrets found in the reviewed files. Other files and unknown private information may still need review.");
+            return result;
+        }
+        const choices = controller.selections().map(item => ({ ...item, description: `Line ${item.line} · ${item.provider}`, detail: "Possible secret in a reviewed saved file. Choose a fix to see its preview and confirmation." }));
+        const choice = await vscode.window.showQuickPick(choices, { title: `${count} finding(s)${result.status === "PARTIAL" ? " — review incomplete" : ""}`, placeHolder: "Select a finding for migration, a blank environment example, or recovery" });
+        if (!available()) return { status: "UNAVAILABLE" };
+        if (!choice || !choices.includes(choice)) return result;
+        const actions = [
+            ...(choice.canVault ? [{ id: "vault", label: "Review vault migration", detail: "Preview replacing the value with a placeholder. The existing flow keeps encrypted recovery." }] : []),
+            ...(choice.canExample ? [{ id: "example", label: "Create a blank environment example", detail: "Write names and empty values. Preserve any conflicting existing file." }] : []),
+            ...(choice.canRestore ? [{ id: "restore", label: "Review encrypted recovery", detail: "The existing disclosure review decides whether originals may be restored." }] : []),
+            { id: "details", label: "View finding metadata", detail: "View line numbers and opaque file references; original values are not shown." },
+        ];
+        const action = await vscode.window.showQuickPick(actions, { title: "Choose the next action", matchOnDetail: true });
+        if (!available()) return { status: "UNAVAILABLE" };
+        if (!action || !actions.includes(action)) return result;
+        if (action.id === "details") { await metadata(result); return result; }
+        const changed = action.id === "vault" ? await controller.vaultFinding(choice.id) : action.id === "restore" ? await controller.restoreFinding(choice.id) : await controller.writeExample(choice.id);
+        if ((changed as { status: string }).status === "UNAVAILABLE") void vscode.window.showInformationMessage("The finding changed or this operation is unavailable. Review the file again before making changes.");
+        return changed;
+    };
+    reg("soterai.reviewWorkspaceHygiene", async () => reviewResult(await controller.reviewWorkspace()));
     reg("soterai.reviewSelectedFileHygiene", async () => {
         const files = await vscode.window.showOpenDialog({ title: "Choose one saved project file for local hygiene review", canSelectMany: false, canSelectFiles: true, canSelectFolders: false, defaultUri: vscode.workspace.workspaceFolders?.[0]?.uri });
         if (!available()) return { status: "UNAVAILABLE" };
         if (!files || files.length !== 1) return { status: "CANCELLED" };
-        const result = await controller.reviewFile(files[0]); await metadata(result); return result;
+        return reviewResult(await controller.reviewFile(files[0]));
     });
     reg("soterai.reviewHygieneVault", () => selected("vault"));
     reg("soterai.generateHygieneEnvExample", () => selected("example"));

@@ -160,8 +160,10 @@ describe("Telemetry contains no raw content (#6)", () => {
         assert.ok(!telemetrySrc.includes("redactedText"), "telemetry must not read redactedText");
         assert.ok(!/rawContent|\.content\b/.test(telemetrySrc), "telemetry must not include raw content");
     });
-    it("event payload only uses the safe redacted preview", () => {
-        assert.match(telemetrySrc, /redactedEvidencePreview:\s*decision\.evidencePreview/);
+    it("event payload excludes caller evidence previews and arbitrary detector metadata", () => {
+        assert.doesNotMatch(telemetrySrc, /redactedEvidencePreview:\s*decision\.evidencePreview/);
+        assert.doesNotMatch(telemetrySrc, /detectorVersions:\s*decision\.detectorVersions/);
+        assert.doesNotMatch(telemetrySrc, /categories:\s*decision\.categories/);
     });
 });
 
@@ -490,6 +492,11 @@ describe("Command-palette hygiene (clutter control)", () => {
         "soterai.openReport",
         // One discoverable entry point contains the project privacy actions.
         "soterai.openProjectPrivacy",
+        // Recovery must remain discoverable before the owner removes Lite.
+        "soterai.restoreChangesBeforeRemoval",
+        // The reviewed developer workflows are deliberate primary entry points.
+        "soterai.openProjectJourney", "soterai.chooseReviewedContext",
+        "soterai.prepareEnvironmentContext", "soterai.prepareDebugContext",
     ];
     const palette: Array<{ command: string; when?: string }> = pkg.contributes.menus?.commandPalette ?? [];
     const gated = new Map(palette.map((e) => [e.command, e.when]));
@@ -501,13 +508,17 @@ describe("Command-palette hygiene (clutter control)", () => {
     });
 
     it("keeps the default palette to a small set of clear, reversible newcomer workflows", () => {
-        assert.strictEqual(core.length, 17);
+        assert.strictEqual(core.length, 22);
+        for (const command of ["soterai.openProjectJourney", "soterai.chooseReviewedContext", "soterai.prepareEnvironmentContext", "soterai.prepareDebugContext"]) {
+            assert.ok(core.includes(command), "reviewed developer workflows must be discoverable");
+        }
         assert.ok(core.includes("soterai.blockSelectionFromAI"), "manual text protection must be discoverable");
         assert.ok(core.includes("soterai.autoMigrateWorkspace"), "vault migration must be discoverable");
         assert.ok(core.includes("soterai.secureAllAI"), "AI routing must be discoverable");
         assert.ok(core.includes("soterai.restoreAIConfigs"), "the reversible route must remain discoverable");
         assert.ok(core.includes("soterai.openReport"), "the one route to every report must be discoverable");
         assert.ok(core.includes("soterai.openProjectPrivacy"), "project restrictions and approved reads must be discoverable");
+        assert.ok(core.includes("soterai.restoreChangesBeforeRemoval"), "reviewed removal recovery must be discoverable");
     });
 
     it("every non-core declared command is gated behind soterai.advancedCommands (or fully hidden)", () => {
@@ -618,11 +629,12 @@ describe("Live inline scanning + Quick Fixes (UX)", () => {
         assert.match(liveScannerSrc, /excludeGlobs/);
     });
 
-    it("offers redact + copy-safe Quick Fixes and gates the internal fix command", () => {
+    it("offers owned copy/protection Quick Fixes and gates the internal fix command", () => {
         assert.match(liveScannerSrc, /registerCodeActionsProvider/);
         assert.match(liveScannerSrc, /CodeActionKind\.QuickFix/);
-        assert.match(liveScannerSrc, /kind:\s*"redact"/);
-        assert.match(liveScannerSrc, /kind:\s*"copySafeLine"/);
+        assert.match(liveScannerSrc, /issue\("redact"/);
+        assert.match(liveScannerSrc, /issue\("copySafeLine"/);
+        assert.match(liveScannerSrc, /issue\("reviewVault"/);
         assert.ok(registeredCommands.has("soterai.applyFindingFix"), "fix command must be registered");
         const palette = pkg.contributes.menus.commandPalette.find((e: any) => e.command === "soterai.applyFindingFix");
         assert.strictEqual(palette?.when, "false", "internal fix command must be hidden from the palette");

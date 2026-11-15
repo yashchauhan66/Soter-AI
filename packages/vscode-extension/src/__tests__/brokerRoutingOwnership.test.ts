@@ -10,7 +10,7 @@ import { EncryptedBackupSink } from "../broker/EncryptedBackupSink";
 
 for (const route of ["soterai.secureAllAI", "soterai.setupBrokerIntegration"] as const) for (const stage of ["approval", "backup"] as const) {
     test(`F14-R01 ${route} refuses stale owner during ${stage} before config write`, async () => {
-        const base = process.platform === "win32" ? "D:/SoterAI-Lite-test-profiles" : os.tmpdir(); await fs.mkdir(base, { recursive: true });
+        const base = os.tmpdir(); await fs.mkdir(base, { recursive: true });
         const root = await fs.mkdtemp(path.join(base, "f14-routing-owner-")), home = path.join(root, "home"), workspace = path.join(root, "workspace");
         const target = path.join(route === "soterai.secureAllAI" ? home : workspace, ".continue/config.json"), original = JSON.stringify({ baseURL: "https://synthetic-provider.example.test/v1" });
         await fs.mkdir(path.dirname(target), { recursive: true }); await fs.mkdir(workspace, { recursive: true }); await fs.writeFile(target, original, { flag: "wx" });

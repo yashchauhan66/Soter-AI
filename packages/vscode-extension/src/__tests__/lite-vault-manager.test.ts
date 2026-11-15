@@ -2,7 +2,7 @@ import "./phase2/register.mjs";
 import assert from "node:assert/strict";
 import { afterEach, beforeEach, mock, test } from "node:test";
 import { createHash } from "node:crypto";
-import { mkdtemp, mkdir, readFile, readdir, rm, writeFile } from "node:fs/promises";
+import { mkdtemp, mkdir, readFile, readdir, rm, unlink, writeFile } from "node:fs/promises";
 import { basename, dirname, join, resolve } from "node:path";
 import { tmpdir } from "node:os";
 import type { Uri as NativeUri } from "vscode";
@@ -125,6 +125,28 @@ test("F06-V01 preview uses a constant mask with no value fragments, lengths or h
         assert.equal(candidate.redactedPreview, MASKED); assert.deepEqual(Object.keys(candidate).sort(), ["key", "placeholder", "redactedPreview", "type"]);
     }
     noValues(JSON.stringify(preview)); assert.deepEqual(await snapshot(storage), {}); assert.equal(textDocumentCalls, 0);
+});
+
+test("missing committed vault ciphertext cannot be reported as an empty vault", async () => {
+    assert.ok(await manager.migrate(uri()) > 0);
+    await unlink(join(storage, "soterai-vault.enc"));
+    const before = await snapshot(storage);
+    manager = new VaultManager(context as never);
+    await assert.rejects(manager.status(), /Protected vault operation withheld/);
+    assert.deepEqual(await snapshot(storage), before, "Encrypted recovery records must remain unchanged.");
+});
+
+test("missing committed ciphertext refuses another migration while reviewed original recovery stays reachable", async () => {
+    assert.ok(await manager.migrate(uri()) > 0);
+    await unlink(join(storage, "soterai-vault.enc"));
+    await write("other/.env", `DB_PASSWORD=BlueMango7!\n`);
+    const before = await snapshot(storage), originalOther = await readFile(uri("other/.env").fsPath, "utf8");
+    manager = new VaultManager(context as never);
+    await assert.rejects(manager.migrate(uri("other/.env")), /Protected vault operation withheld/);
+    assert.deepEqual(await snapshot(storage), before);
+    assert.equal(await readFile(uri("other/.env").fsPath, "utf8"), originalOther);
+    assert.equal(await manager.restoreFromBackup(uri()), true, "Authenticated owner-approved file recovery must stay reachable.");
+    assert.equal(await readFile(uri().fsPath, "utf8"), SIMPLE);
 });
 
 test("F06-V02 reviewed migration handles duplicate/multiline fields, writes blank examples and keeps recovery encrypted outside the project", async () => {

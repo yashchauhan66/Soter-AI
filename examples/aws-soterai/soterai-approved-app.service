@@ -1,0 +1,21 @@
+[Unit]
+Description=Owner reviewed SoterAI Node reference application
+After=network.target
+
+[Service]
+User=soterai-app
+Group=soterai-app
+WorkingDirectory=/opt/soterai-approved/current
+ExecStart=/usr/bin/node /opt/soterai-approved/current/app.bundle.cjs
+# Point this at the existing trusted server runtime env.production after review.
+EnvironmentFile=/etc/soterai/env.production
+Restart=on-failure
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=strict
+ProtectHome=true
+CapabilityBoundingSet=
+RestrictSUIDSGID=true
+
+[Install]
+WantedBy=multi-user.target

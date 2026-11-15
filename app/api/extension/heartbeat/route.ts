@@ -32,25 +32,28 @@ export async function POST(request: Request) {
     const auth = await authenticateExtensionRequest(request, body.organizationId);
     if (!auth.ok) return auth.response;
     const integrityHealthy = body.integrity ? body.integrity.healthy : true;
-    const event = await recordExtensionSecurityEvent({
-      organizationId: body.organizationId,
-      projectId: "projectId" in auth ? auth.projectId : undefined,
-      eventType: integrityHealthy ? "EXTENSION_HEARTBEAT" : "EXTENSION_TAMPER_SUSPECTED",
-      severity: integrityHealthy ? "info" : "high",
-      action: "allow",
-      source: "browser_extension",
-      riskTypes: integrityHealthy ? [] : ["extension_integrity"],
-      metadata: {
-        employeeId: body.employeeId,
-        extensionVersion: body.extensionVersion,
-        browser: body.browser,
-        policyVersion: body.policyVersion,
-        domain: body.domain,
-        lastActiveAt: body.lastActiveAt,
-        lockdownEnabled: body.lockdownEnabled,
-        integrity: body.integrity,
-      },
-    });
+    let event = null;
+    if (!integrityHealthy) {
+      event = await recordExtensionSecurityEvent({
+        organizationId: body.organizationId,
+        projectId: "projectId" in auth ? auth.projectId : undefined,
+        eventType: "EXTENSION_TAMPER_SUSPECTED",
+        severity: "high",
+        action: "allow",
+        source: "browser_extension",
+        riskTypes: ["extension_integrity"],
+        metadata: {
+          employeeId: body.employeeId,
+          extensionVersion: body.extensionVersion,
+          browser: body.browser,
+          policyVersion: body.policyVersion,
+          domain: body.domain,
+          lastActiveAt: body.lastActiveAt,
+          lockdownEnabled: body.lockdownEnabled,
+          integrity: body.integrity,
+        },
+      });
+    }
     if ("deviceId" in auth) {
       await db.deviceAgent.update({
         where: { id: auth.deviceId },
@@ -67,7 +70,7 @@ export async function POST(request: Request) {
       receivedAt: new Date().toISOString(),
       lockdownChanged,
       emergencyPolicyVersion,
-      shortPollingSeconds: lockdown.enabled ? 30 : 300,
+      shortPollingSeconds: lockdown.enabled ? 30 : 600,
     });
   } catch (error) {
     return apiError(error, "Extension heartbeat could not be recorded.");

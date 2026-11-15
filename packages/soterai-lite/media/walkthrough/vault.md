@@ -1,7 +1,12 @@
-# Protect workspace secrets
+# Review secrets in project files
 
-SoterAI can find raw secrets in sensitive project files such as `.env`, private-key files, and cloud credential files.
+SoterAI can detect recognized secrets in supported sensitive files, including `.env`, private-key and cloud-credential files.
 
-Review every finding before any change is made. When you approve migration, SoterAI stores encrypted recovery data outside your project and replaces raw values on disk with safe placeholders.
+1. Choose **Protect Workspace Secrets**.
+2. Review the detected files and proposed changes.
+3. Approve only the values you intend to replace.
+4. Keep the encrypted recovery records and their keys.
 
-That means AI tools and CLI agents that read files directly see placeholders instead of secret values.
+Approved migration replaces selected values in the current saved files with placeholders and retains encrypted recovery outside the project. It does not silently approve every finding.
+
+Other copies, Git history, unknown values and inherited environments remain separate exposure paths. Review recovery before removing the extension.

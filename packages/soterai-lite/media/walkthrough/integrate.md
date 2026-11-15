@@ -1,7 +1,12 @@
-# Secure supported AI tools
+# Connect a supported AI tool
 
-SoterAI can find supported local AI client configurations and propose routing them through local checking.
+This step is optional. Local scanning and reviewed context work without a provider account.
 
-You see each proposed change before it is written. Approved changes are backed up with encryption outside your workspace, and **Restore AI Configs** reverses them.
+1. Choose **Secure Installed AI Tools** to review supported configuration.
+2. Read each proposed routing change and its recovery information.
+3. Approve only the changes you want.
+4. Inspect **Coverage** and verify the actual tool route separately before relying on it.
 
-Only traffic routed through SoterAI can be blocked before it leaves your machine. Other AI tools remain clearly marked as monitoring-only.
+Approved configuration backups are encrypted outside your project. **Undo AI Tool Security Changes** offers reviewed recovery; changed ownership or file bytes can prevent restoration. Keep the recovery receipts and resolve pending changes before removing the extension.
+
+**Gateway-routed**, **Vendor-controls-only** and **Uncovered** are different states. Configured provider requests can leave the machine. Other tools and processes can use routes SoterAI does not inspect.

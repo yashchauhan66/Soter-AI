@@ -17,6 +17,7 @@ export const metadata: Metadata = {
     "Scan model artifacts for pickle code execution, verify SLSA/in-toto provenance and generate a CycloneDX AI-BOM. Pure static analysis — nothing is executed.",
   alternates: { canonical: "/model-supply-chain-security" },
   openGraph: {
+    images: [{ url: "/og-card/default.png", width: 1200, height: 630, alt: "SoterAI, the AI security command layer" }],
     title: "Model Supply-Chain Security | SoterAI",
     description:
       "Catch malicious models before load(): pickle RCE detection, integrity & provenance verification, and AI-BOM generation.",

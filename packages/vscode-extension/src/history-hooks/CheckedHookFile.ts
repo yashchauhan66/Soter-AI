@@ -1,0 +1,154 @@
+import { createHash, randomUUID } from "node:crypto";
+import { lstatSync, realpathSync, openSync, closeSync, fstatSync, readSync, writeFileSync, fchmodSync, mkdirSync, renameSync, unlinkSync, type Stats } from "node:fs";
+import * as path from "node:path";
+import { types } from "node:util";
+import { parseOwnerHookConfig } from "./OwnerHookProtocol";
+import type { HookFileSnapshot } from "./PreCommitHookTransaction";
+
+export interface CheckedHookFile {
+    readonly root: string; readonly file: string; read(): Readonly<HookFileSnapshot> | undefined;
+    write(expected: HookFileSnapshot, bytes: Buffer | undefined, mode: number | undefined): boolean;
+}
+const genuine = new WeakSet<object>(), cap = 98304;
+const hash = (value: Uint8Array | string) => createHash("sha256").update(value).digest("hex");
+const same = (a: string, b: string) => a.toLowerCase() === b.toLowerCase();
+const length = Object.getOwnPropertyDescriptor(Object.getPrototypeOf(Uint8Array.prototype), "byteLength")!.get!;
+const modeOK = (mode: unknown): mode is number => typeof mode === "number" && Number.isInteger(mode) && mode >= 0 && mode <= 0o777;
+function copy(value: unknown): Buffer | undefined {
+    if (!types.isUint8Array(value) || !Buffer.isBuffer(value) || length.call(value) > cap) return undefined;
+    const result = Buffer.alloc(length.call(value)); Uint8Array.prototype.set.call(result, value); return result;
+}
+function missing(error: unknown): boolean { return (error as NodeJS.ErrnoException)?.code === "ENOENT"; }
+function unavailable(): never { throw Error("Hook file unavailable."); }
+function stamp(stat: Stats, directory = false): string {
+    if (directory ? !stat.isDirectory() : !stat.isFile() || stat.nlink !== 1) return unavailable();
+    return JSON.stringify(directory ? [stat.ino, stat.birthtimeMs, stat.mode & 0o777]
+        : [stat.ino, stat.birthtimeMs, stat.size, stat.mtimeMs, stat.ctimeMs, stat.nlink, stat.mode & 0o777]);
+}
+function ordinary(file: string, directory: boolean): string {
+    // Existing dangling reparse points are unsupported, not missing entries.
+    if (lstatSync(file).isSymbolicLink()) return unavailable();
+    if (!same(realpathSync(file), file)) return unavailable();
+    for (let cursor = file;;) {
+        if (lstatSync(cursor).isSymbolicLink()) return unavailable();
+        const parent = path.dirname(cursor); if (parent === cursor) break; cursor = parent;
+    }
+    return stamp(lstatSync(file), directory);
+}
+interface FileState { bytes: Buffer | undefined; mode: number | undefined; leaf: string | null }
+interface Capture extends FileState { parents: readonly (string | null)[]; identity: string }
+function body(file: string): FileState {
+    let before: string;
+    try { before = ordinary(file, false); } catch (error) { if (missing(error)) return { bytes: undefined, mode: undefined, leaf: null }; throw error; }
+    let fd: number | undefined;
+    try {
+        fd = openSync(file, "r"); const initial = fstatSync(fd);
+        if (stamp(initial) !== before || initial.size > cap) return unavailable();
+        const buffer = Buffer.alloc(cap + 1); let offset = 0;
+        for (;;) { const read = readSync(fd, buffer, offset, buffer.length - offset, null); offset += read;
+            if (offset > cap) return unavailable(); if (read === 0) break; }
+        if (stamp(fstatSync(fd)) !== before || ordinary(file, false) !== before) return unavailable();
+        return { bytes: Buffer.from(buffer.subarray(0, offset)), mode: initial.mode & 0o777, leaf: before };
+    } finally { if (fd !== undefined) closeSync(fd); }
+}
+export function isCheckedHookFile(value: unknown): value is CheckedHookFile { return !!value && typeof value === "object" && genuine.has(value); }
+
+/** Narrow synchronous filesystem capability for one reviewed leaf. Directory
+ * identities and bounded FD reads are checked around mutation. The remaining
+ * check-to-rename/unlink race is cooperative, not an OS confinement boundary. */
+export function prepareCheckedHookFile(root: string, hooksRelative: string, enabled: () => boolean): CheckedHookFile | undefined {
+    let live = true;
+    const guard = () => { if (!live) return false; try { live = enabled() === true; } catch { live = false; } return live; };
+    try {
+        if (process.platform !== "win32" || !guard() || typeof root !== "string" || typeof hooksRelative !== "string"
+            || !parseOwnerHookConfig(Buffer.from("local\0file:.git/config\0core.hookspath\n" + hooksRelative + "\0"), root)) return undefined;
+        const file = path.join(root, ...hooksRelative.split("/"), "pre-commit"), git = path.join(root, ".git");
+        const rootStamp = ordinary(root, true), gitStamp = ordinary(git, true);
+        const directoryPaths = [root]; for (const part of hooksRelative.split("/")) directoryPaths.push(path.join(directoryPaths[directoryPaths.length - 1], part));
+        const base = () => {
+            if (!guard()) return false;
+            try { live = ordinary(root, true) === rootStamp && ordinary(git, true) === gitStamp; } catch { live = false; }
+            return live && guard();
+        };
+        const parents = (): readonly (string | null)[] => {
+            let absent = false;
+            return directoryPaths.map(directory => {
+                if (absent) return null;
+                try { return ordinary(directory, true); } catch (error) { if (!missing(error)) throw error; absent = true; return null; }
+            });
+        };
+        let generation = 0;
+        const capture = (): Capture | undefined => {
+            if (!base()) return undefined;
+            try {
+                const before = parents(), value = before[before.length - 1] === null ? { bytes: undefined, mode: undefined, leaf: null } : body(file);
+                if (JSON.stringify(parents()) !== JSON.stringify(before) || !base()) return undefined;
+                return { ...value, parents: before, identity: hash(JSON.stringify([root, file, generation, before, value.leaf, value.bytes === undefined ? null : hash(value.bytes)])) };
+            } catch { return undefined; }
+        };
+        const snapshots = new WeakMap<object, { value: Capture; generation: number; consumed: boolean }>();
+        const read = (): Readonly<HookFileSnapshot> | undefined => {
+            const value = capture(); if (!value) return undefined;
+            const snapshot = Object.freeze({ bytes: value.bytes === undefined ? undefined : Buffer.from(value.bytes), mode: value.mode, identity: value.identity });
+            snapshots.set(snapshot, { value, generation, consumed: false }); return snapshot;
+        };
+        const write = (expected: HookFileSnapshot, next: Buffer | undefined, mode: number | undefined): boolean => {
+            // WeakMap admission occurs before caller properties, guards or I/O.
+            const held = expected && typeof expected === "object" ? snapshots.get(expected) : undefined;
+            if (!held || held.consumed || held.generation !== generation) return false;
+            const expectedBytes = expected.bytes === undefined ? undefined : copy(expected.bytes);
+            if (expected.mode !== held.value.mode || expected.identity !== held.value.identity
+                || (held.value.bytes === undefined ? expected.bytes !== undefined : !expectedBytes?.equals(held.value.bytes))) return false;
+            const replacement = next === undefined ? undefined : copy(next);
+            if (next === undefined ? mode !== undefined : !replacement || !modeOK(mode)) return false;
+            let stage: string | undefined, knownStage: FileState | undefined, stageFd: number | undefined;
+            try {
+                const initial = capture(); if (!initial || initial.identity !== held.value.identity || !base()) return false;
+                held.consumed = true;
+                // Only a reviewed write creates missing parents. Every existing
+                // ancestor remains exact; EEXIST races are refused, not adopted.
+                const expectedParents = [...held.value.parents];
+                for (let i = 0; i < directoryPaths.length; i++) {
+                    if (!base()) return false;
+                    if (expectedParents[i] === null) { mkdirSync(directoryPaths[i]); expectedParents[i] = ordinary(directoryPaths[i], true); }
+                    else if (ordinary(directoryPaths[i], true) !== expectedParents[i]) return false;
+                }
+                const matches = (observed: Capture | undefined) => observed !== undefined && observed.leaf === held.value.leaf
+                    && JSON.stringify(observed.parents) === JSON.stringify(expectedParents)
+                    && observed.mode === held.value.mode && (held.value.bytes === undefined ? observed.bytes === undefined : observed.bytes?.equals(held.value.bytes));
+                if (!matches(capture()) || !base()) return false;
+                if (replacement === undefined) {
+                    if (held.value.bytes !== undefined) unlinkSync(file);
+                    generation++;
+                    const observed = capture(); return !!observed && observed.bytes === undefined && base();
+                }
+                stage = path.join(path.dirname(file), ".soterai-pre-commit-" + randomUUID() + ".tmp");
+                stageFd = openSync(stage, "wx", mode);
+                const inode = fstatSync(stageFd); stamp(inode);
+                writeFileSync(stageFd, replacement); fchmodSync(stageFd, mode!);
+                const written = fstatSync(stageFd);
+                if (written.ino !== inode.ino || written.birthtimeMs !== inode.birthtimeMs || written.nlink !== 1) return false;
+                closeSync(stageFd); stageFd = undefined;
+                const observedStage = body(stage);
+                // Pathname replacement cannot transfer ownership of our wx FD.
+                if (observedStage.leaf !== stamp(written)) return false;
+                knownStage = observedStage;
+                if (!knownStage.bytes?.equals(replacement) || knownStage.mode !== mode || !matches(capture()) || !base()) return false;
+                // Recheck the exclusively created replacement as well as target.
+                const finalStage = body(stage);
+                if (finalStage.leaf !== knownStage.leaf || !finalStage.bytes?.equals(replacement) || !matches(capture()) || !base()) return false;
+                renameSync(stage, file); stage = undefined; generation++;
+                const observed = capture(); return !!observed && observed.mode === mode && !!observed.bytes?.equals(replacement) && base();
+            } catch { return false; }
+            finally {
+                if (stageFd !== undefined) try { closeSync(stageFd); } catch { /* uncertain handle state */ }
+                if (stage && knownStage) try {
+                    const observed = body(stage);
+                    if (observed.leaf === knownStage.leaf && observed.mode === knownStage.mode && observed.bytes?.equals(knownStage.bytes!)) unlinkSync(stage);
+                } catch { /* unknown staging bytes are retained */ }
+            }
+        };
+        const descriptor = Object.freeze({ root, file, read, write });
+        if (!base()) return undefined; genuine.add(descriptor); return descriptor;
+    } catch { live = false; return undefined; }
+}

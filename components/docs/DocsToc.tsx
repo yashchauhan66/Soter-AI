@@ -84,13 +84,18 @@ const NO_ENTRIES: TocEntry[] = [];
 
 let cachedShape = "";
 let cachedEntries: TocEntry[] = NO_ENTRIES;
+let cachedNodes: HTMLElement[] = [];
 
 function readHeadings(): TocEntry[] {
-  const nodes = Array.from(document.querySelectorAll<HTMLElement>("[data-docs-heading]"));
-  const shape = nodes.map((node) => `${node.id}/${node.dataset.docsLevel ?? 2}`).join("|");
+  const nodes = Array.from(document.querySelectorAll<HTMLElement>("[data-docs-article] [data-docs-heading]"));
+  // Labels are part of the snapshot. Two guides can share ids such as "setup"
+  // while displaying different titles. Node identity also resets scroll refs
+  // when a streamed/client navigation replaces an otherwise identical outline.
+  const shape = JSON.stringify(nodes.map((node) => [node.id, node.dataset.docsLevel ?? "2", node.dataset.docsLabel]));
 
-  if (shape !== cachedShape) {
+  if (shape !== cachedShape || nodes.some((node, index) => cachedNodes[index] !== node)) {
     cachedShape = shape;
+    cachedNodes = nodes;
     cachedEntries = nodes
       // An empty id would render an anchor that goes nowhere. `DocsHeading` cannot
       // produce one — the slug test in tests/docs-structure.test.ts enforces it —
@@ -123,7 +128,12 @@ function subscribeToHeadings(onStoreChange: () => void): () => void {
   // The imprecision is free: unrelated mutations do fire `onStoreChange`, but
   // `readHeadings` returns the identical array when the outline has not changed,
   // so React does nothing.
-  observer.observe(document.body, { childList: true, subtree: true });
+  observer.observe(document.body, {
+    childList: true,
+    subtree: true,
+    attributes: true,
+    attributeFilter: ["id", "data-docs-heading", "data-docs-label", "data-docs-level"],
+  });
 
   return () => observer.disconnect();
 }
@@ -205,7 +215,8 @@ export function DocsToc() {
   }, [entries]);
 
   const toTop = useCallback(() => {
-    window.scrollTo({ top: 0, behavior: "smooth" });
+    const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    window.scrollTo({ top: 0, behavior: reducedMotion ? "auto" : "smooth" });
   }, []);
 
   // One heading does not need a table of contents, and an empty rail is worse
@@ -213,8 +224,8 @@ export function DocsToc() {
   if (entries.length < 2) return null;
 
   return (
-    <nav aria-labelledby="docs-toc-label" className="sticky top-24 max-h-[calc(100vh-8rem)] overflow-y-auto pb-8">
-      <p id="docs-toc-label" className="eyebrow">
+    <nav aria-labelledby="docs-toc-label" className="docs-toc">
+      <p id="docs-toc-label" className="docs-toc-label">
         On this page
       </p>
 
@@ -222,11 +233,11 @@ export function DocsToc() {
           active rail entry already says where the reader is. `aria-hidden` rather
           than `role="progressbar"` so assistive technology is not read a number
           that changes on every scroll frame. */}
-      <div className="docs-toc-progress mt-3" aria-hidden="true">
+      <div className="docs-toc-progress" aria-hidden="true">
         <span ref={barRef} style={{ transform: "scaleX(0)" }} />
       </div>
 
-      <ul className="mt-4 space-y-px">
+      <ul className="docs-toc-list">
         {entries.map((entry) => (
           <li key={entry.id}>
             <a
@@ -234,7 +245,7 @@ export function DocsToc() {
               // `location`, not `page` — this marks a position inside the current
               // document, which is what the token means.
               aria-current={activeId === entry.id ? "location" : undefined}
-              className={`docs-toc-link ${entry.level === 3 ? "pl-7" : "pl-3"}`}
+              className="docs-toc-link" data-level={entry.level}
             >
               {entry.label}
             </a>
@@ -244,7 +255,7 @@ export function DocsToc() {
 
       {/* Appears only once there is something to go back up to. */}
       {scrolled && (
-        <button type="button" onClick={toTop} className="docs-toc-top mt-5">
+        <button type="button" onClick={toTop} className="docs-toc-top">
           <ArrowUp size={13} aria-hidden="true" />
           Back to top
         </button>
@@ -270,7 +281,7 @@ export function DocsTocInline() {
   if (entries.length < 2) return null;
 
   return (
-    <details className="docs-toc-inline mt-8 xl:hidden">
+    <details className="docs-toc-inline">
       <summary>
         <span className="flex items-center gap-2">
           <List size={14} aria-hidden="true" />
@@ -282,10 +293,10 @@ export function DocsTocInline() {
         </span>
       </summary>
 
-      <ul className="border-t border-slate-800 px-3 py-2">
+      <ul className="docs-toc-inline-list">
         {entries.map((entry) => (
           <li key={entry.id}>
-            <a href={`#${entry.id}`} className={`docs-toc-link ${entry.level === 3 ? "pl-7" : "pl-3"}`}>
+            <a href={`#${entry.id}`} className="docs-toc-link" data-level={entry.level}>
               {entry.label}
             </a>
           </li>

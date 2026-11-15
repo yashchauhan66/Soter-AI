@@ -7,7 +7,7 @@ export const metadata: Metadata = buildMetadata({
   // so the two do not compete for the same query.
   title: "Enterprise AI Security at Large Scale",
   description:
-    "Enterprise AI security with SSO, RBAC, audit logging, self-hosted deployment and compliance tooling. Protect LLM apps, AI agents and RAG pipelines at scale.",
+    "Enterprise AI security with SSO, RBAC, audit logging, self-hosting and compliance mapping for LLM apps, AI agents and RAG pipelines.",
   path: "/enterprise-ai-security",
   keywords: [
     "enterprise ai security",

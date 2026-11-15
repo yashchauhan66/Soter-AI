@@ -1,5 +1,9 @@
 import Link from "next/link";
-import { ArrowRight } from "lucide-react";
+import { PLAYGROUND_CTA_LABEL } from "@/lib/marketing/cta";
+import { FocusableOverflow } from "@/components/sa/FocusableOverflow";
+import { Faq } from "@/components/sa/Faq";
+import { SaLinkButton } from "@/components/sa/primitives";
+import { SaRoot } from "@/components/sa/SaRoot";
 import { JsonLd } from "@/components/seo/JsonLd";
 import { articleLd, faqPageLd } from "@/lib/seo/metadata";
 import { breadcrumbList } from "@/lib/seo/schema";
@@ -7,30 +11,23 @@ import type { BlogPostMeta } from "@/lib/blog/posts";
 import { VSCODE_MARKETPLACE_URL } from "@/components/marketing/FeatureLanding";
 
 /**
- * Prose wrapper: styles raw heading/paragraph/list children so blog posts can
- * be authored as plain JSX without a Markdown pipeline or the typography plugin.
+ * Prose wrapper: styles raw heading, paragraph, list, code and table children so blog
+ * posts can be authored as plain JSX without a Markdown pipeline. Styles live under
+ * `.sa-prose` in components/sa/sa.css.
  */
 export function Prose({ children }: { children: React.ReactNode }) {
-  return (
-    <div
-      className="mt-10 max-w-3xl text-[15px] leading-7 text-slate-300
-        [&_a]:text-cyan [&_a]:underline [&_a:hover]:opacity-80
-        [&_code]:rounded [&_code]:bg-slate-800/70 [&_code]:px-1.5 [&_code]:py-0.5 [&_code]:font-mono [&_code]:text-[13px] [&_code]:text-cyan
-        [&_h2]:mt-12 [&_h2]:text-2xl [&_h2]:font-bold [&_h2]:text-slate-100
-        [&_h3]:mt-8 [&_h3]:text-lg [&_h3]:font-semibold [&_h3]:text-slate-100
-        [&_li]:mt-2 [&_ol]:mt-4 [&_ol]:list-decimal [&_ol]:pl-6
-        [&_p]:mt-4
-        [&_pre]:mt-5 [&_pre]:overflow-x-auto [&_pre]:rounded-lg [&_pre]:border [&_pre]:border-slate-800 [&_pre]:bg-slate-950/80 [&_pre]:p-4 [&_pre]:text-[13px]
-        [&_ul]:mt-4 [&_ul]:list-disc [&_ul]:pl-6"
-    >
-      {children}
-    </div>
-  );
+  return <div className="sa-prose">{children}</div>;
 }
 
+/** Tags that mean the post is about coding assistants, where the IDE extension is relevant. */
+const IDE_TAGS = new Set(["secret-scanning", "ai-coding", "mcp", "mcp-security"]);
+
 /**
- * Shared article shell for blog posts: header, prose body, FAQ, install CTA,
- * and page-scoped Article + FAQPage + Breadcrumb structured data.
+ * Shared article shell for blog posts: header with author and date, prose body, FAQ,
+ * a closing call to action, and page-scoped BlogPosting + FAQPage + Breadcrumb data.
+ *
+ * The FAQ list is drawn from the same array as the FAQPage schema, so the visible text
+ * and the markup cannot differ.
  */
 export function BlogArticle({
   meta,
@@ -60,65 +57,73 @@ export function BlogArticle({
     day: "numeric",
     timeZone: "UTC",
   });
+  const ideRelevant = meta.tags.some((t) => IDE_TAGS.has(t));
 
   return (
-    <main className="container-page py-16">
+    <SaRoot>
       <JsonLd data={breadcrumb} />
       <JsonLd data={article} />
       <JsonLd data={faqPageLd(faqs)} />
 
-      <article>
-        <header className="max-w-3xl">
-          <p className="eyebrow">SoterAI Blog</p>
-          <h1 className="mt-3 text-4xl font-bold leading-tight tracking-tight sm:text-5xl">
-            {meta.title}
-          </h1>
-          <div className="mt-4 flex flex-wrap items-center gap-x-3 gap-y-1 text-sm text-slate-300">
-            <time dateTime={meta.datePublished}>{published}</time>
-            <span aria-hidden>·</span>
-            <span>{meta.readingTime}</span>
+      <main className="sa-page" style={{ paddingBlock: "var(--sa-space-7) var(--sa-space-9)" }}>
+        <article>
+          <header>
+            <p className="sa-eyebrow">
+              <Link href="/blog" className="sa-link">
+                Blog
+              </Link>
+            </p>
+            <h1 className="sa-h1" style={{ marginTop: "var(--sa-space-3)", maxWidth: "22ch" }}>
+              {meta.title}
+            </h1>
+            <p className="sa-article-meta" style={{ marginTop: "var(--sa-space-4)" }}>
+              <span>
+                By <Link href="/about" className="sa-link">Yash Chauhan</Link>
+              </span>
+              <time dateTime={meta.datePublished}>{published}</time>
+              <span>{meta.readingTime}</span>
+            </p>
+          </header>
+
+          <div style={{ marginTop: "var(--sa-space-6)" }}>
+            <Prose>{children}</Prose>
+            <FocusableOverflow />
           </div>
-        </header>
 
-        <Prose>{children}</Prose>
+          <section className="sa-section" aria-labelledby="faq">
+            <div className="sa-section__head">
+              <h2 className="sa-h2" id="faq">
+                Questions
+              </h2>
+            </div>
+            <Faq items={faqs.map((f) => ({ q: f.q, a: f.a }))} />
+          </section>
 
-        {/* FAQ */}
-        <section className="mt-14 max-w-3xl">
-          <h2 className="text-2xl font-bold">Frequently asked questions</h2>
-          <div className="mt-6 space-y-6">
-            {faqs.map((f) => (
-              <div key={f.q}>
-                <h3 className="font-semibold text-slate-100">{f.q}</h3>
-                <p className="mt-2 text-sm leading-6 text-slate-200">{f.a}</p>
-              </div>
-            ))}
-          </div>
-        </section>
-
-        {/* CTA */}
-        <section className="mt-14 max-w-3xl rounded-2xl border border-cyan/20 bg-cyan/5 p-8">
-          <h2 className="text-xl font-bold">Scan your AI context locally</h2>
-          <p className="mt-3 text-sm leading-6 text-slate-200">
-            SoterAI IDE Guard scans secrets, prompts, MCP tools, and terminal
-            commands on your machine before they reach an AI model. Free to
-            install, local by default.
-          </p>
-          <a
-            href={VSCODE_MARKETPLACE_URL}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="mt-5 inline-flex items-center gap-2 rounded-lg bg-cyan px-5 py-3 text-sm font-semibold text-white transition hover:opacity-90"
-          >
-            Install the VS Code extension <ArrowRight className="h-4 w-4" />
-          </a>
-        </section>
-
-        <nav className="mt-12 max-w-3xl border-t border-slate-800 pt-6 text-sm">
-          <Link href="/blog" className="text-cyan hover:opacity-80">
-            ← Back to all posts
-          </Link>
-        </nav>
-      </article>
-    </main>
+          <section className="sa-closing" aria-labelledby="closing">
+            <h2 className="sa-h2" id="closing">
+              Test it on text you already have.
+            </h2>
+            <p className="sa-body" style={{ marginTop: "var(--sa-space-3)" }}>
+              The playground runs the real engine and shows the verdict, the risk score and where it matched. Use sample data, not real
+              secrets.
+            </p>
+            <div className="sa-hero__actions">
+              <SaLinkButton href="/playground" large>
+                {PLAYGROUND_CTA_LABEL}
+              </SaLinkButton>
+              {ideRelevant ? (
+                <a href={VSCODE_MARKETPLACE_URL} target="_blank" rel="noopener noreferrer" className="sa-btn sa-btn--ghost">
+                  Install the VS Code extension (Beta)
+                </a>
+              ) : (
+                <SaLinkButton href="/limitations" variant="ghost">
+                  Read what it misses
+                </SaLinkButton>
+              )}
+            </div>
+          </section>
+        </article>
+      </main>
+    </SaRoot>
   );
 }

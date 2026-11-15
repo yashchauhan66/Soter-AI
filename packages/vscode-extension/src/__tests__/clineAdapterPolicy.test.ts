@@ -36,6 +36,12 @@ test("F18 current providers/MCP/global schema preserves unrelated fields and mas
     const { plan } = await fixture(); const preview = JSON.stringify(plan.preview()); assert.ok(!preview.includes(OLD) && !preview.includes(OWNER)); assert.ok(!JSON.stringify(plan).includes(OLD));
     assert.deepEqual(plan.preview().changes.slice().sort(), ["providers", "mcp", "globals", "hook", "taskHook"].sort());
 });
+
+test("F18 setup refuses a file model that differs from the reviewed global mode selection", async () => {
+    const { createClinePlan } = await policy();
+    assert.throws(() => createClinePlan(inputs(), { ...binding, model: "changed-mode-model" }), /unavailable|unsupported/i);
+    assert.doesNotThrow(() => createClinePlan(inputs(), { ...binding, model: "synthetic-model" }));
+});
 test("F18 approval, backup and exact apply round trip route only the selected pinned provider", async () => {
     const { plan, deps, files, backups, counts } = await fixture(); const result = await plan.apply(deps); assert.equal(result.status, "APPLIED"); assert.equal(counts().reviews, 1); assert.equal(backups.size, 5);
     const providers = JSON.parse(files.providers!), mcp = JSON.parse(files.mcp!), globals = JSON.parse(files.globals!);

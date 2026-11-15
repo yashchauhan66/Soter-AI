@@ -14,7 +14,7 @@ export default async function SignUpPage() {
       <div className="mx-auto w-full max-w-md">
         <div className="mb-8 flex items-center gap-2 font-semibold tracking-wide">
           <span className="rounded-md border border-cyan/25 bg-cyan/10 p-2 text-cyan"><ShieldCheck size={18} aria-hidden="true" /></span>
-          Soter<span className="text-cyan">AI</span>
+          <Link href="/" className="font-mono">Soter<span className="text-cyan">AI</span></Link>
         </div>
         <div className="card p-7">
           <p className="eyebrow">Create account</p>
@@ -22,7 +22,7 @@ export default async function SignUpPage() {
           <p className="mt-2 text-sm leading-6 text-slate-200">Create a workspace with input protection, output inspection, risk logs, and security evidence.</p>
           <SignUpForm />
           <p className="mt-6 text-sm text-slate-300">
-            Already have an account? <Link href="/signin" className="text-cyan hover:text-cyan/80">Sign in</Link>
+            Already have an account? <Link href="/signin" className="text-cyan underline underline-offset-2 hover:text-cyan/80">Sign in</Link>
           </p>
         </div>
       </div>

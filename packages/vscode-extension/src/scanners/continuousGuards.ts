@@ -229,72 +229,7 @@ export function registerContinuousGuardCommands(
         else vscode.window.showWarningMessage(`AI-code check: ${hits.length} pattern(s) matched: ${hits.join(", ")}`);
     });
 
-    // #5 command: offer to install a pre-commit hook in the workspace
-    reg("soterai.installGitSecretHook", async () => {
-        const folder = vscode.workspace.workspaceFolders?.[0];
-        if (!folder) { vscode.window.showErrorMessage("Open a workspace first."); return; }
-
-        const fsp = require("fs/promises");
-        const pathM = require("path");
-        const root = folder.uri.fsPath;
-        const hookPath = pathM.join(root, ".git", "hooks", "pre-commit");
-
-        // A repo using husky/lefthook sets core.hooksPath, and git then ignores
-        // .git/hooks entirely — installing there would look successful and do
-        // nothing. Detect it and say so instead of writing a dead file.
-        const custom = await readGitHooksPath(root, fsp, pathM);
-        if (custom) {
-            vscode.window.showWarningMessage(
-                `This repo sets core.hooksPath = "${custom}" (husky/lefthook or similar), so git ignores .git/hooks. ` +
-                `SoterAI did not install anything. Add the scan to your "${custom}/pre-commit" manually — ` +
-                `use "SoterAI: Copy Pre-Commit Hook Script" to get the script.`,
-            );
-            return;
-        }
-
-        let existing: string | null = null;
-        try { existing = await fsp.readFile(hookPath, "utf8"); } catch { existing = null; }
-        const alreadyOurs = existing !== null && existing.includes("SoterAI pre-commit guard");
-
-        const prompt = existing === null || alreadyOurs
-            ? "Install SoterAI git pre-commit hook? Future commits will be scanned for secrets (bypass always possible with --no-verify)."
-            : "A pre-commit hook already exists in this repo. SoterAI will back it up to " +
-              "'pre-commit.soterai-backup' and replace it. Your original is restorable from that file.";
-        const confirmLabel = existing !== null && !alreadyOurs ? "Back up & replace" : "Install";
-        const pick = await vscode.window.showWarningMessage(prompt, { modal: true }, confirmLabel);
-        if (pick !== confirmLabel) return;
-
-        try {
-            await fsp.mkdir(pathM.dirname(hookPath), { recursive: true });
-            if (existing !== null && !alreadyOurs) {
-                await fsp.writeFile(`${hookPath}.soterai-backup`, existing, "utf8");
-            }
-            await fsp.writeFile(hookPath, buildPreCommitHook(), "utf8");
-            // Without the exec bit git silently skips the hook on macOS/Linux —
-            // the UI would claim protection that never runs. Windows ignores mode.
-            let execBitSet = true;
-            try { await fsp.chmod(hookPath, 0o755); } catch { execBitSet = false; }
-            const tail = existing !== null && !alreadyOurs ? " Previous hook saved as pre-commit.soterai-backup." : "";
-            if (execBitSet || process.platform === "win32") {
-                vscode.window.showInformationMessage(`SoterAI pre-commit secret hook installed (.git/hooks/pre-commit).${tail}`);
-            } else {
-                vscode.window.showWarningMessage(
-                    `Hook written to .git/hooks/pre-commit but the executable bit could not be set, ` +
-                    `so git will skip it. Run: chmod +x .git/hooks/pre-commit${tail}`,
-                );
-            }
-        } catch (e) {
-            vscode.window.showErrorMessage(`Hook install failed: ${e instanceof Error ? e.message : String(e)}`);
-        }
-    });
-
-    // Escape hatch for husky/lefthook repos, referenced by the warning above.
-    reg("soterai.copyPreCommitHookScript", async () => {
-        await vscode.env.clipboard.writeText(buildPreCommitHook());
-        vscode.window.showInformationMessage(
-            "Pre-commit scan script copied to clipboard. Paste it into your managed hook (e.g. .husky/pre-commit) and make it executable.",
-        );
-    });
+    // Pre-commit install and legacy copy are owned by history-hooks/commands.
 
     // #6 command: warn on screen-share risk (visible sensitive files)
     reg("soterai.checkScreenShareRisk", async () => {

@@ -6,6 +6,7 @@ export const metadata: Metadata = {
     "SoterAI privacy policy: minimized content retention, in-memory processing, encrypted API key storage and stateless platform integrations.",
   alternates: { canonical: "/privacy" },
   openGraph: {
+    images: [{ url: "/og-card/default.png", width: 1200, height: 630, alt: "SoterAI, the AI security command layer" }],
     title: "Privacy Policy | SoterAI",
     description:
       "SoterAI privacy policy: minimized content retention, in-memory processing, encrypted API key storage and stateless platform integrations.",

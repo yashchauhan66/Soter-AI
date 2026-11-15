@@ -98,7 +98,7 @@ async function blocked(saved: unknown, failGet = false): Promise<void> {
 }
 
 beforeEach(async () => {
-    const base = process.platform === "win32" ? "D:\\SoterAI-Lite-test-profiles" : tmpdir(); await mkdir(base, { recursive: true });
+    const base = tmpdir(); await mkdir(base, { recursive: true });
     directory = await mkdtemp(join(await realpath(base), "f10-command-registration-")); root = join(directory, "project"); other = join(directory, "other"); await mkdir(root); await mkdir(other);
     await writeFile(join(root, ".env.synthetic"), "API_KEY=[SOTERAI_PROTECTED_A3427B3646BA4D8482E5C5DFB5BA5DD1_0]\n", { flag: "wx" });
     stub.resetState(root); context = stub.makeExtensionContext(join(directory, "storage")); initializeBoundaryState(context.workspaceState as never); await BoundarySnapshot.load();

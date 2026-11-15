@@ -4,6 +4,30 @@
 configs and git diffs, and manage the SoterAI Local AI Broker — from any editor
 or terminal, no native plugin required.
 
+The current local source also includes `ci scan`, `isolate plan|run`, and
+`acceptance assess`. CI uses the shared deterministic secret policy without a
+running broker and returns 0 clean, 1 findings, or 2 incomplete. JSON/SARIF contain
+locations and rule IDs, never matched values. Source exclusions and finite limits
+are explicit; scans describe admitted saved bytes, not subsequent mutations.
+
+Developer workflow reports: `soterai ci scan --root <directory> --format github`
+produces a fixed Markdown summary, and `--format summary-json` emits shareable
+counts/status without filenames, snippets, values or fingerprints. Both preserve
+finding/incomplete exit codes. Scan source and actual build output separately;
+see [the finite Node example](../../examples/developer-workflow/README.md).
+
+Isolation is a separate Windows Docker Desktop Linux session for an approved,
+digest-pinned, finite Node snapshot. It requires effective settings and runtime
+canaries; absent support fails closed. No real secrets, host mounts, network,
+privileged container, or host fallback are provided. Runtime isolation has not
+been verified on the current host.
+
+The [existing-EC2 delivery reference](../../examples/aws-soterai/README.md) uses
+protected OIDC publication and a separately installed, owner-controlled signed
+operation broker. Its complete trusted runtime is bundled outside the agent
+workspace. Installation, provider configuration and live acceptance are pending.
+These local additions have not been published to the npm registry.
+
 > Sponsored by [SoterAI](https://soterai.in).
 
 `@soterai/cli` is the cross-platform fallback runtime for SoterAI Guard: it gives

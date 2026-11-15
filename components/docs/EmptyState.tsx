@@ -1,5 +1,5 @@
 import type { LucideIcon } from "lucide-react";
-import { Inbox } from "lucide-react";
+import { ArrowRight, Inbox } from "lucide-react";
 
 interface EmptyStateProps {
   title?: string;
@@ -17,22 +17,15 @@ export function EmptyState({
   icon: Icon = Inbox,
 }: EmptyStateProps) {
   return (
-    <section className="card flex flex-col items-center justify-center gap-4 p-12 text-center">
-      <span className="rounded-full bg-slate-800/50 p-4 text-slate-300">
-        <Icon size={32} />
-      </span>
+    <section className="docs-empty-state">
+      <Icon size={20} aria-hidden="true" className="docs-empty-icon" />
       <div>
-        <p className="font-semibold text-slate-300">{title}</p>
-        <p className="mt-1 max-w-md text-sm text-slate-300">{message}</p>
+        <h3>{title}</h3>
+        <p>{message}</p>
+        {actionLabel && actionHref && (
+          <a href={actionHref}>{actionLabel}<ArrowRight size={14} aria-hidden="true" /></a>
+        )}
       </div>
-      {actionLabel && actionHref && (
-        <a
-          href={actionHref}
-          className="button-secondary gap-2 text-sm"
-        >
-          {actionLabel} →
-        </a>
-      )}
     </section>
   );
 }

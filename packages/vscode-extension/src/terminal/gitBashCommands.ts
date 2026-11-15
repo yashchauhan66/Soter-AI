@@ -8,6 +8,8 @@ import { PowerShell51Terminal } from "./PowerShell51Terminal";
 import { managedRootIdentity } from "./ManagedOutputBinding";
 import { PowerShell51Worker, type PowerShell51Snapshot } from "./PowerShell51Worker";
 
+import { lifecycleRecoveryEnabled } from "../lifecycle/LifecycleFlags";
+
 const OWNERSHIP = "soterai.lite.gitBash.ownership.v1";
 type Row = Omit<PowerShell51Snapshot, "state"> & { state: PowerShell51Snapshot["state"] | "UNVERIFIED" };
 type Vault = ConstructorParameters<typeof CheckedPowerShellSession>[0]["vault"];
@@ -89,16 +91,21 @@ export function registerCheckedGitBash(context: vscode.ExtensionContext, vault: 
             return available() && written === version;
         } catch { valid = false; revoke(); return false; }
     };
-    const profile = new CheckedGitBashProfile(context, available);
+    const restoreAvailable = (): boolean => {
+        try { return available() || !disposed && !stopped && process.platform === "win32" && !vscode.env.remoteName
+            && vscode.workspace.isTrusted && lifecycleRecoveryEnabled(); } catch { return false; }
+    };
+    const profile = new CheckedGitBashProfile(context, available, restoreAvailable);
     const currentRoot = (value: unknown): vscode.Uri | undefined => {
         try { if (!(value instanceof vscode.Uri)) return undefined; managedRootIdentity(value); return value; } catch { return undefined; }
     };
-    const choose = async (requested?: unknown): Promise<vscode.Uri | undefined> => {
-        if (!available()) return undefined;
+    const choose = async (requested?: unknown, restoring = false): Promise<vscode.Uri | undefined> => {
+        const allowed = restoring ? restoreAvailable : available;
+        if (!allowed()) return undefined;
         if (requested !== undefined) return currentRoot(requested);
         const folders = vscode.workspace.workspaceFolders;
         const folder = folders?.length === 1 ? folders[0] : await vscode.window.showWorkspaceFolderPick();
-        return available() ? currentRoot(folder?.uri) : undefined;
+        return allowed() ? currentRoot(folder?.uri) : undefined;
     };
     const create = (root: vscode.Uri): vscode.ExtensionTerminalOptions | undefined => {
         if (!available() || !currentRoot(root) || sessions.size >= 32) return undefined;
@@ -131,7 +138,7 @@ export function registerCheckedGitBash(context: vscode.ExtensionContext, vault: 
     };
     const reg = (id: string, handler: (...args: unknown[]) => unknown) => registrations.push(vscode.commands.registerCommand(id, handler));
     reg("soterai.configureCheckedGitBash", async requested => { const root = await choose(requested); return root ? profile.configure(root) : { status: "UNAVAILABLE" }; });
-    reg("soterai.restoreCheckedGitBash", async requested => { const root = await choose(requested); return root ? profile.restore(root) : { status: "UNAVAILABLE" }; });
+    reg("soterai.restoreCheckedGitBash", async requested => { const root = await choose(requested, true); return root ? profile.restore(root) : { status: "UNAVAILABLE" }; });
     reg("soterai.openCheckedGitBash", async requested => ({ status: await open(requested) ? "OPENED" : "UNAVAILABLE" }));
     reg("soterai.runCheckedGitBash", async () => {
         if (!available() || inputPending >= 2) return { status: "UNAVAILABLE" };

@@ -120,7 +120,40 @@ const SLATE_MIRROR: Record<string, number> = {
  * survives being placed on any surface in the system. It stays clearly dimmer than
  * slate-400 (7.58:1), which is what the role requires.
  */
-const SLATE_DIM = "#58687d";
+const SLATE_DIM = "#67625a";
+
+/**
+ * Warm neutral ramp (2026 redesign). Replaces Tailwind's cool blue-grey `slate`
+ * as the SOURCE of the mirrored neutrals, so every `text-slate-*`, `bg-slate-*`
+ * and `border-slate-*` call site becomes warm without being edited.
+ *
+ * Why not Tailwind's `stone`: stone is warm but its lightest step is #fafaf9 and
+ * its darkest is near-black cool-ish; this ramp is tuned to the paper/ink pair
+ * the new pages use, so legacy pages and redesigned pages share one palette.
+ *
+ * Measured against paper #fbfaf7 (WCAG relative luminance):
+ *   900 #14110f 18.01:1 (headings)   800 #2a2723 14.24:1   700 #3f3b35 10.65:1 (body)
+ *   600 #5b5750  6.88:1 (muted)      500 #857f74  3.81:1 (control borders, UI only)
+ * and the "dim" override above (#67625a) clears 4.5:1 on paper 5.80, white 6.05,
+ * sunken 5.36, the brand tint 5.00 and the neutral tint 4.98. It stays visibly
+ * lighter than muted (#5b5750).
+ *
+ * Keys are the ORIGINAL (unmirrored) step names, because `mirror()` reads them
+ * the same way it read `colors.slate`.
+ */
+const WARM: Ramp = {
+  50: "#fbfaf7",
+  100: "#f4f1ea",
+  200: "#e3ded3",
+  300: "#cfc9bc",
+  400: "#a9a294",
+  500: "#857f74",
+  600: "#5b5750",
+  700: "#3f3b35",
+  800: "#2a2723",
+  900: "#14110f",
+  950: "#0c0a08",
+};
 
 type Ramp = Record<string, string>;
 
@@ -155,7 +188,7 @@ const semantic = (scale: Ramp, defaultStep = 800) => mirror(scale, SEMANTIC_MIRR
  * WCAG 1.4.11, a failure as text. It stays reachable as `bg-cyan-600` and as
  * `--brand-graphic` in globals.css. Do not set text in it.
  */
-const BRAND_MARK = "#f96403";
+const BRAND_MARK = "#ea5e03"; // was #f96403 (2.94:1 on paper, under the 3:1 graphics floor). The logo PNG is unchanged: logotypes are exempt from WCAG 1.4.11.
 
 /**
  * The accessible brand step.
@@ -232,14 +265,14 @@ const lime = semantic(colors.green as Ramp, 800);
  * 80% over a white page is no scrim at all. Those call sites move to
  * `bg-slate-900/50`.
  */
-const ink: Ramp = { ...mirror(colors.slate as Ramp, SLATE_MIRROR, 50), DEFAULT: "#ffffff" };
+const ink: Ramp = { ...mirror(WARM, SLATE_MIRROR, 50), DEFAULT: "#fbfaf7" };
 
 /** Elevated surface ramp ("panel"). White card on a white page, split by a hairline. */
-const panel: Ramp = { ...mirror(colors.slate as Ramp, SLATE_MIRROR, 50), DEFAULT: "#ffffff" };
+const panel: Ramp = { ...mirror(WARM, SLATE_MIRROR, 50), DEFAULT: "#ffffff" };
 
 /** Neutral ramp. Carries the entire type hierarchy plus every surface and rule. */
 const slate: Ramp = {
-  ...mirror(colors.slate as Ramp, SLATE_MIRROR, 700),
+  ...mirror(WARM, SLATE_MIRROR, 700),
   500: SLATE_DIM,
   600: SLATE_DIM,
 };
@@ -250,8 +283,10 @@ const config: Config = {
   theme: {
     extend: {
       fontFamily: {
-        sans: ["var(--font-inter)", "system-ui", "-apple-system", "sans-serif"],
-        mono: ["var(--font-jetbrains-mono)", "Consolas", "Monaco", "monospace"],
+        sans: ["var(--font-sa-display)", "Nirmala UI", "Georgia", "serif"],
+        /** Headings and the editorial voice. Newsreader, weights 400-600 only. */
+        display: ["var(--font-sa-display)", "Iowan Old Style", "Palatino Linotype", "Palatino", "Georgia", "serif"],
+        mono: ["var(--font-sa-mono)", "ui-monospace", "SFMono-Regular", "Menlo", "Consolas", "monospace"],
       },
 
       colors: {
@@ -323,7 +358,7 @@ const config: Config = {
        */
       boxShadow: {
         glow: "0 0 0 1px rgba(178, 59, 11, 0.14), 0 8px 24px rgba(178, 59, 11, 0.10)",
-        "elevation-1": "0 1px 2px rgba(15, 23, 42, 0.05)",
+        "elevation-1": "0 1px 2px rgba(20, 17, 15, 0.06)",
         "elevation-2": "0 1px 2px rgba(15, 23, 42, 0.05), 0 2px 8px rgba(15, 23, 42, 0.05)",
         "elevation-3": "0 2px 4px rgba(15, 23, 42, 0.05), 0 8px 24px rgba(15, 23, 42, 0.07)",
         "elevation-4": "0 4px 8px rgba(15, 23, 42, 0.06), 0 16px 48px rgba(15, 23, 42, 0.10)",
@@ -365,7 +400,7 @@ const config: Config = {
 
       backgroundImage: {
         "brand-sheen": "linear-gradient(135deg, #f96403 0%, #b23b0b 100%)",
-        "surface-fade": "linear-gradient(180deg, rgba(248,250,252,0.9) 0%, rgba(255,255,255,0) 100%)",
+        "surface-fade": "linear-gradient(180deg, rgba(244,241,234,0.9) 0%, rgba(251,250,247,0) 100%)",
       },
 
       zIndex: {

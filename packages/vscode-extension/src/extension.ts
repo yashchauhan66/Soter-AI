@@ -13,6 +13,17 @@ import { RiskTreeProvider } from "./views/RiskTreeProvider";
 import { DashboardPanel } from "./webview/DashboardPanel";
 import { ControlPanelViewProvider } from "./webview/ControlPanelViewProvider";
 import { TelemetryManager } from "./telemetry";
+import { emitOwnedDiagnostic } from "../../core/src/OwnedSinkMetadata";
+import { selfHygieneEnabled } from "./self-hygiene/SelfHygieneFlags";
+import { registerReadReliability } from "./security/ReadReliabilityOwner";
+import { registerProtectionCenter, type ProtectionCenterHandle } from "./protection-center/ProtectionCenter";
+import { registerProjectJourney } from "./project-journey/commands";
+import { registerIsolatedAgentCommands } from "./isolated-agent/commands";
+import { registerPortableVaultRecoveryCommands } from "./firewall/portable-recovery-commands";
+import { registerSecretlessOperationCommands } from "./secretless-operations/commands";
+import { protectionCenterEnabled } from "./protection-center/ProtectionCenterFlags";
+import {registerSetupVerification,type SetupVerificationHandle} from "./setup-verification/SetupVerification";
+import {setupVerificationEnabled} from "./setup-verification/SetupVerificationFlags";
 import { BrokerManager, setBrokerManager } from "./broker/BrokerManager";
 import { autoStartBroker, RETRY_START } from "./broker/autoStart";
 import { registerBrokerCommands } from "./broker/commands";
@@ -61,10 +72,18 @@ import { registerTerraformScanner } from "./config-scanners/terraformCommands";
 import { registerRegistryScanner } from "./config-scanners/registryCommands";
 import { registerServiceAccountScanner } from "./config-scanners/serviceAccountCommands";
 import { registerHistoryScanner } from "./history/commands";
+import { registerPreCommitHooks } from "./history-hooks/commands";
+import { registerPrePushHooks } from "./history-hooks/prePushCommands";
+import { registerPSReadLineHistory } from "./history-hooks/psReadLineCommands";
 import { registerArtifactScanner } from "./artifacts/commands";
+import { registerLogProtection } from "./logs/commands";
 import { registerMcpScanner } from "./config-scanners/mcpCommands";
 import { registerEditorScanner } from "./config-scanners/editorCommands";
 import { registerCiScanner } from "./config-scanners/ciCommands";
+import { RecoveryInventory } from "./lifecycle/RecoveryInventory";
+import { registerLifecycleRecovery } from "./lifecycle/commands";
+import { EncryptedRecoveryArchive } from "./lifecycle/EncryptedRecoveryArchive";
+import { stopOwnedLifecycle } from "./lifecycle/OwnedLifecycleStop";
 
 // Single consolidated status-bar item. It replaces the earlier six separate
 // items (main, firewall, broker, safe mode, memory, runtime) — those states now
@@ -100,6 +119,7 @@ let autoVaultMigration: AutoVaultMigration;
 let fileReadSentinel: FileReadSentinel;
 
 export function activate(context: vscode.ExtensionContext): void {
+    const readReliability = registerReadReliability(context);
     extensionContext = context;
     const telemetry = TelemetryManager.getInstance();
     telemetry.syncPrivacyBoundary();
@@ -108,6 +128,7 @@ export function activate(context: vscode.ExtensionContext): void {
             event.affectsConfiguration("soterai.telemetry.redactedEvents")
             || event.affectsConfiguration("soterai.privacyMode")
             || event.affectsConfiguration("soterai.cloud.enabled")
+            || event.affectsConfiguration("soterai.lite.selfHygiene")
         ) {
             telemetry.syncPrivacyBoundary();
             refreshViews();
@@ -179,6 +200,7 @@ export function activate(context: vscode.ExtensionContext): void {
     const projectRiskProvider = new RiskTreeProvider("soterai-project-risk");
     const latestFindingsProvider = new RiskTreeProvider("soterai-latest-findings");
     const policyStatusProvider = new RiskTreeProvider("soterai-policy-status");
+    let protectionCenter: ProtectionCenterHandle | undefined;
 
     // Consolidated Control Panel — single sidebar surface for every protection
     // toggle (Safe Mode, Protected Workspace, Live Scan, Sentinel, MCP Firewall)
@@ -207,11 +229,18 @@ export function activate(context: vscode.ExtensionContext): void {
         if (DashboardPanel.currentPanel) DashboardPanel.currentPanel.refresh();
         if (EnterpriseDashboard.currentPanel) EnterpriseDashboard.currentPanel.refresh();
         controlPanelProvider.refresh();
+        void protectionCenter?.refresh().catch(() => {});
         void updateStatusBar();
     };
 
     registerAIBoundaryCommands(context);
+    registerProjectJourney(context);
     const managedReader = registerProjectPrivacyCommands(context);
+    const secretlessOperations = registerSecretlessOperationCommands(context, refreshViews);
+    registerIsolatedAgentCommands(context, brokerManager, managedReader, undefined, secretlessOperations);
+    registerPortableVaultRecoveryCommands(context, refreshViews);
+    let setupVerification:SetupVerificationHandle|undefined;
+    protectionCenter = registerProtectionCenter(context, { sentinel, brokerState: () => protectionState.current.facts.broker,setupEnabled:setupVerificationEnabled,setupState:()=>setupVerification?.current() });
     registerPublicWorkspaceCommands(context);
     registerSyntheticPreviewCommands(context);
     registerCommands(context, refreshViews);
@@ -226,14 +255,42 @@ export function activate(context: vscode.ExtensionContext): void {
     registerEditorScanner(context);
     registerMcpScanner(context);
     registerHistoryScanner(context);
+    registerPreCommitHooks(context);
+    registerPrePushHooks(context);
+    registerPSReadLineHistory(context);
     registerArtifactScanner(context);
+    registerLogProtection(context);
     registerScannerCommands(context, async () => (await protectionState?.refresh())?.descriptor);
     registerBrokerCommands(context, brokerManager, refreshViews);
+    setupVerification=registerSetupVerification(context,{manager:brokerManager,changed:()=>{void protectionCenter?.refresh().catch(()=>{});}});
+    void protectionCenter.refresh().catch(()=>{});
     registerClineAdapter(context, brokerManager, managedReader);
     registerClaudeAdapter(context, brokerManager, managedReader);
     registerCodexCliAdapter(context, managedReader, brokerManager);
     registerCodexIdeAdapter(context, managedReader, brokerManager);
     registerGeminiCliAdapter(context, managedReader, brokerManager);
+    const recoveryInventory = new RecoveryInventory(context);
+    registerLifecycleRecovery(context, {
+        probe: (id, owner) => recoveryInventory.probe(id, owner),
+        preserveRecovery: current => new EncryptedRecoveryArchive(context).preserve(current),
+        stopBroker: () => stopOwnedLifecycle({
+            async withdraw() {
+                await (await import("./terminal/gitBashCommands")).stopCheckedGitBash();
+                await (await import("./terminal/cmdCommands")).stopCheckedCmd();
+                await (await import("./terminal/commands")).stopCheckedPowerShell();
+                await (await import("./terminal/powerShell7Commands")).stopCheckedPowerShell7();
+                await (await import("./vault-runtime/commands")).stopVaultRuntime();
+            },
+            async snapshots() {
+                const terminals = [];
+                for (const command of ["soterai.checkedPowerShellStatus", "soterai.checkedPowerShell7Status", "soterai.checkedCmdStatus", "soterai.checkedGitBashStatus"]) {
+                    terminals.push(await vscode.commands.executeCommand(command));
+                }
+                return { terminals, vault: await vscode.commands.executeCommand("soterai.vaultAppStatus") };
+            },
+            async stopBroker() { await brokerManager.stop(); return brokerManager.ownedSnapshot(); },
+        }),
+    });
     registerSentinelCommands(context, sentinel);
     registerPermissionCommands(context, permissionStore);
     registerWorkspaceGuardCommands(context, workspaceGuard);
@@ -407,7 +464,7 @@ export function activate(context: vscode.ExtensionContext): void {
 
     statusBarItem = vscode.window.createStatusBarItem(vscode.StatusBarAlignment.Right, 100);
     // One click → the consolidated Control Panel, where every toggle lives.
-    statusBarItem.command = "soterai.openControlPanel";
+    statusBarItem.command = protectionCenterEnabled() ? "soterai.openProtectionCenter" : "soterai.openControlPanel";
     context.subscriptions.push(statusBarItem);
     updateStatusBar();
     statusBarItem.show();
@@ -495,13 +552,14 @@ export function activate(context: vscode.ExtensionContext): void {
                     action === RETRY_START ? "soterai.startLocalAIBroker" : "soterai.openControlPanel",
                 );
             },
-            log: (line) => brokerLog.appendLine(`[${new Date().toISOString()}] ${line}`),
+            log: () => { emitOwnedDiagnostic(selfHygieneEnabled(), event => brokerLog.appendLine(JSON.stringify(event)), "broker_event"); },
             delay: (ms) => new Promise((resolve) => setTimeout(resolve, ms)),
         },
         { enabled: vscode.workspace.getConfiguration("soterai").get<boolean>("broker.autoStart", true) },
     ).finally(() => {
         void updateStatusBar();
     });
+    readReliability.finishStartup();
 }
 
 async function updateBrokerStatus(): Promise<void> {
@@ -573,13 +631,15 @@ async function updateStatusBar(): Promise<void> {
             line("AI Safe Mode", safeMode?.enabled ? `on${safeMode.level ? ` (${safeMode.level})` : ""}${brokerRunning ? "" : " — not enforced while broker stopped"}` : "off"),
             line("AI Memory", memoryActive ? "active" : "idle"),
             "",
-            "$(list-selection) Click to open the SoterAI Control Panel.",
+            protectionCenterEnabled() ? "$(list-selection) Click to open the Protection Center. Live verification is separate from setup." : "$(list-selection) Click to open the SoterAI Control Panel.",
         ].join("\n\n"),
     );
     tip.isTrusted = true;
     tip.supportThemeIcons = true;
 
     statusBarItem.text = text;
+    statusBarItem.command = protectionCenterEnabled() ? "soterai.openProtectionCenter" : "soterai.openControlPanel";
+    statusBarItem.accessibilityInformation = { label: protectionCenterEnabled() ? "SoterAI Protection Center. Review protected items, activity and coverage." : "SoterAI Control Panel", role: "button" };
     statusBarItem.tooltip = tip;
     statusBarItem.backgroundColor = background;
 }
@@ -591,6 +651,8 @@ export async function deactivate(): Promise<void> {
     catch { console.error("SoterAI checked cmd shutdown metadata is unavailable; process exit remains unverified."); }
     try { await (await import("./terminal/commands")).stopCheckedPowerShell(); }
     catch { console.error("SoterAI checked terminal shutdown metadata is unavailable; process exit remains unverified."); }
+    try { await (await import("./terminal/powerShell7Commands")).stopCheckedPowerShell7(); }
+    catch { console.error("SoterAI checked PowerShell 7 shutdown metadata is unavailable; process exit remains unverified."); }
     try { await (await import("./vault-runtime/commands")).stopVaultRuntime(); }
     catch { console.error("SoterAI owned app shutdown metadata is unavailable; process exit remains unverified."); }
     secretBrokerRuntime.enforcedApi.revokeAll();

@@ -2,12 +2,13 @@ import assert from "node:assert/strict";
 import { test } from "node:test";
 import { EventEmitter } from "node:events";
 import { PassThrough } from "node:stream";
-import type { ChildProcess, spawn } from "node:child_process";
+import { spawn as nativeSpawn, type ChildProcess, type spawn } from "node:child_process";
 import { mkdtemp, readFile, readdir, realpath, rm, writeFile } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import { dirname, join, resolve } from "node:path";
 import type { OutputResult } from "../../../core/src/StreamingOutputRedactor";
 import type { VaultAppDescriptor } from "../../../core/src/VaultAppDescriptor";
+import { createVaultAppArtifact, type VaultAppArtifact } from "../../../core/src/VaultAppArtifact";
 
 // Frozen F09 owned-job contract. In-memory subprocesses are fixtures, not OS
 // confinement proof. The three real fixtures are finite, synthetic Node apps;
@@ -22,7 +23,7 @@ type Snapshot = Readonly<{ id: string; state: string; pid?: number; exitCode?: n
 type Completion = { snapshot: Snapshot; output: OutputResult };
 type Job = { start(): Promise<Snapshot>; snapshot(): Snapshot; requestStop(): void; cancel(): void; dispose(): void; readonly completion: Promise<Completion> };
 type Timer = { callback: () => void; ms: number; active: boolean };
-type Options = { descriptor: VaultAppDescriptor; values: Readonly<Record<string, string>>; runtime: { executable: string; electron: boolean }; parentEnvironment: NodeJS.ProcessEnv; enabled?: () => boolean };
+type Options = { descriptor: VaultAppDescriptor; artifact: VaultAppArtifact; values: Readonly<Record<string, string>>; runtime: { executable: string; electron: boolean }; parentEnvironment: NodeJS.ProcessEnv; enabled?: () => boolean };
 type Deps = { spawn?: typeof spawn; setTimer?: (callback: () => void, ms: number) => unknown; clearTimer?: (handle: unknown) => void };
 type Constructor = new (options: Options, deps?: Deps) => Job;
 
@@ -32,13 +33,14 @@ async function implementation(): Promise<Constructor> {
     assert.equal(typeof module.VaultAppJob, "function", "F09 must expose the frozen owned-job API.");
     return module.VaultAppJob;
 }
+const artifact = (source = "") => createVaultAppArtifact("public-app.cjs", [{ path: "public-app.cjs", kind: "commonjs", source, imports: [] }]);
 function descriptor(root = resolve(tmpdir(), "synthetic-f09-job-not-created")): VaultAppDescriptor {
-    return Object.freeze({ schemaVersion: 1, id: ID, root, program: join(root, "public-app.cjs"), cwd: root,
-        source: join(root, ".env.synthetic"), programDigest: "a".repeat(64), args: Object.freeze(["literal argument", "--public-mode"]),
+    return Object.freeze({ schemaVersion: 2, id: ID, root, program: join(root, "public-app.cjs"), cwd: root,
+        source: join(root, ".env.synthetic"), programDigest: "a".repeat(64), artifactDigest: artifact().digest, args: Object.freeze(["literal argument", "--public-mode"]),
         selections: Object.freeze([Object.freeze({ name: "DB_URL", placeholder: PLACEHOLDER })]) }) as VaultAppDescriptor;
 }
 function baseOptions(overrides: Partial<Options> = {}): Options {
-    return { descriptor: descriptor(), values: Object.freeze({ DB_URL: SECRET }), runtime: { executable: process.execPath, electron: false },
+    return { descriptor: descriptor(), artifact: artifact(), values: Object.freeze({ DB_URL: SECRET }), runtime: { executable: process.execPath, electron: false },
         parentEnvironment: Object.freeze({ SystemRoot: "C:\\Windows", WINDIR: "C:\\Windows", TEMP: "D:\\SoterAI-Lite-test-profiles\\f09-temp", TMP: "D:\\SoterAI-Lite-test-profiles\\f09-temp", LANG: "en_US.UTF-8", LC_ALL: "C", TZ: "UTC", PATH: "untrusted-search", HOME: "untrusted-home", USERPROFILE: "untrusted-home", OPENAI_API_KEY: OTHER, HTTP_PROXY: OTHER, NODE_OPTIONS: "--require untrusted", ELECTRON_RUN_AS_NODE: "inherited" }), ...overrides };
 }
 function safe(value: unknown): void {
@@ -248,11 +250,17 @@ async function realFixture(source: string, values: Record<string, string> = { DB
     const Factory = await implementation(), parent = await realpath(tmpdir()), root = await mkdtemp(join(parent, "soterai-f09-job-"));
     assert.equal(dirname(root), parent); await writeFile(join(root, ".synthetic-lite-f09-job"), "synthetic-owned-f09\n", { flag: "wx" });
     const program = join(root, "public-app.cjs"); await writeFile(program, source, { flag: "wx" });
-    const desc = { ...descriptor(root), selections: Object.keys(values).map((name, index) => ({ name, placeholder: `[SOTERAI_PROTECTED_0123456789ABCDEF0123456789ABCDEF_${index}]` })) };
-    const options = baseOptions({ descriptor: desc, values, parentEnvironment: { SystemRoot: process.env.SystemRoot, WINDIR: process.env.WINDIR,
+    const captured = artifact(source);
+    const desc = { ...descriptor(root), artifactDigest: captured.digest, selections: Object.keys(values).map((name, index) => ({ name, placeholder: `[SOTERAI_PROTECTED_0123456789ABCDEF0123456789ABCDEF_${index}]` })) };
+    const options = baseOptions({ descriptor: desc, artifact: captured, values, parentEnvironment: { SystemRoot: process.env.SystemRoot, WINDIR: process.env.WINDIR,
         TEMP: tmpdir(), TMP: tmpdir(), TMPDIR: tmpdir(), LANG: "C", TZ: "UTC", DB_URL: "unrelated-parent-value", OPENAI_API_KEY: OTHER } });
-    const job = new Factory(options);
-    return { job, root, options, async cleanup() {
+    let ready!: () => void; const publicReady = new Promise<void>(resolve => { ready = resolve; });
+    const job = new Factory(options, { spawn: ((executable: string, args: readonly string[], spawnOptions: Record<string, unknown>) => {
+        const child = nativeSpawn(executable, args, spawnOptions);
+        child.stdout?.on("data", (bytes: Buffer) => { if (bytes.includes("public-app-ready")) ready(); });
+        return child;
+    }) as typeof spawn });
+    return { job, root, options, publicReady, async cleanup() {
         assert.equal(dirname(await realpath(root)), parent); assert.equal(await readFile(join(root, ".synthetic-lite-f09-job"), "utf8"), "synthetic-owned-f09\n");
         assert.deepEqual((await readdir(root)).sort(), [".synthetic-lite-f09-job", "public-app.cjs", ...extraPublicFiles].sort(), "The launcher must not create a secret file in its app workspace.");
         await rm(root, { recursive: true });
@@ -274,10 +282,8 @@ test("F09-J21 a fresh real sibling app receives none of an earlier job's selecte
 });
 
 test("F09-J22 real app ignoring STOP remains visibly unconfirmed and then self-exits without external termination", { timeout: 7000 }, async () => {
-    const f = await realFixture('require("node:fs").writeFileSync(".synthetic-app-started", "public-ready"); setTimeout(() => process.stdout.write("public finite app finished"), 1600);', { DB_URL: SECRET }, [".synthetic-app-started"]);
-    await f.job.start(); let ready = false; const until = Date.now() + 2000;
-    while (!ready && Date.now() < until) { try { ready = await readFile(join(f.root, ".synthetic-app-started"), "utf8") === "public-ready"; } catch { /* Wait only for this synthetic marker. */ } if (!ready) await new Promise<void>(done => setTimeout(done, 10)); }
-    assert.equal(ready, true, "Wait for the finite app to start before testing its ignored STOP."); f.job.requestStop();
+    const f = await realFixture('process.stdout.write("public-app-ready"); setTimeout(() => process.stdout.write("public finite app finished"), 1600);');
+    await f.job.start(); await f.publicReady; f.job.requestStop();
     await new Promise<void>(done => setTimeout(done, 1150)); assert.equal(snapshot(f.job).state, "STOP_UNCONFIRMED");
     const result = await f.job.completion; assert.equal(result.snapshot.state, "STOPPED"); withheld(result); await f.cleanup();
 });

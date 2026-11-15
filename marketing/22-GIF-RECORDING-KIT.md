@@ -1,5 +1,9 @@
 # 22 — GIF Recording Kit: "Your Secret, Caught Before AI Sees It"
 
+**Current IDE candidate:** use the [13 November real-editor demo plan](extension-launch-2026-11-13/DEMO.md).
+The older playground GIF and conversion statements below are historical; they
+do not establish current installed-extension or real-provider acceptance.
+
 **Created:** 2026-09-12 | **Goal:** ONE 30-second GIF that makes a developer install the extension
 **Verified fixture:** `scripts/test/gif-demo-fixture.js` — every value is confirmed to trigger the real detector engine (7/7 PASS via `node --import tsx scripts/test/verify-gif-demo-values.cjs`). **No value is real.**
 

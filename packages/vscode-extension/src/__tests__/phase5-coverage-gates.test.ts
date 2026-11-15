@@ -192,6 +192,8 @@ async function withSecretCommands<T>(run: () => Promise<T>, selection?: string):
         mock.method(SensitiveContextPolicyEngine, "loadFromWorkspace", () => structuredClone(DEFAULT_SENSITIVE_CONTEXT_POLICY)),
     ];
     if (selection !== undefined) {
+        restores.push(mock.method(stub.window, "showInformationMessage", async (message: string) =>
+            message === "Review this text for remaining private information before sharing." ? "Copy reviewed text" : undefined));
         const document = stub.makeDocument(stub.Uri.file(`${syntheticRoot}/public-example.txt`), selection);
         const range = new stub.Selection(document.positionAt(0), document.positionAt(selection.length));
         stub.state.activeEditor = { document, selection: range, selections: [range] };
@@ -215,7 +217,9 @@ const fakeKey = "sk-proj-" + "FAKEcoverageCredential73921".repeat(3);
 const promptInput = `${publicText}\n${unmarkedText}\nOPENAI_API_KEY=${fakeKey}`;
 async function generatedPrompt(): Promise<string> {
     return withSecretCommands(async () => {
-        await stub.commands.executeCommand("soterai.buildSafePromptForAI");
+        const outcome = await stub.commands.executeCommand("soterai.buildSafePromptForAI");
+        assert.ok(outcome && typeof outcome === "object" && "status" in outcome);
+        assert.equal(outcome.status, "COPIED", "The positive control must explicitly accept the reviewed copy.");
         assert.ok(stub.sinks.some(item => item.sink === "clipboard"), "The real prompt command must produce output.");
         return stub.state.clipboard;
     }, promptInput);

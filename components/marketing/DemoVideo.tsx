@@ -448,13 +448,17 @@ export function DemoVideo() {
               {activeIndex + 1}/{SCENES.length}
             </span>
             <button
+              type="button"
+              aria-label="Previous scene"
               onClick={handlePrev}
               className="rounded-md p-1.5 text-slate-200 transition hover:bg-slate-800 hover:text-slate-200"
             >
               ‹
             </button>
             <button
+              type="button"
               onClick={handleNext}
+              aria-label="Next scene"
               className="rounded-md p-1.5 text-slate-200 transition hover:bg-slate-800 hover:text-slate-200"
             >
               ›
@@ -466,13 +470,22 @@ export function DemoVideo() {
       {/* Scene selector dots */}
       <div className="mt-4 flex items-center justify-center gap-2">
         {SCENES.map((_, idx) => (
+          // The button is the 44px touch target and carries the name. The dot inside is only decoration.
           <button
             key={idx}
+            type="button"
             onClick={() => handleSelect(idx)}
-            className={`h-2 rounded-full transition-all ${
-              idx === activeIndex ? "w-6 bg-cyan" : "w-2 bg-slate-700 hover:bg-slate-500"
-            }`}
-          />
+            aria-label={`Show scene ${idx + 1} of ${SCENES.length}`}
+            aria-current={idx === activeIndex ? "true" : undefined}
+            className="group flex min-h-[44px] min-w-[44px] items-center justify-center"
+          >
+            <span
+              aria-hidden="true"
+              className={`block h-2 rounded-full transition-all ${
+                idx === activeIndex ? "w-6 bg-cyan" : "w-2 bg-slate-700 group-hover:bg-slate-500"
+              }`}
+            />
+          </button>
         ))}
       </div>
     </div>

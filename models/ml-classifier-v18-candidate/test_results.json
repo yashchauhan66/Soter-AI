@@ -1,0 +1,109 @@
+{
+  "product_version": "v18-student-candidate",
+  "split": "prepared_test_never_used_for_optimization_selection_or_calibration",
+  "rows": 10238,
+  "accuracy": 0.9784137526860714,
+  "f1_macro": 0.9563886708194425,
+  "attack_recall": 0.9946147473073736,
+  "benign_fpr": 0.01034712950600801,
+  "report": {
+    "SAFE": {
+      "precision": 0.987017310252996,
+      "recall": 0.989652870493992,
+      "f1-score": 0.9883333333333333,
+      "support": 2996.0
+    },
+    "PROMPT_INJECTION": {
+      "precision": 0.9686346863468634,
+      "recall": 0.9615384615384616,
+      "f1-score": 0.9650735294117647,
+      "support": 1638.0
+    },
+    "JAILBREAK": {
+      "precision": 0.9824561403508771,
+      "recall": 0.9669064748201439,
+      "f1-score": 0.9746192893401016,
+      "support": 695.0
+    },
+    "SYSTEM_PROMPT_LEAK_ATTEMPT": {
+      "precision": 0.9602272727272727,
+      "recall": 0.96987087517934,
+      "f1-score": 0.9650249821556032,
+      "support": 697.0
+    },
+    "PII": {
+      "precision": 0.9895712630359212,
+      "recall": 0.9930232558139535,
+      "f1-score": 0.9912942542077772,
+      "support": 860.0
+    },
+    "SECRET": {
+      "precision": 0.9902120717781403,
+      "recall": 0.9853896103896104,
+      "f1-score": 0.9877949552481693,
+      "support": 616.0
+    },
+    "UNSAFE_OUTPUT": {
+      "precision": 0.9955257270693513,
+      "recall": 0.9933035714285714,
+      "f1-score": 0.994413407821229,
+      "support": 896.0
+    },
+    "RAG_POISONING": {
+      "precision": 0.9753593429158111,
+      "recall": 0.9713701431492843,
+      "f1-score": 0.9733606557377049,
+      "support": 489.0
+    },
+    "DATA_EXFILTRATION_ATTEMPT": {
+      "precision": 0.9849012775842044,
+      "recall": 0.9883449883449883,
+      "f1-score": 0.9866201279813845,
+      "support": 858.0
+    },
+    "TOOL_CALL_ABUSE": {
+      "precision": 0.9083969465648855,
+      "recall": 0.9444444444444444,
+      "f1-score": 0.9260700389105059,
+      "support": 126.0
+    },
+    "ENCODING_OBFUSCATION": {
+      "precision": 1.0,
+      "recall": 0.9523809523809523,
+      "f1-score": 0.975609756097561,
+      "support": 84.0
+    },
+    "MULTI_TURN_ESCALATION": {
+      "precision": 0.8333333333333334,
+      "recall": 0.9009009009009009,
+      "f1-score": 0.8658008658008658,
+      "support": 111.0
+    },
+    "MODEL_EXTRACTION": {
+      "precision": 0.821917808219178,
+      "recall": 0.8,
+      "f1-score": 0.8108108108108109,
+      "support": 75.0
+    },
+    "TOXICITY_HARASSMENT": {
+      "precision": 0.9795918367346939,
+      "recall": 0.9896907216494846,
+      "f1-score": 0.9846153846153847,
+      "support": 97.0
+    },
+    "accuracy": 0.9784137526860714,
+    "macro avg": {
+      "precision": 0.9555103583509662,
+      "recall": 0.9576298050381521,
+      "f1-score": 0.9563886708194425,
+      "support": 10238.0
+    },
+    "weighted avg": {
+      "precision": 0.9785528572152014,
+      "recall": 0.9784137526860714,
+      "f1-score": 0.9784490100661679,
+      "support": 10238.0
+    }
+  },
+  "limitation": "Independence from historical teacher training must be established by the data audit."
+}

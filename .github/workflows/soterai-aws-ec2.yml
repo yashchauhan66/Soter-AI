@@ -1,0 +1,121 @@
+name: SoterAI approved EC2 artifact
+on:
+  workflow_dispatch:
+    inputs:
+      approved_artifact_sha256:
+        description: Leave empty to build and review; supply the exact reviewed artifact SHA-256 to publish.
+        required: false
+        type: string
+permissions:
+  contents: read
+concurrency:
+  group: soterai-approved-ec2
+  cancel-in-progress: false
+jobs:
+  build:
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020
+        with:
+          node-version: '22'
+      - run: npm ci --ignore-scripts
+      - name: Build guard CLI without production credentials
+        run: |
+          npm --prefix packages/guard-core run build
+          npm --prefix packages/ide-protocol run build
+          npm --prefix packages/ide-common run build
+          npm --prefix packages/soterai-cli run build
+      - name: Admit supported example source including any dotenv files
+        run: node packages/soterai-cli/dist/cli.js ci scan --root examples/aws-soterai/app --mode source
+      - name: Produce finite credential-free Node artifact
+        run: node examples/aws-soterai/delivery.cjs build "$RUNNER_TEMP/artifact.json"
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: ec2-candidate
+          path: ${{ runner.temp }}/artifact.json
+          if-no-files-found: error
+  admit:
+    needs: build
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    outputs:
+      artifact_sha256: ${{ steps.seal.outputs.artifact_sha256 }}
+      report_sha256: ${{ steps.seal.outputs.report_sha256 }}
+      source_sha: ${{ steps.seal.outputs.source_sha }}
+      artifact_id: ${{ steps.upload.outputs.artifact-id }}
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020
+        with:
+          node-version: '22'
+      - run: npm ci --ignore-scripts
+      - run: |
+          npm --prefix packages/guard-core run build
+          npm --prefix packages/ide-protocol run build
+          npm --prefix packages/ide-common run build
+          npm --prefix packages/soterai-cli run build
+      - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093
+        with:
+          name: ec2-candidate
+          path: ${{ runner.temp }}/candidate
+      - name: Decode finite assets without executing candidate code
+        run: node examples/aws-soterai/delivery.cjs prepare "$RUNNER_TEMP/candidate/artifact.json" "$RUNNER_TEMP/scan"
+      - name: Gate final artifact bytes
+        run: node packages/soterai-cli/dist/cli.js ci scan --root "$RUNNER_TEMP/scan" --mode artifact --output "$RUNNER_TEMP/artifact-report.json"
+      - id: seal
+        run: node examples/aws-soterai/delivery.cjs seal "$RUNNER_TEMP/candidate/artifact.json" "$RUNNER_TEMP/artifact-report.json" "$RUNNER_TEMP/scan"
+      - name: Stage only the two verified files with a flat artifact layout
+        run: node examples/aws-soterai/delivery.cjs stage "$RUNNER_TEMP/candidate/artifact.json" "$RUNNER_TEMP/artifact-report.json" "$RUNNER_TEMP/admitted-upload"
+      - id: upload
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: ec2-admitted
+          path: ${{ runner.temp }}/admitted-upload/*
+          if-no-files-found: error
+  publish:
+    needs: admit
+    if: inputs.approved_artifact_sha256 != '' && inputs.approved_artifact_sha256 == needs.admit.outputs.artifact_sha256
+    environment: soterai-aws-ec2
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    permissions:
+      contents: read
+      id-token: write
+    env:
+      APPROVED_ARTIFACT_SHA256: ${{ needs.admit.outputs.artifact_sha256 }}
+      EXPECTED_REPORT_SHA256: ${{ needs.admit.outputs.report_sha256 }}
+      EXPECTED_SOURCE_SHA: ${{ needs.admit.outputs.source_sha }}
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+        with:
+          ref: ${{ needs.admit.outputs.source_sha }}
+          persist-credentials: false
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020
+        with:
+          node-version: '22'
+      - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093
+        with:
+          artifact-ids: ${{ needs.admit.outputs.artifact_id }}
+          path: ${{ runner.temp }}/admitted
+          merge-multiple: true
+      - id: preflight
+        run: node examples/aws-soterai/delivery.cjs preflight
+      - name: Reverify immutable bindings before credentials
+        run: node examples/aws-soterai/delivery.cjs verify "$RUNNER_TEMP/admitted/artifact.json" "$RUNNER_TEMP/admitted/artifact-report.json"
+      - uses: aws-actions/configure-aws-credentials@b47578312673ae6fa5b5096b330d9fbac3d116df
+        with:
+          role-to-assume: ${{ steps.preflight.outputs.role_arn }}
+          aws-region: ${{ steps.preflight.outputs.aws_region }}
+          allowed-account-ids: ${{ steps.preflight.outputs.account_id }}
+          role-duration-seconds: 900
+          unset-current-credentials: true
+          output-credentials: false
+      - name: Publish create-only versioned bytes; separate signed delivery approval follows
+        run: node examples/aws-soterai/delivery.cjs publish "$RUNNER_TEMP/admitted/artifact.json" "$RUNNER_TEMP/admitted/artifact-report.json"

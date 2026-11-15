@@ -42,6 +42,15 @@ export const og = {
 
   hairline: "#e2e8f0",
 
+  /**
+   * The soterai.in share-card palette (components/sa/tokens.css): warm paper, ink, a muted
+   * ink and a warm rule. Used by lib/og/renderCard.tsx.
+   */
+  paper: "#fbfaf7",
+  ink: "#14110f",
+  inkMuted: "#5b5750",
+  rule: "#d9d4c9",
+
   success: "#15803d",
   successTint: "#f0fdf4",
   danger: "#be123c",

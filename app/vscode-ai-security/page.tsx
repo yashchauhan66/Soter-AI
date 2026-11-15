@@ -3,88 +3,98 @@ import { buildMetadata } from "@/lib/seo/metadata";
 import { FeatureLanding, type FeatureLandingData } from "@/components/marketing/FeatureLanding";
 
 export const metadata: Metadata = buildMetadata({
-  title: "VS Code AI Security — Local Guard for AI Coding",
+  title: "SoterAI Secret Guard — Secret Protection for AI Coding",
   description:
-    "SoterAI IDE Guard is a local VS Code extension that scans secrets, prompts, MCP tools and terminal commands before they reach Copilot, Cursor or Claude.",
+    "Find exposed API keys and passwords locally. Review redacted code and debug logs before sharing with AI. SoterAI Secret Guard for Windows.",
   path: "/vscode-ai-security",
+  ogImage: "/og/soterai-secret-guard-preview-20261113.png",
   keywords: [
-    "vscode ai security",
+    "vscode secret scanner",
     "ai coding security",
-    "copilot secret scanning",
-    "cursor security extension",
-    "local ai guard",
+    "api key redaction",
+    "env secret protection",
+    "safe debug context",
   ],
 });
 
 const data: FeatureLandingData = {
   path: "/vscode-ai-security",
-  eyebrow: "VS Code Extension",
-  h1: "AI security for VS Code, running locally",
-  productName: "SoterAI IDE Guard",
+  eyebrow: "SoterAI Secret Guard · Windows Preview",
+  h1: "Check secrets before your next AI prompt",
+  productName: "SoterAI Secret Guard",
+  operatingSystem: "Windows",
+  primaryCta: { label: "Join preview testing", href: "/support", external: false },
+  secondaryCta: { label: "View extension information", href: "/extensions/ide" },
+  scopeNote: "Preview testing is in progress. The current candidate is not a stable release. Local diagnostics do not intercept independent AI traffic.",
   intro:
-    "AI coding assistants read your open files, selections, and context to answer. SoterAI IDE Guard inspects that context on your machine — flagging secrets, PII, prompt-injection text, risky MCP tools, and dangerous terminal commands — before it is shared with Copilot, Cursor, Claude, or any AI model.",
+    "For developers who build with AI: find recognized secrets locally, review redacted code and debug logs, and copy only the context you choose to share. Optional vault workflows replace reviewed credentials with placeholders and retain encrypted recovery.",
   features: [
     {
-      title: "Local secret & PII scanning",
-      body: "Scan the current file, a selection, or the whole workspace for API keys, tokens, database URLs, and personal data. Detection runs in-process; nothing is uploaded to run a scan.",
+      title: "Catch secrets while you code",
+      body: "Live findings identify supported API keys, passwords and other sensitive patterns in eligible files. Open the lightbulb for a reviewed next step. Diagnostics are visibility, not a block on another agent's reads.",
     },
     {
-      title: "Scan before AI prompt",
-      body: "Check exactly what an assistant is about to see and redact sensitive spans before you send them, so credentials do not leave your editor by accident.",
+      title: "Review the whole line before copying",
+      body: "Selecting one finding prepares the affected lines with recognized secrets filtered, including other detected values beside it. Copy only after reviewing the preview; changed source or preview requires a new review.",
     },
     {
-      title: "MCP config review",
-      body: "Inspect Model Context Protocol server configs and tool permissions, and flag over-broad or risky tool recommendations before you enable them.",
+      title: "Build context with synthetic examples",
+      body: "Build an environment contract containing variable names, suggested types and synthetic examples. Original assignment values and comments are discarded. Review whether the names themselves are private.",
     },
     {
-      title: "Terminal command guard",
-      body: "Warn on destructive or exfiltration-prone shell commands (in warn or approval mode) before they run from an AI suggestion.",
+      title: "Keep useful debugging context",
+      body: "Prepare a bounded log or stack trace with recognized-value redaction. Review the remaining error details, paths and hostnames before explicitly copying it into your AI workflow.",
     },
     {
-      title: "AI Memory Inspector & Access Ledger",
-      body: "Keep a local record of what context AI saw during a session so you can review exposure after the fact.",
+      title: "Review vault protection and recovery",
+      body: "Replace reviewed saved-file values with placeholders through the existing vault flow. Preview changes and preserve encrypted recovery. Applications intentionally given a value can still disclose it.",
     },
     {
-      title: "Local canaries",
-      body: "Generate fake canary secrets, plant them in test files, and verify they never appear in logs, reports, or AI output.",
+      title: "See what is actually checked",
+      body: "Guided setup shows Cline/Claude version compatibility and local check results. Configuration, local self-checks and live provider verification are separate observations.",
     },
   ],
   how: [
     {
-      step: "Install and open a workspace",
-      body: "Add the extension from the VS Code Marketplace. All scanning defaults to local; cloud features are opt-in and disabled in untrusted workspaces.",
+      step: "Start with a test project",
+      body: "Request the current Windows preview and use a separate test profile with synthetic credentials. Registry listings can serve an older version; check the version and release notes.",
     },
     {
-      step: "Scan on demand or before a prompt",
-      body: "Run a scan of the file, selection, or workspace, or use “Scan Before AI Prompt” to review and redact context first.",
+      step: "Follow the recommended action",
+      body: "Open Protect This Project Step by Step, or use a current live finding. Review sensitive files and choose the supported workflow for your task.",
     },
     {
-      step: "Redact, approve, or block",
-      body: "Redact detected secrets, approve safe context for the session, or block risky context and MCP recommendations.",
+      step: "Inspect the preview",
+      body: "Review the generated context. Choose Copy reviewed text when ready, or keep the preview without changing the clipboard. Unknown private information may still need manual removal.",
     },
     {
-      step: "Review the ledger",
-      body: "Use the Memory Inspector and Access Ledger to see what AI saw and export a local report.",
+      step: "Verify your chosen integration",
+      body: "Configure the owner-reviewed adapter and inspect its current coverage. Test the actual supported tool route before relying on provider-request protection.",
     },
   ],
   limitations: [
+    "The current candidate is a Windows x64 preview. Installed GUI, configured upgrade/recovery, real-provider and independent user acceptance remain incomplete.",
     "Detection is heuristic and signature-based. It reduces the risk of leaking secrets and PII, but it cannot guarantee that every sensitive value in every format is caught.",
     "The extension inspects context you route through its commands and its optional local broker. It cannot see traffic sent by other extensions that bypass it.",
-    "It does not make an AI model itself “safe” — it reduces what sensitive data reaches the model and records exposure.",
+    "Unrestricted same-user file access, other extensions' original buffers and independent uploads remain outside these controls.",
     "Redaction is best-effort; always review redacted output before sharing externally.",
   ],
   faqs: [
     {
       q: "Does the extension send my code to a server?",
-      a: "No. Secret, PII, prompt-injection, and MCP scanning run locally in the extension host. Cloud connection and remote scan escalation are opt-in, disabled by default, and disabled entirely in untrusted workspaces.",
+      a: "Local scanning and preview generation do not require a SoterAI account or upload to a SoterAI server. Explicitly configured provider routes send their approved requests to that provider; anything you copy and paste is also governed by the destination's privacy policy.",
     },
     {
-      q: "Does it work with Copilot, Cursor, and Claude?",
-      a: "Yes. The extension is editor-side. It scans and redacts the context you are about to share, and its optional Local AI Broker can sit in front of OpenAI- or Anthropic-compatible endpoints those tools use.",
+      q: "Does it protect every AI coding assistant automatically?",
+      a: "No. You can use reviewed context in your chosen workflow, but interception requires an explicitly configured, supported managed route. Cline and Claude adapters check pinned versions. A different client, version or independent upload is not automatically covered.",
     },
     {
       q: "Is it free?",
-      a: "The extension is free to install and its local scanning works without an account. Team and enterprise policy sync are optional paid cloud features.",
+      a: "Local features are free to use without a SoterAI account. The package's Business Source License applies; free use is not a claim of an OSI-approved open-source license.",
+    },
+    {
+      q: "Will it be available on VS Code Marketplace and Open VSX?",
+      a: "Both registries are intended distribution channels under soterai.soterai-ide-guard. The newer preview candidate has not been published by this work. Registry availability, supported target and version must be checked separately.",
     },
   ],
   related: [

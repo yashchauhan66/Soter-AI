@@ -1,85 +1,71 @@
-import type { Metadata } from "next";
-import Link from "next/link";
-import { ArrowRight, Database, ShieldCheck, AlertTriangle } from "lucide-react";
-import { buildMetadata } from "@/lib/seo/metadata";
+import type { Metadata } from 'next';
+import Link from 'next/link';
+import { Callout, SaLinkButton } from '@/components/sa/primitives';
+import { SaRoot } from '@/components/sa/SaRoot';
+import { buildMetadata } from '@/lib/seo/metadata';
 
 export const metadata: Metadata = buildMetadata({
-  title: "Case Studies: Real AI Security Deployments",
+  title: 'Case studies: illustrative AI risk analysis',
   description:
-    "SoterAI case studies of real AI security incidents — RAG data leaks, prompt injection, and how runtime guardrails reduced risk for chatbots and agents.",
-  path: "/case-studies",
+    'An illustrative prompt-injection scenario, not a verified customer incident. Explore data boundaries, possible controls and their limits.',
+  path: '/case-studies',
 });
-
-const caseStudies = [
-  {
-    slug: "prompt-injection-leaks-database",
-    category: "RAG & Prompt Injection",
-    icon: AlertTriangle,
-    tag: "Threat Analysis",
-    title: "How a Prompt Injection Leaked an Entire Enterprise Database",
-    excerpt:
-      "A deep dive into how an innocent-looking HR RAG chatbot became a data exfiltration vector, and how SoterAI's Agent Firewall could have prevented it with zero configuration.",
-    readTime: "5 min read",
-    date: "2026-09-01",
-  },
-];
 
 export default function CaseStudiesPage() {
   return (
-    <main className="container-page py-16 sm:py-24">
-      <div className="text-center">
-        <p className="eyebrow">Case studies</p>
-        <h1 className="mt-3 text-4xl font-bold tracking-tight sm:text-5xl">
-          Real AI security incidents
-        </h1>
-        <p className="mx-auto mt-4 max-w-2xl text-lg leading-7 text-slate-200">
-          Deployments and incidents where the guard layer made the difference. Each case study
-          documents the attack, why standard defenses failed, and the controls that reduced risk.
-        </p>
-      </div>
+    <SaRoot>
+      <main className="sa-page" style={{ paddingBlock: 'var(--sa-space-7) var(--sa-space-9)' }}>
+        <header>
+          <p className="sa-eyebrow">Case studies · Illustrative analysis</p>
+          <h1 className="sa-h1" style={{ marginTop: 'var(--sa-space-3)' }}>
+            AI security scenarios, with their limits.
+          </h1>
+          <p className="sa-lede" style={{ marginTop: 'var(--sa-space-4)' }}>
+            Explore how a prompt injection could cross a RAG application&apos;s data boundaries,
+            and where a guard step might help.
+          </p>
+        </header>
 
-      <div className="mt-12 grid gap-6 md:grid-cols-2">
-        {caseStudies.map((cs) => {
-          const Icon = cs.icon;
-          return (
-            <Link
-              key={cs.slug}
-              href={`/case-studies/${cs.slug}`}
-              className="card group flex flex-col p-6 transition hover:border-cyan/40"
-            >
-              <div className="flex items-center gap-2 text-rose-400 text-xs font-bold uppercase tracking-wider">
-                <Icon className="h-4 w-4" aria-hidden="true" />
-                {cs.tag}
-              </div>
-              <h2 className="mt-3 text-xl font-bold leading-snug text-slate-100 group-hover:text-cyan">
-                {cs.title}
-              </h2>
-              <p className="mt-3 text-sm leading-6 text-slate-300">{cs.excerpt}</p>
-              <div className="mt-auto flex items-center justify-between pt-6 text-xs text-slate-400">
-                <span>{cs.readTime}</span>
-                <span className="inline-flex items-center gap-1 text-cyan">
-                  Read the analysis <ArrowRight className="h-3.5 w-3.5" aria-hidden="true" />
-                </span>
-              </div>
-            </Link>
-          );
-        })}
-      </div>
+        <section className="sa-section" aria-label="Evidence status">
+          <Callout kind="limit" title="Illustrative, not customer proof">
+            This is not a customer case study. No verified customer or incident provenance is
+            supplied for this scenario. It does not report measured outcomes or a deployment of SoterAI.
+          </Callout>
+        </section>
 
-      <div className="mt-16 rounded-3xl border border-cyan/20 bg-gradient-to-br from-cyan/5 to-transparent p-8 text-center sm:p-10">
-        <Database className="mx-auto h-10 w-10 text-cyan" aria-hidden="true" />
-        <h2 className="mt-4 text-2xl font-bold">Have a deployment to share?</h2>
-        <p className="mx-auto mt-3 max-w-xl text-sm leading-6 text-slate-300">
-          If you run SoterAI in production and want to document the risk you retired, we publish
-          approved defensive case studies with full customer sign-off.
-        </p>
-        <Link
-          href="/contact-sales"
-          className="mt-6 inline-flex items-center gap-2 rounded-xl bg-cyan px-6 py-3 font-semibold text-white transition hover:bg-cyan-press"
-        >
-          Contact us <ArrowRight className="h-4 w-4" aria-hidden="true" />
-        </Link>
-      </div>
-    </main>
+        <section className="sa-section" aria-label="Illustrative analyses">
+          <ul className="sa-rules">
+            <li>
+              <Link
+                href="/case-studies/prompt-injection-leaks-database"
+                className="sa-link"
+                style={{ display: 'block', textDecoration: 'none' }}
+              >
+                <p className="sa-eyebrow">RAG &amp; prompt injection · Illustrative</p>
+                <h2 className="sa-h2" style={{ marginBlock: 'var(--sa-space-3)' }}>
+                  How prompt injection could expose a database
+                </h2>
+                <p className="sa-body">
+                  A hypothetical HR chatbot shows the difference between checking retrieved text
+                  and enforcing who may read the underlying records. No prevention result is claimed.
+                </p>
+                <p className="sa-label" style={{ marginTop: 'var(--sa-space-4)' }}>Read the analysis →</p>
+              </Link>
+            </li>
+          </ul>
+        </section>
+
+        <section className="sa-section" aria-labelledby="share-a-case">
+          <div className="sa-section__head">
+            <h2 id="share-a-case" className="sa-h2">Have an evidenced deployment to share?</h2>
+            <p className="sa-body">
+              Send the use case, measured results and known limitations. Customer approval and
+              supporting evidence are needed before a deployment can be presented as a customer case study.
+            </p>
+          </div>
+          <SaLinkButton href="/contact-sales" variant="secondary">Contact us</SaLinkButton>
+        </section>
+      </main>
+    </SaRoot>
   );
 }

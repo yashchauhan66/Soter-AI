@@ -56,6 +56,7 @@ export function DocsHeading({
   return (
     <Tag
       id={slug}
+      tabIndex={-1}
       data-docs-heading=""
       data-docs-label={children}
       data-docs-level={level}

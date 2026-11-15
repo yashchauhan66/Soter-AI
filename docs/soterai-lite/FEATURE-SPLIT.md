@@ -73,3 +73,6 @@ Build/typecheck the canonical sources and new Lite entrypoint, preserve current 
 No source/tests/maps/evidence/fixtures/real secrets/local absolute paths may ship. Omit historical packaged verification JSON from the new candidate until matching new evidence exists; missing evidence must show UNVERIFIED rather than old green results. Record byte size, archive/runtime hashes and actual loaded object. Run current synthetic baseline and existing 17-case host harnesses against that object; retain every managed block and unmanaged leak.
 
 Rollback packaging selects the last proven Lite artifact while retaining saved denies; it never installs Full, restores raw workspace secrets or changes OS permissions. No package identity or structural split is promoted to verified tool confinement.
+
+
+F26a current implementation adds a fourth finite runtime, `dist/pre-commit-client.js`, for the explicit owning-editor pre-commit route. The earlier P02 three-runtime receipt remains historical; a fresh four-runtime build, content inventory and native evidence are required before F26a acceptance. Feature ownership and the frozen applicability catalog are unchanged.

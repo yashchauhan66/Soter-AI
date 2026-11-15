@@ -1,7 +1,8 @@
 import * as vscode from "vscode";
 import { randomBytes } from "crypto";
 import { hashContent, redactAIContext } from "@soterai/guard-core";
-import { applySelectionBoundary } from "../ai-boundary/BoundarySnapshot";
+import { applySelectionBoundary, onDidChangeBoundaryRules, onDidChangeOwnerPolicySession } from "../ai-boundary/BoundarySnapshot";
+import { onDidChangeManualRestriction } from "../ai-boundary/RestrictionOperation";
 import { EnforcedApiCapabilityBroker } from "./EnforcedApiCapability";
 import { buildSafeLLMContext } from "./LLMContext";
 import { secretBrokerRuntime, setCapabilityReleaseGuard, setOutputRedactorGuard, setSecretMatchingGuard, setSecretValueStore } from "./runtime";
@@ -14,6 +15,7 @@ import { type BrokerOperation } from "./types";
 import { LedgerStore } from "../firewall/LedgerStore";
 import { escapeHtml, showInfoWebview, workspacePseudoId } from "../firewall/util";
 import { getBrokerManager } from "../broker/BrokerManager";
+import { buildDebugContext, buildEnvironmentContract, CONTEXT_LIMIT, reviewContext } from "./ReviewedContext";
 
 let lastPreview:
     | {
@@ -50,6 +52,34 @@ export function registerSecretBrokerCommands(context: vscode.ExtensionContext, r
         context.subscriptions.push(vscode.commands.registerCommand(id, handler));
 
     const currentWorkspace = () => vscode.workspace.workspaceFolders?.[0]?.uri.fsPath ?? "no-workspace";
+    let reviewRevision = 0, reviewPending = false;
+    const invalidateReview = () => { reviewRevision++; };
+    context.subscriptions.push(vscode.workspace.onDidChangeWorkspaceFolders(invalidateReview),
+        vscode.workspace.onDidChangeConfiguration(event => { if (event.affectsConfiguration("soterai")) invalidateReview(); }),
+        onDidChangeBoundaryRules(invalidateReview), onDidChangeOwnerPolicySession(invalidateReview), onDidChangeManualRestriction(invalidateReview),
+        { dispose: invalidateReview });
+    const captureReview = () => {
+        const editor = vscode.window.activeTextEditor;
+        if (!editor || !vscode.workspace.isTrusted || editor.selection.isEmpty) return undefined;
+        const document = editor.document, version = document.version, selection = editor.selection, revision = reviewRevision, workspace = currentWorkspace();
+        return () => vscode.workspace.isTrusted && !document.isClosed && editor.document === document && document.version === version
+            && editor.selection.isEqual(selection) && revision === reviewRevision && currentWorkspace() === workspace;
+    };
+    const previewReviewedText = async (text: string, current: () => boolean) => reviewContext(text, {
+        current,
+        preview: async candidate => {
+            const document = await vscode.workspace.openTextDocument({ content: candidate, language: "plaintext" });
+            const version = document.version;
+            if (!current()) throw Error();
+            await vscode.window.showTextDocument(document, { preview: true });
+            return { current: () => !document.isClosed && document.version === version && document.getText() === candidate };
+        },
+        choose: async () => {
+            const action = await vscode.window.showInformationMessage("Review this text for remaining private information before sharing.", "Copy reviewed text", "Keep preview");
+            return action === "Copy reviewed text" ? "copy" : action === "Keep preview" ? "keep" : undefined;
+        },
+        copy: text => Promise.resolve(vscode.env.clipboard.writeText(text)),
+    });
 
     /**
      * Real approval gate. When policy requires approval for brokered use, the
@@ -236,9 +266,11 @@ export function registerSecretBrokerCommands(context: vscode.ExtensionContext, r
         vscode.window.showInformationMessage(`SoterAI privacy mode set to ${pick}.`);
     }
 
-    async function buildSafePromptForAI(): Promise<void> {
+    async function buildSafePromptForAI(): Promise<{ status: string }> {
+        const current = captureReview();
+        if (!current) { void vscode.window.showInformationMessage("Select the code or text you want to share, then run Prepare Reviewed AI Context again."); return { status: "SELECTION_REQUIRED" }; }
         const text = await readSelectedText(true);
-        if (!text) return;
+        if (!text || Buffer.byteLength(text) > CONTEXT_LIMIT || !current()) return { status: "UNAVAILABLE" };
         const result = await redactorForCurrentPolicy().redact(text, currentWorkspace(), "safe-prompt");
         const safeContext = buildSafeLLMContext("Use this VS Code context safely", result, result.allowedOperations);
         const prompt = [
@@ -258,12 +290,13 @@ export function registerSecretBrokerCommands(context: vscode.ExtensionContext, r
             "",
             "Managed redaction summary:",
             "- Recognized sensitive values were replaced; unmarked private information may remain.",
-            "- This command copies a local candidate prompt; it does not observe any model transmission.",
+            "- Copy only after reviewing this local candidate; no model transmission is observed.",
             "- Other tools' direct file, clipboard and network access is outside these checks.",
             "- Selected-architecture guarantees remain UNTESTED.",
             "- Ledger stores raw prompt: no by default",
         ].join("\n");
-        await vscode.env.clipboard.writeText(prompt);
+        const outcome = await previewReviewedText(prompt, current);
+        if (!["PREVIEWED", "COPIED"].includes(outcome.status)) return outcome;
         lastPreview = {
             model: "user-selected",
             provider: "local-or-user-selected",
@@ -272,11 +305,29 @@ export function registerSecretBrokerCommands(context: vscode.ExtensionContext, r
             refs: result.secrets.map((secret) => secret.ref).filter((ref): ref is string => Boolean(ref)),
             allowedOperations: safeContext.allowedOperations,
             blocked: result.blocked.map((secret) => secret.finding.type),
-            policyReason: "safe prompt copied to clipboard",
+            policyReason: outcome.status === "COPIED" ? "reviewed prompt copied to clipboard" : "prompt previewed locally",
         };
         await audit("context_built", "redact", result.text, "managed prompt candidate built with recognized-value redaction");
-        showPreview("Managed prompt copied locally. Review unmarked private information before sharing; no model transmission was observed.");
         refreshViews();
+        return outcome;
+    }
+
+    async function prepareReviewedSelection(kind: "environment" | "debug"): Promise<{ status: string }> {
+        if (reviewPending) return { status: "UNAVAILABLE" };
+        reviewPending = true;
+        try {
+            const current = captureReview();
+            if (!current) { void vscode.window.showInformationMessage(kind === "environment" ? "Select single-line environment assignments, then run Preview Environment Contract from Selection." : "Select the log or stack trace, then run Preview Debug Context from Selection."); return { status: "SELECTION_REQUIRED" }; }
+            const input = await readSelectedText(true);
+            if (!input || !current()) return { status: "UNAVAILABLE" };
+            const filter = (text: string) => secretBrokerRuntime.outputFilter.filter(text);
+            const draft = kind === "environment" ? buildEnvironmentContract(input, filter) : buildDebugContext(input, filter);
+            if (draft.status !== "PREPARED") { void vscode.window.showInformationMessage("This selection could not be prepared completely. Use a smaller supported selection and keep secret matching enabled."); return { status: "UNAVAILABLE" }; }
+            const outcome = await previewReviewedText(draft.text, current);
+            if (outcome.status === "UNAVAILABLE") void vscode.window.showInformationMessage("The source, protection settings or preview changed. Generate a fresh preview before copying.");
+            return outcome;
+        } catch { return { status: "UNAVAILABLE" }; }
+        finally { reviewPending = false; }
     }
 
     async function runSecretBrokerDemo(): Promise<void> {
@@ -669,7 +720,25 @@ ${row("After revocation", afterRevoke.allowed, false)}
     }
 
     reg("soterai.useSensitiveContextSafely", useSensitiveContextSafely);
-    reg("soterai.buildSafePromptForAI", buildSafePromptForAI);
+    const runReviewedPrompt = async () => {
+        if (reviewPending) return { status: "UNAVAILABLE" };
+        reviewPending = true;
+        try { return await buildSafePromptForAI(); } catch { return { status: "UNAVAILABLE" }; } finally { reviewPending = false; }
+    };
+    reg("soterai.buildSafePromptForAI", runReviewedPrompt);
+    reg("soterai.prepareEnvironmentContext", (...args: unknown[]) => args.length ? { status: "UNAVAILABLE" } : prepareReviewedSelection("environment"));
+    reg("soterai.prepareDebugContext", (...args: unknown[]) => args.length ? { status: "UNAVAILABLE" } : prepareReviewedSelection("debug"));
+    reg("soterai.chooseReviewedContext", async (...args: unknown[]) => {
+        if (args.length) return { status: "UNAVAILABLE" };
+        const items = [
+            { label: "Review a prompt from selected code", detail: "Recognized-value redaction with a preview before copying", action: "prompt" },
+            { label: "Build an environment contract from selection", detail: "Variable names, suggested types and synthetic examples; original values are discarded", action: "environment" },
+            { label: "Create a blank .env example from reviewed findings", detail: "Use the existing hygiene writer; prior findings and owner review required", action: "example" },
+        ];
+        const choice = await vscode.window.showQuickPick(items, { title: "Prepare useful AI context", matchOnDetail: true });
+        if (!choice || !items.includes(choice)) return { status: "CANCELLED" };
+        return choice.action === "prompt" ? runReviewedPrompt() : choice.action === "environment" ? prepareReviewedSelection("environment") : vscode.commands.executeCommand("soterai.generateHygieneEnvExample");
+    });
     reg("soterai.runSecretBrokerDemo", runSecretBrokerDemo);
     reg("soterai.openLocalPrivacyStatus", openLocalPrivacyStatus);
     reg("soterai.previewWhatAIWillSee", previewWhatAIWillSee);

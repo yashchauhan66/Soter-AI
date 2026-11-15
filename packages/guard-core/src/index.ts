@@ -36,3 +36,7 @@ export * from "./ExtensionIsolationPolicy";
 export * from "./sensitiveFiles";
 
 export * from "./LitePolicyCatalog";
+export * from "./RegisteredSecretMatcher";
+export * from "./SecretScanPolicy";
+
+export * from "./BoundedJson";

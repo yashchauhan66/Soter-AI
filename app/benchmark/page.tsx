@@ -7,7 +7,7 @@ import { AlertTriangle, BarChart3, Download, Gauge, ShieldCheck } from "lucide-r
 export const metadata: Metadata = {
   title: "AI Security Benchmark: Injection & PII",
   description:
-    "Public AI security benchmark: detection rates for prompt injection, jailbreak, MCP attacks, secret leakage and PII — with methodology and honest limitations.",
+    "Public benchmark report: detection rates for prompt injection, jailbreaks, MCP attacks, secrets and PII, with its method and limitations.",
   keywords: ["ai security benchmark", "prompt injection benchmark", "jailbreak detection test", "llm guardrail benchmark", "ai guard performance", "pii detection benchmark"],
   alternates: { canonical: "/benchmark" },
 };

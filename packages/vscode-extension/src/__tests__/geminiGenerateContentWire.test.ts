@@ -36,6 +36,20 @@ test("F20C Gemini original and encoded masked-result substitutions send zero col
     for (const value of [VALUE, Buffer.from(VALUE).toString("base64")]) { const b = body(); b.contents[2].parts[0].functionResponse.response.output = value; const r = await post(url, b); assert.equal(r.status, 422); assert.match(r.text, /gateway_sensitive/); }
     assert.equal(records.length, 0);
 }));
+
+test("LS17 Gemini native Unicode escapes remain private beside quoted multiline system text", async () => fixture(true, async (url, records) => {
+    const escaped = VALUE.split("").map(char => "\\u" + char.charCodeAt(0).toString(16).padStart(4, "0")).join("");
+    const request = body();
+    request.contents = [{ role: "user", parts: [{ text: escaped }] }];
+    request.systemInstruction = { parts: [{ text: 'Public "quoted" instructions.\nUse C:\\public\\project.\n' }] };
+    const response = await post(url, request);
+    assert.equal(response.status, 422);
+    assert.match(response.text, /gateway_sensitive/);
+    assert.equal(records.length, 0, "no encoded body reaches the provider");
+    request.contents[0].parts[0].text = "PUBLIC_LS17_USEFUL";
+    assert.equal((await post(url, request)).status, 200);
+    assert.equal(records.length, 1);
+}));
 test("F20C Gemini registered output is completely withheld", async () => fixture(true, async (url, records, setOutput) => {
     setOutput(wire(VALUE)); const r = await post(url); assert.equal(r.status, 422); assert.equal(records.length, 1); assert(!r.text.includes(VALUE)); assert.match(r.text, /gateway_output_withheld/);
 }));

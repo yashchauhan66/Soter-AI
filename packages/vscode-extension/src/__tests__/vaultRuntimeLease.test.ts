@@ -9,6 +9,7 @@ import type * as vscode from "vscode";
 import * as stub from "./phase2/vscode-stub";
 import { initializeBoundaryState, BoundarySnapshot } from "../ai-boundary/BoundarySnapshot";
 import { VaultManager } from "../firewall/VaultManager";
+import { captureRuntimeArtifact } from "../vault-runtime/RuntimeBinding";
 
 // All source/vault values here are synthetic; retained fixture directories are
 // evidence, not a normal VS Code profile or project owned by the user.
@@ -32,8 +33,9 @@ function runtime(): LeaseManager {
 }
 async function descriptor(): Promise<Record<string, unknown>> {
     const selections = await runtime().runtimeSelections(uri());
-    return { schemaVersion: 1, id: "ec57b65d-8802-4cb4-837d-51cd174be009", root,
-        source: uri().fsPath, program: join(root, "app.cjs"), cwd: root, programDigest: sha(ENTRY), args: [], selections };
+    return { schemaVersion: 2, id: "ec57b65d-8802-4cb4-837d-51cd174be009", root,
+        source: uri().fsPath, program: join(root, "app.cjs"), cwd: root, programDigest: sha(ENTRY),
+        artifactDigest: captureRuntimeArtifact(root, join(root, "app.cjs")).digest, args: [], selections };
 }
 async function unavailable(work: () => Promise<unknown>): Promise<void> {
     await assert.rejects(work, error => { assert.ok(!(error instanceof assert.AssertionError)); assert.ok(!String(error).includes(FAKE)); return true; });
@@ -92,6 +94,14 @@ test("F09-L06 source drift during review cannot inject an old selection", async 
 });
 test("F09-L07 app change during review withholds until a new allowlist review", async () => {
     const d = await descriptor(); onReview = async () => { await writeFile(join(root, "app.cjs"), ENTRY + "// changed\n"); };
+    let count = 0; await unavailable(() => runtime().withRuntimeValues(d, () => { count++; }, () => true)); assert.equal(count, 0);
+});
+
+test("F09-L07B imported module change during native approval withholds selected values", async () => {
+    const entry = "exports.start = () => require('./helper.cjs').value;";
+    await writeFile(join(root, "app.cjs"), entry); await writeFile(join(root, "helper.cjs"), "exports.value = 'approved-public';");
+    const d = { ...await descriptor(), programDigest: sha(entry) };
+    onReview = async () => { await writeFile(join(root, "helper.cjs"), "exports.value = 'changed-after-approval';"); };
     let count = 0; await unavailable(() => runtime().withRuntimeValues(d, () => { count++; }, () => true)); assert.equal(count, 0);
 });
 test("F09-L08 unavailable/replaced existing key never regenerates a key or releases a value", async () => {

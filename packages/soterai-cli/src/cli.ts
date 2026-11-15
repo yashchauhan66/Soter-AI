@@ -20,6 +20,7 @@ import { run, defaultDeps } from "./run";
  */
 function failureExitCode(argv: string[]): number {
     const [command, sub] = argv.filter((a) => !a.startsWith("--"));
+    if (command === "ci" || command === "isolate" || command === "acceptance") return 2;
     return command === "hook" && sub !== "install" && sub !== "status" ? 2 : 1;
 }
 
@@ -31,11 +32,11 @@ try {
             process.exitCode = code;
         })
         .catch((error) => {
-            process.stderr.write(String(error instanceof Error ? error.message : error) + "\n");
+            process.stderr.write(["ci","isolate","acceptance"].includes(argv[0]) ? "Security operation unavailable.\n" : String(error instanceof Error ? error.message : error) + "\n");
             process.exitCode = failureExitCode(argv);
         });
 } catch (error) {
     // A synchronous throw out of defaultDeps() would otherwise exit 1.
-    process.stderr.write(String(error instanceof Error ? error.message : error) + "\n");
+    process.stderr.write(["ci","isolate","acceptance"].includes(argv[0]) ? "Security operation unavailable.\n" : String(error instanceof Error ? error.message : error) + "\n");
     process.exitCode = failureExitCode(argv);
 }

@@ -1,71 +1,42 @@
 import type { Metadata } from "next";
 import { VsCompetitor, type VsContent } from "@/components/marketing/VsCompetitor";
+import { buildMetadata } from "@/lib/seo/metadata";
 
-export const metadata: Metadata = {
-  title: { absolute: "SoterAI vs NVIDIA NeMo Guardrails | AI Guardrails Comparison" },
+export const metadata: Metadata = buildMetadata({
+  title: "SoterAI vs NeMo Guardrails: Facts and Dates",
   description:
-    "SoterAI vs NVIDIA NeMo Guardrails: Colang conversational rails vs inline runtime enforcement, agent tool-call control, PII redaction and self-hosting.",
-  alternates: { canonical: "/comparison/nemo-guardrails" },
-  openGraph: {
-    title: "SoterAI vs NVIDIA NeMo Guardrails — AI Guardrails Comparison",
-    description:
-      "NeMo Guardrails is the best tool for scripted conversation flows. SoterAI is inline security enforcement across input, output, RAG context, and agent tool calls — no DSL to learn.",
-  },
-};
+    "NeMo Guardrails is an open-source toolkit from NVIDIA. Facts from its README and repository, facts about SoterAI, and when each is the better choice.",
+  path: "/comparison/nemo-guardrails",
+});
 
 const data: VsContent = {
   slug: "nemo-guardrails",
   competitor: "NVIDIA NeMo Guardrails",
-  competitorNote: "Apache-2.0 · Python + Colang DSL · NVIDIA NIM / Triton ecosystem",
-  tagline:
-    "NeMo Guardrails scripts what your bot is allowed to talk about. SoterAI decides what data and actions are allowed to move — at the input, the output, the retrieved context, and the tool call.",
-  intro:
-    "NVIDIA NeMo Guardrails models conversational safety as a state machine written in Colang, a purpose-built DSL. That design is excellent for dialog control: topic fencing, canned refusals, fact-checking rails, and multi-turn flow management, all tightly integrated with NVIDIA NIM and Triton. SoterAI takes the opposite approach — no DSL, no dialog authoring. It is a security control layer you drop in front of an existing app: classify the prompt, scan retrieved documents, redact secrets and Indian PII from the response, and authorize agent tool calls against a reversibility model before they execute. If your problem is 'keep the conversation on-topic', NeMo is the right shape. If your problem is 'stop injection, leakage, and rogue agent actions', SoterAI is.",
-  theirStrength:
-    "NeMo Guardrails is the most capable open-source tool for scripted conversational control. Colang gives precise, auditable dialog state machines; the NVIDIA ecosystem integration (NIM, Triton) is deep; it is Apache-2.0; and it has NVIDIA's engineering weight and enterprise support behind it.",
-  soterEdge: [
-    "No DSL to learn — three SDK calls instead of authoring Colang flows",
-    "Agent firewall: tool-call authorization, reversibility classification, approval queue, rollback",
-    "PII detection and redaction, including India-specific Aadhaar-like, PAN, GSTIN, UPI, IFSC",
-    "Secret and credential detection on both input and output",
-    "RAG security: retrieved-document scanning, quarantine, and ACL enforcement",
-    "JS/TS SDK plus Python — NeMo is Python-only",
-    "Multilingual and Hinglish attack detection measured on a published corpus",
-    "HMAC-signed audit exports and compliance evidence collection",
-    "Local CPU detection with no network call and no GPU requirement",
+  kind: "Open-source toolkit",
+  readOn: "2026-11-10",
+  summary:
+    "NeMo Guardrails controls how a conversational app behaves. SoterAI checks the text and actions that pass through it. Some teams use both.",
+  facts: [
+    { label: "What it is", value: "An open-source toolkit for adding programmable guardrails between application code and the model in conversational apps: topics to avoid, dialog paths, response style, tool use and structured data." },
+    { label: "License", value: "The LICENSE.md header names Apache-2.0, while GitHub’s license field shows “Other” (2026-11-09). The repository was not archived." },
+    { label: "Release", value: "Its README names 0.24.1 as the latest release. Python 3.11 to 3.13." },
+    { label: "Documentation", value: "docs.nvidia.com/nemo/guardrails" },
+    { label: "Where it runs", value: "In your process. You host and operate it." },
   ],
-  theirEdge: [
-    "Colang gives finer-grained, explicitly auditable multi-turn dialog control",
-    "Apache-2.0 across the whole project, versus SoterAI's BUSL-1.1 open core",
-    "Native NVIDIA NIM / Triton integration and NVIDIA enterprise support",
-    "Fact-checking and hallucination rails are more developed",
-    "Larger open-source community and contributor base",
+  chooseThem: [
+    "You need programmable control of conversation flow, not only detection of bad inputs.",
+    "You are building on the NVIDIA ecosystem and want an open-source toolkit you can change.",
+    "You are comfortable writing and testing guardrail configuration yourself.",
   ],
-  rows: [
-    { feature: "Conversational flow control", desc: "Scripted multi-turn dialog rails", soter: "Partial", them: "yes" },
-    { feature: "Topic fencing", soter: "yes", them: "yes" },
-    { feature: "Input guard (prompt injection)", soter: "yes", them: "yes" },
-    { feature: "Output guard (unsafe content)", soter: "yes", them: "yes" },
-    { feature: "PII detection + redaction", soter: "yes", them: "no" },
-    { feature: "India PII", desc: "Aadhaar-like, PAN, GSTIN, UPI, IFSC", soter: "yes", them: "no" },
-    { feature: "Secret / credential detection", soter: "yes", them: "no" },
-    { feature: "RAG security", desc: "Doc scan + quarantine + ACL", soter: "yes", them: "Partial" },
-    { feature: "Agent firewall", desc: "Tool-call authorization + rollback", soter: "yes", them: "no" },
-    { feature: "No DSL required", soter: "yes", them: "no" },
-    { feature: "JS / TypeScript SDK", soter: "yes", them: "no" },
-    { feature: "Signed audit exports", desc: "HMAC JSONL/CSV", soter: "yes", them: "no" },
-    { feature: "Self-hosted", soter: "yes", them: "yes" },
-    { feature: "Runs on CPU without a GPU", soter: "yes", them: "Partial" },
-    { feature: "Fully permissive core license", soter: "no", them: "yes" },
+  chooseUs: [
+    "You want detection of injection, secrets and personal data, with a verdict you can act on, from a hosted API.",
+    "You want risky agent actions held for approval and each decision logged.",
+    "You want to try it on your own text without installing anything.",
   ],
-  bestFor: {
-    soter:
-      "You have an app, a RAG pipeline, or an agent already built, and you need a security layer in front of it in an afternoon — covering injection, leakage, Indian PII, and agent action approval, with signed logs and no new language to learn.",
-    them:
-      "You are building a conversational product where the exact dialog path matters, you want to declare that path explicitly and auditably, and you are already standardized on the NVIDIA inference stack.",
-  },
-  sourceUrl: "https://github.com/NVIDIA/NeMo-Guardrails",
-  sourceLabel: "NVIDIA NeMo Guardrails (GitHub)",
+  sources: [
+    { label: "NeMo Guardrails README", href: "https://github.com/NVIDIA-NeMo/Guardrails" },
+    { label: "LICENSE.md header", href: "https://github.com/NVIDIA-NeMo/Guardrails/blob/develop/LICENSE.md" },
+  ],
 };
 
 export default function Page() {

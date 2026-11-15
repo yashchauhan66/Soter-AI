@@ -38,7 +38,7 @@ async function open(): Promise<void> {
     await handler(stub.Uri.file(root));
 }
 beforeEach(async () => {
-    const base = process.platform === "win32" ? "D:\\SoterAI-Lite-test-profiles" : tmpdir(); await mkdir(base, { recursive: true });
+    const base = tmpdir(); await mkdir(base, { recursive: true });
     root = await mkdtemp(join(base, "f10-controller-review-")); stub.resetState(root); context = stub.makeExtensionContext(join(root, "storage"));
     opened = 0; saves = []; releases = []; controller = undefined; lastPty = undefined;
     initializeBoundaryState(context.workspaceState as never); await BoundarySnapshot.load();

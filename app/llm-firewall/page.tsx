@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { buildMetadata } from "@/lib/seo/metadata";
 import { FeatureLanding, type FeatureLandingData } from "@/components/marketing/FeatureLanding";
+import { LATENCY_SENTENCE } from "@/lib/sa/claims";
 
 export const metadata: Metadata = buildMetadata({
   title: "LLM Firewall: Runtime Protection for LLMs",
@@ -25,7 +26,7 @@ const data: FeatureLandingData = {
   h1: "A runtime firewall for every LLM call",
   productName: "SoterAI LLM Firewall",
   intro:
-    "An LLM firewall sits between your application and the model, inspecting every input and output for threats. SoterAI Guard's LLM firewall provides real-time detection of prompt injection, jailbreaks, PII leakage, unsafe outputs, and policy violations — with configurable enforcement modes and sub-50ms latency.",
+    "An LLM firewall sits between your application and the model, inspecting every input and output for threats. SoterAI Guard's LLM firewall provides real-time detection of prompt injection, jailbreaks, PII leakage, unsafe outputs, and policy violations, with configurable enforcement modes.",
   features: [
     {
       title: "Input firewall",
@@ -78,7 +79,7 @@ const data: FeatureLandingData = {
     },
     {
       q: "Can the firewall block attacks in real time?",
-      a: "Yes. Input inspection adds under 50ms latency. Threats are blocked before the request reaches the LLM provider.",
+      a: `Yes. Input inspection runs before the request goes to the LLM provider, and a blocked request is never sent. ${LATENCY_SENTENCE}`,
     },
     {
       q: "Does it support streaming responses?",

@@ -7,8 +7,10 @@ import { tmpdir } from "node:os";
 import { basename, dirname, join, resolve } from "node:path";
 import type * as vscode from "vscode";
 import type { VaultAppDescriptor } from "../../../core/src/VaultAppDescriptor";
+import { createVaultAppArtifact } from "../../../core/src/VaultAppArtifact";
 import type { OutputResult } from "../../../core/src/StreamingOutputRedactor";
 import type { VaultManager } from "../firewall/VaultManager";
+import { GatewayRegistryLease } from "../broker/GatewayRegistryLease";
 import * as stub from "./phase2/vscode-stub";
 
 // The real coordinator and real finite Node job execute only synthetic public
@@ -26,7 +28,8 @@ type Job = { snapshot(): Snapshot; requestStop(): void; readonly completion: Pro
 type Runtime = { descriptors(): readonly VaultAppDescriptor[]; save(value: unknown): Promise<VaultAppDescriptor>;
     run(id: string): Promise<Job | undefined>; stop(jobId: string): void; jobs(): readonly Snapshot[]; dispose(): void };
 type Factory = new (context: vscode.ExtensionContext, vault: VaultManager) => Runtime;
-type Lease = { withRuntimeValues<T>(descriptor: VaultAppDescriptor, use: (values: Readonly<Record<string, string>>, guard: () => boolean) => T, enabled: () => boolean): Promise<T> };
+type Lease = { withRuntimeValues<T>(descriptor: VaultAppDescriptor, use: (values: Readonly<Record<string, string>>, guard: () => boolean) => T, enabled: () => boolean): Promise<T>;
+    createGatewayRegistry(enabled: () => boolean): Promise<GatewayRegistryLease> };
 function deferred() { let release!: () => void; const promise = new Promise<void>(done => { release = done; }); return { promise, release }; }
 async function bounded<T>(work: PromiseLike<T>, ms = 6000): Promise<T> {
     let timer: ReturnType<typeof setTimeout> | undefined;
@@ -44,8 +47,9 @@ let leaseHold: ReturnType<typeof deferred> | undefined, leaseApproved: boolean, 
 let configEvents: stub.EventEmitter<{ affectsConfiguration(section: string): boolean }>, rootEvents: stub.EventEmitter<unknown>;
 
 function descriptor(index = 0, source = ENTRY): VaultAppDescriptor {
-    return { schemaVersion: 1, id: `6c2988d0-5023-4c1a-9bd2-${String(index).padStart(12, "0")}`, root,
-        program: join(root, "app.cjs"), cwd: root, source: join(root, ".env"), programDigest: sha(source), args: ["literal public argument"],
+    return { schemaVersion: 2, id: `6c2988d0-5023-4c1a-9bd2-${String(index).padStart(12, "0")}`, root,
+        program: join(root, "app.cjs"), cwd: root, source: join(root, ".env"), programDigest: sha(source),
+        artifactDigest: createVaultAppArtifact("app.cjs", [{ path: "app.cjs", kind: "commonjs", source, imports: [] }]).digest, args: ["literal public argument"],
         selections: [{ name: "DATABASE_URL", placeholder: PLACEHOLDER }] };
 }
 async function coordinator(): Promise<Runtime> {
@@ -81,7 +85,7 @@ function rewriteDescriptor(value: unknown, id: string): unknown {
 }
 
 beforeEach(async () => {
-    const base = process.platform === "win32" ? "D:\\SoterAI-Lite-test-profiles" : tmpdir();
+    const base = tmpdir();
     await mkdir(base, { recursive: true }); fixtureParent = await realpath(base);
     fixtureDirectory = await mkdtemp(join(fixtureParent, "f09-coordinator-")); root = join(fixtureDirectory, "project");
     await mkdir(root); await writeFile(join(root, "app.cjs"), ENTRY); await writeFile(join(root, ".env"), SOURCE);
@@ -94,7 +98,7 @@ beforeEach(async () => {
         calls.push(descriptor); await leaseHold?.promise;
         if (!leaseApproved || !leaseGuard || !enabled()) throw new Error("Synthetic private lease withheld.");
         return use(Object.freeze({ DATABASE_URL: FAKE }), () => leaseGuard && enabled());
-    } };
+    }, async createGatewayRegistry(enabled) { return new GatewayRegistryLease([FAKE], () => leaseGuard && enabled()); } };
 });
 afterEach(async () => {
     leaseGuard = false; for (const runtime of runtimes) runtime.dispose(); leaseHold?.release();
@@ -155,7 +159,7 @@ test("F09-C06 changing the allowed app blocks run until its new public digest is
     const runtime = await coordinator(), value = await runtime.save(descriptor()), changed = ENTRY + "// public owner revision\n";
     await writeFile(join(root, "app.cjs"), changed);
     assert.equal(await bounded(run(runtime, value.id)), undefined); assert.equal(calls.length, 0);
-    const reviewed = await runtime.save({ ...value, programDigest: sha(changed) });
+    const reviewed = await runtime.save({ ...value, programDigest: sha(changed), artifactDigest: descriptor(0, changed).artifactDigest });
     const job = await bounded(run(runtime, reviewed.id)); assert.ok(job);
     const completed = await bounded(job.completion); assert.equal(completed.output.status, "COMPLETE");
     assert.equal(completed.output.stdout, "public-complete"); stateSafe(runtime);

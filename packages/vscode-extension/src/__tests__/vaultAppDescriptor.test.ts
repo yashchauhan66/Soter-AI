@@ -10,8 +10,8 @@ const GENERATION = "A3427B3646BA4D8482E5C5DFB5BA5DD1";
 const ID = "a3427b36-46ba-4d84-82e5-c5dfb5ba5dd1";
 const placeholder = (ordinal: number) => `[SOTERAI_PROTECTED_${GENERATION}_${ordinal}]`;
 function fixture() {
-    return { schemaVersion: 1, id: ID, root: ROOT, program: path.join(ROOT, "app.cjs"), cwd: ROOT,
-        source: path.join(ROOT, ".env"), programDigest: "a".repeat(64), args: ["--mode", "public"],
+    return { schemaVersion: 2, id: ID, root: ROOT, program: path.join(ROOT, "app.cjs"), cwd: ROOT,
+        source: path.join(ROOT, ".env"), programDigest: "a".repeat(64), artifactDigest: "b".repeat(64), args: ["--mode", "public"],
         selections: [{ name: "DATABASE_URL", placeholder: placeholder(0) }] };
 }
 function rejected(value: unknown): void {
@@ -35,7 +35,7 @@ test("F09-D01 exported runtime limits remain exact and frozen", () => {
 test("F09-D02 a valid descriptor preserves only the exact public own-data shape and freezes every collection", () => {
     const value = fixture(), parsed = accepted(value);
     assert.deepEqual(JSON.parse(JSON.stringify(parsed)), value);
-    assert.deepEqual(Object.keys(parsed).sort(), ["schemaVersion", "id", "root", "program", "cwd", "source", "programDigest", "args", "selections"].sort());
+    assert.deepEqual(Object.keys(parsed).sort(), ["schemaVersion", "id", "root", "program", "cwd", "source", "programDigest", "artifactDigest", "args", "selections"].sort());
     assert.deepEqual(Object.keys(parsed.selections[0]).sort(), ["name", "placeholder"]);
     assert.equal(Reflect.set(parsed, "program", path.join(ROOT, "other.cjs")), false);
     assert.equal(Reflect.set(parsed.args, "0", "changed"), false);
@@ -43,7 +43,7 @@ test("F09-D02 a valid descriptor preserves only the exact public own-data shape 
 });
 
 test("F09-D03 supported JavaScript entry extensions and Unicode paths remain useful literal metadata", () => {
-    for (const extension of [".js", ".cjs", ".mjs"]) {
+    for (const extension of [".js", ".cjs"]) {
         const value = fixture(); value.program = path.join(ROOT, "public É🔐", "entry" + extension);
         value.cwd = path.join(ROOT, "public É🔐"); accepted(value);
     }
@@ -58,7 +58,8 @@ test("F09-D04 unknown or missing descriptor fields and unsupported schemas rejec
     for (const [key, data] of [["env", { DATABASE_URL: "SYNTHETIC_RAW_NOT_A_DESCRIPTOR_FIELD" }],
         ["shell", true], ["executable", "node"], ["options", {}], ["value", "SYNTHETIC_RAW_NOT_A_DESCRIPTOR_FIELD"]] as const)
         rejected({ ...fixture(), [key]: data });
-    for (const schemaVersion of [0, 2, "1", null, NaN]) rejected({ ...fixture(), schemaVersion });
+    for (const schemaVersion of [0, 1, 3, "2", null, NaN]) rejected({ ...fixture(), schemaVersion });
+    rejected({ ...fixture(), program: path.join(ROOT, "unbundled.mjs") });
 });
 
 test("F09-D05 non-record values and custom prototypes are not descriptors", () => {

@@ -2,11 +2,13 @@
 
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
+import { PLAYGROUND_CTA_LABEL } from "@/lib/marketing/cta";
+import { createPortal } from "react-dom";
 import { usePathname } from "next/navigation";
 import { useSession } from "next-auth/react";
 import { ChevronDown, LayoutDashboard, LogIn, Menu, X } from "lucide-react";
 import { SignOutButton } from "@/components/auth/SignOutButton";
-import { MOBILE_SHORTCUTS, PRIMARY_NAV } from "@/lib/navigation";
+import { MOBILE_SHORTCUTS, PRIMARY_NAV, activeSectionLabel, navCurrent } from "@/lib/navigation";
 
 /**
  * Mobile / tablet navigation drawer.
@@ -54,19 +56,36 @@ export function MobileNav() {
     if (open) setOpen(false);
   }
 
-  // Lock scroll while open; restore focus to the trigger on close.
+  // CSS hides the drawer at lg; close it so scroll and keyboard effects clean up.
   useEffect(() => {
-    if (!open) {
-      openButtonRef.current?.focus();
-      return;
-    }
+    const desktop = window.matchMedia("(min-width: 1024px)");
+    const onDesktopChange = (event: MediaQueryListEvent) => {
+      if (event.matches) setOpen(false);
+    };
+    desktop.addEventListener("change", onDesktopChange);
+    return () => desktop.removeEventListener("change", onDesktopChange);
+  }, []);
 
+  // Lock scroll while open. Restore focus only after an opened drawer closes;
+  // a closed drawer must leave the initial page focus and skip link untouched.
+  useEffect(() => {
+    if (!open) return;
+
+    const trigger = openButtonRef.current;
     const previousOverflow = document.body.style.overflow;
     document.body.style.overflow = "hidden";
     panelRef.current?.querySelector<HTMLElement>("a, button")?.focus();
 
     return () => {
       document.body.style.overflow = previousOverflow;
+      if (trigger?.getClientRects().length) {
+        trigger.focus();
+      } else {
+        const primary = Array.from(
+          trigger?.closest("header")?.querySelectorAll<HTMLElement>("a.button-primary") ?? [],
+        ).find(control => control.getClientRects().length > 0 && getComputedStyle(control).visibility === "visible");
+        primary?.focus();
+      }
     };
   }, [open]);
 
@@ -105,7 +124,8 @@ export function MobileNav() {
 
   const dashboardHref = isAdmin ? "/admin" : "/dashboard";
   const dashboardLabel = isAdmin ? "Admin" : "Dashboard";
-  const isActive = (href: string) => pathname === href || pathname?.startsWith(`${href}/`);
+  // One owner at most; see activeSectionLabel in lib/navigation.ts.
+  const activeLabel = activeSectionLabel(pathname);
 
   return (
     <>
@@ -116,15 +136,21 @@ export function MobileNav() {
         aria-expanded={open}
         aria-controls="mobile-nav-panel"
         aria-label="Open navigation menu"
-        className="button-icon lg:hidden"
+        className="button-icon lg:hidden min-h-12 min-w-12"
       >
         <Menu size={18} aria-hidden="true" />
       </button>
 
-      {open && (
+      {/* Rendered through a portal. The header uses backdrop-filter, and a
+          backdrop-filter makes its element the containing block for `position:
+          fixed` descendants. Inside the header this "full-screen" drawer measured
+          64px tall on the live site (header height) instead of the 879px viewport,
+          so it overlapped the page. On document.body it is really full-screen. */}
+      {open &&
+        createPortal(
         <div className="fixed inset-0 z-overlay lg:hidden">
           <div
-            className="animate-overlay-in absolute inset-0 bg-slate-900/60 backdrop-blur-sm"
+            className="animate-overlay-in absolute inset-0 bg-slate-100/40 backdrop-blur-sm"
             onClick={() => setOpen(false)}
             aria-hidden="true"
           />
@@ -143,7 +169,7 @@ export function MobileNav() {
                 type="button"
                 onClick={() => setOpen(false)}
                 aria-label="Close navigation menu"
-                className="button-icon"
+                className="button-icon min-h-12 min-w-12"
               >
                 <X size={18} aria-hidden="true" />
               </button>
@@ -178,9 +204,9 @@ export function MobileNav() {
                         <Link
                           href={section.href}
                           onClick={() => setOpen(false)}
-                          aria-current={isActive(section.href) ? "page" : undefined}
+                          aria-current={navCurrent(pathname, section.href)}
                           className={`block rounded-lg px-3 py-3 text-sm font-semibold transition-colors ${
-                            isActive(section.href) ? "bg-cyan/10 text-cyan" : "text-slate-100 hover:bg-slate-900"
+                            activeLabel === section.label ? "bg-cyan/10 text-cyan" : "text-slate-100 hover:bg-slate-900"
                           }`}
                         >
                           {section.label}
@@ -199,7 +225,9 @@ export function MobileNav() {
                         aria-expanded={isExpanded}
                         aria-controls={sectionId}
                         onClick={() => setExpanded(isExpanded ? null : section.label)}
-                        className="flex w-full items-center justify-between rounded-lg px-3 py-3 text-sm font-semibold text-slate-100 transition-colors hover:bg-slate-900"
+                        className={`flex w-full items-center justify-between rounded-lg px-3 py-3 text-sm font-semibold transition-colors hover:bg-slate-900 ${
+                          activeLabel === section.label ? "text-cyan" : "text-slate-100"
+                        }`}
                       >
                         {section.label}
                         <ChevronDown
@@ -219,7 +247,9 @@ export function MobileNav() {
                               <ul className="mt-1">
                                 {group.links.map((link) => {
                                   const Icon = link.icon;
-                                  const active = isActive(link.href);
+                                  // Only the exact page is marked inside a menu; the section
+                                  // already shows on the button above.
+                                  const active = navCurrent(pathname, link.href) === "page";
                                   return (
                                     <li key={link.href}>
                                       <Link
@@ -283,7 +313,10 @@ export function MobileNav() {
                 </div>
               ) : (
                 <div className="space-y-2">
-                  <Link href="/signup" onClick={() => setOpen(false)} className="button-primary w-full">
+                  <Link href="/playground" onClick={() => setOpen(false)} className="button-primary w-full">
+                    {PLAYGROUND_CTA_LABEL}
+                  </Link>
+                  <Link href="/signup" onClick={() => setOpen(false)} className="button-secondary w-full">
                     Create free account
                   </Link>
                   <Link href="/signin" onClick={() => setOpen(false)} className="button-secondary w-full">
@@ -293,8 +326,9 @@ export function MobileNav() {
               )}
             </div>
           </div>
-        </div>
-      )}
+        </div>,
+        document.body,
+        )}
     </>
   );
 }

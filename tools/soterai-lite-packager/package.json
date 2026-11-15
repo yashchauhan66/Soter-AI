@@ -1,0 +1,19 @@
+{
+  "name": "soterai-lite-packager",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Isolated packaging toolchain for immutable SoterAI Lite payloads",
+  "engines": { "node": ">=22.0.0" },
+  "scripts": {
+    "test": "node --test package.test.cjs audit.test.cjs",
+    "package": "node package.cjs"
+  },
+  "dependencies": {
+    "@vscode/vsce": "4.1.0",
+    "semver": "7.8.5",
+    "yauzl": "3.4.0"
+  },
+  "overrides": {
+    "@vscode/vsce": { "minimatch": "11.0.5" }
+  }
+}

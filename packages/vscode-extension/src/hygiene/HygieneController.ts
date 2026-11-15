@@ -179,8 +179,12 @@ export class HygieneController implements vscode.Disposable {
     restoreFinding(id: string): Promise<any> { return this.#action(id, "restore"); }
     writeExample(id: string): Promise<any> { return this.#action(id, "example"); }
     /** Fixed safe menu metadata only; the actual URI/identity remains private. */
-    selections(): ReadonlyArray<Readonly<{ id: string; label: string; provider: HygieneFinding["provider"] }>> {
-        return Object.freeze([...this.#bindings.entries()].map(([id, binding], ordinal) => Object.freeze({ id, label: "Finding " + (ordinal + 1) + " · " + binding.findings.find(f => f.id === id)!.kind, provider: binding.findings.find(f => f.id === id)!.provider })));
+    selections(): ReadonlyArray<Readonly<{ id: string; label: string; provider: HygieneFinding["provider"]; line: number; canVault: boolean; canExample: boolean; canRestore: boolean }>> {
+        return Object.freeze([...this.#bindings.entries()].map(([id, binding], ordinal) => {
+            const finding = binding.findings.find(f => f.id === id)!;
+            return Object.freeze({ id, label: "Finding " + (ordinal + 1) + " · " + finding.kind, provider: finding.provider, line: finding.line,
+                canVault: binding.safeLabels && !binding.vaulted, canExample: binding.safeLabels && binding.environment, canRestore: binding.safeLabels && binding.vaulted });
+        }));
     }
     async exposures(): Promise<any> { try { return await this.#ledger.view(this.#root().toString()); } catch { return { status: "UNAVAILABLE", rows: [] }; } }
     exportLedger(): Promise<any> {

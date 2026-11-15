@@ -92,6 +92,14 @@ export const DOCS_SECTIONS: DocsSection[] = [
         icon: Layers3,
         keywords: ["catalog", "directory", "features", "controls", "capabilities"],
       },
+      {
+        href: "/docs/soterai-lite",
+        label: "SoterAI Lite",
+        summary: "Local extension protection, privacy, license and recovery limits for Windows developers.",
+        minutes: 4,
+        icon: ShieldCheck,
+        keywords: ["extension", "vscode", "windows", "privacy", "license", "secrets", "recovery"],
+      },
     ],
   },
   {

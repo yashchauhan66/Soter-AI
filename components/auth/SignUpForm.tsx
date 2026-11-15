@@ -97,7 +97,7 @@ export function SignUpForm() {
         <label className="mb-1.5 block text-sm font-medium" htmlFor="name">
           Your name
         </label>
-        <input id="name" name="name" autoComplete="name" maxLength={120} className="input" placeholder="Priya Sharma" />
+        <input id="name" name="name" autoComplete="name" maxLength={120} className="input" placeholder="Enter your name" />
       </div>
       <div>
         <label className="mb-1.5 block text-sm font-medium" htmlFor="email">

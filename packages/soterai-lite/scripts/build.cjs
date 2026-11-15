@@ -21,12 +21,20 @@ async function main() {
   const specs = [
     ['extension.js', path.join(extensionRoot, 'src/extension.ts'), ['vscode']],
     ['local-ai-broker.js', path.join(repo, 'apps/local-ai-broker/src/cli.ts'), []],
-    ['soterai-mcp-server.js', path.join(legacy, 'src/agent/mcpServer.ts'), []]
+    ['soterai-mcp-server.js', path.join(legacy, 'src/agent/mcpServer.ts'), []],
+    ['pre-commit-client.js', path.join(legacy, 'src/history-hooks/preCommitClientMain.ts'), []]
   ];
   const forbidden = ['apps/privacy-controller/', 'project-privacy/capabilities/', 'tier2-lite/'];
   const inventory = [];
+  const parserOptions = parserBundleOptions(repo);
+  // Bundle the same local source modules that source tests exercise. Exported
+  // package/dist files can belong to an earlier build in this workspace.
+  const alias = { ...parserOptions.alias,
+    '@soterai/guard-core': path.join(repo, 'packages/guard-core/src/index.ts'),
+    '@soterai/ide-common': path.join(repo, 'packages/ide-common/src/index.ts'),
+    '@soterai/ide-protocol': path.join(repo, 'packages/ide-protocol/src/index.ts') };
   for (const [name, entry, external] of specs) {
-    const result = await esbuild.build({ ...parserBundleOptions(repo), absWorkingDir: repo, entryPoints: [entry], bundle: true,
+    const result = await esbuild.build({ ...parserOptions, alias, absWorkingDir: repo, entryPoints: [entry], bundle: true,
       outfile: path.join(attempt, 'dist', name), platform: 'node', format: 'cjs', target: 'node18',
       tsconfig: path.join(legacy, 'tsconfig.json'), external, minify: true, sourcemap: false,
       metafile: true, logLevel: 'warning', legalComments: 'eof' });
@@ -35,6 +43,7 @@ async function main() {
       const normalized = relative.replace(/\\/g, '/');
       if (forbidden.some(item => normalized.includes(item))) throw new Error('Full/test runtime input refused: ' + normalized);
       if (/\/(__tests__|fixtures|evidence)\//.test(normalized)) throw new Error('Test/evidence runtime input refused: ' + normalized);
+      if (/packages\/(?:guard-core|ide-common|ide-protocol)\/dist\//.test(normalized)) throw new Error('Stale local dist runtime input refused');
       const bytes = await fs.readFile(path.resolve(repo, relative));
       inputs.push({ path: normalized, bytes: bytes.length, sha256: sha(bytes) });
     }

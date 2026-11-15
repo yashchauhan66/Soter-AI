@@ -7,11 +7,32 @@
     "executionDependencies": "Record any availability-based change to the proposed linear queue before freeze; no unsupported card counted complete"
   },
   "planVersion": 1,
-  "clientDate": "2026-10-13",
+  "clientDate": "2026-11-11",
   "planPath": "docs/soterai-lite/IMPLEMENTATION-PLAN.md",
-  "scope": "F01-F10/F12-F24 scoped DONE after byte barriers; F11 optional absent NOT_TESTED/NOT_COVERED. F25 active only after actual transition bytes; F26-F32/V01-V05 pending. No final rating/human/independent claim.",
+  "scope": "32 feature implementations complete. Current Code1.146 matching13/broker106/functional10/security17/tool99+hook4/original lifecycle44/59/8 and LS17 28 controls verified. Full independent/human/universal scenario acceptance remains explicitly incomplete; owner publishes.",
   "implementationConcurrency": 1,
-  "activeFeature": "F25",
+  "activeFeature": null,
+  "activeSubcard": null,
+  "priorityAmendment": {
+    "date": "2026-10-26",
+    "authority": "User requested shorter independent features first and time-consuming work later",
+    "order": [
+      "F31a",
+      "F26c",
+      "F27",
+      "F29",
+      "F30",
+      "F26a",
+      "F26b",
+      "F28",
+      "F31b",
+      "F32"
+    ],
+    "deferred": [
+      "F26a native09 USER_DEFERRED_NOT_RUN; required F26a/parentF26 gates remain incomplete"
+    ],
+    "rule": "One selected implementation task at a time; all original required feature gates retained. Parent F31 cannot be DONE on F31a preparation alone."
+  },
   "prerequisiteBlock": {
     "id": "P00",
     "result": "FAIL",
@@ -20,9 +41,17 @@
     "executionGate": "OPEN"
   },
   "finalRating": {
-    "status": "PENDING",
+    "status": "PROVISIONAL_LOCAL_WORK_COMPLETE_ORIGINAL_ACCEPTANCE_INCOMPLETE",
     "allowed": false,
-    "requires": "All required feature, integration, artifact and human acceptance gates; no numerical interim rating"
+    "requires": "All required feature, integration, artifact, catalog and human acceptance gates.",
+    "provisional": {
+      "allowed": true,
+      "value": 5.7,
+      "outOf": 10,
+      "kind": "ENGINEERING_ASSESSMENT_NOT_CATALOG_SCORE",
+      "authority": "Current user explicitly requested an honest extension rating and developer usefulness assessment",
+      "report": "docs/soterai-lite/evidence/20261111-queue-completion/DEV-VIBECODER-ASSESSMENT.md"
+    }
   },
   "preparations": [
     {
@@ -146,14 +175,80 @@
       "id": "F07",
       "title": "Shared registered-value matching.",
       "status": "DONE",
-      "result": "PASS",
+      "result": "PASS_SCOPED",
       "requires": [
         "F06"
       ],
       "completionEvidence": "Per-card focused controls, current exact artifact/affected actual host integration, safe withdrawal, ledger receipt and local scoped commit; tool cards require actual tool route checks",
       "sourceEvidenceCommit": "5740f70c2c656ec25f346c1297504c7a4155af7a",
       "acceptanceEvidence": "docs/soterai-lite/evidence/20261015-f07-matching-64a72df1/f07-acceptance-01.json",
-      "commitByteVerification": "docs/soterai-lite/evidence/20261015-f07-matching-64a72df1/f07-committed-byte-verification-01.json"
+      "commitByteVerification": "docs/soterai-lite/evidence/20261015-f07-matching-64a72df1/f07-committed-byte-verification-01.json",
+      "priorCompletionBeforeEscapedFinding": {
+        "status": "DONE",
+        "result": "PASS"
+      },
+      "retainedEscapedSecretFinding": {
+        "path": "docs/soterai-lite/evidence/20261110-acceptance-resume/finding-01/finding.json",
+        "bytes": 2508,
+        "sha256": "daa0fc1d92041269d830f096b8431e77c22dba8eaeb01f2d37eb97c8a5701473"
+      },
+      "currentAcceptanceEvidence": {
+        "path": "docs/soterai-lite/evidence/20261111-queue-completion/final-local-reconciliation-01/summary.json",
+        "bytes": 5281,
+        "sha256": "3034136597e441069dc2ae64e10f62350b81a6ded17e47bece01166947fb66a4"
+      },
+      "currentNativeEvidence": {
+        "matching": {
+          "path": "docs/soterai-lite/evidence/20261110-acceptance-resume/native-affected/v4-11460/native-extra/matching-02/matching-acceptance.json",
+          "bytes": 2894,
+          "sha256": "e04bbe1e4d695374cfaeb6a99b2d5255323f7890ad5b54da3cfed4ead959b322"
+        },
+        "foundation": {
+          "path": "docs/soterai-lite/evidence/20261110-acceptance-resume/native-affected/v4-11460/native-extra/foundations-04/affected-acceptance.json",
+          "bytes": 16181,
+          "sha256": "0af7ae8206d64b980cffd03a397e77dc5579d25f38bf871cf4835dd63c282bb1"
+        },
+        "vendor": {
+          "path": "docs/soterai-lite/evidence/20261110-acceptance-resume/native-affected/v4-11460/vendor-assessment.json",
+          "bytes": 18215,
+          "sha256": "d3484806b888b41d90207753b38cfb6ab115eca60af53026bb0fa7be17efaa28"
+        },
+        "gemini": {
+          "path": "docs/soterai-lite/evidence/20261110-acceptance-resume/native-affected/v4-11460/native-extra/gemini-candidate-01/route-acceptance.json",
+          "bytes": 7313,
+          "sha256": "57904ea0475371e6f95d6c5040a2317dbd0500c0abd12dbebe4f33670b82d4bb"
+        },
+        "lifecycle": {
+          "path": "docs/soterai-lite/evidence/20261110-acceptance-resume/native-affected/v4-11460/f32-code-size-02/f32-assessment.json",
+          "bytes": 21842,
+          "sha256": "3f4299bc6309b42ad86bebce951289de5961148d4873b1bddae4da6adec0c6ab"
+        },
+        "ls17": {
+          "path": "docs/soterai-lite/evidence/20261111-queue-completion/ls17-qualified-r4-01.json",
+          "bytes": 475231,
+          "sha256": "7a588bfe778db3c8f8b7c8fe0d594b8e5adfec3d70195066b374d47d2259b97e"
+        },
+        "catalog": {
+          "path": "docs/soterai-lite/evidence/20261111-queue-completion/original-assessment-current-03/assessment.json",
+          "bytes": 544322,
+          "sha256": "038d29963d60b6da5c0b9685a15c314ce85061cff0dae76ac7f2a4ea93f99ce0"
+        },
+        "fiveProfiles": {
+          "path": "docs/soterai-lite/evidence/20261111-publish-fast/catalog/five-profile-reconciliation.json",
+          "bytes": 8546,
+          "sha256": "f497dcde4ac6b0fa4168c819584fce231bbe51fd1d31a10ac6985c7a929eb989"
+        },
+        "review": {
+          "path": "docs/soterai-lite/evidence/20261111-queue-completion/CURRENT-ENGINEERING-REVIEW.md",
+          "bytes": 3469,
+          "sha256": "b4c30b66c43e7a112744328b9384d0e6ab0ac9448c8ff4b66bc080fb15232824"
+        }
+      },
+      "resolvedFinding": {
+        "path": "docs/soterai-lite/evidence/20261110-acceptance-resume/current-state-20261111-01/summary.json",
+        "bytes": 5480,
+        "sha256": "dff9160f47932ef094fc5c0c310aa6bedcbdcbf2fb90b3117abb04d0a658552a"
+      }
     },
     {
       "id": "F08",
@@ -198,17 +293,29 @@
     {
       "id": "F11",
       "title": "Managed PowerShell 7 terminal.",
-      "status": "PLANNED",
-      "result": "UNTESTED",
+      "status": "DONE",
+      "result": "PASS",
       "requires": [
         "F10"
       ],
       "completionEvidence": "Per-card focused controls, current exact artifact/affected actual host integration, safe withdrawal, ledger receipt and local scoped commit; tool cards require actual tool route checks",
-      "supportedExecution": false,
-      "coverage": "NOT_TESTED/NOT_COVERED",
-      "disposition": "OPTIONAL_UNAVAILABLE_UNIMPLEMENTED",
-      "availabilityEvidence": "docs/soterai-lite/evidence/20261017-f11-ps7-availability-6f721c9d/availability-01.json",
-      "remainingWork": "Install only if separately authorized/available later, then implement and execute all F11 gates. No PS7 support advertised."
+      "supportedExecution": true,
+      "coverage": "SCOPED_CHECKED_COMMANDS_VERIFIED_NOT_CATALOG_ACCEPTANCE",
+      "disposition": "IMPLEMENTED_VERIFIED_OPTIONAL_RUNTIME",
+      "availabilityEvidence": "docs/soterai-lite/evidence/20261108-ps7-completion/powershell-installation.json",
+      "remainingWork": [],
+      "acceptance": {
+        "path": "docs/soterai-lite/evidence/20261108-ps7-completion/acceptance.json",
+        "bytes": 2739,
+        "sha256": "5813fc623ca194b8295d09ec6016923ebfc7a449c13fa34645e5df460a83e276"
+      },
+      "sourceCommit": "18b578e6d933dc0ca4aa73368773baf98664097b",
+      "commitByteVerification": {
+        "path": "docs/soterai-lite/evidence/20261108-ps7-completion/checkpoint-proof.json",
+        "bytes": 258,
+        "sha256": "4b58848fd47a3fcb80908338542b79d5917b2a258f68c955a3898fa3ad4667f1"
+      },
+      "scope": "Separate PowerShell7 Core checked worker/profile/controller; actual7.6.9, compiler, full components, package55 and native38 pass. No unmanaged shell or final release claim."
     },
     {
       "id": "F12",
@@ -260,7 +367,7 @@
       "id": "F15",
       "title": "Gateway body-decoder coverage.",
       "status": "DONE",
-      "result": "PASS",
+      "result": "PASS_SCOPED",
       "requires": [
         "F14"
       ],
@@ -376,13 +483,79 @@
       "acceptanceEvidence": "docs/soterai-lite/evidence/20261018-f15h-base64-8b7d260e/f15-parent-acceptance-01.json",
       "commitByteVerification": "docs/soterai-lite/evidence/20261018-f15h-base64-8b7d260e/f15h-committed-byte-verification-01.json",
       "transitionByteVerification": "docs/soterai-lite/evidence/20261018-f15h-base64-8b7d260e/f15h-transition-byte-verification-01.json",
-      "parentCompletionVerification": "docs/soterai-lite/evidence/20261018-f15h-base64-8b7d260e/f15-parent-completion-byte-verification-01.json"
+      "parentCompletionVerification": "docs/soterai-lite/evidence/20261018-f15h-base64-8b7d260e/f15-parent-completion-byte-verification-01.json",
+      "priorCompletionBeforeEscapedFinding": {
+        "status": "DONE",
+        "result": "PASS"
+      },
+      "retainedEscapedSecretFinding": {
+        "path": "docs/soterai-lite/evidence/20261110-acceptance-resume/finding-01/finding.json",
+        "bytes": 2508,
+        "sha256": "daa0fc1d92041269d830f096b8431e77c22dba8eaeb01f2d37eb97c8a5701473"
+      },
+      "currentAcceptanceEvidence": {
+        "path": "docs/soterai-lite/evidence/20261111-queue-completion/final-local-reconciliation-01/summary.json",
+        "bytes": 5281,
+        "sha256": "3034136597e441069dc2ae64e10f62350b81a6ded17e47bece01166947fb66a4"
+      },
+      "currentNativeEvidence": {
+        "matching": {
+          "path": "docs/soterai-lite/evidence/20261110-acceptance-resume/native-affected/v4-11460/native-extra/matching-02/matching-acceptance.json",
+          "bytes": 2894,
+          "sha256": "e04bbe1e4d695374cfaeb6a99b2d5255323f7890ad5b54da3cfed4ead959b322"
+        },
+        "foundation": {
+          "path": "docs/soterai-lite/evidence/20261110-acceptance-resume/native-affected/v4-11460/native-extra/foundations-04/affected-acceptance.json",
+          "bytes": 16181,
+          "sha256": "0af7ae8206d64b980cffd03a397e77dc5579d25f38bf871cf4835dd63c282bb1"
+        },
+        "vendor": {
+          "path": "docs/soterai-lite/evidence/20261110-acceptance-resume/native-affected/v4-11460/vendor-assessment.json",
+          "bytes": 18215,
+          "sha256": "d3484806b888b41d90207753b38cfb6ab115eca60af53026bb0fa7be17efaa28"
+        },
+        "gemini": {
+          "path": "docs/soterai-lite/evidence/20261110-acceptance-resume/native-affected/v4-11460/native-extra/gemini-candidate-01/route-acceptance.json",
+          "bytes": 7313,
+          "sha256": "57904ea0475371e6f95d6c5040a2317dbd0500c0abd12dbebe4f33670b82d4bb"
+        },
+        "lifecycle": {
+          "path": "docs/soterai-lite/evidence/20261110-acceptance-resume/native-affected/v4-11460/f32-code-size-02/f32-assessment.json",
+          "bytes": 21842,
+          "sha256": "3f4299bc6309b42ad86bebce951289de5961148d4873b1bddae4da6adec0c6ab"
+        },
+        "ls17": {
+          "path": "docs/soterai-lite/evidence/20261111-queue-completion/ls17-qualified-r4-01.json",
+          "bytes": 475231,
+          "sha256": "7a588bfe778db3c8f8b7c8fe0d594b8e5adfec3d70195066b374d47d2259b97e"
+        },
+        "catalog": {
+          "path": "docs/soterai-lite/evidence/20261111-queue-completion/original-assessment-current-03/assessment.json",
+          "bytes": 544322,
+          "sha256": "038d29963d60b6da5c0b9685a15c314ce85061cff0dae76ac7f2a4ea93f99ce0"
+        },
+        "fiveProfiles": {
+          "path": "docs/soterai-lite/evidence/20261111-publish-fast/catalog/five-profile-reconciliation.json",
+          "bytes": 8546,
+          "sha256": "f497dcde4ac6b0fa4168c819584fce231bbe51fd1d31a10ac6985c7a929eb989"
+        },
+        "review": {
+          "path": "docs/soterai-lite/evidence/20261111-queue-completion/CURRENT-ENGINEERING-REVIEW.md",
+          "bytes": 3469,
+          "sha256": "b4c30b66c43e7a112744328b9384d0e6ab0ac9448c8ff4b66bc080fb15232824"
+        }
+      },
+      "resolvedFinding": {
+        "path": "docs/soterai-lite/evidence/20261110-acceptance-resume/current-state-20261111-01/summary.json",
+        "bytes": 5480,
+        "sha256": "dff9160f47932ef094fc5c0c310aa6bedcbdcbf2fb90b3117abb04d0a658552a"
+      }
     },
     {
       "id": "F16",
       "title": "Gateway per-tool policy and self-test.",
       "status": "DONE",
-      "result": "PASS",
+      "result": "PASS_SCOPED",
       "requires": [
         "F15"
       ],
@@ -390,7 +563,73 @@
       "sourceEvidenceCommit": "5891325f56ca4801c3e330727c3627ee783d1d2b",
       "acceptanceEvidence": "docs/soterai-lite/evidence/20261018-f16-gateway-policy-6e9a31d4/f16-acceptance-02.json",
       "commitByteVerification": "docs/soterai-lite/evidence/20261018-f16-gateway-policy-6e9a31d4/f16-committed-byte-verification-02.json",
-      "transitionByteVerification": "docs/soterai-lite/evidence/20261018-f16-gateway-policy-6e9a31d4/f16-transition-byte-verification-01.json"
+      "transitionByteVerification": "docs/soterai-lite/evidence/20261018-f16-gateway-policy-6e9a31d4/f16-transition-byte-verification-01.json",
+      "priorCompletionBeforeEscapedFinding": {
+        "status": "DONE",
+        "result": "PASS"
+      },
+      "retainedEscapedSecretFinding": {
+        "path": "docs/soterai-lite/evidence/20261110-acceptance-resume/finding-01/finding.json",
+        "bytes": 2508,
+        "sha256": "daa0fc1d92041269d830f096b8431e77c22dba8eaeb01f2d37eb97c8a5701473"
+      },
+      "currentAcceptanceEvidence": {
+        "path": "docs/soterai-lite/evidence/20261111-queue-completion/final-local-reconciliation-01/summary.json",
+        "bytes": 5281,
+        "sha256": "3034136597e441069dc2ae64e10f62350b81a6ded17e47bece01166947fb66a4"
+      },
+      "currentNativeEvidence": {
+        "matching": {
+          "path": "docs/soterai-lite/evidence/20261110-acceptance-resume/native-affected/v4-11460/native-extra/matching-02/matching-acceptance.json",
+          "bytes": 2894,
+          "sha256": "e04bbe1e4d695374cfaeb6a99b2d5255323f7890ad5b54da3cfed4ead959b322"
+        },
+        "foundation": {
+          "path": "docs/soterai-lite/evidence/20261110-acceptance-resume/native-affected/v4-11460/native-extra/foundations-04/affected-acceptance.json",
+          "bytes": 16181,
+          "sha256": "0af7ae8206d64b980cffd03a397e77dc5579d25f38bf871cf4835dd63c282bb1"
+        },
+        "vendor": {
+          "path": "docs/soterai-lite/evidence/20261110-acceptance-resume/native-affected/v4-11460/vendor-assessment.json",
+          "bytes": 18215,
+          "sha256": "d3484806b888b41d90207753b38cfb6ab115eca60af53026bb0fa7be17efaa28"
+        },
+        "gemini": {
+          "path": "docs/soterai-lite/evidence/20261110-acceptance-resume/native-affected/v4-11460/native-extra/gemini-candidate-01/route-acceptance.json",
+          "bytes": 7313,
+          "sha256": "57904ea0475371e6f95d6c5040a2317dbd0500c0abd12dbebe4f33670b82d4bb"
+        },
+        "lifecycle": {
+          "path": "docs/soterai-lite/evidence/20261110-acceptance-resume/native-affected/v4-11460/f32-code-size-02/f32-assessment.json",
+          "bytes": 21842,
+          "sha256": "3f4299bc6309b42ad86bebce951289de5961148d4873b1bddae4da6adec0c6ab"
+        },
+        "ls17": {
+          "path": "docs/soterai-lite/evidence/20261111-queue-completion/ls17-qualified-r4-01.json",
+          "bytes": 475231,
+          "sha256": "7a588bfe778db3c8f8b7c8fe0d594b8e5adfec3d70195066b374d47d2259b97e"
+        },
+        "catalog": {
+          "path": "docs/soterai-lite/evidence/20261111-queue-completion/original-assessment-current-03/assessment.json",
+          "bytes": 544322,
+          "sha256": "038d29963d60b6da5c0b9685a15c314ce85061cff0dae76ac7f2a4ea93f99ce0"
+        },
+        "fiveProfiles": {
+          "path": "docs/soterai-lite/evidence/20261111-publish-fast/catalog/five-profile-reconciliation.json",
+          "bytes": 8546,
+          "sha256": "f497dcde4ac6b0fa4168c819584fce231bbe51fd1d31a10ac6985c7a929eb989"
+        },
+        "review": {
+          "path": "docs/soterai-lite/evidence/20261111-queue-completion/CURRENT-ENGINEERING-REVIEW.md",
+          "bytes": 3469,
+          "sha256": "b4c30b66c43e7a112744328b9384d0e6ab0ac9448c8ff4b66bc080fb15232824"
+        }
+      },
+      "resolvedFinding": {
+        "path": "docs/soterai-lite/evidence/20261110-acceptance-resume/current-state-20261111-01/summary.json",
+        "bytes": 5480,
+        "sha256": "dff9160f47932ef094fc5c0c310aa6bedcbdcbf2fb90b3117abb04d0a658552a"
+      }
     },
     {
       "id": "F17",
@@ -570,7 +809,73 @@
       "acceptanceEvidence": "docs/soterai-lite/evidence/20261020-f20c-gemini-cli-8a6d3e70/f20c-acceptance-01.json",
       "commitByteVerification": "docs/soterai-lite/evidence/20261020-f20c-gemini-cli-8a6d3e70/f20c-committed-byte-verification-01.json",
       "transitionByteVerification": "docs/soterai-lite/evidence/20261020-f20c-gemini-cli-8a6d3e70/f20c-transition-byte-verification-01.json",
-      "scope": "Enumerated installed supported Codex CLI, Codex IDE and Gemini CLI subcards complete for their separate pinned text/F04 routes. No generic support inference; unsupported/native bypass routes remain named uncovered."
+      "scope": "Enumerated installed supported Codex CLI, Codex IDE and Gemini CLI subcards complete for their separate pinned text/F04 routes. No generic support inference; unsupported/native bypass routes remain named uncovered.",
+      "priorCompletionBeforeEscapedFinding": {
+        "status": "DONE",
+        "result": "PASS_SCOPED"
+      },
+      "retainedEscapedSecretFinding": {
+        "path": "docs/soterai-lite/evidence/20261110-acceptance-resume/finding-01/finding.json",
+        "bytes": 2508,
+        "sha256": "daa0fc1d92041269d830f096b8431e77c22dba8eaeb01f2d37eb97c8a5701473"
+      },
+      "currentAcceptanceEvidence": {
+        "path": "docs/soterai-lite/evidence/20261111-queue-completion/final-local-reconciliation-01/summary.json",
+        "bytes": 5281,
+        "sha256": "3034136597e441069dc2ae64e10f62350b81a6ded17e47bece01166947fb66a4"
+      },
+      "currentNativeEvidence": {
+        "matching": {
+          "path": "docs/soterai-lite/evidence/20261110-acceptance-resume/native-affected/v4-11460/native-extra/matching-02/matching-acceptance.json",
+          "bytes": 2894,
+          "sha256": "e04bbe1e4d695374cfaeb6a99b2d5255323f7890ad5b54da3cfed4ead959b322"
+        },
+        "foundation": {
+          "path": "docs/soterai-lite/evidence/20261110-acceptance-resume/native-affected/v4-11460/native-extra/foundations-04/affected-acceptance.json",
+          "bytes": 16181,
+          "sha256": "0af7ae8206d64b980cffd03a397e77dc5579d25f38bf871cf4835dd63c282bb1"
+        },
+        "vendor": {
+          "path": "docs/soterai-lite/evidence/20261110-acceptance-resume/native-affected/v4-11460/vendor-assessment.json",
+          "bytes": 18215,
+          "sha256": "d3484806b888b41d90207753b38cfb6ab115eca60af53026bb0fa7be17efaa28"
+        },
+        "gemini": {
+          "path": "docs/soterai-lite/evidence/20261110-acceptance-resume/native-affected/v4-11460/native-extra/gemini-candidate-01/route-acceptance.json",
+          "bytes": 7313,
+          "sha256": "57904ea0475371e6f95d6c5040a2317dbd0500c0abd12dbebe4f33670b82d4bb"
+        },
+        "lifecycle": {
+          "path": "docs/soterai-lite/evidence/20261110-acceptance-resume/native-affected/v4-11460/f32-code-size-02/f32-assessment.json",
+          "bytes": 21842,
+          "sha256": "3f4299bc6309b42ad86bebce951289de5961148d4873b1bddae4da6adec0c6ab"
+        },
+        "ls17": {
+          "path": "docs/soterai-lite/evidence/20261111-queue-completion/ls17-qualified-r4-01.json",
+          "bytes": 475231,
+          "sha256": "7a588bfe778db3c8f8b7c8fe0d594b8e5adfec3d70195066b374d47d2259b97e"
+        },
+        "catalog": {
+          "path": "docs/soterai-lite/evidence/20261111-queue-completion/original-assessment-current-03/assessment.json",
+          "bytes": 544322,
+          "sha256": "038d29963d60b6da5c0b9685a15c314ce85061cff0dae76ac7f2a4ea93f99ce0"
+        },
+        "fiveProfiles": {
+          "path": "docs/soterai-lite/evidence/20261111-publish-fast/catalog/five-profile-reconciliation.json",
+          "bytes": 8546,
+          "sha256": "f497dcde4ac6b0fa4168c819584fce231bbe51fd1d31a10ac6985c7a929eb989"
+        },
+        "review": {
+          "path": "docs/soterai-lite/evidence/20261111-queue-completion/CURRENT-ENGINEERING-REVIEW.md",
+          "bytes": 3469,
+          "sha256": "b4c30b66c43e7a112744328b9384d0e6ab0ac9448c8ff4b66bc080fb15232824"
+        }
+      },
+      "resolvedFinding": {
+        "path": "docs/soterai-lite/evidence/20261110-acceptance-resume/current-state-20261111-01/summary.json",
+        "bytes": 5480,
+        "sha256": "dff9160f47932ef094fc5c0c310aa6bedcbdcbf2fb90b3117abb04d0a658552a"
+      }
     },
     {
       "id": "F21",
@@ -821,18 +1126,23 @@
     {
       "id": "F25",
       "title": "Logs/test/debug leak handling.",
-      "status": "ACTIVE",
-      "result": "NOT-RUN",
+      "status": "DONE",
+      "result": "PASS_SCOPED",
       "requires": [
         "F24"
       ],
-      "completionEvidence": "Per-card focused controls, current exact artifact/affected actual host integration, safe withdrawal, ledger receipt and local scoped commit; tool cards require actual tool route checks"
+      "completionEvidence": "Per-card focused controls, current exact artifact/affected actual host integration, safe withdrawal, ledger receipt and local scoped commit; tool cards require actual tool route checks",
+      "acceptanceEvidence": "docs/soterai-lite/evidence/20261024-f25-logs-a41d9e62/f25-acceptance-01.json",
+      "scope": "Owner-reviewed bounded TEXT/strict JSON/JSONL saved logs plus SoterAI-owned finite app/task/lifecycle-debug collectors; canonical registry/redactor, private logs-v1 exposure metadata, strict machine withdrawal, final guarded per-channel release. Current509native/37phases/20families and functional10/security17same; final delivery race evidence UNIT_ONLY. No arbitrary process/otherextension/earliercopy recall/OS boundary or human independence claim. Raw caps/unknown/binary remain PARTIAL or withheld. LOW; Scoped source bytes verified; separate transition proof is required before F26a.",
+      "sourceEvidenceCommit": "a6f125e194049bca29e5d031e47a25ddd57fa334",
+      "commitByteVerification": "docs/soterai-lite/evidence/20261024-f25-logs-a41d9e62/f25-source-byte-verification-05.json",
+      "transitionByteVerification": "docs/soterai-lite/evidence/20261024-f25-logs-a41d9e62/f25-transition-byte-verification-05.json"
     },
     {
       "id": "F26",
       "title": "Optional Git/history hooks.",
-      "status": "PLANNED",
-      "result": "NOT-RUN",
+      "status": "DONE",
+      "result": "PASS_SCOPED",
       "requires": [
         "F25"
       ],
@@ -840,139 +1150,1335 @@
         {
           "id": "F26a",
           "title": "pre-commit",
-          "status": "PLANNED",
-          "result": "NOT-RUN",
+          "status": "DONE",
+          "result": "PASS_SCOPED",
           "requires": [
             "parent prerequisites"
-          ]
+          ],
+          "progressEvidence": "docs/soterai-lite/evidence/20261108-queue-completion/current-snapshot-02.json",
+          "executionDecision": "Original current native34/affected509 and scoped source/evidence gates pass; transition byte proof finalizes this completion.",
+          "native12PendingDecision": {
+            "status": "NATIVE12_ONE_EXTRA_DECISION_ASKED_NOT_AUTHORIZED_NOT_RUN",
+            "checkpoint": "5901a05b6b040334ad9c3e83c9ba474df35be3a6",
+            "decisionEvidence": {
+              "path": "docs/soterai-lite/evidence/20261102-f26a-native09-preparation/native12-user-decision-pending-01.json",
+              "bytes": 1239,
+              "sha256": "2e8e7d227e97427efd6bacb1713825b5bb9c4d54d9645836471a68cff70ec010"
+            },
+            "approvalRequired": true,
+            "native12": "NOT_AUTHORIZED_NOT_RUN",
+            "historical": true,
+            "supersededBy": "native12FinalDecision"
+          },
+          "native12FinalDecision": {
+            "approval": {
+              "path": "docs/soterai-lite/evidence/20261102-f26a-native09-preparation/native12-user-approval-01.json",
+              "bytes": 1788,
+              "sha256": "05611c74b3ce60678c34fb09328e7434eed202c18b88834a0adf68521470b469"
+            },
+            "allowedAttempts": 1,
+            "finalAttempt": true,
+            "ifIncomplete": "SKIP_WITH_RETAINED_EVIDENCE_NO_FALSE_DONE_NO_RETRY",
+            "consumed": true,
+            "outcome": {
+              "path": "docs/soterai-lite/evidence/20261102-f26a-native09-preparation/native12-final-reconciliation-01.json",
+              "bytes": 5257,
+              "sha256": "5286c28ea8fc56ac01e0479c329ee454263dfe56952aebbebd5a5055f0b6b7db"
+            },
+            "furtherAttemptsAllowed": 0,
+            "historical": true,
+            "supersededForCurrentWorkBy": "docs/soterai-lite/evidence/20261106-remaining-queue/owner-resumption-01.json"
+          },
+          "executionState": "CURRENT_NATIVE34_AFFECTED509_AND_SOURCE_BYTES_PASS",
+          "supported": true,
+          "historicalExecutionDecision": "Final native12 consumed once and failed with missing primary result; Code0/wrapper1/bothEOF/no deadline. User call_3d1ca86cdb034f82a9ea32aa1bc401ab explicitly permits skip/delete if incomplete: reversible SKIP selected, source/evidence retained, no further F26a native runs, no DONE/supported claim.",
+          "currentAuthorization": {
+            "path": "docs/soterai-lite/evidence/20261106-remaining-queue/owner-resumption-01.json",
+            "bytes": 1121,
+            "sha256": "dd21779251529dc61814c451b9089767ff7e7af218f17784cb7269344544ffa0"
+          },
+          "currentNativeAcceptance": {
+            "path": "docs/soterai-lite/evidence/20261107-removal-recovery/f26a-recovery-02/native14-acceptance.json",
+            "bytes": 14961,
+            "sha256": "36775dd851409e58d817d85ce7211d28dc5c7cbb523439f89623e86da8faf5b1"
+          },
+          "currentAffectedAcceptance": {
+            "path": "docs/soterai-lite/evidence/20261107-removal-recovery/affected509-batch-01/acceptance.json",
+            "bytes": 1679,
+            "sha256": "5c4e04f7c36973887f7213a7ce9dda5c3ccb407d67d8e2aba034709a94e963ad"
+          },
+          "remaining": [],
+          "candidateAvailability": {
+            "preCommitDefault": false,
+            "ownerReviewedOptIn": true,
+            "native34": "PASS_CURRENT_RECOVERY_ARTIFACT",
+            "featureComplete": true
+          },
+          "acceptanceScope": "Current recovery artifact; original native34 including owner-absent Git and restart, plus affected509.",
+          "completedAt": "2026-11-08",
+          "completionReceipt": {
+            "path": "docs/soterai-lite/evidence/20261108-queue-completion/feature-completion-01.json",
+            "bytes": 2623,
+            "sha256": "61e5aa0fabcbc53519f09e3a2339b748abb6763074d9e5fb4de7214e55ce6b8d"
+          },
+          "sourceCommit": "639639189c49cc6b45691abed4a61f6852176984",
+          "sourceByteProof": {
+            "path": "docs/soterai-lite/evidence/20261108-queue-completion/source-checkpoint-02-byte-proof.json",
+            "bytes": 149825,
+            "sha256": "72931852e7f5ff2f6074eeea5e869659c22e03a0a13ac2b7370190b3b49b6230"
+          },
+          "transitionByteProof": "docs/soterai-lite/evidence/20261108-queue-completion/transition-checkpoint-01-byte-proof.json",
+          "completionCondition": "DONE takes effect only after the separate transition-byte proof passes for these queue bytes.",
+          "supportedExecution": true
         },
         {
           "id": "F26b",
           "title": "pre-push",
-          "status": "PLANNED",
-          "result": "NOT-RUN",
+          "status": "DONE",
+          "result": "PASS_SCOPED",
           "requires": [
             "F26a"
-          ]
+          ],
+          "executionDecision": "Scoped F26b gates PASS: full4746PASS0FAIL4SKIP/native36/configured8TWOlocalfilepushes/affected509in37phases/functional10/security17unchanged/withdrawal. Source6b207278/96paths raw byte-exact. DONE and F28 selection take effect only after separate transition11 raw byte proof. Parent F26 and deferred F26a remain INCOMPLETE; no release-ready claim.",
+          "startEvidence": {
+            "path": "docs/soterai-lite/evidence/20261029-f26b-prepush-70e1c9a4/start-checkpoint-01.json",
+            "bytes": 3420,
+            "sha256": "a178762fbaa32752d4ef36a638e3b6cb9e65f342aacfdc995aff9235ea1e3279"
+          },
+          "progressEvidence": "docs/soterai-lite/evidence/20261029-f26b-prepush-70e1c9a4/acceptance-01.json",
+          "sourceCommit": "6b207278feff0eae509e43a04a340f678c84c1d9",
+          "sourceByteProof": "docs/soterai-lite/evidence/20261029-f26b-prepush-70e1c9a4/f26b-source-byte-proof-10.json",
+          "transitionByteProof": "docs/soterai-lite/evidence/20261029-f26b-prepush-70e1c9a4/f26b-transition-byte-proof-11.json"
         },
         {
           "id": "F26c",
           "title": "PSReadLine exclusion",
-          "status": "PLANNED",
-          "result": "NOT-RUN",
+          "status": "DONE",
+          "result": "PASS_SCOPED",
           "requires": [
-            "F26b"
-          ]
+            "F10",
+            "F21",
+            "F25"
+          ],
+          "startCondition": "Selected by user shorter-first priority; no production before actual F31a transition byte proof. Synthetic isolated profile only, no real shell-history read or normal-profile edit.",
+          "progressEvidence": "docs/soterai-lite/evidence/20261026-f26c-psreadline-53a78b20/acceptance-01.json",
+          "executionDecision": "Scoped supported contract gates PASS on current exactVSIX03: full4319zeroFAIL/backend/native28/emittedconsole8/affected509/functional10/security17 unchanged/withdrawal. Source1696paths exact. DONE/next selection take effect only after actual separate transition-byte-proof01 PASS; no F26a acceptance/human claim.",
+          "sourceCommit": "f86d4150132f383f496075c937ce2e84e575e86b",
+          "sourceByteProof": "docs/soterai-lite/evidence/20261026-f26c-psreadline-53a78b20/f26c-source-byte-proof-01.json",
+          "transitionByteProof": "docs/soterai-lite/evidence/20261026-f26c-psreadline-53a78b20/f26c-transition-byte-proof-01.json"
         }
       ],
       "completionRule": "All required subcards pass individually before parent DONE",
-      "completionEvidence": "Per-card focused controls, current exact artifact/affected actual host integration, safe withdrawal, ledger receipt and local scoped commit; tool cards require actual tool route checks"
+      "completionEvidence": "Per-card focused controls, current exact artifact/affected actual host integration, safe withdrawal, ledger receipt and local scoped commit; tool cards require actual tool route checks",
+      "executionState": "ALL_REQUIRED_SUBCARDS_PASS",
+      "completedAt": "2026-11-08",
+      "completionReceipt": {
+        "path": "docs/soterai-lite/evidence/20261108-queue-completion/feature-completion-01.json",
+        "bytes": 2623,
+        "sha256": "61e5aa0fabcbc53519f09e3a2339b748abb6763074d9e5fb4de7214e55ce6b8d"
+      },
+      "sourceCommit": "639639189c49cc6b45691abed4a61f6852176984",
+      "sourceByteProof": {
+        "path": "docs/soterai-lite/evidence/20261108-queue-completion/source-checkpoint-02-byte-proof.json",
+        "bytes": 149825,
+        "sha256": "72931852e7f5ff2f6074eeea5e869659c22e03a0a13ac2b7370190b3b49b6230"
+      },
+      "transitionByteProof": "docs/soterai-lite/evidence/20261108-queue-completion/transition-checkpoint-01-byte-proof.json",
+      "completionCondition": "DONE takes effect only after the separate transition-byte proof passes for these queue bytes.",
+      "remaining": []
     },
     {
       "id": "F27",
       "title": "Extension self-hygiene.",
-      "status": "PLANNED",
-      "result": "NOT-RUN",
+      "status": "DONE",
+      "result": "PASS",
       "requires": [
-        "F26"
+        "F25"
       ],
-      "completionEvidence": "Per-card focused controls, current exact artifact/affected actual host integration, safe withdrawal, ledger receipt and local scoped commit; tool cards require actual tool route checks"
+      "completionEvidence": "Per-card focused controls, current exact artifact/affected actual host integration, safe withdrawal, ledger receipt and local scoped commit; tool cards require actual tool route checks",
+      "startCondition": "Selected next by existing shorter-first order only after actual F26c transition-byte-proof01 PASS; no production before barrier.",
+      "progressEvidence": "docs/soterai-lite/evidence/20261027-f27-self-hygiene-8c16e402/acceptance-01.json",
+      "executionDecision": "Current1016/full4376zeroFAIL/backend143PASS1SKIP/exactVSIX/content/compiled27/native22/affected537/console8/functional10/security17unchanged/withdrawal PASS; actual source1004 raw-byte verified. Nine unmanaged baseline leaks and component-only global audit export remain.",
+      "acceptanceEvidence": "docs/soterai-lite/evidence/20261027-f27-self-hygiene-8c16e402/acceptance-01.json",
+      "flag": "soterai.lite.selfHygiene",
+      "sourceEvidenceCommit": "e772c2b0b8422e87638daccf48c3e37c93a3ace5",
+      "commitByteVerification": "docs/soterai-lite/evidence/20261027-f27-self-hygiene-8c16e402/f27-source-byte-proof-01.json",
+      "transitionByteVerification": "docs/soterai-lite/evidence/20261027-f27-self-hygiene-8c16e402/f27-transition-byte-proof-01.json",
+      "completionCondition": "Scoped DONE takes effect only after actual separate transition-byte-proof01 PASS; never accept unrelated F26a or later human gates."
     },
     {
       "id": "F28",
       "title": "Path race, performance and degradation.",
-      "status": "PLANNED",
-      "result": "NOT-RUN",
+      "status": "DONE",
+      "result": "PASS_SCOPED",
       "requires": [
-        "F27"
+        "F26",
+        "F27",
+        "F30"
       ],
-      "completionEvidence": "Per-card focused controls, current exact artifact/affected actual host integration, safe withdrawal, ledger receipt and local scoped commit; tool cards require actual tool route checks"
+      "completionEvidence": "Per-card focused controls, current exact artifact/affected actual host integration, safe withdrawal, ledger receipt and local scoped commit; tool cards require actual tool route checks",
+      "executionDecision": "Scoped current1076/full4780zeroFAIL/VSIX5dac/native30/affected509in37phases/functional10/security17 unchanged/withdrawal PASS. Exact14 source/test/doc paths plus scoped evidence raw-byte verified. DONE effective only after transition01 raw bytes. Historical F20 and original interrupted F28 closure gaps remain named; no release-ready/rating claim.",
+      "executionDependenciesCurrent": [
+        "F26b",
+        "F26c",
+        "F27",
+        "F30"
+      ],
+      "originalRequiresPreserved": [
+        "F26",
+        "F27",
+        "F30"
+      ],
+      "deferredDependency": "F26a USER_DEFERRED_INCOMPLETE; no F28 evidence substitutes for its required acceptance.",
+      "progressEvidence": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/progress-08.json",
+      "acceptanceEvidence": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/acceptance-01.json",
+      "sourceEvidenceCommit": "3c3f6e0567c2398d9fda8c614122697cebc0b335",
+      "commitByteVerification": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/f28-source-byte-proof-03.json",
+      "transitionByteVerification": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/f28-transition-byte-proof-01.json"
     },
     {
       "id": "F29",
       "title": "One Protection Center.",
-      "status": "PLANNED",
-      "result": "NOT-RUN",
+      "status": "DONE",
+      "result": "PASS",
       "requires": [
-        "F28"
+        "F27"
       ],
-      "completionEvidence": "Per-card focused controls, current exact artifact/affected actual host integration, safe withdrawal, ledger receipt and local scoped commit; tool cards require actual tool route checks"
+      "completionEvidence": "Per-card focused controls, current exact artifact/affected actual host integration, safe withdrawal, ledger receipt and local scoped commit; tool cards require actual tool route checks",
+      "startCondition": "Existing priority order selects F29 only after actual F27 source1004 and separate transition byte proof PASS. No production before the barrier.",
+      "flag": "soterai.lite.protectionCenter",
+      "progressEvidence": "docs/soterai-lite/evidence/20261028-f29-protection-center-6c93e15a/progress-11.json",
+      "executionDecision": "Current1024/full4421zeroFAIL/backend143PASS1SKIP/exactVSIX47df/content85flags/native30/actual3tree keyboard focus+arrows+EnterEscape+revokeowner/highcontrast/reducedmotion/Edge3modeszeroViolations/affected66+functional10+security17unchanged/actualwithdrawal PASS. Actualsource1322rawbytePASS. Manualaria/forcedcontrast findings and frameDOMunobserved/humanL6 remain explicit; unrelated3guardcore+8generated paths preserved unstaged with tested snapshots.",
+      "acceptanceEvidence": {
+        "path": "docs/soterai-lite/evidence/20261028-f29-protection-center-6c93e15a/acceptance-01.json",
+        "bytes": 46558,
+        "sha256": "2b9952db3c76b458f0b0355f8f668542102c12818c60f795e7c5eb9584dd3dcb"
+      },
+      "sourceEvidenceCommit": "1603dd5f32e92e62e49824e2f5370217279d5b35",
+      "commitByteVerification": "docs/soterai-lite/evidence/20261028-f29-protection-center-6c93e15a/f29-source-byte-proof-01.json",
+      "transitionByteVerification": "docs/soterai-lite/evidence/20261028-f29-protection-center-6c93e15a/f29-transition-byte-proof-01.json",
+      "completionCondition": "Scoped DONE takes effect only after actual separate transition-byte-proof01 PASS. Later human/manual accessibility, complete live verification and other cards remain required."
     },
     {
       "id": "F30",
       "title": "Verify my setup.",
-      "status": "PLANNED",
-      "result": "NOT-RUN",
+      "status": "DONE",
+      "result": "PASS",
       "requires": [
         "F29"
       ],
-      "completionEvidence": "Per-card focused controls, current exact artifact/affected actual host integration, safe withdrawal, ledger receipt and local scoped commit; tool cards require actual tool route checks"
+      "completionEvidence": "Per-card focused controls, current exact artifact/affected actual host integration, safe withdrawal, ledger receipt and local scoped commit; tool cards require actual tool route checks",
+      "startCondition": "Existing priority order selects F30 after actual F29 source1322 and separate transition byte proof PASS. No F30 production before barrier.",
+      "progressEvidence": "docs/soterai-lite/evidence/20261028-f30-setup-verification-847d2f09/progress-06.json",
+      "executionDecision": "F30 declared scoped gates PASS: current1036/full4464zeroFAIL/backend143PASS1SKIP/exactVSIX142832a7/native50+actualVerify/keys/HC/motion/Edge3zeroViolations/affected166+functional10/security17unchanged/withdrawal. Source4c2a5f0/729 exact paths verified. Manual accessibility/liveframeDOM/human/L6/9 unmanaged leaks retained; failed initialEdge originalEOF unobserved/not regraded. F26a06 USER_DEFERRED.",
+      "flag": "soterai.lite.setupVerification",
+      "acceptanceEvidence": {
+        "path": "docs/soterai-lite/evidence/20261028-f30-setup-verification-847d2f09/acceptance-01.json",
+        "bytes": 55823,
+        "sha256": "5317501d7536e5df2a7b466fee284c2c4fba4a6da51990d96bc29d832f6f1b48"
+      },
+      "sourceEvidenceCommit": "4c2a5f0350ede2a1a4e8d8cc744936e122da89aa",
+      "commitByteVerification": "docs/soterai-lite/evidence/20261028-f30-setup-verification-847d2f09/f30-source-byte-proof-01.json",
+      "transitionByteVerification": "docs/soterai-lite/evidence/20261028-f30-setup-verification-847d2f09/f30-transition-byte-proof-01.json",
+      "completionCondition": "Scoped DONE takes effect only after actual separate transition-byte-proof01 PASS. All8 live surfaces and5 tools remain NOT_TESTED/Uncovered; no human/rating claim."
     },
     {
       "id": "F31",
       "title": "Marketplace-ready package preparation.",
-      "status": "PLANNED",
-      "result": "NOT-RUN",
+      "status": "DONE",
+      "result": "PASS_SCOPED",
       "requires": [
-        "F30"
+        "F25"
       ],
-      "completionEvidence": "Per-card focused controls, current exact artifact/affected actual host integration, safe withdrawal, ledger receipt and local scoped commit; tool cards require actual tool route checks"
+      "subcards": [
+        {
+          "id": "F31a",
+          "title": "Offline release inventory, detached bundled-component SBOM and publishing runbook",
+          "status": "DONE",
+          "result": "PASS",
+          "requires": [
+            "F25"
+          ],
+          "scope": "Build/documentation utility only; explicit exact VSIX/provenance and bounded code/license inputs. No runtime change/native acceptance/release-readiness or publishing claim.",
+          "evidence": "docs/soterai-lite/evidence/20261026-f31a-offline-release-6c28a19f",
+          "progressEvidence": "docs/soterai-lite/evidence/20261026-f31a-offline-release-6c28a19f/acceptance-01.json",
+          "verification": "Scoped offline utility only: current20tests20PASS; exact15-entry/4-runtime/408-input/3-component audit repeated byte-identically; overwrite refused. Source0906b502162c79b590df6210b5d262fa113b86a3 all44paths byte-exact. Prepared DONE/next selection valid only with actual utility-transition-byte-proof-01.json PASS. Parent F31/F31b/runtime/native/human/release gates remain incomplete.",
+          "sourceCommit": "0906b502162c79b590df6210b5d262fa113b86a3",
+          "sourceByteProof": "docs/soterai-lite/evidence/20261026-f31a-offline-release-6c28a19f/utility-source-byte-proof-01.json",
+          "transitionByteProofRequired": "docs/soterai-lite/evidence/20261026-f31a-offline-release-6c28a19f/utility-transition-byte-proof-01.json"
+        },
+        {
+          "id": "F31b",
+          "title": "Final exact-package readiness, honest claims, shipped notices/privacy/SBOM and audits",
+          "status": "DONE",
+          "result": "PASS_SCOPED",
+          "requires": [
+            "F26",
+            "F27",
+            "F28",
+            "F29",
+            "F30",
+            "F31a"
+          ],
+          "scope": "All original F31 final-object packaging and readiness requirements retained; early detached SBOM does not complete this subcard.",
+          "originalRequiresPreserved": [
+            "F26",
+            "F27",
+            "F28",
+            "F29",
+            "F30",
+            "F31a"
+          ],
+          "executionDependenciesCurrent": [
+            "F26b",
+            "F26c",
+            "F27",
+            "F28",
+            "F29",
+            "F30",
+            "F31a"
+          ],
+          "userSkippedDependency": "F26a remains INCOMPLETE/unsupported; parent F26 is not DONE. Owner explicitly permits progression after final failed attempt, not an acceptance substitution.",
+          "startCondition": "No F31b production until actual f26a-native12-final-skip-byte-proof-01.json PASS; retain original BUSL owner choice and F31b original contract for supported scope.",
+          "acceptanceEvidence": {
+            "path": "docs/soterai-lite/evidence/20261102-f31b-final-package-7be1c304/feature-acceptance-01.json",
+            "bytes": 12610,
+            "sha256": "9ce861b797fd6ed8697e0f5fe045960b79467942f5619ace5bdbaaf1de9cc161"
+          },
+          "sourceCommit": "730b01d95ee89b62c58ef0a5ace3991b549107e3",
+          "sourceByteProof": {
+            "path": "docs/soterai-lite/evidence/20261102-f31b-final-package-7be1c304/scoped-f31b-source-checkpoint-03-byte-proof.json",
+            "bytes": 268305,
+            "sha256": "a1d4a12f3706962b1365488a6f41e54668da911960fd5f62eee07694ca678d2b"
+          },
+          "transitionByteProofRequired": "docs/soterai-lite/evidence/20261102-f31b-final-package-7be1c304/f31b-transition-byte-proof-01.json",
+          "completionCondition": "Scoped package/audit-work DONE takes effect only after actual transition-byte-proof01 PASS. No clean audit, remediation, current-Edge, installed lifecycle, independent or publication readiness acceptance.",
+          "verification": "Full4783=4779PASS0FAIL4SKIP; package46/manifest559 separate; backend exact reuse; exactVSIX6231159d18entries4runtimes; accepted175native+functional10/security17baseline8blocked9leaks; declared withdrawal; one external claims-only refresh. Audit COMPLETE_WITH_KNOWN_BUILD_FINDINGS42=17HIGH19MODERATE6LOW; remediationOPEN/riskNOT_GRANTED. Unexecuted permutation subcases and historical closure gaps retained.",
+          "dependencyAudit": {
+            "status": "COMPLETE_WITH_KNOWN_BUILD_FINDINGS",
+            "report": {
+              "path": "docs/soterai-lite/evidence/20261102-f31b-final-package-7be1c304/advisory-detail-result-review-01.json",
+              "bytes": 269561,
+              "sha256": "2d0a41c4986c149ec10cdc194de93d266f005af20ce101c40c43255a219ec6d2"
+            },
+            "findings": 42,
+            "high": 17,
+            "moderate": 19,
+            "low": 6,
+            "remediation": "OPEN",
+            "riskAcceptance": "NOT_GRANTED",
+            "cleanAudit": false
+          }
+        }
+      ],
+      "completionRule": "Both F31a and F31b pass their declared scope; all required earlier runtime features pass before parent DONE",
+      "completionEvidence": "Per-card focused controls, current exact artifact/affected actual host integration, safe withdrawal, ledger receipt and local scoped commit; tool cards require actual tool route checks",
+      "packagingSubcardsCompleteWithinSupportedScope": true,
+      "remaining": "Package preparation is complete within its declared scope. Known42 build findings retain open remediation and no risk acceptance; downstream F32/final gates control release readiness.",
+      "currentPackageQualification": {
+        "path": "docs/soterai-lite/evidence/20261107-removal-recovery/candidate-01/current-package-qualification-01.json",
+        "bytes": 6882,
+        "sha256": "269997922881683a450294feb80bee9cdf83e1b7b2351264a59697256e40c1f5"
+      },
+      "completedAt": "2026-11-08",
+      "completionReceipt": {
+        "path": "docs/soterai-lite/evidence/20261108-queue-completion/feature-completion-01.json",
+        "bytes": 2623,
+        "sha256": "61e5aa0fabcbc53519f09e3a2339b748abb6763074d9e5fb4de7214e55ce6b8d"
+      },
+      "sourceCommit": "639639189c49cc6b45691abed4a61f6852176984",
+      "sourceByteProof": {
+        "path": "docs/soterai-lite/evidence/20261108-queue-completion/source-checkpoint-02-byte-proof.json",
+        "bytes": 149825,
+        "sha256": "72931852e7f5ff2f6074eeea5e869659c22e03a0a13ac2b7370190b3b49b6230"
+      },
+      "transitionByteProof": "docs/soterai-lite/evidence/20261108-queue-completion/transition-checkpoint-01-byte-proof.json",
+      "completionCondition": "DONE takes effect only after the separate transition-byte proof passes for these queue bytes."
     },
     {
       "id": "F32",
       "title": "Install, upgrade and removal lifecycle.",
-      "status": "PLANNED",
-      "result": "NOT-RUN",
+      "status": "DONE",
+      "result": "PASS_SCOPED",
       "requires": [
         "F31"
       ],
-      "completionEvidence": "Per-card focused controls, current exact artifact/affected actual host integration, safe withdrawal, ledger receipt and local scoped commit; tool cards require actual tool route checks"
+      "completionEvidence": "Per-card focused controls, current exact artifact/affected actual host integration, safe withdrawal, ledger receipt and local scoped commit; tool cards require actual tool route checks",
+      "originalRequiresPreserved": [
+        "F31"
+      ],
+      "executionDependenciesCurrent": [
+        "F31a",
+        "F31b"
+      ],
+      "ownerException": "Current owner request authorizes completing F26a/F31/F32 and final gates; historical skipped-feature scheduling remains historical. No required acceptance is inferred.",
+      "startCondition": "No F32 production before actual f31b-transition-byte-proof-01.json PASS; actual installed-only lifecycle and its own feature flags/tests/newVSIX/affected checks/source bytes remain mandatory.",
+      "implementationState": {
+        "recordedAt": "2026-11-10",
+        "status": "CURRENT_PS7_QUALIFIED_PHASE_SCOPES_ORIGINAL_LIFECYCLE_INCOMPLETE",
+        "sourceProof": {
+          "path": "docs/soterai-lite/evidence/20261108-ps7-completion/verification-2026-11-08T06-10-08-922Z/inputs.json",
+          "bytes": 153717,
+          "sha256": "09dcb047a5292f77ed71a7714cf3db003e143e151eafece3f37394ba6403dc8c"
+        },
+        "vsix": {
+          "path": "packages/soterai-lite/soterai-lite-0.7.0-ps7-20261108-attempt02.vsix",
+          "bytes": 1747225,
+          "sha256": "ceea88a4aef06ab37f886beccdcdaab7677e87caacdcab51a37f22c2e648ef7d"
+        },
+        "fullSuite": {
+          "tests": 5037,
+          "pass": 5033,
+          "fail": 0,
+          "cancelled": 0,
+          "skipped": 4,
+          "todo": 0
+        },
+        "packageControlTests": 55,
+        "currentVerification": {
+          "path": "docs/soterai-lite/evidence/20261108-final-gates/reconciliation-01/snapshot.json",
+          "bytes": 17485,
+          "sha256": "f4c6dc09ca6a34ca805d83dc802bb747b91fe620c5caa75c1ee3694d9a21cf63"
+        },
+        "currentLifecycleAssessment": {
+          "path": "docs/soterai-lite/evidence/20261109-queue-resume/legacy/native-ps7-10/current-complete-acceptance-resumed-01.json",
+          "bytes": 19986,
+          "sha256": "d927844bbc4459fb94e39eac8f0db6dc3c11ea5df9946ef945dfcb34b836087b"
+        }
+      },
+      "installedLifecycle": {
+        "result": "PASS_ORIGINAL_NATIVE_CONTRACT",
+        "assertionsAccepted": 0,
+        "assertionsDeclared": 44,
+        "phaseObservationsDeclared": 59,
+        "normalRounds": {
+          "max": 3,
+          "consumed": 3,
+          "result": "ALL_FAIL_OR_INCOMPLETE",
+          "perRound": {
+            "1": "AssertionError in the runner at the first phase (primary-before-cli-absence); no later phase ran and no Code window launched; failure receipt lists no completed phases.",
+            "2": "Primary-phase observer AssertionError during the primary Code window; failing stage not recorded.",
+            "3": "Primary-phase observer failed at NATIVE_TRUST_HANDSHAKE (no native trust keyboard receipt)."
+          },
+          "note": "No attempt, including extra05, ran any phase beyond primary. Failures retained, not regraded."
+        },
+        "extra05": {
+          "authorized": true,
+          "maxAttempts": 1,
+          "consumed": true,
+          "result": "FAIL_OR_INCOMPLETE_NO_RETRY",
+          "stage": "I06",
+          "consumedReceipt": "docs/soterai-lite/evidence/20261103-f32-lifecycle-2e95d6a4/installed-extra05-consumed.json",
+          "consumedReceiptSha256": "31c056ea8f50096952512203655999f137a73dc52df05cedaa910d3e8c217f44",
+          "failureReceipt": "docs/soterai-lite/evidence/20261103-f32-lifecycle-2e95d6a4/retained-native-extra05-01/installed-extra05-failure.json",
+          "failureReceiptSha256": "f89e0779a7f5b32988173cd25812ec7a882c77dfa1e519175fa2d2142fd25847",
+          "checkpoint": "docs/soterai-lite/evidence/20261103-f32-lifecycle-2e95d6a4/native-extra05-checkpoint-01.json",
+          "checkpointSha256": "d815cb292d90f60be13a8274f74529f1941a65fb70396516a2b0184388db69d1",
+          "observed": "Real native trust grant and minimal onboarding (33031 ms, 9 keyboard actions) completed. Failed at the I06 migration-modal handshake: renderer timed out 15.2 s after the request while the product's vault migration had completed on disk. Declared close and both EOF were recorded."
+        },
+        "phasesNeverReachedNatively": [],
+        "diagnosis": {
+          "status": "INERT_PROPOSAL_ONLY_NOT_RUN",
+          "proposal": "docs/soterai-lite/evidence/20261103-f32-lifecycle-2e95d6a4/I06-DIAGNOSTIC-PROPOSAL06.md",
+          "proposalSha256": "211cad36c13d5f0113616104fee5beb07591b93a76c44a90246762d18141eff5",
+          "fixture": "docs/soterai-lite/evidence/20261103-f32-lifecycle-2e95d6a4/installed-renderer-proposed-05.cjs",
+          "fixtureSha256": "75f2c76f9a35796cd86bde0ebcff259fe3f1bf93c87b33f75e2e4913ee50b205",
+          "cause": "UNCONFIRMED. Retained receipts cannot tell the 15 s dialog-text wait from the 8 s dialog-close wait. Manual interaction with the visible owned window is an open candidate; startup auto-scan is ruled out by timing.",
+          "admissionWiredToFixture": false,
+          "rootCauseUpdate": {
+            "recordedAt": "2026-11-06",
+            "status": "PROBABLE_NOT_NATIVELY_CONFIRMED",
+            "cause": "Launch contracts 01-03 never set window.dialogStyle; Windows default 'native' renders extension modal messages as OS boxes outside the workbench DOM, while workspace trust always uses the custom dialog. Renderer .monaco-dialog-box wait therefore expired at WAIT_DIALOG_TEXT while the visible OS box was answered outside the fixture.",
+            "proposal": "docs/soterai-lite/evidence/20261103-f32-lifecycle-2e95d6a4/I06-ROOT-CAUSE-PROPOSAL07.md",
+            "fixtureFix": "docs/soterai-lite/evidence/20261103-f32-lifecycle-2e95d6a4/installed-launch-contract-proposed-04.cjs",
+            "fixtureFixHashed": false,
+            "fixtureFixSyntaxCheck": "node --check exit 0 (2026-11-06)",
+            "ownerIntent": "Owner granted blanket permission on 2026-11-06; extra06 still needs runner06/admission/control tests/hash-bound approval before launch.",
+            "blockers": [
+              "Kiro OS command sandbox denies D:\\ to shell processes (Test-Path/Get-ChildItem Access is denied); runner requires a fresh D:\\SoterAI-Lite-test-profiles root, so no native round can launch from the sandboxed agent shell.",
+              "Installed VS Code self-updated to 1.145.0 (a717861c07586a53d83b80d742cd3f59b20a6273); admission/runner05/custody pins 1.144.1 (261c84cb1e...), whose appRoot no longer exists. Vendor receipt, signature/vendor/CDP review, final package qualification and runner constants must be re-qualified for 1.145.0 before extra06."
+            ]
+          },
+          "historical": true
+        },
+        "furtherNativeRounds": "Each further round needs its own bounded approval/admission. Sandbox is disabled by the owner (2026-11-06). Do not open VS Code on the normal profile during a run: it triggers vendor auto-update.",
+        "f26a": "Owner resumed; earlier native34 receipt remains scoped to its original artifact. Current affected and completion gates remain incomplete.",
+        "currentAttemptState": {
+          "acceptedAssertions": 44,
+          "qualifiedPhaseAssertions": 44,
+          "qualifiedPhaseObservations": 59,
+          "requiredAssertions": 44,
+          "requiredObservations": 59,
+          "requiredPhases": 8,
+          "originalLifecycleComplete": true,
+          "status": "PASS_EXACT_OBJECT_ORIGINAL44ASSERTIONS59OBSERVATIONS8PHASES_FINAL_GATES_PENDING",
+          "evidence": {
+            "path": "docs/soterai-lite/evidence/20261110-unc-candidate/native/assessment-20261110-01.json",
+            "bytes": 22642,
+            "sha256": "0c910d6fcce1673035ca5dc533a32dc386dc9757eda28550189195a9cae6deed"
+          }
+        },
+        "currentNativeBlocker": "Latest native-ps7-13 accepted 38/44 distinct phase IDs and 45/59 phase observations, with 0/44 original complete-run assertions accepted. upgrade-current/observer: ENOENT: no such file or directory, lstat 'D:\\SoterAI-Lite-test-profiles\\f32-installed-20261109T175827Z-b76b4ead\\profile-upgrade\\F32Gate\\upgrade-current\\upgrade-current-observer-results.json'; upgrade-current/acceptance: ENOENT: no such file or directory, lstat 'D:\\SoterAI-Lite-test-profiles\\f32-installed-20261109T175827Z-b76b4ead\\profile-upgrade\\F32Gate\\upgrade-current\\upgrade-current-phase-scoped-result.json'; upgrade-restart/observer: ENOENT: no such file or directory, lstat 'D:\\SoterAI-Lite-test-profiles\\f32-installed-20261109T175827Z-b76b4ead\\profile-upgrade\\F32Gate\\upgrade-restart\\upgrade-restart-observer-results.json'; upgrade-restart/acceptance: ENOENT: no such file or directory, lstat 'D:\\SoterAI-Lite-test-profiles\\f32-installed-20261109T175827Z-b76b4ead\\profile-upgrade\\F32Gate\\upgrade-restart\\upgrade-restart-phase-scoped-result.json'; upgrade-current/upgrade-current-listener-custody-owned-close.json: Invalid close exitCode\n\n1 !== 0\n; upgrade-current/upgrade-current-renderer-owned-close.json: Invalid close exitCode\n\n1 !== 0\n; outer-runner-close: Invalid close exitCode\n\n1 !== 0\n; complete-run: Retained run failure is authoritative. Earlier ordinary Windows URI casing failure remains historical; separately qualified later legacy seed/migration evidence supersedes it as the current blocker. The original UNC deny remains retained. The current local workspace database and exact local root URI do not contain that manual deny. Physical directory identity does not bridge either persistence boundary. The current product and candidate are unchanged; any new-candidate proposal has no execution or transferred acceptance.",
+        "extraRounds": {
+          "recordedAt": "2026-11-07",
+          "note": "Each round was one bounded isolated synthetic run authorised by the owner messages quoted in its approval file. Every failure is retained and not regraded. assertionsAccepted stays 0 because no single run passed all 44 assertions.",
+          "extra06": {
+            "result": "FAIL_ENVIRONMENT_NO_WINDOW",
+            "cause": "Electron install_dir_access FATAL on VS Code 1.145.0: install dir ACL held AppContainer package SIDs without ALL APPLICATION PACKAGES (left by the Kiro command sandbox). Code.exe exited before any window.",
+            "evidence": "docs/soterai-lite/evidence/20261103-f32-lifecycle-2e95d6a4/retained-native-extra06-01/"
+          },
+          "incident": "A diagnostic Code.exe --version launched the normal-profile VS Code app, which started its own auto-update (1.145.0 -> 1.145.1; 1.145.2 appeared later). Window was closed gracefully; no user data touched. Vendor pins were rebuilt each time.",
+          "extra07_08": {
+            "result": "FAIL_NATIVE_TRUST_CHANGED_BEFORE_RENDERER_ATTACH",
+            "evidence": [
+              "docs/soterai-lite/evidence/20261103-f32-lifecycle-2e95d6a4/installed-extra07-consumed.json",
+              "docs/soterai-lite/evidence/20261103-f32-lifecycle-2e95d6a4/installed-extra08-consumed.json"
+            ]
+          },
+          "extra09": {
+            "result": "PREPARED_NEVER_LAUNCHED_SUPERSEDED_BY_VENDOR_DRIFT",
+            "evidence": "docs/soterai-lite/evidence/20261103-f32-lifecycle-2e95d6a4/installed-extra09-admission.json"
+          },
+          "extra10": {
+            "result": "FAIL_FIXTURE_RECEIPT_READ_RACE_BEFORE_CODE_LAUNCH",
+            "evidence": "docs/soterai-lite/evidence/20261103-f32-lifecycle-2e95d6a4/installed-extra10-consumed.json"
+          },
+          "extra11": {
+            "result": "FAIL_RENDERER_O01_WAIT",
+            "reached": "native trust keyboard choice, early+full custody, product activation",
+            "evidence": "docs/soterai-lite/evidence/20261103-f32-lifecycle-2e95d6a4/installed-extra11-consumed.json"
+          },
+          "extra12": {
+            "result": "FAIL_RESTART_I12_FIXTURE_COMPARISON",
+            "reached": "primary phase fully passed (17 observations)",
+            "evidence": "docs/soterai-lite/evidence/20261103-f32-lifecycle-2e95d6a4/installed-extra12-consumed.json"
+          },
+          "extra13": {
+            "result": "FAIL_UNINSTALLED_I28_VENDOR_DEFERRED_GLOBAL_STORAGE_DELETION",
+            "vendor": "VS Code 1.145.2 c4453f8ea4",
+            "phasesNativePass": [
+              "primary",
+              "restart",
+              "untrusted",
+              "disabled"
+            ],
+            "phasesNotPassed": [
+              "uninstalled",
+              "upgrade-old",
+              "upgrade-current",
+              "upgrade-restart"
+            ],
+            "uniqueAssertionsObservedPassing": 29,
+            "uniqueAssertionsRequired": 44,
+            "phaseObservationsPassing": 36,
+            "phaseObservationsRequired": 59,
+            "passingIds": [
+              "B01",
+              "B02",
+              "I01",
+              "I02",
+              "I03",
+              "I04",
+              "I05",
+              "I06",
+              "I07",
+              "I08",
+              "I09",
+              "I10",
+              "I11",
+              "I12",
+              "I13",
+              "I14",
+              "I15",
+              "I16",
+              "I17",
+              "I18",
+              "I19",
+              "I20",
+              "I21",
+              "I22",
+              "I23",
+              "I24",
+              "I25",
+              "I26",
+              "O01"
+            ],
+            "notYetPassing": [
+              "I27",
+              "I28",
+              "U01-U13"
+            ],
+            "finding": "Vendor postUninstall removes the extension storage directory even without a vscode:uninstall script. Actual extra13 reached delayed physical extension removal; earlier marker controls did not establish that boundary.",
+            "evidence": [
+              "docs/soterai-lite/evidence/20261103-f32-lifecycle-2e95d6a4/installed-extra13-consumed.json",
+              "docs/soterai-lite/evidence/20261103-f32-lifecycle-2e95d6a4/installed-extra13-native-01.txt",
+              "docs/soterai-lite/evidence/20261103-f32-lifecycle-2e95d6a4/installed-extra13-native-01.txt.result.json"
+            ],
+            "controlledChecks": [
+              "docs/soterai-lite/evidence/20261103-f32-lifecycle-2e95d6a4/experiment-uninstall-storage-result-01.json",
+              "docs/soterai-lite/evidence/20261103-f32-lifecycle-2e95d6a4/experiment-uninstall-storage-result-02.json",
+              "docs/soterai-lite/evidence/20261103-f32-lifecycle-2e95d6a4/experiment-uninstall-storage-result-03.json"
+            ],
+            "historicalFinding": "At I28 (uninstalled phase) the encrypted vault files and the whole extension globalStorage folder were absent, although the same files were byte-identical after the restart, untrusted and disabled phases. CORRECTION (7 Nov, later): the earlier claim that VS Code deletes extension global storage on uninstall is NOT supported. Three controlled checks on VS Code 1.145.2 (CLI-only; CLI plus a window started after uninstall; installed and activated product plus CLI uninstall plus a window) all left marker files in globalStorage/soterai.soterai-ide-guard intact, and the installed workbench, shared-process, CLI and extension-host bundles contain no code that deletes that folder. The product has no vscode:uninstall script and no deletion code on that path; the fixtures contain no deleter. The actual deleter is not yet identified, so whether this is a product defect, VS Code behaviour under the real flow, or a fixture side effect is open.",
+            "currentDiagnosis": {
+              "path": "docs/soterai-lite/evidence/20261107-removal-recovery/verified-uninstall-cause-01.json",
+              "bytes": 2586,
+              "sha256": "bc2aadd34ef536d5364cf9da8bbb744bcde0e1eaee9a388af37b3593ae988e0e"
+            }
+          }
+        },
+        "currentDiagnosis": {
+          "path": "docs/soterai-lite/evidence/20261107-removal-recovery/verified-uninstall-cause-01.json",
+          "bytes": 2586,
+          "sha256": "bc2aadd34ef536d5364cf9da8bbb744bcde0e1eaee9a388af37b3593ae988e0e"
+        },
+        "retainedRecoveryAttemptState": {
+          "acceptedAssertions": 0,
+          "requiredAssertions": 44,
+          "requiredObservations": 59,
+          "requiredPhases": 8,
+          "status": "GENUINE_063_MIGRATION_NOT_ESTABLISHED_LIMITED_CURRENT_UPGRADE_PASS14",
+          "evidence": {
+            "path": "docs/soterai-lite/evidence/20261107-removal-recovery/limited-upgrade-01-acceptance.json",
+            "bytes": 7974,
+            "sha256": "715065b7b9b35d4eb74e684f070df5f28c0330a86712830f53b3dab909406f8b"
+          }
+        },
+        "retainedRecoveryLimitedProbe": {
+          "evidence": {
+            "path": "docs/soterai-lite/evidence/20261107-removal-recovery/limited-upgrade-01-acceptance.json",
+            "bytes": 7974,
+            "sha256": "715065b7b9b35d4eb74e684f070df5f28c0330a86712830f53b3dab909406f8b"
+          },
+          "checks": 14,
+          "originalAssertionsAccepted": 0,
+          "oldManualDenyEstablished": false,
+          "oldMigrationEstablished": false
+        },
+        "retainedPreviousAttemptState": {
+          "acceptedAssertions": 0,
+          "requiredAssertions": 44,
+          "requiredObservations": 59,
+          "requiredPhases": 8,
+          "status": "CURRENT_PS7_FULL_INSTALLED_LIFECYCLE_NOT_ESTABLISHED",
+          "evidence": {
+            "path": "docs/soterai-lite/evidence/20261108-final-gates/reconciliation-01/snapshot.json",
+            "bytes": 17485,
+            "sha256": "f4c6dc09ca6a34ca805d83dc802bb747b91fe620c5caa75c1ee3694d9a21cf63"
+          }
+        },
+        "retainedPreviousNativeBlocker": "Immutable genuine 0.6.3 rejects ordinary Windows URI drive casing before creating its manual-deny/vault seed. Original U05-U13 and complete44/59/eight-phase current-artifact lifecycle remain unsatisfied.",
+        "retainedPreviousPhasesNeverReachedNatively": [
+          "upgrade-old",
+          "upgrade-current from genuine 0.6.3",
+          "upgrade-restart"
+        ],
+        "acceptedAssertions": 44
+      },
+      "remainingToDone": [
+        "Original installed lifecycle: 44 assertions, 59 observations and eight phases including genuine 0.6.3 migration.",
+        "The limited14 current-install/restart probe accepts zero original upgrade assertions.",
+        "Scoped source/evidence and transition byte proofs."
+      ],
+      "releaseReady": false,
+      "currentResumedWork": {
+        "path": "docs/soterai-lite/evidence/20261109-session-continuation/reconciliation-resumed-01/summary.json",
+        "bytes": 57038,
+        "sha256": "78ef8600ded4cd22602c8d9deb126225576d39e510f0b28e4f5390eb97f31c39"
+      },
+      "historicalImplementationState": {
+        "recordedAt": "2026-11-06",
+        "status": "SOURCE_FULL_PACKAGE_PASS_INSTALLED_ACCEPTANCE_PENDING",
+        "sourceProof": {
+          "path": "docs/soterai-lite/evidence/20261106-remaining-queue/candidate-01/full-inputs-02.json",
+          "bytes": 223848,
+          "sha256": "23fd63bb04122bf055f656a77424085b75ff3e3c813121c15034cd209fd1c8f6"
+        },
+        "vsix": {
+          "path": "packages/soterai-lite/soterai-lite-0.7.0-resumed-20261106-attempt02.vsix",
+          "bytes": 1742104,
+          "sha256": "011f96d19d42dbefc2e56eb5399bf5c7f16a09d6b71b8bae5be9d66b2f3769ec"
+        },
+        "fullSuite": {
+          "tests": 4892,
+          "pass": 4888,
+          "fail": 0,
+          "cancelled": 0,
+          "skipped": 4,
+          "todo": 0,
+          "evidence": {
+            "path": "docs/soterai-lite/evidence/20261106-remaining-queue/candidate-01/full-suite-acceptance-02.json",
+            "bytes": 32648,
+            "sha256": "95da08741866668bcaba10ffdb395b838875c078b58c7a0cb96caec4ade6c777"
+          },
+          "execution": "EXECUTED_ON_PREVIOUS_PROOF_REUSED_AFTER_METADATA_ONLY_CHANGE"
+        },
+        "metadataTests": {
+          "tests": 110,
+          "pass": 110,
+          "fail": 0,
+          "cancelled": 0,
+          "skipped": 0,
+          "todo": 0
+        },
+        "packageTests": {
+          "tests": 55,
+          "pass": 55,
+          "fail": 0,
+          "cancelled": 0,
+          "skipped": 0,
+          "todo": 0
+        }
+      },
+      "currentRecoveryVerification": {
+        "path": "docs/soterai-lite/evidence/20261108-queue-completion/current-snapshot-02.json",
+        "bytes": 8810,
+        "sha256": "aaaa99719c9b0db15532f1347adc473d5e30343cbb0727443d9fa6b7ac7d2faf"
+      },
+      "retainedRecoveryImplementationState": {
+        "recordedAt": "2026-11-08",
+        "status": "SOURCE_FULL_PACKAGE_CURRENT_NATIVE_SCOPES_VERIFIED_ORIGINAL_LIFECYCLE_INCOMPLETE",
+        "sourceProof": {
+          "path": "docs/soterai-lite/evidence/20261107-removal-recovery/candidate-01/full-inputs-01.json",
+          "bytes": 390999,
+          "sha256": "1325eaf66ddf15a202d56774bf348422df688e4cf0a396f43b7b27b4b67b8f06"
+        },
+        "vsix": {
+          "path": "packages/soterai-lite/soterai-lite-0.7.0-recovery-20261107-attempt01.vsix",
+          "bytes": 1745352,
+          "sha256": "38b81310f53d5f138d966c8f29de75bf22841ec20640fc7f31f473f38d60b96f"
+        },
+        "fullSuite": {
+          "tests": 4917,
+          "pass": 4913,
+          "fail": 0,
+          "cancelled": 0,
+          "skipped": 4,
+          "todo": 0
+        },
+        "packageControlTests": 55,
+        "currentVerification": {
+          "path": "docs/soterai-lite/evidence/20261108-queue-completion/current-snapshot-02.json",
+          "bytes": 8810,
+          "sha256": "aaaa99719c9b0db15532f1347adc473d5e30343cbb0727443d9fa6b7ac7d2faf"
+        }
+      },
+      "currentPS7ScriptedRoutes": [
+        {
+          "toolId": "codexCli",
+          "assertions": 20,
+          "version": "0.160.1",
+          "vendorSelection": {
+            "observedAt": "2026-11-08T10:03:51.688Z",
+            "installedRoot": "C:/Users/USER/AppData/Roaming/npm/node_modules/@openai/codex",
+            "installedManifest": {
+              "path": "C:\\Users\\USER\\AppData\\Roaming\\npm\\node_modules\\@openai\\codex\\package.json",
+              "bytes": 1082,
+              "sha256": "a673c6cd2211c83378ebd3d24f08285a94322fd6b588255396c0f675ef74b1b5"
+            },
+            "installedVersion": "0.167.0",
+            "installedBytesMatchOriginal": false,
+            "selectedRoot": "D:\\SoterAI-Lite-test-profiles\\f20a-product-20261019T141404Z-0e97c811\\public-vendor\\npm\\node_modules\\@openai\\codex",
+            "selectedManifest": {
+              "path": "D:\\SoterAI-Lite-test-profiles\\f20a-product-20261019T141404Z-0e97c811\\public-vendor\\npm\\node_modules\\@openai\\codex\\package.json",
+              "bytes": 1082,
+              "sha256": "05d54db58bd6e525e69e770052b189970dc52f72457e5cc189bab0cbd70d11f8"
+            },
+            "selectedVersion": "0.160.1",
+            "sourceKind": "RETAINED_EXACT_PUBLIC_VENDOR_COPY_INSTALLED_BYTES_DIFFER",
+            "latestInstalledVersionCovered": false,
+            "scope": "Native execution will exercise only these exact selected public bytes. Retained vendor data is not a prior native acceptance or coverage of a drifted installed version."
+          },
+          "independence": "LOW_SCRIPTED_NATIVE_ONLY",
+          "physicalWebview": "UNVERIFIED",
+          "authenticatedProvider": "NOT_RUN",
+          "wholeCatalogPairsAccepted": 0,
+          "receipt": {
+            "path": "docs/soterai-lite/evidence/20261108-final-gates/codex-current-01/codexcli-candidate-01/run/acceptance.json",
+            "bytes": 2353,
+            "sha256": "d358ee22eddbbbfef9299ac0c3fa1117159de3a91f82c67bb54d176e3f31ec18"
+          },
+          "closures": [
+            {
+              "path": "docs/soterai-lite/evidence/20261108-final-gates/codex-current-01/codexcli-candidate-01/run/wrapper-owned-close.json",
+              "bytes": 608,
+              "sha256": "1248078af1b2808240ecb689cb98f39b2cd8171261ae995b600fbd1c4e6a7532"
+            },
+            {
+              "path": "docs/soterai-lite/evidence/20261108-final-gates/codex-current-01/codexcli-candidate-01/run/code-owned-close.json",
+              "bytes": 619,
+              "sha256": "c2abab556556363f7925317d7362f3f9ad30a783def5f2713db5f1f6bba1eea8"
+            },
+            {
+              "path": "docs/soterai-lite/evidence/20261108-final-gates/codex-current-01/codexcli-candidate-01/run/node-helper-close.json",
+              "bytes": 202,
+              "sha256": "1ba1ad8c707db5cc69edba53147e0b1b7859589eb0852d3c89636296b720fdeb"
+            }
+          ],
+          "scope": "Pinned public vendor bytes with loopback/scripted native APIs; provider, physical UI and complete catalog coverage remain incomplete."
+        },
+        {
+          "toolId": "codexIde",
+          "assertions": 21,
+          "version": "26.51007.21434",
+          "vendorSelection": {
+            "observedAt": "2026-11-08T13:55:30.049Z",
+            "installedRoot": "C:/Users/USER/.vscode/extensions/openai.chatgpt-26.51007.21434-win32-x64",
+            "installedManifest": {
+              "path": "C:\\Users\\USER\\.vscode\\extensions\\openai.chatgpt-26.51007.21434-win32-x64\\package.json",
+              "bytes": 7510,
+              "sha256": "54de4eb013fd11f6da1a898f9bdc44ced8b535dee674a1d547b9801c68a4a71e"
+            },
+            "installedVersion": "26.51007.21434",
+            "installedBytesMatchOriginal": false,
+            "selectedRoot": "D:\\SoterAI-Lite-test-profiles\\f20b-product-20261020T143621Z-adac67b8\\extensions\\openai.chatgpt-26.51007.21434-win32-x64",
+            "selectedManifest": {
+              "path": "D:\\SoterAI-Lite-test-profiles\\f20b-product-20261020T143621Z-adac67b8\\extensions\\openai.chatgpt-26.51007.21434-win32-x64\\package.json",
+              "bytes": 7510,
+              "sha256": "10044df52cde43b8e7a98fd6f9c8b159db2283b3bee3a1f12ed7caf44b8d498c"
+            },
+            "selectedVersion": "26.51007.21434",
+            "sourceKind": "RETAINED_EXACT_PUBLIC_VENDOR_COPY_INSTALLED_BYTES_DIFFER",
+            "latestInstalledVersionCovered": false,
+            "scope": "Native execution will exercise only these exact selected public bytes. Retained vendor data is not a prior native acceptance or coverage of a drifted installed version."
+          },
+          "independence": "LOW_SCRIPTED_NATIVE_ONLY",
+          "physicalWebview": "UNVERIFIED",
+          "authenticatedProvider": "NOT_RUN",
+          "wholeCatalogPairsAccepted": 0,
+          "receipt": {
+            "path": "docs/soterai-lite/evidence/20261108-final-gates/codex-current-03/codexide-candidate-01/run/acceptance.json",
+            "bytes": 2401,
+            "sha256": "8369f279c0643bf0d6546e3d1c568eec46528e4bbcd846ff411c09627dca134f"
+          },
+          "closures": [
+            {
+              "path": "docs/soterai-lite/evidence/20261108-final-gates/codex-current-03/codexide-candidate-01/run/wrapper-owned-close.json",
+              "bytes": 609,
+              "sha256": "e4768f6fdf719b90525ca051347d176f06cc31deda4fa8c6c2a78c13aeda7a5a"
+            },
+            {
+              "path": "docs/soterai-lite/evidence/20261108-final-gates/codex-current-03/codexide-candidate-01/run/code-owned-close.json",
+              "bytes": 619,
+              "sha256": "ef8199ddb2ad55f8dc866398cbd45a0df4f3cc50187927f1aa2b32bc2203c293"
+            },
+            {
+              "path": "docs/soterai-lite/evidence/20261108-final-gates/codex-current-03/codexide-candidate-01/run/node-helper-close.json",
+              "bytes": 202,
+              "sha256": "ce3570df9419f0a2ace5848110b8954564fd66f037d5f3e5d9453c5a791f5037"
+            }
+          ],
+          "scope": "Pinned public vendor bytes with loopback/scripted native APIs; provider, physical UI and complete catalog coverage remain incomplete."
+        },
+        {
+          "toolId": "claudeCli",
+          "assertions": 22,
+          "version": "2.1.301",
+          "vendorSelection": {
+            "observedAt": "2026-11-07T18:08:49.525Z",
+            "originalPin": {
+              "path": "docs/soterai-lite/evidence/20261019-f19-claude-89c1e602/installed-public-inputs-01.json",
+              "bytes": 19206,
+              "sha256": "69dd0d711b2408ed28e9c43577b3671e366f592ee1f7b950caa75e4b2429d9a7"
+            },
+            "relocations": [
+              {
+                "originalRoot": "C:/Users/USER/.vscode/extensions/anthropic.claude-code-2.1.301-win32-x64",
+                "selectedRoot": "D:/SoterAI-Lite-test-profiles/f19-product-20261019T105923Z-cf56eaaa/extensions/anthropic.claude-code-2.1.301-win32-x64",
+                "status": "RETAINED_EXACT_PUBLIC_BYTES_NOT_CURRENT_INSTALLATION",
+                "bytesUnchanged": true
+              }
+            ],
+            "selectedVersion": "2.1.301",
+            "status": "CURRENT_BYTE_CHECK_OF_PINNED_PUBLIC_INPUTS_NO_NATIVE_RESULT",
+            "currentInstalledPublicPackages": [
+              {
+                "version": "2.1.319",
+                "manifest": {
+                  "path": "../../../.vscode/extensions/anthropic.claude-code-2.1.319-win32-x64/package.json",
+                  "bytes": 21632,
+                  "sha256": "c6e6216088ad26ded5d816b11d4e6216a2b1a5df2451925b57d32278b8d147c3"
+                }
+              }
+            ],
+            "currentInstalledVersionCovered": false
+          },
+          "independence": "LOW_SCRIPTED_NATIVE_ONLY",
+          "physicalWebview": "UNVERIFIED",
+          "authenticatedProvider": "NOT_RUN",
+          "wholeCatalogPairsAccepted": 0,
+          "receipt": {
+            "path": "docs/soterai-lite/evidence/20261108-v01-ps7-claude-01/route-acceptance.json",
+            "bytes": 5948,
+            "sha256": "2de9940c14329b33869f5019299b133eacfe871014fb5bdae417f7aa23f6bf1c"
+          },
+          "closures": [
+            {
+              "path": "docs/soterai-lite/evidence/20261108-v01-ps7-claude-01/route-owned-close.json",
+              "bytes": 615,
+              "sha256": "726e0802c32b6f66a10cf9daa6707fe0a03745cece6eb76876d4ac53368814ec"
+            },
+            {
+              "path": "docs/soterai-lite/evidence/20261108-v01-ps7-claude-01/f19-product-20261108T115457Z-aa31953d/helper-pipe-ownership.json",
+              "bytes": 531,
+              "sha256": "18937effa1e9920ffa8c56a144a33cb01a760f5cece5ee076b1bcb40363e04aa"
+            }
+          ],
+          "scope": "Pinned public vendor bytes with loopback/scripted native APIs; provider, physical UI and complete catalog coverage remain incomplete."
+        },
+        {
+          "toolId": "clineIde",
+          "assertions": 20,
+          "version": "4.1.25",
+          "vendorSelection": {
+            "observedAt": "2026-11-07T18:08:34.248Z",
+            "originalPin": {
+              "path": "docs/soterai-lite/evidence/20261018-f18-cline-46a8c902/installed-public-inputs-01.json",
+              "bytes": 8628,
+              "sha256": "b3fa5e24fdd763980e032c1b6e46a7ce3c74f19c40571959531bbe092577c277"
+            },
+            "relocations": [
+              {
+                "originalRoot": "C:/Users/USER/.vscode/extensions/saoudrizwan.claude-dev-4.1.25",
+                "selectedRoot": "D:/SoterAI-Lite-test-profiles/f18-product-20261019T045611Z-9e21a4b9/extensions/saoudrizwan.claude-dev-4.1.25",
+                "status": "RETAINED_EXACT_PUBLIC_BYTES_NOT_CURRENT_INSTALLATION",
+                "bytesUnchanged": true
+              }
+            ],
+            "selectedVersion": "4.1.25",
+            "status": "CURRENT_BYTE_CHECK_OF_PINNED_PUBLIC_INPUTS_NO_NATIVE_RESULT",
+            "currentInstalledPublicPackages": [],
+            "currentInstalledVersionCovered": false
+          },
+          "independence": "LOW_SCRIPTED_NATIVE_ONLY",
+          "physicalWebview": "UNVERIFIED",
+          "authenticatedProvider": "NOT_RUN",
+          "wholeCatalogPairsAccepted": 0,
+          "receipt": {
+            "path": "docs/soterai-lite/evidence/20261108-v01-ps7-cline-01/route-acceptance.json",
+            "bytes": 5676,
+            "sha256": "ef6e82c514d307c545055d790bac6bbb85c28255d3d7a20f02e215fd7f78a1a6"
+          },
+          "closures": [
+            {
+              "path": "docs/soterai-lite/evidence/20261108-v01-ps7-cline-01/route-owned-close.json",
+              "bytes": 617,
+              "sha256": "a66e085e2ec510afc0bde31563cbc72bb56df055e28721ee8c8bf5b26d937cb7"
+            },
+            {
+              "path": "docs/soterai-lite/evidence/20261108-v01-ps7-cline-01/f18-product-20261108T122838Z-3182138d/helper-pipe-ownership.json",
+              "bytes": 530,
+              "sha256": "00f6dfca71daabfdb038e4e2a22c303319174e6c22dbabfaa5058e0fe9f3a084"
+            }
+          ],
+          "scope": "Pinned public vendor bytes with loopback/scripted native APIs; provider, physical UI and complete catalog coverage remain incomplete."
+        },
+        {
+          "toolId": "geminiCli",
+          "assertions": 16,
+          "version": "0.55.1",
+          "vendorSelection": {
+            "observedAt": "2026-11-07T18:09:09.844Z",
+            "originalPin": {
+              "path": "docs/soterai-lite/evidence/20261020-f20c-gemini-cli-8a6d3e70/installed-public-inputs-02.json",
+              "bytes": 162252,
+              "sha256": "a8cc2ad675f7fb8e3a1b6fad487064906fa9015c5093f9f83745437f4e477d1a"
+            },
+            "relocations": [
+              {
+                "originalRoot": "C:/Users/USER/node_modules/picomatch",
+                "selectedRoot": "D:/SoterAI-Lite-test-profiles/f20c-product-20261020T142131Z-3dfc1593/public-vendor/npm/node_modules/picomatch",
+                "status": "RETAINED_EXACT_PUBLIC_BYTES_NOT_CURRENT_INSTALLATION",
+                "bytesUnchanged": true
+              }
+            ],
+            "selectedVersion": "0.55.1",
+            "status": "CURRENT_BYTE_CHECK_OF_PINNED_PUBLIC_INPUTS_NO_NATIVE_RESULT",
+            "currentInstalledPublicPackages": [
+              {
+                "version": "0.55.1",
+                "manifest": {
+                  "path": "../../../AppData/Roaming/npm/node_modules/@google/gemini-cli/package.json",
+                  "bytes": 705,
+                  "sha256": "3af58ef0f181bfb7484b718033191d86563fbb60a942175904e8df75d11796f6"
+                }
+              }
+            ],
+            "currentInstalledVersionCovered": true
+          },
+          "independence": "LOW_SCRIPTED_NATIVE_ONLY",
+          "physicalWebview": "UNVERIFIED",
+          "authenticatedProvider": "NOT_RUN",
+          "wholeCatalogPairsAccepted": 0,
+          "receipt": {
+            "path": "docs/soterai-lite/evidence/20261108-v01-ps7-gemini-01/route-acceptance.json",
+            "bytes": 6211,
+            "sha256": "3fb5608411a40f960078c202c4207bcaf74f5eee390c7cc52d539a81d7093800"
+          },
+          "closures": [
+            {
+              "path": "docs/soterai-lite/evidence/20261108-v01-ps7-gemini-01/route-owned-close.json",
+              "bytes": 614,
+              "sha256": "6795d5319861d8344ac7c5bebdb70bd26b155133cb4fe96ecf0d9d4496328507"
+            },
+            {
+              "path": "docs/soterai-lite/evidence/20261108-v01-ps7-gemini-01/f20c-product-20261108T122401Z-d733c8c8/helper-pipe-ownership.json",
+              "bytes": 531,
+              "sha256": "372893fa420fb642356a067a2406a7f0902fca953c4454bd314996c44fcbc767"
+            }
+          ],
+          "scope": "Pinned public vendor bytes with loopback/scripted native APIs; provider, physical UI and complete catalog coverage remain incomplete."
+        }
+      ],
+      "currentAcceptanceSnapshot": {
+        "path": "docs/soterai-lite/evidence/20261108-final-gates/reconciliation-01/snapshot.json",
+        "bytes": 17485,
+        "sha256": "f4c6dc09ca6a34ca805d83dc802bb747b91fe620c5caa75c1ee3694d9a21cf63"
+      },
+      "currentInstalledLifecycleScopes": {
+        "path": "docs/soterai-lite/evidence/20261109-queue-resume/legacy/native-ps7-10/current-complete-acceptance-resumed-01.json",
+        "bytes": 19986,
+        "sha256": "d927844bbc4459fb94e39eac8f0db6dc3c11ea5df9946ef945dfcb34b836087b"
+      },
+      "retainedPreviousRemainingToDone": [
+        "Original installed lifecycle: 44 assertions, 59 observations and eight phases including genuine 0.6.3 migration.",
+        "The limited14 current-install/restart probe accepts zero original upgrade assertions.",
+        "Scoped source/evidence and transition byte proofs."
+      ],
+      "retainedPreviousInstalledLifecycleScopes": {
+        "path": "docs/soterai-lite/evidence/20261109-queue-resume/legacy/native-ps7-04/current-installed-acceptance.json",
+        "bytes": 17601,
+        "sha256": "976115a5f799ecb0da043e0a8c32fc437f62b985d62da3eb7e9f0a499d00a173"
+      },
+      "retainedPreviousResumedWork": {
+        "path": "docs/soterai-lite/evidence/20261106-remaining-queue/owner-resumption-01.json",
+        "bytes": 1121,
+        "sha256": "dd21779251529dc61814c451b9089767ff7e7af218f17784cb7269344544ffa0"
+      },
+      "retainedPreviousImplementationState": {
+        "recordedAt": "2026-11-09",
+        "status": "CURRENT_PS7_SOURCE_PACKAGE_AND_SCRIPTED_ROUTES_VERIFIED_ORIGINAL_LIFECYCLE_INCOMPLETE",
+        "sourceProof": {
+          "path": "docs/soterai-lite/evidence/20261108-ps7-completion/verification-2026-11-08T06-10-08-922Z/inputs.json",
+          "bytes": 153717,
+          "sha256": "09dcb047a5292f77ed71a7714cf3db003e143e151eafece3f37394ba6403dc8c"
+        },
+        "vsix": {
+          "path": "packages/soterai-lite/soterai-lite-0.7.0-ps7-20261108-attempt02.vsix",
+          "bytes": 1747225,
+          "sha256": "ceea88a4aef06ab37f886beccdcdaab7677e87caacdcab51a37f22c2e648ef7d"
+        },
+        "fullSuite": {
+          "tests": 5037,
+          "pass": 5033,
+          "fail": 0,
+          "cancelled": 0,
+          "skipped": 4,
+          "todo": 0
+        },
+        "packageControlTests": 55,
+        "currentVerification": {
+          "path": "docs/soterai-lite/evidence/20261108-final-gates/reconciliation-01/snapshot.json",
+          "bytes": 17485,
+          "sha256": "f4c6dc09ca6a34ca805d83dc802bb747b91fe620c5caa75c1ee3694d9a21cf63"
+        }
+      },
+      "newCandidateVerification": {
+        "path": "docs/soterai-lite/evidence/20261110-unc-candidate/completion-2026-11-10T07-55-54-504Z/summary.json",
+        "bytes": 4044,
+        "sha256": "c07d91c0d4800b7123e499d853e1eef4497971432955f4062f749f1b7bbe4541"
+      },
+      "nativeContractComplete": true,
+      "newCandidateOriginalLifecycle": {
+        "complete": true,
+        "assertions": 44,
+        "observations": 59,
+        "phases": 8,
+        "evidence": {
+          "path": "docs/soterai-lite/evidence/20261110-unc-candidate/native/assessment-20261110-01.json",
+          "bytes": 22642,
+          "sha256": "0c910d6fcce1673035ca5dc533a32dc386dc9757eda28550189195a9cae6deed"
+        }
+      },
+      "sourceCheckpoint": {
+        "path": "docs/soterai-lite/evidence/20261110-source-checkpoint/source-byte-proof.json",
+        "bytes": 3528,
+        "sha256": "a35c2d04376eee9eef0819821f62259a1b678a05c9d48e7b4023e5411bb05f5c"
+      },
+      "completedAtClientDate": "2026-11-10",
+      "currentAcceptanceEvidence": {
+        "path": "docs/soterai-lite/evidence/20261110-acceptance-resume/native-affected/v4-11460/f32-code-size-02/f32-assessment.json",
+        "bytes": 21842,
+        "sha256": "3f4299bc6309b42ad86bebce951289de5961148d4873b1bddae4da6adec0c6ab"
+      }
     }
   ],
   "finalGates": [
     {
       "id": "V01",
-      "status": "PLANNED",
-      "result": "NOT-RUN",
+      "status": "VERIFYING",
+      "result": "INCOMPLETE",
       "requires": [
         "F32"
-      ]
+      ],
+      "preparationState": "REPLACEMENT_PREPARED_NATIVE_AND_EXTERNAL_ACCEPTANCE_PENDING",
+      "currentWork": "docs/soterai-lite/evidence/20261111-queue-completion/final-local-reconciliation-01/summary.json",
+      "currentProgress": {
+        "path": "docs/soterai-lite/evidence/20261111-queue-completion/final-local-reconciliation-01/summary.json",
+        "bytes": 5281,
+        "sha256": "3034136597e441069dc2ae64e10f62350b81a6ded17e47bece01166947fb66a4"
+      },
+      "remaining": [
+        "Formal original acceptance remains limited to the declared native scopes; broader native context and human scope remain unaccepted."
+      ],
+      "retainedRecoveryProgress": {
+        "path": "docs/soterai-lite/evidence/20261108-queue-completion/current-snapshot-02.json",
+        "bytes": 8810,
+        "sha256": "aaaa99719c9b0db15532f1347adc473d5e30343cbb0727443d9fa6b7ac7d2faf"
+      },
+      "successorScope": "Replacement 7ebe9142 source and package verified: 5070 component passes,0 failures,4 skips; package55. Escaped-secret defect fixed in committed source. Four affected feature verifications and all final acceptance remain incomplete; native launch refused due active VS Code updater.",
+      "currentHandoff": {
+        "path": "docs/soterai-lite/evidence/20261110-acceptance-resume/review-packet/handoff/HANDOFF.json",
+        "bytes": 4631,
+        "sha256": "a694e2ec67f10f46cf991b3daca3f4630c8c153e13508e7b4231c6fa152d19f7"
+      },
+      "newCandidateProgress": {
+        "path": "docs/soterai-lite/evidence/20261110-acceptance-resume/current-state-20261111-01/summary.json",
+        "bytes": 5480,
+        "sha256": "dff9160f47932ef094fc5c0c310aa6bedcbdcbf2fb90b3117abb04d0a658552a"
+      },
+      "historicalWork": "docs/soterai-lite/evidence/20261107-removal-recovery/owner-resumption-01.json",
+      "historicalMachineTrials": {
+        "path": "docs/soterai-lite/evidence/20261109-claude-working-route/qualified-real-trials-01.json",
+        "bytes": 7291,
+        "sha256": "9e0fa6f86b3efe200c72f9e60befb01ef777bd85600e8eca0b17a2b0315d8ed0"
+      },
+      "historicalPS7Verification": {
+        "path": "docs/soterai-lite/evidence/20261108-ps7-completion/acceptance.json",
+        "bytes": 2739,
+        "sha256": "5813fc623ca194b8295d09ec6016923ebfc7a449c13fa34645e5df460a83e276"
+      },
+      "predecessorMachineTrials": {
+        "path": "docs/soterai-lite/evidence/20261110-release-finish/trials/qualified-current-real-trials.json",
+        "bytes": 26424,
+        "sha256": "a44d44450500ce711c007880810e2ba2d5fe874ffea46cfabcc805acfc4f7be7"
+      },
+      "localPreparation": "DONE"
     },
     {
       "id": "V02",
-      "status": "PLANNED",
-      "result": "NOT-RUN",
+      "status": "VERIFYING",
+      "result": "INCOMPLETE",
       "requires": [
         "V01"
-      ]
+      ],
+      "preparationState": "REPLACEMENT_PREPARED_NATIVE_AND_EXTERNAL_ACCEPTANCE_PENDING",
+      "currentWork": "docs/soterai-lite/evidence/20261111-queue-completion/final-local-reconciliation-01/summary.json",
+      "currentProgress": {
+        "path": "docs/soterai-lite/evidence/20261111-queue-completion/final-local-reconciliation-01/summary.json",
+        "bytes": 5281,
+        "sha256": "3034136597e441069dc2ae64e10f62350b81a6ded17e47bece01166947fb66a4"
+      },
+      "remaining": [
+        "Unverified native search/context/attachments and remaining full-scenario controls"
+      ],
+      "retainedRecoveryProgress": {
+        "path": "docs/soterai-lite/evidence/20261108-queue-completion/current-snapshot-02.json",
+        "bytes": 8810,
+        "sha256": "aaaa99719c9b0db15532f1347adc473d5e30343cbb0727443d9fa6b7ac7d2faf"
+      },
+      "successorScope": "Replacement 7ebe9142 source and package verified: 5070 component passes,0 failures,4 skips; package55. Escaped-secret defect fixed in committed source. Four affected feature verifications and all final acceptance remain incomplete; native launch refused due active VS Code updater.",
+      "currentHandoff": {
+        "path": "docs/soterai-lite/evidence/20261110-acceptance-resume/review-packet/handoff/HANDOFF.json",
+        "bytes": 4631,
+        "sha256": "a694e2ec67f10f46cf991b3daca3f4630c8c153e13508e7b4231c6fa152d19f7"
+      },
+      "newCandidateProgress": {
+        "path": "docs/soterai-lite/evidence/20261110-acceptance-resume/current-state-20261111-01/summary.json",
+        "bytes": 5480,
+        "sha256": "dff9160f47932ef094fc5c0c310aa6bedcbdcbf2fb90b3117abb04d0a658552a"
+      },
+      "historicalWork": "docs/soterai-lite/evidence/20261107-removal-recovery/owner-resumption-01.json",
+      "historicalMachineTrials": {
+        "path": "docs/soterai-lite/evidence/20261109-claude-working-route/qualified-real-trials-01.json",
+        "bytes": 7291,
+        "sha256": "9e0fa6f86b3efe200c72f9e60befb01ef777bd85600e8eca0b17a2b0315d8ed0"
+      },
+      "historicalRealAgentAttempt": {
+        "path": "docs/soterai-lite/evidence/20261109-queue-resume/trials/quota-failure-03.json",
+        "bytes": 12613,
+        "sha256": "2afd72efa6426fb86f2168b612d7d39df7c056b971f3855536021d09652c965e"
+      },
+      "historicalPS7Verification": {
+        "path": "docs/soterai-lite/evidence/20261108-ps7-completion/acceptance.json",
+        "bytes": 2739,
+        "sha256": "5813fc623ca194b8295d09ec6016923ebfc7a449c13fa34645e5df460a83e276"
+      },
+      "predecessorMachineTrials": {
+        "path": "docs/soterai-lite/evidence/20261110-release-finish/trials/qualified-current-real-trials.json",
+        "bytes": 26424,
+        "sha256": "a44d44450500ce711c007880810e2ba2d5fe874ffea46cfabcc805acfc4f7be7"
+      },
+      "predecessorCatalogAssessment": {
+        "path": "docs/soterai-lite/evidence/20261110-release-finish/catalog/verification-01/catalog-assessment.json",
+        "bytes": 2305419,
+        "sha256": "71f1fa4d74f62f0a569e19a9a3a961681f0349f3aed33a25f52d20e27a599a5e"
+      },
+      "localPreparation": "DONE"
     },
     {
       "id": "V03",
-      "status": "PLANNED",
-      "result": "NOT-RUN",
+      "status": "VERIFYING",
+      "result": "INCOMPLETE",
       "requires": [
         "V02"
-      ]
+      ],
+      "preparationState": "REPLACEMENT_PREPARED_NATIVE_AND_EXTERNAL_ACCEPTANCE_PENDING",
+      "currentWork": "docs/soterai-lite/evidence/20261111-queue-completion/final-local-reconciliation-01/summary.json",
+      "currentProgress": {
+        "path": "docs/soterai-lite/evidence/20261111-queue-completion/final-local-reconciliation-01/summary.json",
+        "bytes": 5281,
+        "sha256": "3034136597e441069dc2ae64e10f62350b81a6ded17e47bece01166947fb66a4"
+      },
+      "remaining": [
+        "Publish the prepared exact legal-document commit and verify served hashes"
+      ],
+      "retainedRecoveryProgress": {
+        "path": "docs/soterai-lite/evidence/20261108-queue-completion/current-snapshot-02.json",
+        "bytes": 8810,
+        "sha256": "aaaa99719c9b0db15532f1347adc473d5e30343cbb0727443d9fa6b7ac7d2faf"
+      },
+      "successorScope": "Replacement 7ebe9142 source and package verified: 5070 component passes,0 failures,4 skips; package55. Escaped-secret defect fixed in committed source. Four affected feature verifications and all final acceptance remain incomplete; native launch refused due active VS Code updater.",
+      "currentHandoff": {
+        "path": "docs/soterai-lite/evidence/20261110-acceptance-resume/review-packet/handoff/HANDOFF.json",
+        "bytes": 4631,
+        "sha256": "a694e2ec67f10f46cf991b3daca3f4630c8c153e13508e7b4231c6fa152d19f7"
+      },
+      "newCandidateProgress": {
+        "path": "docs/soterai-lite/evidence/20261110-acceptance-resume/current-state-20261111-01/summary.json",
+        "bytes": 5480,
+        "sha256": "dff9160f47932ef094fc5c0c310aa6bedcbdcbf2fb90b3117abb04d0a658552a"
+      },
+      "historicalWork": "docs/soterai-lite/evidence/20261107-removal-recovery/owner-resumption-01.json",
+      "historicalMachineTrials": {
+        "path": "docs/soterai-lite/evidence/20261109-claude-working-route/qualified-real-trials-01.json",
+        "bytes": 7291,
+        "sha256": "9e0fa6f86b3efe200c72f9e60befb01ef777bd85600e8eca0b17a2b0315d8ed0"
+      },
+      "historicalPS7Verification": {
+        "path": "docs/soterai-lite/evidence/20261108-ps7-completion/acceptance.json",
+        "bytes": 2739,
+        "sha256": "5813fc623ca194b8295d09ec6016923ebfc7a449c13fa34645e5df460a83e276"
+      },
+      "localPreparation": "DONE"
     },
     {
       "id": "V04",
-      "status": "PLANNED",
-      "result": "NOT-RUN",
+      "status": "VERIFYING",
+      "result": "INCOMPLETE",
       "requires": [
         "V03"
-      ]
+      ],
+      "preparationState": "REPLACEMENT_PREPARED_NATIVE_AND_EXTERNAL_ACCEPTANCE_PENDING",
+      "currentWork": "docs/soterai-lite/evidence/20261111-queue-completion/final-local-reconciliation-01/summary.json",
+      "currentProgress": {
+        "path": "docs/soterai-lite/evidence/20261111-queue-completion/final-local-reconciliation-01/summary.json",
+        "bytes": 5281,
+        "sha256": "3034136597e441069dc2ae64e10f62350b81a6ded17e47bece01166947fb66a4"
+      },
+      "remaining": [
+        "Independent human or different-vendor exact-object verdict"
+      ],
+      "retainedRecoveryProgress": {
+        "path": "docs/soterai-lite/evidence/20261108-queue-completion/current-snapshot-02.json",
+        "bytes": 8810,
+        "sha256": "aaaa99719c9b0db15532f1347adc473d5e30343cbb0727443d9fa6b7ac7d2faf"
+      },
+      "successorScope": "Replacement 7ebe9142 source and package verified: 5070 component passes,0 failures,4 skips; package55. Escaped-secret defect fixed in committed source. Four affected feature verifications and all final acceptance remain incomplete; native launch refused due active VS Code updater.",
+      "currentHandoff": {
+        "path": "docs/soterai-lite/evidence/20261110-acceptance-resume/review-packet/handoff/HANDOFF.json",
+        "bytes": 4631,
+        "sha256": "a694e2ec67f10f46cf991b3daca3f4630c8c153e13508e7b4231c6fa152d19f7"
+      },
+      "newCandidateProgress": {
+        "path": "docs/soterai-lite/evidence/20261110-acceptance-resume/current-state-20261111-01/summary.json",
+        "bytes": 5480,
+        "sha256": "dff9160f47932ef094fc5c0c310aa6bedcbdcbf2fb90b3117abb04d0a658552a"
+      },
+      "historicalWork": "docs/soterai-lite/evidence/20261107-removal-recovery/owner-resumption-01.json",
+      "historicalMachineTrials": {
+        "path": "docs/soterai-lite/evidence/20261109-claude-working-route/qualified-real-trials-01.json",
+        "bytes": 7291,
+        "sha256": "9e0fa6f86b3efe200c72f9e60befb01ef777bd85600e8eca0b17a2b0315d8ed0"
+      },
+      "historicalPS7Verification": {
+        "path": "docs/soterai-lite/evidence/20261108-ps7-completion/acceptance.json",
+        "bytes": 2739,
+        "sha256": "5813fc623ca194b8295d09ec6016923ebfc7a449c13fa34645e5df460a83e276"
+      },
+      "localPreparation": "DONE"
     },
     {
       "id": "V05",
-      "status": "PLANNED",
-      "result": "NOT-RUN",
+      "status": "VERIFYING",
+      "result": "INCOMPLETE",
       "requires": [
         "V04"
       ],
-      "action": "L6 HUMAN-ACTIONS and STOP; L7 resumes from supplied exact-object evidence"
+      "action": "L6 HUMAN-ACTIONS and STOP; L7 resumes from supplied exact-object evidence",
+      "preparationState": "REPLACEMENT_PREPARED_NATIVE_AND_EXTERNAL_ACCEPTANCE_PENDING",
+      "currentWork": "docs/soterai-lite/evidence/20261111-queue-completion/final-local-reconciliation-01/summary.json",
+      "currentProgress": {
+        "path": "docs/soterai-lite/evidence/20261111-queue-completion/final-local-reconciliation-01/summary.json",
+        "bytes": 5281,
+        "sha256": "3034136597e441069dc2ae64e10f62350b81a6ded17e47bece01166947fb66a4"
+      },
+      "remaining": [
+        "Independent human or different-vendor exact-object verdict",
+        "Full real screen-reader/human accessibility judgment",
+        "Publish the prepared exact legal-document commit and verify served hashes",
+        "Publish the exact VSIX and retain registry confirmation"
+      ],
+      "ownerResponse": {
+        "clientDate": "2026-11-08",
+        "humanResultsAvailable": false
+      },
+      "retainedRecoveryProgress": {
+        "path": "docs/soterai-lite/evidence/20261108-queue-completion/current-snapshot-02.json",
+        "bytes": 8810,
+        "sha256": "aaaa99719c9b0db15532f1347adc473d5e30343cbb0727443d9fa6b7ac7d2faf"
+      },
+      "successorScope": "Replacement 7ebe9142 source and package verified: 5070 component passes,0 failures,4 skips; package55. Escaped-secret defect fixed in committed source. Four affected feature verifications and all final acceptance remain incomplete; native launch refused due active VS Code updater.",
+      "currentHandoff": {
+        "path": "docs/soterai-lite/evidence/20261110-acceptance-resume/review-packet/handoff/HANDOFF.json",
+        "bytes": 4631,
+        "sha256": "a694e2ec67f10f46cf991b3daca3f4630c8c153e13508e7b4231c6fa152d19f7"
+      },
+      "newCandidateProgress": {
+        "path": "docs/soterai-lite/evidence/20261110-acceptance-resume/current-state-20261111-01/summary.json",
+        "bytes": 5480,
+        "sha256": "dff9160f47932ef094fc5c0c310aa6bedcbdcbf2fb90b3117abb04d0a658552a"
+      },
+      "historicalWork": "docs/soterai-lite/evidence/20261107-removal-recovery/owner-resumption-01.json",
+      "historicalMachineTrials": {
+        "path": "docs/soterai-lite/evidence/20261109-claude-working-route/qualified-real-trials-01.json",
+        "bytes": 7291,
+        "sha256": "9e0fa6f86b3efe200c72f9e60befb01ef777bd85600e8eca0b17a2b0315d8ed0"
+      },
+      "historicalPS7Verification": {
+        "path": "docs/soterai-lite/evidence/20261108-ps7-completion/acceptance.json",
+        "bytes": 2739,
+        "sha256": "5813fc623ca194b8295d09ec6016923ebfc7a449c13fa34645e5df460a83e276"
+      },
+      "predecessorMachineTrials": {
+        "path": "docs/soterai-lite/evidence/20261110-release-finish/trials/qualified-current-real-trials.json",
+        "bytes": 26424,
+        "sha256": "a44d44450500ce711c007880810e2ba2d5fe874ffea46cfabcc805acfc4f7be7"
+      },
+      "localPreparation": "DONE"
     }
   ],
-  "runtimeFeatureFlags": "Proposed only in plan; no settings or runtime implementation changed",
+  "runtimeFeatureFlags": "Implemented in current source and manifests; flag availability alone is not acceptance. See each feature receipt and current source/package qualification.",
   "catalog": {
     "path": "docs/soterai-lite/LITE-CATALOG.json",
     "status": "FROZEN",
@@ -986,7 +2492,1445 @@
       "evidence": "docs/soterai-lite/evidence/20261017-f11-ps7-availability-6f721c9d/availability-01.json",
       "requestedFeatureRetained": true,
       "requiredBehaviorReclassified": false,
-      "queueNormalization": "Late reconciliation of proposed linear F12 dependency; catalog unchanged"
+      "queueNormalization": "Late reconciliation of proposed linear F12 dependency; catalog unchanged",
+      "historical": true,
+      "supersededBy": "docs/soterai-lite/evidence/20261108-ps7-completion/acceptance.json",
+      "currentExclusion": false
+    },
+    "F26a": {
+      "reason": "Explicit owner final-attempt instruction: skip or delete if incomplete; final native12 missing result. Reversible skip, no further runs or false DONE.",
+      "recordedAt": "2026-11-02T15:00:49.146Z",
+      "evidence": "docs/soterai-lite/evidence/20261102-f26a-native09-preparation/native12-final-reconciliation-01.json",
+      "retainedOriginalRequirement": true,
+      "countsAsDone": false,
+      "advertisedSupport": false,
+      "historical": true,
+      "activeForCurrentWork": false,
+      "supersededForCurrentWorkBy": "docs/soterai-lite/evidence/20261106-remaining-queue/owner-resumption-01.json",
+      "supersededByCurrentCompletion": {
+        "path": "docs/soterai-lite/evidence/20261108-queue-completion/feature-completion-01.json",
+        "bytes": 2623,
+        "sha256": "61e5aa0fabcbc53519f09e3a2339b748abb6763074d9e5fb4de7214e55ce6b8d"
+      }
     }
+  },
+  "f26cLatestCheckpoint": {
+    "path": "docs/soterai-lite/evidence/20261026-f26c-psreadline-53a78b20/f26c-source-byte-proof-01.json",
+    "sha256": "3d5ae6f5d7885ae1a60cdfb4d4b506d318719e8a8d3f6aca373fe12a5e427959",
+    "status": "SOURCE_1696_AND_TRANSITION_10_EXACT_BYTES_PASS",
+    "native06": "F26a_USER_DEFERRED_NOT_RUN"
+  },
+  "f27LatestCheckpoint": {
+    "path": "docs/soterai-lite/evidence/20261027-f27-self-hygiene-8c16e402/f27-source-byte-proof-01.json",
+    "sha256": "3b8a1539dfbb0b6c0a89df15923c46bfcfaf5f39f5ce1ed47b7cc0647a99cd5d",
+    "status": "SOURCE_1004_EXACT_BYTES_PASS_SEPARATE_TRANSITION_REQUIRED_BEFORE_F29",
+    "transitionProof": "docs/soterai-lite/evidence/20261027-f27-self-hygiene-8c16e402/f27-transition-byte-proof-01.json"
+  },
+  "f29LatestCheckpoint": {
+    "path": "docs/soterai-lite/evidence/20261028-f29-protection-center-6c93e15a/f29-source-byte-proof-01.json",
+    "sha256": "0b664de4540d685121b046bf2dc560516d529ea0ac5e986124ed12b9b1a5672c",
+    "status": "SOURCE_1322_EXACT_BYTES_PASS_SEPARATE_TRANSITION_REQUIRED_BEFORE_F30",
+    "transitionProof": "docs/soterai-lite/evidence/20261028-f29-protection-center-6c93e15a/f29-transition-byte-proof-01.json"
+  },
+  "f30LatestCheckpoint": {
+    "path": "docs/soterai-lite/evidence/20261028-f30-setup-verification-847d2f09/acceptance-01.json",
+    "bytes": 55823,
+    "sha256": "5317501d7536e5df2a7b466fee284c2c4fba4a6da51990d96bc29d832f6f1b48"
+  },
+  "f30SourceByteBarrier": {
+    "status": "SOURCE_729_EXACT_BYTES_PASS_SEPARATE_TRANSITION_REQUIRED",
+    "commit": "4c2a5f0350ede2a1a4e8d8cc744936e122da89aa",
+    "proof": {
+      "path": "docs/soterai-lite/evidence/20261028-f30-setup-verification-847d2f09/f30-source-byte-proof-01.json",
+      "bytes": 237944,
+      "sha256": "291399a3c26857993278bc1bd7e33325702c06dec861a9f413d70619b8f453d5"
+    },
+    "acceptance": {
+      "path": "docs/soterai-lite/evidence/20261028-f30-setup-verification-847d2f09/acceptance-01.json",
+      "bytes": 55823,
+      "sha256": "5317501d7536e5df2a7b466fee284c2c4fba4a6da51990d96bc29d832f6f1b48"
+    },
+    "native06": "F26a_USER_DEFERRED_NOT_RUN"
+  },
+  "f26aLatestCheckpoint": {
+    "path": "docs/soterai-lite/evidence/20261029-f26a-resume-1a40d9e7/progress-08.json",
+    "bytes": 3305,
+    "sha256": "2e7adf7f808df9ea0cd827736c262cbb1f5373d234a5a887bed565c7a8ae7130"
+  },
+  "f26aNative06Authorization": {
+    "status": "APPROVED_SINGLE_NATIVE06_CONSUMED_FAILED_NO_RETRY",
+    "allowedAttempts": 1,
+    "approval": {
+      "path": "docs/soterai-lite/evidence/20261029-f26a-resume-1a40d9e7/native06-user-approval-01.json",
+      "bytes": 812,
+      "sha256": "64dca32309bd7c25cea2db79d0602117034e0bd77ddd4d6fbb245c98b226f069"
+    },
+    "materialization": {
+      "path": "docs/soterai-lite/evidence/20261029-f26a-resume-1a40d9e7/native06-materialization-01.json",
+      "bytes": 1527,
+      "sha256": "36d5278dc44468e63d92b35813d222a7cb6c7f867894ef510ea2ad971b711a1e"
+    },
+    "consumption": {
+      "path": "docs/soterai-lite/evidence/20261029-f26a-resume-1a40d9e7/native06-consumption-01.json",
+      "bytes": 435,
+      "sha256": "631260c6fb14de700253300c971ce80b18bad751995cfe05bfa563e906b634da"
+    },
+    "result": {
+      "path": "docs\\soterai-lite\\evidence\\20261029-f26a-resume-1a40d9e7\\native06-chain-result-01.json",
+      "bytes": 359,
+      "sha256": "fc55dd5cc3f18c50e15bbb0cf14cc99cdf3ab34ed2ae0d345a58ac70241ca214"
+    }
+  },
+  "f26aNative07Proposal": {
+    "status": "EXPLICIT_FRESH_APPROVAL_REQUIRED_NOT_RUN",
+    "allowedAttemptsIfApproved": 1,
+    "proposal": {
+      "path": "docs/soterai-lite/evidence/20261029-f26a-resume-1a40d9e7/NATIVE07-DIAGNOSTIC-PROPOSAL01.md",
+      "bytes": 4221,
+      "sha256": "5cb1a498ea8091a2a21abc341701fcb039d6ccca43c76994fc01cd14727a28cb"
+    },
+    "candidate": {
+      "path": "docs/soterai-lite/evidence/20261029-f26a-resume-1a40d9e7/native07-candidate-01.ps1.txt",
+      "bytes": 52783,
+      "sha256": "2988d8f30bd7c590a15a88839f1fc0e90be9e8f189cb44293ece71913c7a9cc1"
+    },
+    "review": {
+      "path": "docs/soterai-lite/evidence/20261029-f26a-resume-1a40d9e7/native07-packet-review-01.json",
+      "bytes": 3294,
+      "sha256": "cd2e5c76653df2cee10fa69958a90e602a11333146468ac33a5bfe4716de30d5"
+    }
+  },
+  "f26aFailurePreparationCheckpoint": {
+    "commit": "3d913847a363103d44fd4267d602b8bef99d6ede",
+    "paths": 154,
+    "proof": {
+      "path": "docs/soterai-lite/evidence/20261029-f26a-resume-1a40d9e7/f26a-native06-failure-byte-proof-01.json",
+      "bytes": 49328,
+      "sha256": "a9f6276454d67a022c5182437cde3a7a0bd895ef6223eca18b0a41c235510df3"
+    },
+    "native07": "EXPLICIT_NEW_APPROVAL_REQUIRED_NOT_RUN"
+  },
+  "f26aNative07Authorization": {
+    "status": "EXPLICIT_SINGLE_CONSUMED_FAILED_NO_RETRY",
+    "allowedAttempts": 1,
+    "approval": {
+      "path": "docs/soterai-lite/evidence/20261029-f26a-resume-1a40d9e7/native07-user-approval-01.json",
+      "bytes": 1075,
+      "sha256": "7af7bbc2ebda6c4545462748fd182b747aa9c728705ea233721a3e056833bb38"
+    },
+    "materialization": {
+      "path": "docs/soterai-lite/evidence/20261029-f26a-resume-1a40d9e7/native07-materialization-01.json",
+      "bytes": 1543,
+      "sha256": "b0aa2f3c41b88f4c92c0347f3203377cc0ae747e31724f956c06a2067d8ed7ae"
+    },
+    "consumption": {
+      "path": "docs/soterai-lite/evidence/20261029-f26a-resume-1a40d9e7/native07-consumption-01.json",
+      "bytes": 435,
+      "sha256": "70821e041285bec3043c9f92b9d9124cc7b16a2fc600b8a76e2fac6fa619b888"
+    },
+    "result": {
+      "path": "docs/soterai-lite/evidence/20261029-f26a-resume-1a40d9e7/native07-chain-result-01.json",
+      "bytes": 359,
+      "sha256": "6935180b8fb1b662706c59b44a64bfcf0073a5d263a1f034fa4c8758bfe3a722"
+    }
+  },
+  "f26aNative08Proposal": {
+    "status": "CURRENT_STORAGE_FIX_EXPLICIT_FRESH_APPROVAL_REQUIRED_NOT_RUN",
+    "proposal": {
+      "path": "docs/soterai-lite/evidence/20261029-f26a-resume-1a40d9e7/NATIVE08-STORAGE-FIX-PROPOSAL01.md",
+      "bytes": 4837,
+      "sha256": "f16433a981cfdee3b84861b86ec67e8f6e1880e7ba7c94562c1a83b9a10ce6da"
+    },
+    "candidate": {
+      "path": "docs/soterai-lite/evidence/20261029-f26a-resume-1a40d9e7/native08-candidate-01.ps1.txt",
+      "bytes": 52789,
+      "sha256": "6f73e5d53b42a38f94871cdaccb28df63de572f0e100d33a262ce79c5eab4b78"
+    },
+    "review": {
+      "path": "docs/soterai-lite/evidence/20261029-f26a-resume-1a40d9e7/native08-packet-review-01.json",
+      "bytes": 6054,
+      "sha256": "a72182e0017ea9546a41ad5c5d08208f4f899457d2751c12c62ea0912681c411"
+    }
+  },
+  "f26aStoragePreparationCheckpoint": {
+    "commit": "56f2ec543b5bf704ea686b4ca40e65c5094caec9",
+    "paths": 262,
+    "proof": {
+      "path": "docs/soterai-lite/evidence/20261029-f26a-resume-1a40d9e7/f26a-storage-preparation-byte-proof-08.json",
+      "bytes": 82243,
+      "sha256": "7112c06dddd9ea53e7e3f472dc6f115db68205e5b04aed1675ce41a583bd0bc1"
+    },
+    "native08": "EXPLICIT_FRESH_APPROVAL_REQUIRED_NOT_RUN",
+    "actualFeatureSource": "UNCOMMITTED_UNSTAGED_PENDING_REQUIRED_ACCEPTANCE"
+  },
+  "f26aNative08Authorization": {
+    "status": "CONSUMED_PRIMARY30_PASS_OFFLINE_PREFLIGHT_FAIL_RESTART_NOT_RUN",
+    "allowedAttempts": 1,
+    "approval": {
+      "path": "docs/soterai-lite/evidence/20261029-f26a-resume-1a40d9e7/native08-user-approval-01.json",
+      "bytes": 1063,
+      "sha256": "1b68c403e2dc682778f53e29c8025d22994dfdffd8368d56aba09e843eeacf54"
+    },
+    "materialization": {
+      "path": "docs/soterai-lite/evidence/20261029-f26a-resume-1a40d9e7/native08-materialization-01.json",
+      "bytes": 1507,
+      "sha256": "2ace1383e6f00de6ace4d0500211abcd6110d9779b4a9b846ba734455e21c544"
+    },
+    "consumption": {
+      "path": "docs/soterai-lite/evidence/20261029-f26a-resume-1a40d9e7/native08-consumption-01.json",
+      "bytes": 435,
+      "sha256": "eed777afa82e9f13359c92b943b88720a73937955de2fa383f16eef5a3d1493a"
+    },
+    "progress": {
+      "path": "docs/soterai-lite/evidence/20261029-f26a-resume-1a40d9e7/progress-09.json",
+      "bytes": 1306,
+      "sha256": "68f5dccc446bb00e6a2acd4111f65bef61a59330597286a4649aceab2405e28b"
+    }
+  },
+  "f26aNative09Preparation": {
+    "status": "EXPLICIT_USER_DEFERRED_F26A_NATIVE09_NOT_AUTHORIZED_NOT_RUN",
+    "proposal": {
+      "path": "docs/soterai-lite/evidence/20261029-f26a-resume-1a40d9e7/NATIVE09-OFFLINE-FIXTURE-PROPOSAL01.md",
+      "bytes": 4087,
+      "sha256": "ecbd4fe076d7581fa46068b25e4ad48da11a1f7b3dbae3e10292e1c9f23dcfc2"
+    },
+    "candidate": {
+      "path": "docs/soterai-lite/evidence/20261029-f26a-resume-1a40d9e7/native09-candidate-02.ps1.txt",
+      "bytes": 52812,
+      "sha256": "052687ac56ed8cc2c5bdae621c4b54685fb7cf24e0f03ab9992dee334e43486a"
+    },
+    "helper": {
+      "path": "docs/soterai-lite/evidence/20261029-f26a-resume-1a40d9e7/precommit-offline-owner-09b.cjs.txt",
+      "bytes": 14902,
+      "sha256": "ebfd7153a7aac41a88b5a46f5be7d8fad699a5d2b0e144fcb038053a4c2e62ef"
+    },
+    "progress": {
+      "path": "docs/soterai-lite/evidence/20261029-f26a-resume-1a40d9e7/progress-10.json",
+      "bytes": 4116,
+      "sha256": "8644a2a273790fb3cb0f656f9be3b55c50c727ff0c2248afc87fd09d5800601c"
+    },
+    "userDecision": {
+      "path": "docs/soterai-lite/evidence/20261029-f26a-resume-1a40d9e7/native09-user-decision-01.json",
+      "bytes": 1602,
+      "sha256": "0f1097855874eedd6374a2d4521b614ffc213e4b5aac32e3de2a9118aa7488e9"
+    }
+  },
+  "f26aNative08FailureCheckpoint": {
+    "commit": "88c3d4969a2bd51639b67ec43ba951db9958ef5c",
+    "paths": 192,
+    "proof": {
+      "path": "docs/soterai-lite/evidence/20261029-f26a-resume-1a40d9e7/f26a-native08-failure-byte-proof-09.json",
+      "bytes": 60964,
+      "sha256": "462b6250e434b33683f9b956cbb2d87c404632e0d41670e4e56bde2e7c030930"
+    },
+    "native09": "EXPLICIT_FRESH_APPROVAL_REQUIRED_NOT_RUN"
+  },
+  "f26aAffectedCurrentPreparation": {
+    "status": "NOT_RUN_F26A_NATIVE09_EXPLICITLY_USER_DEFERRED",
+    "materialization": {
+      "path": "docs/soterai-lite/evidence/20261029-f26a-resume-1a40d9e7/affected-current-materialization-09.json",
+      "bytes": 25643,
+      "sha256": "eb069de4b1983c6826df8bfa0fafc0f8f317df1712145c999f55f31659c71e58"
+    },
+    "cutover": {
+      "path": "docs/soterai-lite/evidence/20261029-f26a-resume-1a40d9e7/affected-native09-cutover-01.json",
+      "bytes": 1053,
+      "sha256": "fb96009ab6f4a7be3ede7048b7d9f4f21d513048da087b6753bbb7ec67d76896"
+    },
+    "requires": "Actual native09 34 plus offline pass and all owners closed/EOF",
+    "start": "start-affected-current-10.ps1"
+  },
+  "f26bPrioritySelection": {
+    "userRequest": "f26bko very fast complete kro",
+    "checkpoint": {
+      "path": "docs/soterai-lite/evidence/20261029-f26b-prepush-70e1c9a4/start-checkpoint-01.json",
+      "bytes": 3420,
+      "sha256": "a178762fbaa32752d4ef36a638e3b6cb9e65f342aacfdc995aff9235ea1e3279"
+    },
+    "f26a": "USER_DEFERRED_INCOMPLETE",
+    "pushAuthority": "NONE_NO_GIT_PUSH_LOCAL_OR_NETWORK_AUTHORIZED"
+  },
+  "f26bConfiguredLocalPushDecision": {
+    "status": "PROPOSAL03_CONSUMED_ONCE_PASS8_TWO_LOCAL_FILE_PUSHES_NO_RETRY",
+    "approval": {
+      "path": "docs/soterai-lite/evidence/20261029-f26b-prepush-70e1c9a4/configured-push-user-approval-03.json",
+      "bytes": 854,
+      "sha256": "aad8c912912a8ca9a604b3baf52a04f10857aa342f42a08d3702831db063c09a"
+    },
+    "consumption": {
+      "path": "docs/soterai-lite/evidence/20261029-f26b-prepush-70e1c9a4/configured-push-consumption-03.json",
+      "bytes": 565,
+      "sha256": "05e47bfa832306917a00bf5d4718a40625caf16a36cf7e047e3cda50ccf072e8"
+    },
+    "acceptance": {
+      "path": "docs/soterai-lite/evidence/20261029-f26b-prepush-70e1c9a4/configured-push-acceptance-03.json",
+      "bytes": 2567,
+      "sha256": "d31f5708f101dd189784ca95406b20aa6266d405bc1d0fdd68a8d75f38c63d59"
+    },
+    "externalNetwork": "NOT_AUTHORIZED_NOT_RUN"
+  },
+  "f26bLatestCheckpoint": {
+    "status": "SOURCE_BYTES_PASS_DONE_TRANSITION_PREPARED",
+    "acceptance": {
+      "path": "docs/soterai-lite/evidence/20261029-f26b-prepush-70e1c9a4/acceptance-01.json",
+      "bytes": 119594,
+      "sha256": "5f197dc7d7b59c6a69585e28a2ee1615ebfa7a8d4437f0f9f5a1ddd32159bf42"
+    },
+    "sourceProof": {
+      "path": "docs/soterai-lite/evidence/20261029-f26b-prepush-70e1c9a4/f26b-source-byte-proof-10.json",
+      "bytes": 29652,
+      "sha256": "9fb8ace1f6da50a251fe6d1111a72258cf27c984f3da27bb9ea9d84585027d4b"
+    },
+    "next": "F28_AFTER_TRANSITION_BYTES",
+    "f26aNative09": "USER_DEFERRED_NOT_RUN"
+  },
+  "f26bSourceByteBarrier": {
+    "path": "docs/soterai-lite/evidence/20261029-f26b-prepush-70e1c9a4/f26b-source-byte-proof-10.json",
+    "bytes": 29652,
+    "sha256": "9fb8ace1f6da50a251fe6d1111a72258cf27c984f3da27bb9ea9d84585027d4b",
+    "commit": "6b207278feff0eae509e43a04a340f678c84c1d9",
+    "paths": 96,
+    "mismatches": 0
+  },
+  "f28LatestCheckpoint": {
+    "status": "SOURCE_BYTES_PASS_DONE_TRANSITION_PREPARED",
+    "acceptance": {
+      "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/acceptance-01.json",
+      "bytes": 103979,
+      "sha256": "3a598a322e6ad742faa47ac8f076505b28e02c0ff90665cbe8bc8ea59026c2b2"
+    },
+    "proof": {
+      "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/f28-source-byte-proof-03.json",
+      "bytes": 113453,
+      "sha256": "8c234126dc4edd6107905d02b27d5a2191455da27a58026e09b137efde01784d"
+    },
+    "next": "F26a_AFTER_TRANSITION_BYTES_EXPLICIT_NATIVE09_DECISION_PENDING"
+  },
+  "f28SourceByteBarrier": {
+    "path": "docs/soterai-lite/evidence/20261101-f28-reliability-9a4c2e71/f28-source-byte-proof-03.json",
+    "bytes": 113453,
+    "sha256": "8c234126dc4edd6107905d02b27d5a2191455da27a58026e09b137efde01784d",
+    "commit": "3c3f6e0567c2398d9fda8c614122697cebc0b335",
+    "paths": 339,
+    "mismatches": 0
+  },
+  "f26aCurrentNative09Preparation": {
+    "path": "docs/soterai-lite/evidence/20261102-f26a-native09-preparation/progress-01.json",
+    "bytes": 3014,
+    "sha256": "381319df0eeb31df8304afc1501b6cb680b06e0a71f52fc289c8a5a915271fdd",
+    "status": "F26A_CURRENT_NATIVE09_PACKET_READY_EXPLICIT_DECISION_PENDING",
+    "binding": {
+      "path": "docs/soterai-lite/evidence/20261102-f26a-native09-preparation/native09-current-binding-01.json",
+      "bytes": 254196,
+      "sha256": "9a6e8cac4f1ef74618565faf9c4bb5c6f71e0f36b2f7c6f755996d685d131616"
+    },
+    "candidate": {
+      "path": "docs/soterai-lite/evidence/20261102-f26a-native09-preparation/native09-current-candidate-01.ps1.txt",
+      "bytes": 52900,
+      "sha256": "58641f92928b8f92bdf8ada857dc6f3316949c0e830fbb4df8975002f31e9033"
+    },
+    "proposal": {
+      "path": "docs/soterai-lite/evidence/20261102-f26a-native09-preparation/NATIVE09-CURRENT-ARTIFACT-PROPOSAL01.md",
+      "bytes": 3061,
+      "sha256": "5ed49c9ef49af1fd87f92eab70a32724f05f33e9cfd4c93853aab5ba28385c40"
+    },
+    "native09": "EXPLICIT_USER_DEFERRED_NOT_RUN"
+  },
+  "f26aCurrentNative10Preparation": {
+    "path": "docs/soterai-lite/evidence/20261102-f26a-native09-preparation/progress-02.json",
+    "bytes": 2902,
+    "sha256": "8e7aa78fd0a8a303f46cb26f8c679c4faa963384518460bd82526f074e4d1530",
+    "status": "F26A_NATIVE09_FAIL_CURRENT_JSON_ROOT_FIX_NATIVE10_READY_NOT_AUTHORIZED",
+    "native09": "CONSUMED_ONCE_FAIL_BEFORE_PRODUCT_DRIVER_REQUIRE_NO_RETRY",
+    "native10": "EXTRA_EXPLICIT_APPROVAL_REQUIRED_TEXT_ONLY_NOT_RUN",
+    "candidate": {
+      "path": "docs/soterai-lite/evidence/20261102-f26a-native09-preparation/native10-current-candidate-02.ps1.txt",
+      "bytes": 53298,
+      "sha256": "351f8a4b8175515768db90a62b57bbe5b573e959b0fbda37f8edc7e8e1d81d5e"
+    },
+    "proposal": {
+      "path": "docs/soterai-lite/evidence/20261102-f26a-native09-preparation/NATIVE10-CURRENT-JSON-PINS-PROPOSAL01.md",
+      "bytes": 3200,
+      "sha256": "ea8f2c9dad5c95677390914601202c088af7650abf5ed5d33e411fa94d21a42b"
+    }
+  },
+  "f26aCurrentNative11Preparation": {
+    "path": "docs/soterai-lite/evidence/20261102-f26a-native09-preparation/progress-03.json",
+    "bytes": 2005,
+    "sha256": "5b7d64eef73a5914ce952b0a48b732bed6a35fa348a64cc6625aeb0d7c1a6f74",
+    "status": "F26A_NATIVE10_PRIMARY30_PASS_PHASE300_FAIL_NATIVE11_540_PROPOSED_NOT_AUTHORIZED",
+    "partial": {
+      "path": "docs/soterai-lite/evidence/20261102-f26a-native09-preparation/native10-partial-acceptance-01.json",
+      "bytes": 4864,
+      "sha256": "54d9d54f47b770e0808ddf7a8e8c80288b58ca0bc08dd420d1468a0794ae4f9e"
+    },
+    "candidate": {
+      "path": "docs/soterai-lite/evidence/20261102-f26a-native09-preparation/native11-current-candidate-01.ps1.txt",
+      "bytes": 53294,
+      "sha256": "d2cbb1a04f50bc114ad8a28afd36c56ecea943e37d4c444066bd0eeb6782a320"
+    },
+    "proposal": {
+      "path": "docs/soterai-lite/evidence/20261102-f26a-native09-preparation/NATIVE11-PHASE-BUDGET-PROPOSAL01.md",
+      "bytes": 4634,
+      "sha256": "767dca8042070ac87ad5143b491d370a7c643a857f793e568043ef777324e8da"
+    },
+    "native11": "TEXT_ONLY_NOT_AUTHORIZED_NOT_MATERIALIZED_NOT_RUN",
+    "proposedFixturePhaseSeconds": 540
+  },
+  "f26aNative11DecisionPending": {
+    "path": "docs/soterai-lite/evidence/20261102-f26a-native09-preparation/native11-decision-pending-01.json",
+    "bytes": 1256,
+    "sha256": "9a6ea53ec8ee4476b90b90c5f81e62402cb57ef09ef0d598e8d09c6e08a6ad9f",
+    "status": "NATIVE11_ONE_EXTRA_AND_PHASE540_DECISION_ASKED_NOT_APPROVED",
+    "checkpoint": "5933b2f4248a250d193119639dd650dfca1ba80d"
+  },
+  "f26aCurrentNative12Preparation": {
+    "path": "docs/soterai-lite/evidence/20261102-f26a-native09-preparation/progress-04.json",
+    "bytes": 2289,
+    "sha256": "ad06b96735a4e3f3b72e668b7c57ca18c759478b1a91828d989e4f5e30c73ad3",
+    "status": "F26A_NATIVE11_PRIMARY30_OFFLINE_PASS_HR02_CASE_FAIL_NATIVE12_READY_NOT_AUTHORIZED",
+    "candidate": {
+      "path": "docs/soterai-lite/evidence/20261102-f26a-native09-preparation/native12-current-candidate-01.ps1.txt",
+      "bytes": 53731,
+      "sha256": "57951923ebce4985bd28f01eb2fac5976e8266c9e67c6b94748b644204eb46e5"
+    },
+    "proposal": {
+      "path": "docs/soterai-lite/evidence/20261102-f26a-native09-preparation/NATIVE12-OFFLINE-ROOT-CASE-PROPOSAL01.md",
+      "bytes": 3304,
+      "sha256": "4f7f47e420c2a9383917a7934279751f00584ab27d7982902bff098dbffb25e8"
+    },
+    "runner": {
+      "path": "docs/soterai-lite/evidence/20261102-f26a-native09-preparation/run-native12-current-chain-01.cjs",
+      "bytes": 3730,
+      "sha256": "65569fb7ee66949ebf65912ef2c8f741621f0cd9f341274d0b494c53148f18aa"
+    },
+    "native12": "EXPLICIT_EXTRA_APPROVAL_REQUIRED_TEXT_ONLY_NOT_RUN"
+  },
+  "f31bLatestCheckpoint": {
+    "acceptance": {
+      "path": "docs/soterai-lite/evidence/20261102-f31b-final-package-7be1c304/feature-acceptance-01.json",
+      "bytes": 12610,
+      "sha256": "9ce861b797fd6ed8697e0f5fe045960b79467942f5619ace5bdbaaf1de9cc161"
+    },
+    "sourceProof": {
+      "path": "docs/soterai-lite/evidence/20261102-f31b-final-package-7be1c304/scoped-f31b-source-checkpoint-03-byte-proof.json",
+      "bytes": 268305,
+      "sha256": "a1d4a12f3706962b1365488a6f41e54668da911960fd5f62eee07694ca678d2b"
+    },
+    "transitionByteProofRequired": "docs/soterai-lite/evidence/20261102-f31b-final-package-7be1c304/f31b-transition-byte-proof-01.json",
+    "next": "F32_AFTER_TRANSITION_BYTES",
+    "releaseReady": false
+  },
+  "currentResumedWork": {
+    "schemaVersion": 1,
+    "clientDate": "2026-11-11",
+    "status": "LOCAL_IMPLEMENTATION_AND_DECLARED_NATIVE_SCOPES_VERIFIED",
+    "verifiedAt": "2026-11-11T18:06:29.550Z",
+    "artifact": {
+      "path": ".worktrees/soterai-lite-escaped-20261110/packages/soterai-lite/soterai-lite-0.7.0-escaped-20261110-attempt01.vsix",
+      "bytes": 1749209,
+      "sha256": "7ebe91420024516e4a55c1afe123f32e6defa40208971cf023a7bfae4a2045dd"
+    },
+    "qualification": {
+      "path": "docs/soterai-lite/evidence/20261110-acceptance-resume/candidate/package-2026-11-10T19-01-29-682Z/qualification/qualification.json",
+      "sha256": "76cff80023b2e2d2be5cdca12fea1ae22f80198dbab2d3d67bc54ca7fcf965ec",
+      "sourceInputs": {
+        "path": "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\docs\\soterai-lite\\evidence\\20261110-acceptance-resume\\candidate\\package-2026-11-10T19-01-29-682Z\\qualification\\source-inputs.json",
+        "bytes": 385009,
+        "sha256": "13b64907199726a824cfe46b52636b4e6376ee67f0c42eee0492bd073146dfea"
+      },
+      "retainedRegression": {
+        "tests": 5074,
+        "pass": 5070,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 4,
+        "todo": 0
+      }
+    },
+    "hostVersion": "1.146.0",
+    "sourceTests": {
+      "tests": 5074,
+      "pass": 5070,
+      "fail": 0,
+      "cancelled": 0,
+      "skipped": 4,
+      "todo": 0,
+      "execution": "RETAINED_FULL_EXECUTION_REVALIDATED_NOT_RERUN"
+    },
+    "counts": {
+      "featureImplementations": 32,
+      "matching": 13,
+      "broker": 106,
+      "functional": 10,
+      "securityBaseline": 17,
+      "originalToolMatrices": 99,
+      "clineHooks": 4,
+      "lifecycleAssertions": 44,
+      "lifecycleObservations": 59,
+      "lifecyclePhases": 8,
+      "ls17Controls": 28,
+      "ls17Attempts": 39,
+      "catalogCells": 264
+    },
+    "catalogGrades": {
+      "scenarios": 44,
+      "toolColumns": 6,
+      "dispositionCells": 264,
+      "STRONG": 1,
+      "PARTIAL": 214,
+      "NONE": 0,
+      "UNVERIFIED": 5,
+      "NOT_COVERED": 44,
+      "uniqueSelectedPassingTests": 144,
+      "selectedSourceFiles": 50,
+      "originalSourceSuiteSkipsStillNotTested": 4
+    },
+    "evidence": {
+      "matching": {
+        "path": "docs/soterai-lite/evidence/20261110-acceptance-resume/native-affected/v4-11460/native-extra/matching-02/matching-acceptance.json",
+        "bytes": 2894,
+        "sha256": "e04bbe1e4d695374cfaeb6a99b2d5255323f7890ad5b54da3cfed4ead959b322"
+      },
+      "foundation": {
+        "path": "docs/soterai-lite/evidence/20261110-acceptance-resume/native-affected/v4-11460/native-extra/foundations-04/affected-acceptance.json",
+        "bytes": 16181,
+        "sha256": "0af7ae8206d64b980cffd03a397e77dc5579d25f38bf871cf4835dd63c282bb1"
+      },
+      "vendor": {
+        "path": "docs/soterai-lite/evidence/20261110-acceptance-resume/native-affected/v4-11460/vendor-assessment.json",
+        "bytes": 18215,
+        "sha256": "d3484806b888b41d90207753b38cfb6ab115eca60af53026bb0fa7be17efaa28"
+      },
+      "gemini": {
+        "path": "docs/soterai-lite/evidence/20261110-acceptance-resume/native-affected/v4-11460/native-extra/gemini-candidate-01/route-acceptance.json",
+        "bytes": 7313,
+        "sha256": "57904ea0475371e6f95d6c5040a2317dbd0500c0abd12dbebe4f33670b82d4bb"
+      },
+      "lifecycle": {
+        "path": "docs/soterai-lite/evidence/20261110-acceptance-resume/native-affected/v4-11460/f32-code-size-02/f32-assessment.json",
+        "bytes": 21842,
+        "sha256": "3f4299bc6309b42ad86bebce951289de5961148d4873b1bddae4da6adec0c6ab"
+      },
+      "ls17": {
+        "path": "docs/soterai-lite/evidence/20261111-queue-completion/ls17-qualified-r4-01.json",
+        "bytes": 475231,
+        "sha256": "7a588bfe778db3c8f8b7c8fe0d594b8e5adfec3d70195066b374d47d2259b97e"
+      },
+      "catalog": {
+        "path": "docs/soterai-lite/evidence/20261111-queue-completion/original-assessment-current-03/assessment.json",
+        "bytes": 544322,
+        "sha256": "038d29963d60b6da5c0b9685a15c314ce85061cff0dae76ac7f2a4ea93f99ce0"
+      },
+      "fiveProfiles": {
+        "path": "docs/soterai-lite/evidence/20261111-publish-fast/catalog/five-profile-reconciliation.json",
+        "bytes": 8546,
+        "sha256": "f497dcde4ac6b0fa4168c819584fce231bbe51fd1d31a10ac6985c7a929eb989"
+      },
+      "review": {
+        "path": "docs/soterai-lite/evidence/20261111-queue-completion/CURRENT-ENGINEERING-REVIEW.md",
+        "bytes": 3469,
+        "sha256": "b4c30b66c43e7a112744328b9384d0e6ab0ac9448c8ff4b66bc080fb15232824"
+      }
+    },
+    "requestedFiveProfileWork": "DONE_HISTORICAL_SELF_RUN_SCOPE",
+    "actualHumanParticipants": 0,
+    "independentVerdict": "NOT_PROVIDED",
+    "engineeringReviewIndependence": "LOW_SAME_LINEAGE_SAME_VENDOR",
+    "rating": {
+      "value": 5.7,
+      "outOf": 10,
+      "status": "PROVISIONAL_ENGINEERING_ASSESSMENT_NOT_MEASURED_MARKET_SCORE"
+    },
+    "remainingOriginalAcceptance": [
+      "Independent human or different-vendor exact-object verdict",
+      "Full real screen-reader/human accessibility judgment",
+      "Unverified native search/context/attachments and remaining full-scenario controls"
+    ],
+    "ownerPublicationActions": [
+      "Publish the prepared exact legal-document commit and verify served hashes",
+      "Publish the exact VSIX and retain registry confirmation"
+    ],
+    "originalReleaseAcceptanceComplete": false,
+    "releaseReady": false,
+    "localWorkComplete": true,
+    "publication": "NOT_RUN_OWNER_PUBLISHES",
+    "latestProgress": {
+      "path": "docs/soterai-lite/evidence/20261111-queue-completion/final-local-reconciliation-01/summary.json",
+      "bytes": 5281,
+      "sha256": "3034136597e441069dc2ae64e10f62350b81a6ded17e47bece01166947fb66a4"
+    }
+  },
+  "reconciliationHistory": [
+    {
+      "snapshot": {
+        "path": "docs/soterai-lite/evidence/20261108-queue-completion/current-snapshot-01.json",
+        "bytes": 7911,
+        "sha256": "ea224953e41986b6e2dc9457b16bcab67cc012504b6bfa6bdd30cfaea19972bf"
+      },
+      "prior": {
+        "clientDate": "2026-11-07",
+        "scope": "Owner-authorized remaining work is executing on recovery VSIX38b81310f53d. Fresh full verification passed4913/4917 with0 failures and4 privileged-symlink skips; package controls55/55 passed. Fresh affected175+functional10 passed and remaining334 are running. F32 extra14 passed the first five native phases including actual uninstall recovery; genuine0.6.3 upgrade stopped at U05 with a retained legacy Windows path-casing incompatibility. F26a/F26, parent F31, F32 and final gates remain incomplete until their actual required evidence.",
+        "f26aCurrentNativeAcceptance": {
+          "path": "docs/soterai-lite/evidence/20261106-remaining-queue/f26a/native14-acceptance.json",
+          "bytes": 14633,
+          "sha256": "e2914c7271cab9503d3f325d1ecd6276b861543b1f1915ebcf5aa5cb8ec9fe42"
+        },
+        "f26aCurrentAffectedAcceptance": {
+          "path": "docs/soterai-lite/evidence/20261106-v01-current-01/affected-acceptance.json",
+          "bytes": 25731,
+          "sha256": "413ae4dac58f5969bbac5a8ec2e83f8acc1964c96efbdc3aa3bb418fb77ba165"
+        },
+        "f26aExecutionState": "PRIOR_NATIVE34_PASS_RECOVERY_CANDIDATE_REQUALIFICATION_REQUIRED",
+        "f31CurrentPackageQualification": {
+          "path": "docs/soterai-lite/evidence/20261106-remaining-queue/candidate-01/current-package-qualification-01.json",
+          "bytes": 8739,
+          "sha256": "650ec4dd35938dbbce995c858063ffe773850f941f611a3925425fd2b2aefe1d"
+        },
+        "f32ImplementationState": {
+          "recordedAt": "2026-11-07",
+          "status": "FROZEN_SOURCE_FULL_VERIFICATION_AND_PACKAGE_RUNNING",
+          "sourceProof": {
+            "path": "docs/soterai-lite/evidence/20261107-removal-recovery/candidate-01/full-inputs-01.json",
+            "bytes": 390999,
+            "sha256": "1325eaf66ddf15a202d56774bf348422df688e4cf0a396f43b7b27b4b67b8f06"
+          },
+          "localVerification": {
+            "path": "docs/soterai-lite/evidence/20261107-removal-recovery/current-review-verification-01.json",
+            "bytes": 5166,
+            "sha256": "744e326278572f5e71895f5362f3e2e2dc55b9332e3a402840e1904620331d97"
+          },
+          "scopedLifecycleTests": 78,
+          "packageControlTests": 55,
+          "preparationControlTests": 27,
+          "fullSuite": "PENDING_FRESH_EXECUTION",
+          "vsix": "NOT_BUILT",
+          "nativeAcceptance": "NOT_EXECUTED_ON_RECOVERY_CANDIDATE"
+        },
+        "f32CurrentAttemptState": {
+          "acceptedAssertions": 0,
+          "requiredAssertions": 44,
+          "requiredObservations": 59,
+          "requiredPhases": 8,
+          "status": "EXTRA13_FAILED_I28_VENDOR_DEFERRED_STORAGE_DELETION_CONFIRMED",
+          "failure": "Vendor physical uninstall removes extension globalStorage. Prior four passing phases remain observations within failed extra13, not feature acceptance."
+        },
+        "f32CurrentNativeBlocker": "Fix confirmed deferred vendor deletion by preserving ciphertext outside extension global storage; rebuild and requalify, then run all44 assertions/59 observations/eight phases.",
+        "gates": [
+          {
+            "id": "V01",
+            "preparationState": "RECOVERY_SOURCE_CHANGED_CURRENT_OBJECT_REQUALIFICATION_REQUIRED",
+            "currentProgress": {
+              "path": "docs/soterai-lite/evidence/20261107-removal-recovery/current-review-verification-01.json",
+              "bytes": 5166,
+              "sha256": "744e326278572f5e71895f5362f3e2e2dc55b9332e3a402840e1904620331d97"
+            }
+          },
+          {
+            "id": "V02",
+            "preparationState": "RECOVERY_SOURCE_CHANGED_CURRENT_OBJECT_REQUALIFICATION_REQUIRED",
+            "currentProgress": {
+              "path": "docs/soterai-lite/evidence/20261107-removal-recovery/current-review-verification-01.json",
+              "bytes": 5166,
+              "sha256": "744e326278572f5e71895f5362f3e2e2dc55b9332e3a402840e1904620331d97"
+            }
+          },
+          {
+            "id": "V03",
+            "preparationState": "RECOVERY_SOURCE_CHANGED_CURRENT_OBJECT_REQUALIFICATION_REQUIRED",
+            "currentProgress": {
+              "path": "docs/soterai-lite/evidence/20261107-removal-recovery/current-review-verification-01.json",
+              "bytes": 5166,
+              "sha256": "744e326278572f5e71895f5362f3e2e2dc55b9332e3a402840e1904620331d97"
+            }
+          },
+          {
+            "id": "V04",
+            "preparationState": "RECOVERY_SOURCE_CHANGED_CURRENT_OBJECT_REQUALIFICATION_REQUIRED",
+            "currentProgress": {
+              "path": "docs/soterai-lite/evidence/20261107-removal-recovery/current-review-verification-01.json",
+              "bytes": 5166,
+              "sha256": "744e326278572f5e71895f5362f3e2e2dc55b9332e3a402840e1904620331d97"
+            }
+          },
+          {
+            "id": "V05",
+            "preparationState": "HUMAN_RESULTS_ABSENT_CHECKLIST_REQUIRES_NEW_ARTIFACT",
+            "currentProgress": {
+              "path": "docs/soterai-lite/evidence/20261107-removal-recovery/current-review-verification-01.json",
+              "bytes": 5166,
+              "sha256": "744e326278572f5e71895f5362f3e2e2dc55b9332e3a402840e1904620331d97"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "snapshot": {
+        "path": "docs/soterai-lite/evidence/20261108-queue-completion/current-snapshot-02.json",
+        "bytes": 8810,
+        "sha256": "aaaa99719c9b0db15532f1347adc473d5e30343cbb0727443d9fa6b7ac7d2faf"
+      },
+      "prior": {
+        "clientDate": "2026-11-08",
+        "scope": "Recovery VSIX38b81310f53d: fresh full4913 PASS/0 FAIL/4 privileged SKIP, package55, affected509, pre-commit34, editor10 and reliability30 verified. Limited upgrade14 accepts zero original migration assertions. Current tool-route qualification is tracked separately. Required feature checkpoints, genuine legacy migration, 264 catalog pairs and actual human/independent gates remain incomplete.",
+        "f26aCurrentNativeAcceptance": {
+          "path": "docs/soterai-lite/evidence/20261107-removal-recovery/f26a-recovery-02/native14-acceptance.json",
+          "bytes": 14961,
+          "sha256": "36775dd851409e58d817d85ce7211d28dc5c7cbb523439f89623e86da8faf5b1"
+        },
+        "f26aCurrentAffectedAcceptance": {
+          "path": "docs/soterai-lite/evidence/20261107-removal-recovery/affected509-batch-01/acceptance.json",
+          "bytes": 1679,
+          "sha256": "5c4e04f7c36973887f7213a7ce9dda5c3ccb407d67d8e2aba034709a94e963ad"
+        },
+        "f26aExecutionState": "CURRENT_NATIVE34_AFFECTED509_PASS_SOURCE_TRANSITION_PROOFS_PENDING",
+        "f31CurrentPackageQualification": {
+          "path": "docs/soterai-lite/evidence/20261107-removal-recovery/candidate-01/current-package-qualification-01.json",
+          "bytes": 6882,
+          "sha256": "269997922881683a450294feb80bee9cdf83e1b7b2351264a59697256e40c1f5"
+        },
+        "f32ImplementationState": {
+          "recordedAt": "2026-11-08",
+          "status": "SOURCE_FULL_PACKAGE_CURRENT_NATIVE_SCOPES_VERIFIED_ORIGINAL_LIFECYCLE_INCOMPLETE",
+          "sourceProof": {
+            "path": "docs/soterai-lite/evidence/20261107-removal-recovery/candidate-01/full-inputs-01.json",
+            "bytes": 390999,
+            "sha256": "1325eaf66ddf15a202d56774bf348422df688e4cf0a396f43b7b27b4b67b8f06"
+          },
+          "vsix": {
+            "path": "packages/soterai-lite/soterai-lite-0.7.0-recovery-20261107-attempt01.vsix",
+            "bytes": 1745352,
+            "sha256": "38b81310f53d5f138d966c8f29de75bf22841ec20640fc7f31f473f38d60b96f"
+          },
+          "fullSuite": {
+            "tests": 4917,
+            "pass": 4913,
+            "fail": 0,
+            "cancelled": 0,
+            "skipped": 4,
+            "todo": 0
+          },
+          "packageControlTests": 55,
+          "currentVerification": {
+            "path": "docs/soterai-lite/evidence/20261108-queue-completion/current-snapshot-01.json",
+            "bytes": 7911,
+            "sha256": "ea224953e41986b6e2dc9457b16bcab67cc012504b6bfa6bdd30cfaea19972bf"
+          }
+        },
+        "f32CurrentAttemptState": {
+          "acceptedAssertions": 0,
+          "requiredAssertions": 44,
+          "requiredObservations": 59,
+          "requiredPhases": 8,
+          "status": "GENUINE_063_MIGRATION_NOT_ESTABLISHED_LIMITED_CURRENT_UPGRADE_PASS14",
+          "evidence": {
+            "path": "docs/soterai-lite/evidence/20261107-removal-recovery/limited-upgrade-01-acceptance.json",
+            "bytes": 7974,
+            "sha256": "715065b7b9b35d4eb74e684f070df5f28c0330a86712830f53b3dab909406f8b"
+          }
+        },
+        "f32CurrentNativeBlocker": "Genuine old0.6.3 manual-deny/migration seed is absent; limited current-install/restart probe does not satisfy original U05-U13.",
+        "gates": [
+          {
+            "id": "V01",
+            "preparationState": "CURRENT_RECEIPTS_RECONCILED_REQUIRED_ACCEPTANCE_INCOMPLETE",
+            "currentProgress": {
+              "path": "docs/soterai-lite/evidence/20261108-queue-completion/current-snapshot-01.json",
+              "bytes": 7911,
+              "sha256": "ea224953e41986b6e2dc9457b16bcab67cc012504b6bfa6bdd30cfaea19972bf"
+            }
+          },
+          {
+            "id": "V02",
+            "preparationState": "CURRENT_RECEIPTS_RECONCILED_REQUIRED_ACCEPTANCE_INCOMPLETE",
+            "currentProgress": {
+              "path": "docs/soterai-lite/evidence/20261108-queue-completion/current-snapshot-01.json",
+              "bytes": 7911,
+              "sha256": "ea224953e41986b6e2dc9457b16bcab67cc012504b6bfa6bdd30cfaea19972bf"
+            }
+          },
+          {
+            "id": "V03",
+            "preparationState": "CURRENT_RECEIPTS_RECONCILED_REQUIRED_ACCEPTANCE_INCOMPLETE",
+            "currentProgress": {
+              "path": "docs/soterai-lite/evidence/20261108-queue-completion/current-snapshot-01.json",
+              "bytes": 7911,
+              "sha256": "ea224953e41986b6e2dc9457b16bcab67cc012504b6bfa6bdd30cfaea19972bf"
+            }
+          },
+          {
+            "id": "V04",
+            "preparationState": "CURRENT_RECEIPTS_RECONCILED_REQUIRED_ACCEPTANCE_INCOMPLETE",
+            "currentProgress": {
+              "path": "docs/soterai-lite/evidence/20261108-queue-completion/current-snapshot-01.json",
+              "bytes": 7911,
+              "sha256": "ea224953e41986b6e2dc9457b16bcab67cc012504b6bfa6bdd30cfaea19972bf"
+            }
+          },
+          {
+            "id": "V05",
+            "preparationState": "CURRENT_RECEIPTS_RECONCILED_REQUIRED_ACCEPTANCE_INCOMPLETE",
+            "currentProgress": {
+              "path": "docs/soterai-lite/evidence/20261108-queue-completion/current-snapshot-01.json",
+              "bytes": 7911,
+              "sha256": "ea224953e41986b6e2dc9457b16bcab67cc012504b6bfa6bdd30cfaea19972bf"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "date": "2026-11-08",
+      "reason": "Owner-authorized PS7 implementation and requested provisional rating; prior current state retained as historical.",
+      "previous": {
+        "scope": "Recovery VSIX38b81310f53d: F26a/F26 and scoped F31 package preparation pass, finalized by the separate transition byte proof. Current full4913 PASS/0 FAIL/4 SKIP, package55, affected509, pre-commit34, editor10, reliability30 and tool matrices99+hook4 verified. F32 genuine legacy migration,264 catalog pairs and actual human/independent acceptance remain incomplete.",
+        "finalRating": {
+          "status": "PENDING",
+          "allowed": false,
+          "requires": "All required feature, integration, artifact and human acceptance gates; no numerical interim rating"
+        },
+        "F11": {
+          "id": "F11",
+          "title": "Managed PowerShell 7 terminal.",
+          "status": "PLANNED",
+          "result": "UNTESTED",
+          "requires": [
+            "F10"
+          ],
+          "completionEvidence": "Per-card focused controls, current exact artifact/affected actual host integration, safe withdrawal, ledger receipt and local scoped commit; tool cards require actual tool route checks",
+          "supportedExecution": false,
+          "coverage": "NOT_TESTED/NOT_COVERED",
+          "disposition": "OPTIONAL_UNAVAILABLE_UNIMPLEMENTED",
+          "availabilityEvidence": "docs/soterai-lite/evidence/20261017-f11-ps7-availability-6f721c9d/availability-01.json",
+          "remainingWork": "Install only if separately authorized/available later, then implement and execute all F11 gates. No PS7 support advertised."
+        },
+        "exclusion": {
+          "reason": "P03 frozen PowerShell7 NOT_FOUND_ON_PATH, fresh bounded discovery unchanged",
+          "recordedAt": "2026-10-17T02:46:49.7493288Z",
+          "evidence": "docs/soterai-lite/evidence/20261017-f11-ps7-availability-6f721c9d/availability-01.json",
+          "requestedFeatureRetained": true,
+          "requiredBehaviorReclassified": false,
+          "queueNormalization": "Late reconciliation of proposed linear F12 dependency; catalog unchanged"
+        },
+        "currentResumedWork": {
+          "path": "docs/soterai-lite/evidence/20261106-remaining-queue/owner-resumption-01.json",
+          "bytes": 1121,
+          "sha256": "dd21779251529dc61814c451b9089767ff7e7af218f17784cb7269344544ffa0",
+          "status": "F26_AND_SCOPED_F31_COMPLETE_F32_AND_FINAL_ACCEPTANCE_INCOMPLETE",
+          "featureComplete": false,
+          "releaseReady": false,
+          "latestProgress": {
+            "path": "docs/soterai-lite/evidence/20261108-queue-completion/current-snapshot-02.json",
+            "bytes": 8810,
+            "sha256": "aaaa99719c9b0db15532f1347adc473d5e30343cbb0727443d9fa6b7ac7d2faf"
+          },
+          "artifact": {
+            "path": "packages/soterai-lite/soterai-lite-0.7.0-recovery-20261107-attempt01.vsix",
+            "bytes": 1745352,
+            "sha256": "38b81310f53d5f138d966c8f29de75bf22841ec20640fc7f31f473f38d60b96f"
+          },
+          "sourceProof": {
+            "path": "docs/soterai-lite/evidence/20261107-removal-recovery/candidate-01/full-inputs-01.json",
+            "bytes": 390999,
+            "sha256": "1325eaf66ddf15a202d56774bf348422df688e4cf0a396f43b7b27b4b67b8f06"
+          },
+          "nativeBlocker": null,
+          "currentAuthorization": {
+            "path": "docs/soterai-lite/evidence/20261107-removal-recovery/owner-resumption-01.json",
+            "bytes": 519,
+            "sha256": "afde7de964f48633eb8de669d0137b6b8a077d23820bed23078421a12cf0cbdc"
+          },
+          "latestDiagnosis": {
+            "path": "docs/soterai-lite/evidence/20261107-removal-recovery/verified-uninstall-cause-01.json",
+            "bytes": 2586,
+            "sha256": "bc2aadd34ef536d5364cf9da8bbb744bcde0e1eaee9a388af37b3593ae988e0e"
+          },
+          "historicalArtifact": {
+            "path": "packages/soterai-lite/soterai-lite-0.7.0-resumed-20261106-attempt02.vsix",
+            "bytes": 1742104,
+            "sha256": "011f96d19d42dbefc2e56eb5399bf5c7f16a09d6b71b8bae5be9d66b2f3769ec"
+          },
+          "historicalSourceProof": {
+            "path": "docs/soterai-lite/evidence/20261106-remaining-queue/candidate-01/full-inputs-02.json",
+            "bytes": 223848,
+            "sha256": "23fd63bb04122bf055f656a77424085b75ff3e3c813121c15034cd209fd1c8f6"
+          },
+          "currentRecoveryVerification": {
+            "path": "docs/soterai-lite/evidence/20261107-removal-recovery/current-review-verification-01.json",
+            "bytes": 5166,
+            "sha256": "744e326278572f5e71895f5362f3e2e2dc55b9332e3a402840e1904620331d97"
+          },
+          "latestExecutionPreflight": {
+            "path": "docs/soterai-lite/evidence/20261107-removal-recovery/execution-unblocked-01.json",
+            "bytes": 825,
+            "sha256": "1fb4e4d08e10146babfb8448472b236c7ac29f51c05d2e3107217428b217b721"
+          },
+          "remaining": {
+            "F11": [
+              "Optional unavailable PowerShell 7 remains unimplemented and NOT_TESTED/NOT_COVERED."
+            ],
+            "F26": [],
+            "F31": [
+              "Historical candidate retains42 build findings. The isolated successor resolves all42 and has zero current npm-reported findings; its byte-equivalent repack still needs installed-host acceptance before becoming the active candidate."
+            ],
+            "F32": [
+              "Original installed lifecycle: 44 assertions, 59 observations and eight phases including genuine 0.6.3 migration.",
+              "The limited14 current-install/restart probe accepts zero original upgrade assertions.",
+              "Scoped source/evidence and transition byte proofs."
+            ],
+            "V01": [
+              "Claude IDE and physical webview/provider coverage are not established by the five current scripted native routes."
+            ],
+            "V02": [
+              "264 catalog pairs need actual pair-specific positive, negative, oracle and prevention-sensitive mutation evidence.",
+              "Two actual real-agent project trials with protection on/off remain absent."
+            ],
+            "V03": [
+              "Reconcile complete current release/handoff documents and claim/artifact drift after remaining gates."
+            ],
+            "V04": [
+              "Exact neutral reviewer kit is prepared; different-vendor or human exact-object dynamic verdict remains absent."
+            ],
+            "V05": [
+              "Authenticated per-tool smoke, two real-agent trials, five separate users and actual screen-reader results.",
+              "Optional privilege/platform decisions and owner publishing decision; no publication inferred."
+            ]
+          },
+          "sourceCheckpoint": {
+            "path": "docs/soterai-lite/evidence/20261108-queue-completion/source-checkpoint-02-byte-proof.json",
+            "bytes": 149825,
+            "sha256": "72931852e7f5ff2f6074eeea5e869659c22e03a0a13ac2b7370190b3b49b6230"
+          },
+          "completedFeatures": [
+            "F26a",
+            "F26",
+            "F31"
+          ],
+          "featureTransitionProof": "docs/soterai-lite/evidence/20261108-queue-completion/transition-checkpoint-01-byte-proof.json",
+          "currentCatalogAssessment": {
+            "path": "docs/soterai-lite/evidence/20261108-queue-completion/routes/catalog99-assessment.json",
+            "bytes": 2309189,
+            "sha256": "8297efa797fed7432e46021d902724f2c2e0639099ab67d17c2a0ed672fcc620"
+          },
+          "currentRawCodexLinkage": {
+            "path": "docs/soterai-lite/evidence/20261108-queue-completion/routes/codex-raw-assessment.json",
+            "bytes": 72389,
+            "sha256": "5b360dcae7f0a3eee6127540a72425aa0732291657b21069fd51447309fbf31f"
+          },
+          "packagingSuccessor": {
+            "status": "ISOLATED_PACKAGING_REMEDIATION_COMPLETE_NEW_ARTIFACT_NOT_HOST_VERIFIED",
+            "report": {
+              "path": "docs/soterai-lite/evidence/20261108-queue-completion/packager-remediation-02.json",
+              "bytes": 1938244,
+              "sha256": "ed5c1eb9603782db180c3102ac5eb7cc9c727e43e353e7c9a882273d1d5412b7"
+            },
+            "package": {
+              "path": "docs/soterai-lite/evidence/20261108-queue-completion/repack-03/result.json",
+              "bytes": 4838,
+              "sha256": "332b95aefcc17c348f4116a591bb75da58262305d8c023e05d490cf86ab7244c"
+            },
+            "details": {
+              "path": "docs/soterai-lite/evidence/20261108-queue-completion/PACKAGING-SUCCESSOR.md",
+              "bytes": 3193,
+              "sha256": "7c152f695374cbb0ac0176e84d7cb1d3c5dd1c144ea77d91fb21451d25536b98"
+            },
+            "installedPackages": 118,
+            "retainedAdvisoriesResolved": 42,
+            "currentNpmReportedVulnerabilities": 0,
+            "identicalArchiveEntries": 18,
+            "activeCandidateChanged": false,
+            "historicalBuildAuditChanged": false,
+            "releaseReady": false
+          }
+        }
+      }
+    },
+    {
+      "clientDate": "2026-11-09",
+      "status": "PS7_VERIFIED_SCOPES_FINAL_ACCEPTANCE_INCOMPLETE",
+      "evidence": {
+        "path": "docs/soterai-lite/evidence/20261108-final-gates/reconciliation-01/snapshot.json",
+        "bytes": 17485,
+        "sha256": "f4c6dc09ca6a34ca805d83dc802bb747b91fe620c5caa75c1ee3694d9a21cf63"
+      },
+      "authority": "Owner explicitly requested all remaining work; current evidence replaces stale pointers without changing original acceptance requirements."
+    },
+    {
+      "clientDate": "2026-11-09",
+      "status": "PS7_REAL_MODEL_TRIALS_VERIFIED_REQUIRED_ACCEPTANCE_INCOMPLETE",
+      "evidence": {
+        "path": "docs/soterai-lite/evidence/20261109-claude-working-route/canonical-correction-01/snapshot.json",
+        "bytes": 1758,
+        "sha256": "0b2966e13c494fbb13f293acfd87f94312f785c22abfbf36e5645e743ee15d66"
+      },
+      "authority": "Owner supplied working Claude screenshot; actual live chat/tool/coding observations supersede account-wide quota inference while original failed requests remain retained."
+    },
+    {
+      "recordedAt": "2026-11-10",
+      "retainedPreviousQueueClientDate": "2026-11-09",
+      "status": "RESUMED_MACHINE_SCOPES_RECONCILED_REQUIRED_ACCEPTANCE_INCOMPLETE",
+      "evidence": {
+        "path": "docs/soterai-lite/evidence/20261109-session-continuation/reconciliation-resumed-01/summary.json",
+        "bytes": 57038,
+        "sha256": "78ef8600ded4cd22602c8d9deb126225576d39e510f0b28e4f5390eb97f31c39"
+      },
+      "retainedPreviousF32InstalledLifecycle": {
+        "result": "INCOMPLETE",
+        "assertionsAccepted": 0,
+        "assertionsDeclared": 44,
+        "phaseObservationsDeclared": 59,
+        "normalRounds": {
+          "max": 3,
+          "consumed": 3,
+          "result": "ALL_FAIL_OR_INCOMPLETE",
+          "perRound": {
+            "1": "AssertionError in the runner at the first phase (primary-before-cli-absence); no later phase ran and no Code window launched; failure receipt lists no completed phases.",
+            "2": "Primary-phase observer AssertionError during the primary Code window; failing stage not recorded.",
+            "3": "Primary-phase observer failed at NATIVE_TRUST_HANDSHAKE (no native trust keyboard receipt)."
+          },
+          "note": "No attempt, including extra05, ran any phase beyond primary. Failures retained, not regraded."
+        },
+        "extra05": {
+          "authorized": true,
+          "maxAttempts": 1,
+          "consumed": true,
+          "result": "FAIL_OR_INCOMPLETE_NO_RETRY",
+          "stage": "I06",
+          "consumedReceipt": "docs/soterai-lite/evidence/20261103-f32-lifecycle-2e95d6a4/installed-extra05-consumed.json",
+          "consumedReceiptSha256": "31c056ea8f50096952512203655999f137a73dc52df05cedaa910d3e8c217f44",
+          "failureReceipt": "docs/soterai-lite/evidence/20261103-f32-lifecycle-2e95d6a4/retained-native-extra05-01/installed-extra05-failure.json",
+          "failureReceiptSha256": "f89e0779a7f5b32988173cd25812ec7a882c77dfa1e519175fa2d2142fd25847",
+          "checkpoint": "docs/soterai-lite/evidence/20261103-f32-lifecycle-2e95d6a4/native-extra05-checkpoint-01.json",
+          "checkpointSha256": "d815cb292d90f60be13a8274f74529f1941a65fb70396516a2b0184388db69d1",
+          "observed": "Real native trust grant and minimal onboarding (33031 ms, 9 keyboard actions) completed. Failed at the I06 migration-modal handshake: renderer timed out 15.2 s after the request while the product's vault migration had completed on disk. Declared close and both EOF were recorded."
+        },
+        "phasesNeverReachedNatively": [
+          "upgrade-old",
+          "upgrade-current from genuine 0.6.3",
+          "upgrade-restart"
+        ],
+        "diagnosis": {
+          "status": "INERT_PROPOSAL_ONLY_NOT_RUN",
+          "proposal": "docs/soterai-lite/evidence/20261103-f32-lifecycle-2e95d6a4/I06-DIAGNOSTIC-PROPOSAL06.md",
+          "proposalSha256": "211cad36c13d5f0113616104fee5beb07591b93a76c44a90246762d18141eff5",
+          "fixture": "docs/soterai-lite/evidence/20261103-f32-lifecycle-2e95d6a4/installed-renderer-proposed-05.cjs",
+          "fixtureSha256": "75f2c76f9a35796cd86bde0ebcff259fe3f1bf93c87b33f75e2e4913ee50b205",
+          "cause": "UNCONFIRMED. Retained receipts cannot tell the 15 s dialog-text wait from the 8 s dialog-close wait. Manual interaction with the visible owned window is an open candidate; startup auto-scan is ruled out by timing.",
+          "admissionWiredToFixture": false,
+          "rootCauseUpdate": {
+            "recordedAt": "2026-11-06",
+            "status": "PROBABLE_NOT_NATIVELY_CONFIRMED",
+            "cause": "Launch contracts 01-03 never set window.dialogStyle; Windows default 'native' renders extension modal messages as OS boxes outside the workbench DOM, while workspace trust always uses the custom dialog. Renderer .monaco-dialog-box wait therefore expired at WAIT_DIALOG_TEXT while the visible OS box was answered outside the fixture.",
+            "proposal": "docs/soterai-lite/evidence/20261103-f32-lifecycle-2e95d6a4/I06-ROOT-CAUSE-PROPOSAL07.md",
+            "fixtureFix": "docs/soterai-lite/evidence/20261103-f32-lifecycle-2e95d6a4/installed-launch-contract-proposed-04.cjs",
+            "fixtureFixHashed": false,
+            "fixtureFixSyntaxCheck": "node --check exit 0 (2026-11-06)",
+            "ownerIntent": "Owner granted blanket permission on 2026-11-06; extra06 still needs runner06/admission/control tests/hash-bound approval before launch.",
+            "blockers": [
+              "Kiro OS command sandbox denies D:\\ to shell processes (Test-Path/Get-ChildItem Access is denied); runner requires a fresh D:\\SoterAI-Lite-test-profiles root, so no native round can launch from the sandboxed agent shell.",
+              "Installed VS Code self-updated to 1.145.0 (a717861c07586a53d83b80d742cd3f59b20a6273); admission/runner05/custody pins 1.144.1 (261c84cb1e...), whose appRoot no longer exists. Vendor receipt, signature/vendor/CDP review, final package qualification and runner constants must be re-qualified for 1.145.0 before extra06."
+            ]
+          },
+          "historical": true
+        },
+        "furtherNativeRounds": "Each further round needs its own bounded approval/admission. Sandbox is disabled by the owner (2026-11-06). Do not open VS Code on the normal profile during a run: it triggers vendor auto-update.",
+        "f26a": "Owner resumed; earlier native34 receipt remains scoped to its original artifact. Current affected and completion gates remain incomplete.",
+        "currentAttemptState": {
+          "acceptedAssertions": 0,
+          "requiredAssertions": 44,
+          "requiredObservations": 59,
+          "requiredPhases": 8,
+          "status": "CURRENT_PS7_FULL_INSTALLED_LIFECYCLE_NOT_ESTABLISHED",
+          "evidence": {
+            "path": "docs/soterai-lite/evidence/20261108-final-gates/reconciliation-01/snapshot.json",
+            "bytes": 17485,
+            "sha256": "f4c6dc09ca6a34ca805d83dc802bb747b91fe620c5caa75c1ee3694d9a21cf63"
+          }
+        },
+        "currentNativeBlocker": "Immutable genuine 0.6.3 rejects ordinary Windows URI drive casing before creating its manual-deny/vault seed. Original U05-U13 and complete44/59/eight-phase current-artifact lifecycle remain unsatisfied.",
+        "extraRounds": {
+          "recordedAt": "2026-11-07",
+          "note": "Each round was one bounded isolated synthetic run authorised by the owner messages quoted in its approval file. Every failure is retained and not regraded. assertionsAccepted stays 0 because no single run passed all 44 assertions.",
+          "extra06": {
+            "result": "FAIL_ENVIRONMENT_NO_WINDOW",
+            "cause": "Electron install_dir_access FATAL on VS Code 1.145.0: install dir ACL held AppContainer package SIDs without ALL APPLICATION PACKAGES (left by the Kiro command sandbox). Code.exe exited before any window.",
+            "evidence": "docs/soterai-lite/evidence/20261103-f32-lifecycle-2e95d6a4/retained-native-extra06-01/"
+          },
+          "incident": "A diagnostic Code.exe --version launched the normal-profile VS Code app, which started its own auto-update (1.145.0 -> 1.145.1; 1.145.2 appeared later). Window was closed gracefully; no user data touched. Vendor pins were rebuilt each time.",
+          "extra07_08": {
+            "result": "FAIL_NATIVE_TRUST_CHANGED_BEFORE_RENDERER_ATTACH",
+            "evidence": [
+              "docs/soterai-lite/evidence/20261103-f32-lifecycle-2e95d6a4/installed-extra07-consumed.json",
+              "docs/soterai-lite/evidence/20261103-f32-lifecycle-2e95d6a4/installed-extra08-consumed.json"
+            ]
+          },
+          "extra09": {
+            "result": "PREPARED_NEVER_LAUNCHED_SUPERSEDED_BY_VENDOR_DRIFT",
+            "evidence": "docs/soterai-lite/evidence/20261103-f32-lifecycle-2e95d6a4/installed-extra09-admission.json"
+          },
+          "extra10": {
+            "result": "FAIL_FIXTURE_RECEIPT_READ_RACE_BEFORE_CODE_LAUNCH",
+            "evidence": "docs/soterai-lite/evidence/20261103-f32-lifecycle-2e95d6a4/installed-extra10-consumed.json"
+          },
+          "extra11": {
+            "result": "FAIL_RENDERER_O01_WAIT",
+            "reached": "native trust keyboard choice, early+full custody, product activation",
+            "evidence": "docs/soterai-lite/evidence/20261103-f32-lifecycle-2e95d6a4/installed-extra11-consumed.json"
+          },
+          "extra12": {
+            "result": "FAIL_RESTART_I12_FIXTURE_COMPARISON",
+            "reached": "primary phase fully passed (17 observations)",
+            "evidence": "docs/soterai-lite/evidence/20261103-f32-lifecycle-2e95d6a4/installed-extra12-consumed.json"
+          },
+          "extra13": {
+            "result": "FAIL_UNINSTALLED_I28_VENDOR_DEFERRED_GLOBAL_STORAGE_DELETION",
+            "vendor": "VS Code 1.145.2 c4453f8ea4",
+            "phasesNativePass": [
+              "primary",
+              "restart",
+              "untrusted",
+              "disabled"
+            ],
+            "phasesNotPassed": [
+              "uninstalled",
+              "upgrade-old",
+              "upgrade-current",
+              "upgrade-restart"
+            ],
+            "uniqueAssertionsObservedPassing": 29,
+            "uniqueAssertionsRequired": 44,
+            "phaseObservationsPassing": 36,
+            "phaseObservationsRequired": 59,
+            "passingIds": [
+              "B01",
+              "B02",
+              "I01",
+              "I02",
+              "I03",
+              "I04",
+              "I05",
+              "I06",
+              "I07",
+              "I08",
+              "I09",
+              "I10",
+              "I11",
+              "I12",
+              "I13",
+              "I14",
+              "I15",
+              "I16",
+              "I17",
+              "I18",
+              "I19",
+              "I20",
+              "I21",
+              "I22",
+              "I23",
+              "I24",
+              "I25",
+              "I26",
+              "O01"
+            ],
+            "notYetPassing": [
+              "I27",
+              "I28",
+              "U01-U13"
+            ],
+            "finding": "Vendor postUninstall removes the extension storage directory even without a vscode:uninstall script. Actual extra13 reached delayed physical extension removal; earlier marker controls did not establish that boundary.",
+            "evidence": [
+              "docs/soterai-lite/evidence/20261103-f32-lifecycle-2e95d6a4/installed-extra13-consumed.json",
+              "docs/soterai-lite/evidence/20261103-f32-lifecycle-2e95d6a4/installed-extra13-native-01.txt",
+              "docs/soterai-lite/evidence/20261103-f32-lifecycle-2e95d6a4/installed-extra13-native-01.txt.result.json"
+            ],
+            "controlledChecks": [
+              "docs/soterai-lite/evidence/20261103-f32-lifecycle-2e95d6a4/experiment-uninstall-storage-result-01.json",
+              "docs/soterai-lite/evidence/20261103-f32-lifecycle-2e95d6a4/experiment-uninstall-storage-result-02.json",
+              "docs/soterai-lite/evidence/20261103-f32-lifecycle-2e95d6a4/experiment-uninstall-storage-result-03.json"
+            ],
+            "historicalFinding": "At I28 (uninstalled phase) the encrypted vault files and the whole extension globalStorage folder were absent, although the same files were byte-identical after the restart, untrusted and disabled phases. CORRECTION (7 Nov, later): the earlier claim that VS Code deletes extension global storage on uninstall is NOT supported. Three controlled checks on VS Code 1.145.2 (CLI-only; CLI plus a window started after uninstall; installed and activated product plus CLI uninstall plus a window) all left marker files in globalStorage/soterai.soterai-ide-guard intact, and the installed workbench, shared-process, CLI and extension-host bundles contain no code that deletes that folder. The product has no vscode:uninstall script and no deletion code on that path; the fixtures contain no deleter. The actual deleter is not yet identified, so whether this is a product defect, VS Code behaviour under the real flow, or a fixture side effect is open.",
+            "currentDiagnosis": {
+              "path": "docs/soterai-lite/evidence/20261107-removal-recovery/verified-uninstall-cause-01.json",
+              "bytes": 2586,
+              "sha256": "bc2aadd34ef536d5364cf9da8bbb744bcde0e1eaee9a388af37b3593ae988e0e"
+            }
+          }
+        },
+        "currentDiagnosis": {
+          "path": "docs/soterai-lite/evidence/20261107-removal-recovery/verified-uninstall-cause-01.json",
+          "bytes": 2586,
+          "sha256": "bc2aadd34ef536d5364cf9da8bbb744bcde0e1eaee9a388af37b3593ae988e0e"
+        },
+        "retainedRecoveryAttemptState": {
+          "acceptedAssertions": 0,
+          "requiredAssertions": 44,
+          "requiredObservations": 59,
+          "requiredPhases": 8,
+          "status": "GENUINE_063_MIGRATION_NOT_ESTABLISHED_LIMITED_CURRENT_UPGRADE_PASS14",
+          "evidence": {
+            "path": "docs/soterai-lite/evidence/20261107-removal-recovery/limited-upgrade-01-acceptance.json",
+            "bytes": 7974,
+            "sha256": "715065b7b9b35d4eb74e684f070df5f28c0330a86712830f53b3dab909406f8b"
+          }
+        },
+        "retainedRecoveryLimitedProbe": {
+          "evidence": {
+            "path": "docs/soterai-lite/evidence/20261107-removal-recovery/limited-upgrade-01-acceptance.json",
+            "bytes": 7974,
+            "sha256": "715065b7b9b35d4eb74e684f070df5f28c0330a86712830f53b3dab909406f8b"
+          },
+          "checks": 14,
+          "originalAssertionsAccepted": 0,
+          "oldManualDenyEstablished": false,
+          "oldMigrationEstablished": false
+        }
+      },
+      "authority": "Root-reviewed proposal only; no acceptance requirement, final gate, runtime flag or rating policy changed."
+    },
+    {
+      "date": "2026-11-10",
+      "retained": {
+        "path": "docs/soterai-lite/evidence/20261109-session-continuation/reconciliation-resumed-01/summary.json",
+        "bytes": 57038,
+        "sha256": "78ef8600ded4cd22602c8d9deb126225576d39e510f0b28e4f5390eb97f31c39"
+      },
+      "scope": "Current PS7 successor ceea88a4aef0:31/32 feature cards DONE. Source/package,99 scripted vendor assertions+4 hooks and4 real-model Node/Express/Next.js OFF/ON trials verified within their recorded scopes. F32,264 catalog pairs and actual human/independent acceptance remain incomplete."
+    },
+    {
+      "date": "2026-11-10",
+      "retained": {
+        "path": "docs/soterai-lite/evidence/20261110-unc-candidate/completion-2026-11-10T06-36-36-702Z/summary.json",
+        "bytes": 3505,
+        "sha256": "daead85cdd76fd3f6d714cfd097d6bf96a1febdbef1ad3a17f8e0a38a41964fc"
+      },
+      "scope": "New UNC candidate: fresh5052 component PASS/0FAIL/4SKIP, package55, original lifecycle44/59/eight and all5 automated profiles PASS. New scripted vendor99/hook4 pending. Full catalog and required human/independent/release decisions remain incomplete."
+    },
+    {
+      "date": "2026-11-10",
+      "retained": {
+        "path": "docs/soterai-lite/evidence/20261110-unc-candidate/completion-2026-11-10T07-31-58-166Z/summary.json",
+        "bytes": 3682,
+        "sha256": "5086f9abb4a481c6ccde21bdb34abf4f9b40c3e8a66cb7b50fa06dfe484b8ef2"
+      },
+      "scope": "New UNC candidate: fresh5052 component PASS/0FAIL/4SKIP, package55, original lifecycle44/59/eight and all5 automated profiles PASS. New scripted vendor99/hook4 PASS. Full catalog and required human/independent/release decisions remain incomplete."
+    },
+    {
+      "date": "2026-11-10",
+      "retained": {
+        "path": "docs/soterai-lite/evidence/20261110-unc-candidate/completion-2026-11-10T07-55-54-504Z/summary.json",
+        "bytes": 4044,
+        "sha256": "c07d91c0d4800b7123e499d853e1eef4497971432955f4062f749f1b7bbe4541"
+      },
+      "scope": "All32 implementation cards DONE in their recorded scopes. Current UNC candidate: fresh5052 component PASS/0FAIL/4SKIP, package55, original lifecycle44/59/eight, seven committed source/test files and all5 automated profiles PASS. New scripted vendor99/hook4 PASS. Full catalog and required human/independent/release decisions remain incomplete."
+    },
+    {
+      "date": "2026-11-10",
+      "retained": {
+        "path": "docs/soterai-lite/evidence/20261110-release-finish/reconciliation-01/summary.json",
+        "bytes": 7891,
+        "sha256": "23cfde450b4e9a736aefec126983579c5ec97f1aea99e2db6a98e855a1a9de7e"
+      },
+      "scope": "All 32 implementation cards DONE in recorded scopes; current UNC source/package/lifecycle verified. Current dependency advisory checks PASS, catalog tooling 109/109 PASS, current 552-file reviewer packet verified. Whole catalog, actual human/independent acceptance and final publishing remain incomplete."
+    },
+    {
+      "date": "2026-11-10",
+      "retained": {
+        "path": "docs/soterai-lite/evidence/20261110-release-finish/reconciliation-02/summary.json",
+        "bytes": 1539,
+        "sha256": "1b10d701182cab563741b4d0dd02e1729b17a273496cb7af5861c3b3ce9d6784"
+      },
+      "scope": "All 32 implementation cards DONE in recorded scopes; current UNC source/package/lifecycle verified. Current dependency advisory checks PASS, catalog tooling 109/109 PASS, current 552-file reviewer packet verified. Whole catalog, actual human/independent acceptance and final publishing remain incomplete."
+    },
+    {
+      "date": "2026-11-11",
+      "retained": {
+        "path": "docs/soterai-lite/evidence/20261110-release-finish/reconciliation-04/summary.json",
+        "bytes": 732,
+        "sha256": "39a81e67602ba84aa3d4c23c9871239fe06bdfc79b2b723f62fcab6be3331df9"
+      },
+      "scope": "Escaped-secret defect reproduced on ad9 candidate. F07/F15/F16/F20 verification reopened; bounded source fix passes243 affected tests. New artifact/full regression/native validation required. Original catalog/human/independent gates remain required."
+    },
+    {
+      "date": "2026-11-11",
+      "retained": {
+        "path": "docs/soterai-lite/evidence/20261110-acceptance-resume/current-state-20261111-01/summary.json",
+        "bytes": 5480,
+        "sha256": "dff9160f47932ef094fc5c0c310aa6bedcbdcbf2fb90b3117abb04d0a658552a"
+      },
+      "scope": "Replacement 7ebe9142 source and package verified: 5070 component passes,0 failures,4 skips; package55. Escaped-secret defect fixed in committed source. Four affected feature verifications and all final acceptance remain incomplete; native launch refused due active VS Code updater."
+    }
+  ],
+  "currentSessionReconciliation": {
+    "path": "docs/soterai-lite/evidence/20261111-queue-completion/final-local-reconciliation-01/summary.json",
+    "bytes": 5281,
+    "sha256": "3034136597e441069dc2ae64e10f62350b81a6ded17e47bece01166947fb66a4"
+  },
+  "newCandidateProgress": {
+    "schemaVersion": 1,
+    "clientDate": "2026-11-11",
+    "status": "LOCAL_IMPLEMENTATION_AND_DECLARED_NATIVE_SCOPES_VERIFIED",
+    "verifiedAt": "2026-11-11T18:06:29.550Z",
+    "artifact": {
+      "path": ".worktrees/soterai-lite-escaped-20261110/packages/soterai-lite/soterai-lite-0.7.0-escaped-20261110-attempt01.vsix",
+      "bytes": 1749209,
+      "sha256": "7ebe91420024516e4a55c1afe123f32e6defa40208971cf023a7bfae4a2045dd"
+    },
+    "qualification": {
+      "path": "docs/soterai-lite/evidence/20261110-acceptance-resume/candidate/package-2026-11-10T19-01-29-682Z/qualification/qualification.json",
+      "sha256": "76cff80023b2e2d2be5cdca12fea1ae22f80198dbab2d3d67bc54ca7fcf965ec",
+      "sourceInputs": {
+        "path": "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\docs\\soterai-lite\\evidence\\20261110-acceptance-resume\\candidate\\package-2026-11-10T19-01-29-682Z\\qualification\\source-inputs.json",
+        "bytes": 385009,
+        "sha256": "13b64907199726a824cfe46b52636b4e6376ee67f0c42eee0492bd073146dfea"
+      },
+      "retainedRegression": {
+        "tests": 5074,
+        "pass": 5070,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 4,
+        "todo": 0
+      }
+    },
+    "hostVersion": "1.146.0",
+    "sourceTests": {
+      "tests": 5074,
+      "pass": 5070,
+      "fail": 0,
+      "cancelled": 0,
+      "skipped": 4,
+      "todo": 0,
+      "execution": "RETAINED_FULL_EXECUTION_REVALIDATED_NOT_RERUN"
+    },
+    "counts": {
+      "featureImplementations": 32,
+      "matching": 13,
+      "broker": 106,
+      "functional": 10,
+      "securityBaseline": 17,
+      "originalToolMatrices": 99,
+      "clineHooks": 4,
+      "lifecycleAssertions": 44,
+      "lifecycleObservations": 59,
+      "lifecyclePhases": 8,
+      "ls17Controls": 28,
+      "ls17Attempts": 39,
+      "catalogCells": 264
+    },
+    "catalogGrades": {
+      "scenarios": 44,
+      "toolColumns": 6,
+      "dispositionCells": 264,
+      "STRONG": 1,
+      "PARTIAL": 214,
+      "NONE": 0,
+      "UNVERIFIED": 5,
+      "NOT_COVERED": 44,
+      "uniqueSelectedPassingTests": 144,
+      "selectedSourceFiles": 50,
+      "originalSourceSuiteSkipsStillNotTested": 4
+    },
+    "evidence": {
+      "matching": {
+        "path": "docs/soterai-lite/evidence/20261110-acceptance-resume/native-affected/v4-11460/native-extra/matching-02/matching-acceptance.json",
+        "bytes": 2894,
+        "sha256": "e04bbe1e4d695374cfaeb6a99b2d5255323f7890ad5b54da3cfed4ead959b322"
+      },
+      "foundation": {
+        "path": "docs/soterai-lite/evidence/20261110-acceptance-resume/native-affected/v4-11460/native-extra/foundations-04/affected-acceptance.json",
+        "bytes": 16181,
+        "sha256": "0af7ae8206d64b980cffd03a397e77dc5579d25f38bf871cf4835dd63c282bb1"
+      },
+      "vendor": {
+        "path": "docs/soterai-lite/evidence/20261110-acceptance-resume/native-affected/v4-11460/vendor-assessment.json",
+        "bytes": 18215,
+        "sha256": "d3484806b888b41d90207753b38cfb6ab115eca60af53026bb0fa7be17efaa28"
+      },
+      "gemini": {
+        "path": "docs/soterai-lite/evidence/20261110-acceptance-resume/native-affected/v4-11460/native-extra/gemini-candidate-01/route-acceptance.json",
+        "bytes": 7313,
+        "sha256": "57904ea0475371e6f95d6c5040a2317dbd0500c0abd12dbebe4f33670b82d4bb"
+      },
+      "lifecycle": {
+        "path": "docs/soterai-lite/evidence/20261110-acceptance-resume/native-affected/v4-11460/f32-code-size-02/f32-assessment.json",
+        "bytes": 21842,
+        "sha256": "3f4299bc6309b42ad86bebce951289de5961148d4873b1bddae4da6adec0c6ab"
+      },
+      "ls17": {
+        "path": "docs/soterai-lite/evidence/20261111-queue-completion/ls17-qualified-r4-01.json",
+        "bytes": 475231,
+        "sha256": "7a588bfe778db3c8f8b7c8fe0d594b8e5adfec3d70195066b374d47d2259b97e"
+      },
+      "catalog": {
+        "path": "docs/soterai-lite/evidence/20261111-queue-completion/original-assessment-current-03/assessment.json",
+        "bytes": 544322,
+        "sha256": "038d29963d60b6da5c0b9685a15c314ce85061cff0dae76ac7f2a4ea93f99ce0"
+      },
+      "fiveProfiles": {
+        "path": "docs/soterai-lite/evidence/20261111-publish-fast/catalog/five-profile-reconciliation.json",
+        "bytes": 8546,
+        "sha256": "f497dcde4ac6b0fa4168c819584fce231bbe51fd1d31a10ac6985c7a929eb989"
+      },
+      "review": {
+        "path": "docs/soterai-lite/evidence/20261111-queue-completion/CURRENT-ENGINEERING-REVIEW.md",
+        "bytes": 3469,
+        "sha256": "b4c30b66c43e7a112744328b9384d0e6ab0ac9448c8ff4b66bc080fb15232824"
+      }
+    },
+    "requestedFiveProfileWork": "DONE_HISTORICAL_SELF_RUN_SCOPE",
+    "actualHumanParticipants": 0,
+    "independentVerdict": "NOT_PROVIDED",
+    "engineeringReviewIndependence": "LOW_SAME_LINEAGE_SAME_VENDOR",
+    "rating": {
+      "value": 5.7,
+      "outOf": 10,
+      "status": "PROVISIONAL_ENGINEERING_ASSESSMENT_NOT_MEASURED_MARKET_SCORE"
+    },
+    "remainingOriginalAcceptance": [
+      "Independent human or different-vendor exact-object verdict",
+      "Full real screen-reader/human accessibility judgment",
+      "Unverified native search/context/attachments and remaining full-scenario controls"
+    ],
+    "ownerPublicationActions": [
+      "Publish the prepared exact legal-document commit and verify served hashes",
+      "Publish the exact VSIX and retain registry confirmation"
+    ],
+    "originalReleaseAcceptanceComplete": false,
+    "releaseReady": false,
+    "localWorkComplete": true,
+    "publication": "NOT_RUN_OWNER_PUBLISHES"
+  },
+  "activeFinalGate": "V05",
+  "currentNativeScenarioProgress": {
+    "path": "docs/soterai-lite/evidence/20261111-queue-completion/ls17-qualified-r4-01.json",
+    "bytes": 475231,
+    "sha256": "7a588bfe778db3c8f8b7c8fe0d594b8e5adfec3d70195066b374d47d2259b97e"
+  },
+  "currentEscapedSecretFinding": {
+    "status": "CLOSED_DECLARED_CURRENT_SOURCE_AND_NATIVE_SCOPE",
+    "evidence": {
+      "path": "docs/soterai-lite/evidence/20261111-queue-completion/ls17-qualified-r4-01.json",
+      "bytes": 475231,
+      "sha256": "7a588bfe778db3c8f8b7c8fe0d594b8e5adfec3d70195066b374d47d2259b97e"
+    },
+    "priorFinding": {
+      "path": "docs/soterai-lite/evidence/20261110-acceptance-resume/current-state-20261111-01/summary.json",
+      "bytes": 5480,
+      "sha256": "dff9160f47932ef094fc5c0c310aa6bedcbdcbf2fb90b3117abb04d0a658552a"
+    }
+  },
+  "releaseReady": false,
+  "retainedEscapedSecretFinding": {
+    "path": "docs/soterai-lite/evidence/20261110-acceptance-resume/finding-01/finding.json",
+    "bytes": 2508,
+    "sha256": "daa0fc1d92041269d830f096b8431e77c22dba8eaeb01f2d37eb97c8a5701473"
+  },
+  "localWorkComplete": true,
+  "remainingLocalWork": [],
+  "currentOriginalAssessment": {
+    "path": "docs/soterai-lite/evidence/20261111-queue-completion/original-assessment-current-03/assessment.json",
+    "bytes": 544322,
+    "sha256": "038d29963d60b6da5c0b9685a15c314ce85061cff0dae76ac7f2a4ea93f99ce0"
   }
 }

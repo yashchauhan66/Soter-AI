@@ -2,7 +2,28 @@
 
 Date: 13 October 2026. Plan version: 1. Scope: existing non-VM functionality plus the remaining Lite upgrades. This is a plan, not an implementation or a passing product report. Final rating: **PENDING until completion and required verification**.
 
-The user's latest instruction controls execution: **finish and test one feature, then start the next**. Implementation has one active feature at a time. Test specifications and adversarial reviews may run in parallel; production implementation may not. Existing working-tree changes and the tested dated 0.6.3 candidate are the starting inputs; they are not a newly completed Lite split.
+The user's latest instruction controls execution. **26 October 2026 priority amendment:** implement shorter independent work first and defer time-consuming work, while keeping one implementation task active at a time. The original finish-and-test rule still applies to each selected task's declared contract; an unfinished deferred card remains INCOMPLETE and cannot acquire another card's PASS. Test specifications and adversarial reviews may run in parallel; production implementation may not. Existing working-tree changes and the tested dated 0.6.3 candidate are the starting inputs; they are not a newly completed Lite split.
+
+## Priority amendment — 26 October 2026
+
+User instruction: “abhi jo features jaldi implement ho sakte hai unko pahle implement kro or jo time consuming hai unko baad ke implement kro.” This changes scheduling, not the frozen catalog, required behavior or verification standard. F26a is preserved at progress-14 and native06 stays explicitly deferred; its former serial dependency no longer blocks independent preparation. Original before-bytes are retained in `evidence/20261026-f31a-offline-release-6c28a19f/`.
+
+Preferred remaining order, subject to technical dependencies: **F31a → F26c → F27 → F29 → F30 → F26a → F26b → F28 → F31b → F32**, then unchanged V01–V05. This is a relative effort judgment from current scope, not a measured completion-time promise. F26a/native06 still needs a later explicit extra-round authorization; no push is authorized for F26b. A declined operation is not retried merely because another card completes.
+
+F31 is split at a reviewable boundary: **F31a** is an offline release-inventory/SBOM utility and owner publishing runbook, independent of runtime feature completion. It reads only an explicit exact VSIX, bounded build-provenance code inputs and dependency license metadata. It never publishes, logs in, downloads, launches Code or declares release readiness. **F31b** retains all original final-package requirements, honest final README-CLAIMS, complete shipped notices/privacy, final exact-object SBOM inclusion, platform declarations, audits and final content inspection. Parent F31 cannot be DONE before F31b. An early detached SBOM is not a claim that the VSIX already embeds it.
+
+Current selected task F31a:
+
+- [x] Retain pre-change plan/queue/ledger and a meaningful missing-module regression baseline (17FAIL).
+- [x] Add `packages/soterai-lite/scripts/audit-release.cjs` with `auditRelease({repoRoot,vsixPath,expectedSha256,buildReceiptPath})`, returning bounded deterministic `{report,sbom}`; CLI writes new report files only to a new explicit workspace directory. Consumers use this API; no runtime import or flag is added.
+- [x] Test exact ZIP entries/runtime/source hashes, missing/tampered inputs, unsupported platform, duplicate/case aliases, budget/truncation failures, license uncertainty, deterministic SBOM and no absolute workspace paths. Actual current20tests20PASS; original17 retained, three real-packager/shared-root regressions added. Earlier17PASS1FAIL and18PASS2FAIL retained.
+- [x] Execute the auditor on the retained exact F26a attempt02 VSIX and immutable build receipt; actual03/04 output byte-identical and overwrite refusal1 retained.15entries/four runtimes/408inputs/three bundled components. This build-tool scope does not change installed runtimes or substitute for F26a's native checks.
+- [x] Write `PUBLISHING-RUNBOOK.md` from current official docs and installed CLI options; owner identity/token or secure automation, exact win32-x64 artifact, pre-release first and Open VSX are covered. No publish command is executed.
+- [x] Verify unchanged F26a990 input bytes, record ledger receipt, scope only F31a files for a local utility commit and verify actual committed bytes: source0906b502162c79b590df6210b5d262fa113b86a3/44paths/zero mismatch. Separate transition byte proof is required before the prepared next-task selection takes effect. Preserve all unrelated and uncommitted F26a work. Parent F31 and F26 remain incomplete.
+
+## Current checkpoint ? 27 October 2026
+
+F31a scoped utility is DONE after source44/transition11 byte verification. F26c has current scoped verification PASS: full4319/4315PASS/4SKIP/zero failures, backend, exact VSIX03 content/offline, native28, emitted-console8, affected20families/509checks, functional10 and unchanged security17 baseline. F26c scoped source commit `f86d4150132f383f496075c937ce2e84e575e86b` has1696 exact paths/zero mismatch/empty index. Prepared F26c DONE/F27 selection takes effect only after actual `f26c-transition-byte-proof-01.json` PASS; no F27 production before that barrier. F26a/native06 remains explicitly deferred and incomplete; its shared source dependencies are checkpointed without accepting F26a. Evidence: `evidence/20261026-f26c-psreadline-53a78b20/acceptance-01.json`. Original L6 HUMAN-ACTIONS/STOP and remaining order/gates are unchanged.
 
 ## Product contract
 
@@ -185,3 +206,28 @@ The user has already authorized continuation while waiving the disk threshold. P
 
 No new plan approval is required by this document. This is the execution order for the user's authorized work, subject to the explicit existing resource and human-evidence gates.
 
+
+
+## Priority amendment — 29 October 2026: F26b selected
+
+The user explicitly requested “f26bko very fast complete kro” after declining F26a native09. Select F26b as the sole implementation task; preserve F26a source and exact native08 evidence as INCOMPLETE/USER_DEFERRED. This changes scheduling only. F26b must independently verify its own declared pre-push contract and shared dependencies; no F26a PASS, native09 authorization, local/network push authorization or completed prerequisite is inferred. Keep original per-feature completion, affected checks, artifact, rollback, byte-commit and L6 gates. No F26a native09 or actual Git push is run under this scheduling instruction. F26b implementation and non-push verification may proceed; any remaining actual-push permission gate needs a concrete reviewed isolated-fixture packet before asking.
+
+
+## Current checkpoint - 1 November 2026
+
+F26b scoped supported contract passes current full/native36/configured-local-push8/affected509/functional10/security17 baseline and safe withdrawal gates. Source commit `6b207278feff0eae509e43a04a340f678c84c1d9` has96 raw-byte-verified paths. DONE and next F28 selection require `evidence/20261029-f26b-prepush-70e1c9a4/f26b-transition-byte-proof-11.json` PASS. User-deferred F26a/native09 remains unrun/incomplete; parentF26 is not DONE. Continue the existing shorter-independent-first order with F28 path/performance/degradation work after the transition barrier; no F28 evidence completes F26a. Original F28 contract and final F31b/F32/V01-V05/L6 stop gates remain. Exactly two synthetic local file pushes ran under consumed Proposal03 authority; no further or external/source-project push permission and no publishing action.
+
+
+## Current checkpoint - 2 November 2026
+
+F28 supported scoped acceptance/source14 byte gates pass at 3c3f6e0567c2398d9fda8c614122697cebc0b335. DONE takes effect after evidence/20261101-f28-reliability-9a4c2e71/f28-transition-byte-proof-01.json PASS. Resume required F26a next before F31b/F32/V01-V05, retaining its explicit native09 defer until a refreshed reviewed proposal is explicitly authorized. No schedule or scope replacement, no release-ready/publish/rating claim; original L6 HUMAN-ACTIONS and STOP remains.
+
+
+## Owner final-attempt amendment - 2 November 2026
+
+User call_3d1ca86cdb034f82a9ea32aa1bc401ab allowed ONE LAST F26a native12 attempt and explicitly instructed skip or delete if incomplete. Native12 actual missing primary result/Code0/wrapper1/bothEOF; offline/restart NOT_RUN. Choose reversible skip: F26a stays INCOMPLETE/unsupported, source and all failures retained, no further F26a native runs. Parent F26 is not DONE; F26b/F26c scoped DONE stand. This owner exception permits F31b supported-scope progression after the scoped final-skip byte barrier; original F26 prerequisite/catalog requirement remains named unmet, not silently accepted. F31b must exclude pre-commit supported claims and preserve recovery access for existing owned hooks. Remaining order F31b -> F32 -> unchanged V01-V05; no replacement plan, rating or original L6 HUMAN-ACTIONS/STOP bypass.
+
+
+## Current supported checkpoint - 3 November 2026
+
+F31b package/audit-work acceptance passes with known42 build findings; remediationOPEN/no risk acceptance/no clean result. Source730b01d9 has832 exact paths including18 source paths. Scoped DONE and nextF32 take effect only after docs/soterai-lite/evidence/20261102-f31b-final-package-7be1c304/f31b-transition-byte-proof-01.json PASS. Preserve original F26a requirement as owner-skipped INCOMPLETE/unsupported/no more native attempts, parentF26/globalF31 readiness incomplete. The owner explicitly requests F31b then F32 then unchanged V01-V05; current F32 execution dependencies are F31a/F31b supported scopes while original F31 prerequisite remains recorded. No lifecycle/human/publication completion or rating inferred. OriginalL6 HUMAN-ACTIONS STOP remains.

@@ -1,79 +1,56 @@
-/**
- * Generates every brand raster from the single source of truth,
- * `public/logo_circle_whiter.png` (1254x1254, white glyph on a #f96403 disc).
- *
- * ## Why this replaces `make-logo-assets.mjs`
- *
- * That script read `public/SoterAILogo.png`, a file that no longer exists, and
- * flattened every favicon onto `#0b1117` — a near-black square, which is what a
- * dark product wants and exactly wrong now: a black-backed tab icon on a white
- * site reads as a different brand.
- *
- * ## What it emits, and why each one exists
- *
- * - `logo-mark.png` (128px)  — the header/footer mark. The header was loading a
- *   448 KB `logo.png` to render at 114x40 CSS px; at DPR 2 that is 228x80 of
- *   actual pixels, so ~99% of the bytes were discarded by the browser after
- *   being downloaded, parsed, and decoded on the critical path.
- * - `logo-mark@2x.png` (256px) — retina, wired through `srcSet`.
- * - `icon.png` / `icon-192.png` / `icon-512.png` / `apple-icon.png` — favicons
- *   and the PWA install icon.
- *
- * ## The transparency decision
- *
- * The source has a near-white glyph on an opaque orange disc. The disc is kept:
- * knocking it out would leave a white shield that is invisible on a white page.
- * What *is* removed is the transparent bleed outside the circle, via `trim()`,
- * so the mark sits on its own bounding box and vertical rhythm in the header is
- * set by the circle rather than by whitespace baked into a PNG.
- *
- * Apple icons are the exception: iOS composites them onto white and applies its
- * own mask, so `apple-icon.png` is flattened onto the brand orange to fill the
- * rounded square instead of showing a circle inside a square.
- *
- * Usage: node scripts/make-brand-assets.mjs
- */
+/** Export the selected release symbol for favicons, app icons and the press kit. */
 import sharp from "sharp";
-import { stat } from "node:fs/promises";
+import { createHash } from "node:crypto";
+import { mkdir, readFile, writeFile } from "node:fs/promises";
 import { fileURLToPath } from "node:url";
 import path from "node:path";
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
-const pub = (file) => path.join(root, "public", file);
-
-const SOURCE = pub("logo_circle_whiter.png");
-/** The disc colour, sampled from the source. Also `--brand-graphic` in globals.css. */
-const BRAND = { r: 249, g: 100, b: 3 };
-
-async function emit(buffer, size, file, { flattenTo } = {}) {
-  let pipeline = sharp(buffer).resize(size, size, {
-    fit: "contain",
-    background: { r: 0, g: 0, b: 0, alpha: 0 },
-  });
-  if (flattenTo) pipeline = pipeline.flatten({ background: flattenTo });
-
-  // The mark is a two-colour graphic (white glyph, orange disc) plus antialiased
-  // edges, so an indexed PNG is far smaller than truecolour with no visible
-  // difference. `colours: 64` leaves ~62 shades for the edge ramp and cuts
-  // `icon-512.png` from 198 kB truecolour / 123 kB full-palette to 41 kB.
-  await pipeline.png({ compressionLevel: 9, palette: true, colours: 64, effort: 10 }).toFile(pub(file));
-
-  const { size: bytes } = await stat(pub(file));
-  console.log(`${file.padEnd(20)} ${String(size).padStart(4)}px  ${(bytes / 1024).toFixed(1)} kB`);
+const sourcePath = path.join(root, "public/brand/selected/symbol.png");
+const args = process.argv.slice(2);
+if (args.length !== 0 && (args.length !== 2 || args[0] !== "--output-dir" || !args[1])) {
+  throw new Error("Usage: make-brand-assets.mjs [--output-dir <directory>]");
 }
-
-const source = await sharp(SOURCE).metadata();
-console.log(`source: logo_circle_whiter.png ${source.width}x${source.height}\n`);
-
-// Trim the transparent margin so the disc defines the box.
-const mark = await sharp(SOURCE).ensureAlpha().trim({ threshold: 1 }).png().toBuffer();
-const trimmed = await sharp(mark).metadata();
-console.log(`trimmed to ${trimmed.width}x${trimmed.height}\n`);
-
-await emit(mark, 128, "logo-mark.png");
-await emit(mark, 256, "logo-mark@2x.png");
-await emit(mark, 32, "icon.png");
-await emit(mark, 192, "icon-192.png");
-await emit(mark, 512, "icon-512.png");
-// iOS masks this into a rounded square and offers no transparency.
-await emit(mark, 180, "apple-icon.png", { flattenTo: BRAND });
+const outputDir = args.length ? path.resolve(args[1]) : path.join(root, "public/brand/selected");
+const master = await readFile(sourcePath);
+const sourceSha256 = createHash("sha256").update(master).digest("hex");
+if (sourceSha256 !== "bcbc6cd5335ae9ad147ff93d760b62d3e85ff951de66f819d1e60c590157b15c") {
+  throw new Error("The selected release symbol changed; review the source before exporting it.");
+}
+const metadata = await sharp(master).metadata();
+if (metadata.format !== "png" || metadata.width !== 223 || metadata.height !== 223) {
+  throw new Error("The selected release symbol must be a 223x223 PNG");
+}
+const paper = { r: 251, g: 250, b: 247, alpha: 1 };
+const exports = [
+  { file: "logo-mark.png", size: 128 },
+  { file: "logo-mark@2x.png", size: 256 },
+  { file: "icon.png", size: 32 },
+  { file: "icon-192.png", size: 192 },
+  { file: "icon-512.png", size: 512, maskable: true },
+  { file: "apple-icon.png", size: 180, flatten: true },
+];
+const rendered = [];
+for (const item of exports) {
+  // Keep the complete symbol within the central safe area for adaptive app icons.
+  const markSize = item.maskable ? Math.floor(item.size * 0.7) : item.size;
+  let pipeline = sharp(master).resize(markSize, markSize, {
+    fit: "contain", background: { r: 0, g: 0, b: 0, alpha: 0 },
+  });
+  if (item.maskable) {
+    const before = Math.floor((item.size - markSize) / 2);
+    const after = item.size - markSize - before;
+    pipeline = pipeline.extend({ top: before, left: before, bottom: after, right: after, background: paper });
+  }
+  if (item.flatten || item.maskable) pipeline = pipeline.flatten({ background: paper });
+  const buffer = await pipeline.png({ compressionLevel: 9 }).toBuffer();
+  rendered.push({ ...item, buffer });
+}
+await mkdir(outputDir, { recursive: true });
+const records = [];
+for (const item of rendered) {
+  const file = path.join(outputDir, item.file);
+  await writeFile(file, item.buffer);
+  records.push({ file, size: item.size, bytes: item.buffer.length, sha256: createHash("sha256").update(item.buffer).digest("hex") });
+}
+console.log(JSON.stringify({ source: sourcePath, sourceSha256, outputDir, rasters: records }));

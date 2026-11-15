@@ -27,11 +27,11 @@ const data: FeatureLandingData = {
   h1: "AI security built for Indian enterprises and startups",
   productName: "SoterAI Guard — India Edition",
   intro:
-    "Indian enterprises face unique AI security challenges: detecting Aadhaar, PAN, GSTIN, UPI, and IFSC identifiers, complying with the DPDP Act, and protecting AI applications at scale. SoterAI Guard is the only AI security platform with native India PII detection, local-first deployment options, and compliance tooling designed for the Indian regulatory landscape.",
+    "Indian enterprises face unique AI security challenges: detecting Aadhaar, PAN, GSTIN, UPI, and IFSC identifiers, complying with the DPDP Act, and protecting AI applications at scale. SoterAI names these identifiers directly, can be self-hosted, and lists its known gaps: the Aadhaar-like rule has no checksum and can fire on some card and IBAN digits, and masked numbers are not reliably named.",
   features: [
     {
       title: "India PII detection",
-      body: "Detect and redact Aadhaar numbers (masked and full), PAN, GSTIN, UPI IDs, IFSC codes, Indian mobile numbers, and contextual identifiers in real time.",
+      body: "Detect and redact Aadhaar-like numbers, PAN, GSTIN, UPI IDs, IFSC codes and Indian mobile numbers. The Aadhaar-like rule matches the 12-digit format and does not check the checksum yet.",
     },
     {
       title: "DPDP Act compliance",
@@ -39,7 +39,7 @@ const data: FeatureLandingData = {
     },
     {
       title: "Local-first architecture",
-      body: "Deploy SoterAI Guard on Indian cloud providers or on-premises. Data never leaves your jurisdiction.",
+      body: "Self-host with Docker, Postgres and Redis on a provider or machine you choose. Where text is processed then depends on how you deploy and which optional services you enable.",
     },
     {
       title: "Multilingual support",
@@ -76,7 +76,7 @@ const data: FeatureLandingData = {
   faqs: [
     {
       q: "Does SoterAI detect masked Aadhaar numbers?",
-      a: "Yes. SoterAI detects both full Aadhaar numbers and masked patterns like 'XXXX XXXX 1234' commonly used in Indian applications.",
+      a: "Not reliably. It names 12-digit Aadhaar-like numbers. In two samples on 2026-11-09, a masked number written as 'XXXX XXXX 1234' got no pattern rule and was only held for review by the model tier. Treat masked numbers as a known gap.",
     },
     {
       q: "Is SoterAI DPDP Act compliant?",

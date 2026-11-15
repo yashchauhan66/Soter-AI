@@ -333,8 +333,8 @@ export function LiveThreatConsole() {
           <p className="text-[10px] uppercase tracking-wider text-slate-300">Neutralized</p>
         </div>
         <div className="px-4 py-3 text-center">
-          <p className="text-lg font-bold text-slate-100">&lt;50ms</p>
-          <p className="text-[10px] uppercase tracking-wider text-slate-300">Per decision</p>
+          <p className="text-lg font-bold text-slate-100">20 ms</p>
+          <p className="text-[10px] uppercase tracking-wider text-slate-300">Median server time, 7 calls</p>
         </div>
         <div className="px-4 py-3 text-center">
           <p className="text-lg font-bold text-lime">0</p>

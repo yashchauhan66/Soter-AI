@@ -1,62 +1,41 @@
 import type { Metadata } from "next";
 import { VsCompetitor, type VsContent } from "@/components/marketing/VsCompetitor";
+import { buildMetadata } from "@/lib/seo/metadata";
 
-export const metadata: Metadata = {
-  title: { absolute: "SoterAI vs Lakera | AI Security Guardrail Comparison" },
+export const metadata: Metadata = buildMetadata({
+  title: "SoterAI vs Lakera: Facts and Dates",
   description:
-    "SoterAI vs Lakera (Check Point): prompt injection detection, RAG security, agent firewall, self-hosting, India PII and audit exports compared.",
-  alternates: { canonical: "/comparison/lakera" },
-  openGraph: {
-    title: "SoterAI vs Lakera — AI Security Comparison",
-    description:
-      "Lakera is a strong cloud prompt-injection API. SoterAI adds RAG quarantine, agent firewall, policy modes, self-hosting, and signed audit exports.",
-  },
-};
+    "Looking for a Lakera alternative? Facts about Lakera from Check Point’s own pages, facts about SoterAI, and when each is the better choice.",
+  path: "/comparison/lakera",
+});
 
 const data: VsContent = {
   slug: "lakera",
   competitor: "Lakera",
-  competitorNote: "Acquired by Check Point, Sep 2025 ($300M)",
-  tagline:
-    "Lakera pioneered low-latency prompt-injection detection. SoterAI delivers that plus RAG security, an agent firewall, policy modes, self-hosting, and signed audit trails in one product.",
-  intro:
-    "Lakera (now part of Check Point) is a purpose-built, cloud-hosted API for prompt injection and jailbreak detection, with a well-known red-team community (Gandalf) and broad language coverage. SoterAI is a broader runtime security command layer: it guards both input and output, scans and quarantines RAG documents, authorizes agent tool calls, enforces policy modes, and ships HMAC-signed audit exports — and it can run fully self-hosted in your own VPC.",
-  theirStrength:
-    "Lakera has deep, purpose-built adversarial detection with strong brand maturity, a large public attack corpus, and Check Point's enterprise go-to-market.",
-  soterEdge: [
-    "Self-hostable in your own VPC (Lakera is cloud-only)",
-    "RAG security: document scanning + quarantine + ACL enforcement",
-    "Agent firewall: tool-call authorization, passports, approvals, escrow",
-    "Policy engine with Monitor / Balanced / Strict modes",
-    "India-specific PII (Aadhaar, PAN, GSTIN, UPI, IFSC) plus global PII",
-    "HMAC-signed JSONL/CSV audit exports for SIEM and compliance",
+  kind: "Vendor platform, now part of Check Point",
+  readOn: "2026-11-10",
+  summary:
+    "Lakera is an AI security platform that Check Point announced it would acquire on 2025-09-16. Both check prompts and replies for injection and data leakage, and they differ in size, price model and proof.",
+  facts: [
+    { label: "Owner", value: "Check Point announced the agreement on 2025-09-16. Its Q3 2025 results release describes the Lakera acquisition as made." },
+    { label: "What the owner says it does", value: "Pre-deployment posture assessment (AI Red Teaming) and real-time runtime enforcement (AI Agent Security) for LLMs, agents and multimodal workflows." },
+    { label: "Vendor figures", value: "The announcement quotes its own detection, latency, false-positive and language figures. They are Check Point’s claims. We have not tested them." },
+    { label: "Terms", value: "Commercial. Pricing was not published on the pages read." },
   ],
-  theirEdge: [
-    "Larger public adversarial corpus and longer track record",
-    "Check Point enterprise security stack integration and GTM",
-    "Very broad language coverage validated at scale",
+  chooseThem: [
+    "You want a vendor backed by a large security company and its enterprise contracts.",
+    "You want runtime protection and a red-teaming product from the same vendor.",
+    "Your procurement requires a vendor of that size.",
   ],
-  rows: [
-    { feature: "Input guard (prompt injection)", soter: "yes", them: "yes" },
-    { feature: "Output guard (unsafe content)", soter: "yes", them: "yes" },
-    { feature: "RAG security", desc: "Doc scan + quarantine + ACL", soter: "yes", them: "no" },
-    { feature: "Agent firewall", desc: "Tool-call authorization", soter: "yes", them: "no" },
-    { feature: "Policy engine", desc: "3 enforcement modes", soter: "yes", them: "no" },
-    { feature: "India PII", desc: "Aadhaar, PAN, GSTIN, UPI", soter: "yes", them: "yes" },
-    { feature: "Self-hosted (Docker)", soter: "yes", them: "no" },
-    { feature: "Signed audit exports", desc: "HMAC JSONL/CSV", soter: "yes", them: "no" },
-    { feature: "Framework SDKs", desc: "LangChain, Vercel AI, Next.js, Express, FastAPI", soter: "yes", them: "Partial" },
-    { feature: "Free tier", soter: "yes", them: "no" },
+  chooseUs: [
+    "You want to try the real engine on your own text with no signup, and start on a free plan.",
+    "You want published limits and known gaps beside every number.",
+    "You want to self-host with Docker, Postgres and Redis.",
   ],
-  bestFor: {
-    soter:
-      "You need end-to-end runtime security — input + output + RAG + agents + policy + audit — and want the option to self-host.",
-    them:
-      "You want a focused, battle-tested cloud prompt-injection API and are standardized on the Check Point security stack.",
-  },
-  sourceUrl:
-    "https://www.checkpoint.com/press-releases/check-point-acquires-lakera-to-deliver-end-to-end-ai-security-for-enterprises/",
-  sourceLabel: "Check Point / Lakera",
+  sources: [
+    { label: "Check Point press release, 2025-09-16", href: "https://www.checkpoint.com/press-releases/check-point-acquires-lakera-to-deliver-end-to-end-ai-security-for-enterprises/" },
+    { label: "Check Point Q3 2025 results", href: "https://www.checkpoint.com/press-releases/check-point-software-reports-2025-third-quarter-financial-results/" },
+  ],
 };
 
 export default function Page() {

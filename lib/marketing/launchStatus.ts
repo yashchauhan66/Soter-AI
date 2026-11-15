@@ -1,3 +1,5 @@
+import { PLAYGROUND_CTA_LABEL } from "./cta";
+
 export type LaunchStatus = "Stable" | "Beta" | "Labs" | "Coming Soon";
 
 /**
@@ -23,7 +25,7 @@ export const heroCopy = {
   headline: "Stop sensitive company data and risky AI-agent actions—before they become incidents.",
   subheading:
     "One security layer to inspect prompts and outputs, redact secrets and Indian PII, and approve or block agent tool calls across browsers, IDEs, workflows, and APIs.",
-  primaryCta: "Test It Live — No Signup",
+  primaryCta: PLAYGROUND_CTA_LABEL,
   secondaryCta: "Book Security Demo",
 };
 

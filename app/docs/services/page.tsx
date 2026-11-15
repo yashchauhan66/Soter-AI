@@ -31,6 +31,7 @@ export const metadata: Metadata = {
   description: `Searchable directory of all ${SERVICES.length} SoterAI security controls — monitoring, protection, detection, agent governance and compliance evidence.`,
   alternates: { canonical: "/docs/services" },
   openGraph: {
+    images: [{ url: "/og-card/default.png", width: 1200, height: 630, alt: "SoterAI, the AI security command layer" }],
     title: "All SoterAI Security Services",
     description: `Browse ${SERVICES.length} security controls, each with a focused setup guide.`,
   },
@@ -71,26 +72,27 @@ export default function ServicesHubPage() {
         }}
       />
 
-      <header className="max-w-3xl">
-        <p className="eyebrow">Service documentation</p>
-        <h1 className="heading-1 mt-3">Every security control, with its own setup guide</h1>
-        <p className="lede mt-4">
-          {SERVICES.length} controls, grouped by what they do for you. Each page follows the same path: understand the
-          control, open the right workspace, configure it, integrate it, and verify the result.
+      <header className="docs-page-header">
+        <p className="docs-eyebrow">Service documentation</p>
+        <h1 className="docs-title">Find the control you need</h1>
+        <p className="docs-summary">
+          {SERVICES.length} service references, grouped by purpose. Each guide covers the actual setup,
+          authentication boundary, verification steps, and limitations in the repository implementation.
+          Live deployment and account availability still need to be checked.
         </p>
       </header>
 
       {/* The six groups explained once, up front. Without this the filter buttons
           in the directory below are six unexplained words. */}
-      <section aria-labelledby="service-groups" className="mt-10">
-        <h2 id="service-groups" className="text-sm font-bold uppercase tracking-micro text-slate-200">
+      <section aria-labelledby="service-groups" className="docs-category-section">
+        <h2 id="service-groups" className="docs-category-heading">
           How the catalogue is organised
         </h2>
-        <dl className="mt-4 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+        <dl className="docs-category-list">
           {SERVICE_GROUPS.map((group) => {
             const count = SERVICES.filter((service) => service.group === group.id).length;
             return (
-              <div key={group.id} className="surface p-4">
+              <div key={group.id}>
                 <dt className="flex items-center justify-between gap-2">
                   <span className="font-semibold text-slate-100">{group.label}</span>
                   <span data-numeric className="text-xs text-slate-500">

@@ -5,7 +5,7 @@ import { FeatureLanding, type FeatureLandingData } from "@/components/marketing/
 export const metadata: Metadata = buildMetadata({
   title: "AI Agent Security: Protect Autonomous Agents",
   description:
-    "Secure AI agents against prompt injection, tool abuse, data exfiltration and privilege escalation with an agent firewall, MCP security and runtime enforcement.",
+    "Check agent prompts and tool calls for injection, tool abuse and data exfiltration, and hold risky actions for approval before they run.",
   path: "/ai-agent-security",
   keywords: [
     "ai agent security",
@@ -74,7 +74,7 @@ const data: FeatureLandingData = {
     "Agent security policies reduce risk but cannot guarantee an agent will never be compromised. Defense in depth is essential.",
     "The agent firewall covers tool calls routed through SoterAI. Agents operating entirely outside the security boundary are not visible.",
     "Passport-based identity is only as secure as the key management backing it. Protect private keys used for agent identity.",
-    "Runtime enforcement adds latency to tool calls (typically under 50ms for policy evaluation).",
+    "Runtime enforcement adds latency to every tool call it checks. We have not published a figure for tool-call policy evaluation; the measured numbers for text checks are on the benchmarks page.",
   ],
   faqs: [
     {

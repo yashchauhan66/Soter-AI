@@ -29,8 +29,9 @@ export const BLOG_POSTS: BlogPostMeta[] = [
   {
     slug: "how-ai-coding-tools-leak-secrets",
     title: "How to Prevent Secret Leaks from AI Coding Tools",
+    seoTitle: "Prevent Secret Leaks from AI Coding Tools",
     description:
-      "Prevent secret leaks from AI coding tools with local scanning, redaction, narrow context, canaries, and credential rotation before prompts leave your editor.",
+      "Keep secrets out of AI coding tools with local scanning, redaction, narrow context, canaries and credential rotation before prompts leave your editor.",
     datePublished: "2026-07-06",
     excerpt:
       "AI coding assistants read more of your project than you think. Here is how credentials end up in prompts — and a practical, local-first checklist to reduce the risk.",
@@ -42,7 +43,7 @@ export const BLOG_POSTS: BlogPostMeta[] = [
     title: "What Is an AI Context Firewall? Definition and Architecture",
     seoTitle: "What Is an AI Context Firewall? Architecture",
     description:
-      "An AI context firewall inspects prompts, files, tool results, and model output for secret leakage and injected instructions. Learn its architecture and limits.",
+      "An AI context firewall inspects prompts, files, tool results and model output for leaked secrets and injected instructions. Architecture and limits.",
     datePublished: "2026-07-06",
     excerpt:
       "The context an AI reads is the new attack surface. This guide explains the AI context firewall pattern — what it inspects, where it sits, and its honest limits.",
@@ -100,7 +101,7 @@ export const BLOG_POSTS: BlogPostMeta[] = [
   {
     slug: "ai-agent-security-risks-threats-protection",
     title: "AI Agent Security: Risks, Real Threats, and How to Protect Autonomous Agents",
-    seoTitle: "AI Agent Security: Risks & How to Protect Agents",
+    seoTitle: "AI Agent Security: Risks, Threats, Protection",
     description:
       "AI agents bring new risks: tool abuse, MCP permission exploits, indirect prompt injection and data exfiltration. Learn how to secure agents in production.",
     datePublished: "2026-07-21",

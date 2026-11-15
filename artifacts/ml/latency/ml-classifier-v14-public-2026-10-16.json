@@ -1,0 +1,48 @@
+{
+  "generated_at": "2026-10-16T15:36:56.760Z",
+  "path": "analyzeText → augmentWithMl (enforce)",
+  "model_dir": "models/ml-classifier-v14",
+  "model_sha256": "5b83b2810138c89bc74e7c9e7f86d913d69d27d4efb2b07ba349ed00dc4bf829",
+  "corpus": "public",
+  "rows": 1200,
+  "warmup": 50,
+  "positive_control_ms": 2523.017,
+  "env": {
+    "node": "v22.16.0",
+    "onnxruntime_node": "1.21.1",
+    "cpu_model": "Intel(R) Core(TM) i5-8350U CPU @ 1.70GHz",
+    "logical_cpus": 8,
+    "platform": "Windows_NT 10.0.26300 x64",
+    "ML_ONNX_MAX_LENGTH": "256"
+  },
+  "results": {
+    "concurrency_1": {
+      "total_ms": {
+        "n": 1200,
+        "mean": 112.386,
+        "p50": 103.709,
+        "p95": 160.081,
+        "p99": 239.016,
+        "max": 735.838
+      },
+      "rules_ms": {
+        "n": 1200,
+        "mean": 3.575,
+        "p50": 3.091,
+        "p95": 5.434,
+        "p99": 14.82,
+        "max": 42.89
+      },
+      "ml_ms": {
+        "n": 1200,
+        "mean": 108.811,
+        "p50": 100.444,
+        "p95": 155.476,
+        "p99": 230.653,
+        "max": 718.641
+      },
+      "throughput_rps": 8.9,
+      "wall_s": 134.87
+    }
+  }
+}

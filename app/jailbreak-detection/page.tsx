@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { buildMetadata } from "@/lib/seo/metadata";
 import { FeatureLanding, type FeatureLandingData } from "@/components/marketing/FeatureLanding";
+import { LATENCY_SENTENCE } from "@/lib/sa/claims";
 
 export const metadata: Metadata = buildMetadata({
   title: "LLM Jailbreak Detection for DAN and AI Attacks",
@@ -54,8 +55,8 @@ const data: FeatureLandingData = {
       body: "Choose Monitor, Balanced, or Strict mode to control how aggressively jailbreak attempts are blocked.",
     },
     {
-      step: "Real-time detection",
-      body: "Every prompt is evaluated in under 50ms. Detected jailbreak attempts are blocked, logged, or flagged.",
+      step: "Detection before the model",
+      body: "Every prompt is evaluated before it reaches the model. Detected jailbreak attempts are blocked, logged, or flagged.",
     },
     {
       step: "Review and tune",
@@ -78,7 +79,7 @@ const data: FeatureLandingData = {
     },
     {
       q: "Does it add latency to prompts?",
-      a: "Jailbreak detection typically adds under 50ms to prompt processing time.",
+      a: `Yes, a little. ${LATENCY_SENTENCE}`,
     },
   ],
   related: [

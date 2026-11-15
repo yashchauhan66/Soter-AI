@@ -62,7 +62,7 @@ function color(path) {
   return value;
 }
 
-const PAGE = "#ffffff";
+const PAGE = "#fbfaf7"; // warm paper, the real page colour (2026 redesign). Cards are #ffffff and are easier than this.
 
 /**
  * Tinted grounds, composited the way the browser does.
@@ -141,7 +141,7 @@ const CHECKS = [
 
   // Boundaries. A hairline between two cards is decorative (the card also has a
   // shadow), but a form field's border is the only thing announcing the field.
-  ["control  .input border on page  ", "#64748b", PAGE, 3.0, "ui"],
+  ["control  .input border on page  ", "#857f74", PAGE, 3.0, "ui"],
   ["control  secondary btn border   ", color("slate-600"), PAGE, 3.0, "ui"],
   ["focus    ring on page           ", color("cyan-DEFAULT"), PAGE, 3.0, "ui"],
   ["focus    ring on sunken well    ", color("cyan-DEFAULT"), color("slate-950"), 3.0, "ui"],

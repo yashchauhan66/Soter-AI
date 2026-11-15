@@ -26,7 +26,7 @@ export function registerLedgerCommands(deps: FirewallDeps): void {
             "soteraiLedger",
             "SoterAI: What AI Saw — Ledger",
             `<h1>📒 What AI Saw</h1>
-         <p>${entries.length} recorded event(s). Newest first (max 200 shown). Hashes and redacted previews only — no raw secrets.</p>
+         <p>${entries.length} metadata projection(s). Newest first (max 200 shown). Caller text and original chain hashes are withheld. Original storage verification is separate; an unavailable ledger may appear empty.</p>
          <table><tr><th>Time</th><th>Event</th><th>Decision</th><th>Risk</th><th>Categories</th><th>Files</th><th>Evidence</th></tr>${
              rows || `<tr><td colspan="7">Ledger is empty.</td></tr>`
          }</table>`,
@@ -37,7 +37,7 @@ export function registerLedgerCommands(deps: FirewallDeps): void {
         const jsonl = await LedgerStore.exportSafe();
         const doc = await vscode.workspace.openTextDocument({ content: jsonl || "", language: "json" });
         await vscode.window.showTextDocument(doc);
-        vscode.window.showInformationMessage("Exported sanitized AI access ledger (no raw secrets).");
+        vscode.window.showInformationMessage("Opened metadata projection. This projection does not carry original chain verification material; disabled or unavailable records are withheld.");
     };
 
     const clearAILedger = async () => {

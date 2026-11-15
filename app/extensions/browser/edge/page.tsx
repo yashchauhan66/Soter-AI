@@ -21,6 +21,7 @@ export const metadata: Metadata = {
     "Install SoterAI Browser Guard for Microsoft Edge: real-time prompt scanning, secret & PII redaction and org policy enforcement across 20+ AI tools.",
   alternates: { canonical: "/extensions/browser/edge" },
   openGraph: {
+    images: [{ url: "/og-card/default.png", width: 1200, height: 630, alt: "SoterAI, the AI security command layer" }],
     title: "SoterAI for Microsoft Edge — AI Security Extension",
     description:
       "Guard every AI conversation in Edge. Scan prompts, redact secrets and PII, and enforce org policy across ChatGPT, Claude, Copilot, and more.",

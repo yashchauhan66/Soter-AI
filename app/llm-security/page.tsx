@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { buildMetadata } from "@/lib/seo/metadata";
 import { FeatureLanding, type FeatureLandingData } from "@/components/marketing/FeatureLanding";
+import { LATENCY_SENTENCE } from "@/lib/sa/claims";
 
 export const metadata: Metadata = buildMetadata({
   title: "LLM Security Platform: Protect LLM Applications",
@@ -87,7 +88,7 @@ const data: FeatureLandingData = {
     },
     {
       q: "Does it work with streaming responses?",
-      a: "Yes. SoterAI Guard supports streaming output inspection with minimal added latency (typically under 100ms for the first chunk).",
+      a: `The guard checks the text you send it. For a streamed reply, send the text once it has been assembled. A check on a partial reply can miss an instruction that arrives later, and no streaming latency has been measured. ${LATENCY_SENTENCE}`,
     },
     {
       q: "Can I self-host SoterAI?",

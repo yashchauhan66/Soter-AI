@@ -78,7 +78,7 @@ function flag(name: string, enabled: boolean): void {
     configEvents.fire({ affectsConfiguration: section => section === "soterai" || section === "soterai." + name });
 }
 beforeEach(async () => {
-    const base = process.platform === "win32" ? "D:\\SoterAI-Lite-test-profiles" : tmpdir(); await mkdir(base, { recursive: true });
+    const base = tmpdir(); await mkdir(base, { recursive: true });
     directory = await mkdtemp(join(await realpath(base), "f10-output-filter-")); root = join(directory, "project"); other = join(directory, "other-project"); storage = join(directory, "storage");
     await mkdir(root); await mkdir(other); await mkdir(storage); stub.resetState(root);
     context = stub.makeExtensionContext(directory); context.globalStorageUri = stub.Uri.file(storage);

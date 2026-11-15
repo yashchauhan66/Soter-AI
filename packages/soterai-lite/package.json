@@ -1,10 +1,15 @@
 {
   "name": "soterai-ide-guard",
-  "displayName": "SoterAI Lite",
-  "description": "Local managed secret protection for cooperative AI tools, with approved masked reads and bundled broker. No VM or account required.",
+  "displayName": "SoterAI Secret Guard",
+  "description": "Find exposed secrets and review redacted code and logs before sharing with AI. Local checks, optional vault. Windows preview.",
   "version": "0.7.0",
   "publisher": "soterai",
   "preview": true,
+  "soteraiLiteRelease": {
+    "schemaVersion": 1,
+    "channel": "pre-release",
+    "unsupportedFeatures": []
+  },
   "pricing": "Free",
   "icon": "media/logo_circle_whiter.png",
   "galleryBanner": {
@@ -20,28 +25,18 @@
     "Other"
   ],
   "keywords": [
-    "ai-security",
-    "ai-coding",
-    "prompt-injection",
     "secret-scanning",
-    "mcp-security",
-    "cursor",
-    "copilot",
-    "claude",
-    "local-ai",
-    "data-leakage",
-    "vscode-security",
-    "developer-security",
-    "ai-agent-security",
-    "ai-safe-mode",
-    "ai-memory-inspector",
-    "enterprise-security",
-    "ai-activity-sentinel",
-    "protected-workspace",
-    "mcp-firewall",
-    "dependency-guard",
-    "policy-packs",
-    "risk-dashboard"
+    "secret-protection",
+    "api-keys",
+    "redaction",
+    "env",
+    "ai-coding",
+    "privacy",
+    "security",
+    "cline",
+    "claude-code",
+    "local-first",
+    "developer-tools"
   ],
   "license": "SEE LICENSE IN LICENSE.md",
   "repository": {
@@ -63,9 +58,13 @@
   ],
   "main": "./dist/extension.js",
   "capabilities": {
+    "virtualWorkspaces": {
+      "supported": false,
+      "description": "SoterAI Lite requires one local Windows filesystem workspace. Virtual and remote workspaces are not tested or supported by this release."
+    },
     "untrustedWorkspaces": {
       "supported": "limited",
-      "description": "SoterAI IDE Guard runs all secret/PII/prompt-injection scanning fully locally, so scanning works in restricted mode. Cloud connection, token storage, and remote scan escalation are disabled in untrusted workspaces until you trust the workspace.",
+      "description": "Local scanning is available in restricted mode. Reviewed tool configuration, managed routes and vault operations require a trusted supported local workspace; independent tools and their traffic remain outside Lite enforcement.",
       "restrictedConfigurations": [
         "soterai.hardening.safeDiffLaunch",
         "soterai.hardening.coverageDisclosure",
@@ -146,7 +145,18 @@
         "soterai.lite.configScanner.editor",
         "soterai.lite.configScanner.mcp",
         "soterai.lite.historyScanner",
-        "soterai.lite.artifactScanner"
+        "soterai.lite.artifactScanner",
+        "soterai.lite.logProtection",
+        "soterai.lite.historyHooks.preCommit",
+        "soterai.lite.historyHooks.prePush",
+        "soterai.lite.historyHooks.psReadLine",
+        "soterai.lite.selfHygiene",
+        "soterai.lite.protectionCenter",
+        "soterai.lite.setupVerification",
+        "soterai.lite.reliability",
+        "soterai.lite.lifecycleRecovery",
+        "soterai.lite.ps7Terminal",
+        "soterai.lite.isolatedAgent"
       ]
     }
   },
@@ -164,6 +174,10 @@
         {
           "id": "soterai.gitbash.checked",
           "title": "SoterAI Git Bash (checked commands)"
+        },
+        {
+          "id": "soterai.ps7.checked",
+          "title": "SoterAI PowerShell 7 (checked commands)"
         }
       ]
     },
@@ -1148,7 +1162,7 @@
       },
       {
         "command": "soterai.installGitSecretHook",
-        "title": "Install Git Pre-Commit Secret Hook (block secrets at commit time)",
+        "title": "Review and Install Pre-Commit Guard (Legacy Alias)",
         "category": "SoterAI"
       },
       {
@@ -1168,7 +1182,7 @@
       },
       {
         "command": "soterai.copyPreCommitHookScript",
-        "title": "Copy Pre-Commit Hook Script (for husky/lefthook repos)",
+        "title": "Pre-Commit Owner Guidance (Legacy Alias)",
         "category": "SoterAI"
       },
       {
@@ -1586,6 +1600,192 @@
         "command": "soterai.artifactScannerStatus",
         "title": "Artifact Scanner Status",
         "category": "SoterAI"
+      },
+      {
+        "command": "soterai.reviewLogs",
+        "title": "Review Saved Logs and Test Reports",
+        "category": "SoterAI"
+      },
+      {
+        "command": "soterai.logProtectionStatus",
+        "title": "Log Protection Status",
+        "category": "SoterAI"
+      },
+      {
+        "command": "soterai.installPreCommitGuard",
+        "title": "Review and Install Pre-Commit Guard",
+        "category": "SoterAI"
+      },
+      {
+        "command": "soterai.resumePreCommitGuard",
+        "title": "Resume Pre-Commit Owner",
+        "category": "SoterAI"
+      },
+      {
+        "command": "soterai.restorePreCommitGuard",
+        "title": "Restore Original Pre-Commit Hook",
+        "category": "SoterAI"
+      },
+      {
+        "command": "soterai.preCommitGuardStatus",
+        "title": "Pre-Commit Owner Status",
+        "category": "SoterAI"
+      },
+      {
+        "command": "soterai.installPrePushGuard",
+        "title": "Review and Install Pre-Push Guard",
+        "category": "SoterAI"
+      },
+      {
+        "command": "soterai.resumePrePushGuard",
+        "title": "Resume Pre-Push Owner",
+        "category": "SoterAI"
+      },
+      {
+        "command": "soterai.restorePrePushGuard",
+        "title": "Restore Original Pre-Push Hook",
+        "category": "SoterAI"
+      },
+      {
+        "command": "soterai.prePushGuardStatus",
+        "title": "Pre-Push Owner Status",
+        "category": "SoterAI"
+      },
+      {
+        "command": "soterai.installPSReadLineHistoryGuard",
+        "title": "Review and Install PowerShell History Exclusion",
+        "category": "SoterAI"
+      },
+      {
+        "command": "soterai.restorePSReadLineHistoryGuard",
+        "title": "Restore Owned PowerShell History Profile",
+        "category": "SoterAI"
+      },
+      {
+        "command": "soterai.psReadLineHistoryGuardStatus",
+        "title": "PowerShell History Exclusion Status",
+        "category": "SoterAI"
+      },
+      {
+        "command": "soterai.openProtectionCenter",
+        "title": "Open Protection Center",
+        "category": "SoterAI",
+        "icon": "$(shield)"
+      },
+      {
+        "command": "soterai.refreshProtectionCenter",
+        "title": "Refresh Protection Center",
+        "category": "SoterAI",
+        "icon": "$(refresh)"
+      },
+      {
+        "command": "soterai.protectionCenterAction",
+        "title": "Protection Center reviewed action",
+        "category": "SoterAI",
+        "icon": "$(list-selection)"
+      },
+      {
+        "command": "soterai.verifySetup",
+        "title": "Verify my setup",
+        "category": "SoterAI",
+        "icon": "$(beaker)"
+      },
+      {
+        "command": "soterai.readReliabilityStatus",
+        "title": "Managed Read Reliability Status",
+        "category": "SoterAI"
+      },
+      {
+        "command": "soterai.restoreChangesBeforeRemoval",
+        "title": "Restore changes before removal",
+        "category": "SoterAI"
+      },
+      {
+        "command": "soterai.configureCheckedPowerShell7",
+        "title": "Configure Checked PowerShell 7 Profile",
+        "category": "SoterAI"
+      },
+      {
+        "command": "soterai.openCheckedPowerShell7",
+        "title": "Open Checked PowerShell 7",
+        "category": "SoterAI"
+      },
+      {
+        "command": "soterai.runCheckedPowerShell7",
+        "title": "Run Checked PowerShell 7 Command",
+        "category": "SoterAI"
+      },
+      {
+        "command": "soterai.restoreCheckedPowerShell7",
+        "title": "Restore Previous Profile for Checked PowerShell 7",
+        "category": "SoterAI"
+      },
+      {
+        "command": "soterai.checkedPowerShell7Status",
+        "title": "Inspect Checked PowerShell 7 Status",
+        "category": "SoterAI"
+      },
+      {
+        "command": "soterai.openProjectJourney",
+        "title": "Protect This Project Step by Step",
+        "category": "SoterAI"
+      },
+      {
+        "command": "soterai.chooseReviewedContext",
+        "title": "Prepare Reviewed AI Context",
+        "category": "SoterAI"
+      },
+      {
+        "command": "soterai.prepareEnvironmentContext",
+        "title": "Preview Environment Contract from Selection",
+        "category": "SoterAI"
+      },
+      {
+        "command": "soterai.prepareDebugContext",
+        "title": "Preview Debug Context from Selection",
+        "category": "SoterAI"
+      },
+      {
+        "command": "soterai.runIsolatedAgent",
+        "title": "Run isolated AI task",
+        "category": "SoterAI",
+        "enablement": "isWorkspaceTrusted"
+      },
+      {
+        "command": "soterai.reviewIsolatedAgentResult",
+        "title": "Review isolated AI changes",
+        "category": "SoterAI",
+        "enablement": "isWorkspaceTrusted"
+      },
+      {
+        "command": "soterai.configureSecretlessVaultOperation",
+        "title": "Configure an approved secretless operation",
+        "category": "SoterAI",
+        "enablement": "isWorkspaceTrusted"
+      },
+      {
+        "command": "soterai.removeSecretlessVaultOperation",
+        "title": "Remove an approved secretless operation",
+        "category": "SoterAI",
+        "enablement": "isWorkspaceTrusted"
+      },
+      {
+        "command": "soterai.secretlessOperationStatus",
+        "title": "Show secretless operation status",
+        "category": "SoterAI",
+        "enablement": "isWorkspaceTrusted"
+      },
+      {
+        "command": "soterai.exportVaultRecovery",
+        "title": "Export encrypted portable vault recovery",
+        "category": "SoterAI",
+        "enablement": "isWorkspaceTrusted"
+      },
+      {
+        "command": "soterai.importVaultRecovery",
+        "title": "Import encrypted portable vault recovery",
+        "category": "SoterAI",
+        "enablement": "isWorkspaceTrusted"
       }
     ],
     "viewsContainers": {
@@ -1600,21 +1800,40 @@
     "views": {
       "soterai-explorer": [
         {
+          "id": "soterai-protected-items",
+          "name": "Protected items",
+          "when": "soterai.protectionCenter"
+        },
+        {
+          "id": "soterai-protection-activity",
+          "name": "Activity",
+          "when": "soterai.protectionCenter"
+        },
+        {
+          "id": "soterai-protection-coverage",
+          "name": "Coverage",
+          "when": "soterai.protectionCenter"
+        },
+        {
           "id": "soterai-control-panel",
           "name": "Control Panel",
-          "type": "webview"
+          "type": "webview",
+          "when": "!soterai.protectionCenter"
         },
         {
           "id": "soterai-project-risk",
-          "name": "Project Risk"
+          "name": "Project Risk",
+          "when": "!soterai.protectionCenter"
         },
         {
           "id": "soterai-latest-findings",
-          "name": "Latest Findings"
+          "name": "Latest Findings",
+          "when": "!soterai.protectionCenter"
         },
         {
           "id": "soterai-policy-status",
-          "name": "Policy & Cloud Sync Status"
+          "name": "Policy & Cloud Sync Status",
+          "when": "!soterai.protectionCenter"
         }
       ]
     },
@@ -2045,7 +2264,7 @@
         "soterai.autoVaultMigration.enabled": {
           "type": "boolean",
           "default": true,
-          "description": "Enable AutoVaultMigration: scan the workspace on startup for sensitive files (.env*, *.pem, etc.) that contain raw secrets and offer to migrate them to the encrypted vault. This is the only protection that works against CLI-based agents (Claude Code, Codex) that read files directly from disk.",
+          "description": "Offer reviewed vault migration for detected values in sensitive workspace files (.env*, *.pem, etc.). Successfully migrated selected values become placeholders in the current saved files. Other copies, unknown values and independent same-user reads remain outside this protection.",
           "scope": "machine",
           "policy": {
             "name": "SoterAIAutoVaultMigrationEnabled",
@@ -2344,6 +2563,72 @@
           "default": true,
           "scope": "machine",
           "description": "Enable bounded owner-reviewed artifact/source-map/copy analysis and guarded public release. Disable withdraws scans and new publication. Source maps and sourceMappingURL-bearing files are withheld from release; no automatic cleanup or build is performed."
+        },
+        "soterai.lite.logProtection": {
+          "type": "boolean",
+          "default": true,
+          "scope": "machine",
+          "description": "Enable owner-reviewed bounded saved-log analysis and guarded SoterAI-owned app/task/lifecycle output. Disable withdraws pending and completed output. Original logs, other extensions and arbitrary processes remain outside these collectors; no automatic cleanup or past-disclosure recall."
+        },
+        "soterai.lite.historyHooks.preCommit": {
+          "type": "boolean",
+          "default": false,
+          "scope": "machine",
+          "description": "Opt in to the owner-reviewed cooperative staged-tree pre-commit candidate. Native verification remains pending; enabling this machine setting does not prove protection. Existing owned-hook status and reviewed encrypted recovery/restore remain available while disabled. Deliberate bypass and final commit races remain; no complete detection or registered-value guarantee."
+        },
+        "soterai.lite.historyHooks.psReadLine": {
+          "type": "boolean",
+          "default": false,
+          "scope": "machine",
+          "description": "Opt in to native owner-reviewed credential-command history exclusion for a selected Windows PowerShell 5.1 / PSReadLine 2.0.0 ConsoleHost profile. Only absent, blank or ordinary comment-only originals are supported automatically. Preserves prior handler denies and public history, with conservative extra exclusions. Existing history and unknown values/encodings remain limited. Status stays Uncovered until the selected profile is actually loaded and verified. Disable stops new installs; explicit reviewed restore verifies encrypted recovery and exact owned bytes."
+        },
+        "soterai.lite.historyHooks.prePush": {
+          "type": "boolean",
+          "default": false,
+          "scope": "machine",
+          "description": "Opt in to a reviewed cooperative pre-push guard for bounded full reachable branch history. Requires the live owning editor and explicit resume after restart. Unknown data, limits and owner absence withhold pushes. Encrypted reviewed restore remains available while disabled. Commit/tag messages, deliberate bypass and final push races remain outside this blob analysis; no registered-value guarantee."
+        },
+        "soterai.lite.selfHygiene": {
+          "type": "boolean",
+          "default": false,
+          "scope": "machine",
+          "description": "Opt in to owned metadata-only audit, activity, broker and diagnostic sinks. Caller text, paths, previews and error messages are withheld. Telemetry still requires separate global opt-in and defaults off. Disable withdraws new owned emissions and purges in-memory telemetry; old signed audit history is not rewritten. JS/native transient processing memory and arbitrary crash dumps remain outside this guarantee."
+        },
+        "soterai.lite.protectionCenter": {
+          "type": "boolean",
+          "default": true,
+          "scope": "machine",
+          "description": "Show native Protected items, Activity and Coverage in one sidebar. Uses saved explicit metadata and existing reviewed setup/restore commands; settings never establish tested protection. Repository overrides are ignored. Disable withdraws this presentation and retains saved denies, audit and recovery records."
+        },
+        "soterai.lite.setupVerification": {
+          "type": "boolean",
+          "default": true,
+          "scope": "machine",
+          "description": "Offer owner-triggered synthetic local component checks and current artifact/configuration-bound timestamps in Protection Center. No real workspace scan, tool launch, login or automatic broker start. Missing, stale or withdrawn evidence stays NOT_TESTED; local checks do not verify live AI-tool routes or establish a coverage score. Disable withdraws checks/presentation while retaining saved protection."
+        },
+        "soterai.lite.reliability": {
+          "type": "boolean",
+          "default": true,
+          "scope": "machine",
+          "description": "Keep bounded managed reader identity checks enabled. File/parent changes, cancellation, size/time limits or resource failures withhold reads. Turning this off withdraws shared managed reads; it does not restore unchecked originals. SoterAI cannot prevent arbitrary same-user filesystem access or every path race."
+        },
+        "soterai.lite.lifecycleRecovery": {
+          "type": "boolean",
+          "default": true,
+          "scope": "machine",
+          "description": "Offer a native review of recorded project changes before removal. Existing per-action confirmations remain required. Unknown or manual recovery stays pending; policy, vault values and encrypted backups are retained. Repository overrides are ignored. Disable withdraws this coordinator without changing saved protection or recovery."
+        },
+        "soterai.lite.ps7Terminal": {
+          "type": "boolean",
+          "default": true,
+          "scope": "machine",
+          "description": "Enable the separate checked PowerShell 7 Core route when installed in the system PowerShell 7 directory or LOCALAPPDATA/Programs/PowerShell/7. Declared commands use managed safe reads and output filtering; unmanaged shell commands and uploads remain outside these checks."
+        },
+        "soterai.lite.isolatedAgent": {
+          "type": "boolean",
+          "default": true,
+          "scope": "application",
+          "description": "Offer owner-reviewed isolated SoterAI tasks using an existing pinned Docker image. This does not sandbox another host extension. Requests refuse when effective isolation cannot be verified."
         }
       }
     },
@@ -2402,6 +2687,11 @@
           "command": "soterai.recoverVaultMigration",
           "when": "resourceScheme == file && !explorerResourceIsFolder && isWorkspaceTrusted",
           "group": "soterai@7"
+        },
+        {
+          "command": "soterai.openProtectionCenter",
+          "when": "soterai.protectionCenter && resourceScheme == file",
+          "group": "soterai@0"
         }
       ],
       "soterai.explorerContext": [
@@ -2493,6 +2783,11 @@
           "command": "soterai.openWalkthrough",
           "group": "1_help@1",
           "when": "view == soterai-control-panel"
+        },
+        {
+          "command": "soterai.refreshProtectionCenter",
+          "when": "view == soterai-protected-items || view == soterai-protection-activity || view == soterai-protection-coverage",
+          "group": "navigation"
         }
       ],
       "commandPalette": [
@@ -2622,11 +2917,11 @@
         },
         {
           "command": "soterai.installGitSecretHook",
-          "when": "soterai.advancedCommands"
+          "when": "false"
         },
         {
           "command": "soterai.copyPreCommitHookScript",
-          "when": "soterai.advancedCommands"
+          "when": "false"
         },
         {
           "command": "soterai.checkScreenShareRisk",
@@ -3531,14 +3826,141 @@
         {
           "command": "soterai.artifactScannerStatus",
           "when": "soterai.advancedCommands"
+        },
+        {
+          "command": "soterai.reviewLogs",
+          "when": "soterai.advancedCommands"
+        },
+        {
+          "command": "soterai.logProtectionStatus",
+          "when": "soterai.advancedCommands"
+        },
+        {
+          "command": "soterai.installPreCommitGuard",
+          "when": "soterai.advancedCommands"
+        },
+        {
+          "command": "soterai.resumePreCommitGuard",
+          "when": "soterai.advancedCommands"
+        },
+        {
+          "command": "soterai.restorePreCommitGuard",
+          "when": "soterai.advancedCommands"
+        },
+        {
+          "command": "soterai.preCommitGuardStatus",
+          "when": "soterai.advancedCommands"
+        },
+        {
+          "command": "soterai.installPrePushGuard",
+          "when": "soterai.advancedCommands"
+        },
+        {
+          "command": "soterai.resumePrePushGuard",
+          "when": "soterai.advancedCommands"
+        },
+        {
+          "command": "soterai.restorePrePushGuard",
+          "when": "soterai.advancedCommands"
+        },
+        {
+          "command": "soterai.prePushGuardStatus",
+          "when": "soterai.advancedCommands"
+        },
+        {
+          "command": "soterai.installPSReadLineHistoryGuard",
+          "when": "soterai.advancedCommands"
+        },
+        {
+          "command": "soterai.restorePSReadLineHistoryGuard",
+          "when": "soterai.advancedCommands"
+        },
+        {
+          "command": "soterai.psReadLineHistoryGuardStatus",
+          "when": "soterai.advancedCommands"
+        },
+        {
+          "command": "soterai.openProtectionCenter",
+          "when": "false"
+        },
+        {
+          "command": "soterai.refreshProtectionCenter",
+          "when": "false"
+        },
+        {
+          "command": "soterai.protectionCenterAction",
+          "when": "false"
+        },
+        {
+          "command": "soterai.verifySetup",
+          "when": "false"
+        },
+        {
+          "command": "soterai.readReliabilityStatus",
+          "when": "soterai.advancedCommands"
+        },
+        {
+          "command": "soterai.configureCheckedPowerShell7",
+          "when": "soterai.advancedCommands"
+        },
+        {
+          "command": "soterai.openCheckedPowerShell7",
+          "when": "soterai.advancedCommands"
+        },
+        {
+          "command": "soterai.runCheckedPowerShell7",
+          "when": "soterai.advancedCommands"
+        },
+        {
+          "command": "soterai.restoreCheckedPowerShell7",
+          "when": "soterai.advancedCommands"
+        },
+        {
+          "command": "soterai.checkedPowerShell7Status",
+          "when": "soterai.advancedCommands"
+        },
+        {
+          "command": "soterai.runIsolatedAgent",
+          "when": "soterai.advancedCommands"
+        },
+        {
+          "command": "soterai.reviewIsolatedAgentResult",
+          "when": "soterai.advancedCommands"
+        },
+        {
+          "command": "soterai.configureSecretlessVaultOperation",
+          "when": "soterai.advancedCommands"
+        },
+        {
+          "command": "soterai.removeSecretlessVaultOperation",
+          "when": "soterai.advancedCommands"
+        },
+        {
+          "command": "soterai.secretlessOperationStatus",
+          "when": "soterai.advancedCommands"
+        },
+        {
+          "command": "soterai.exportVaultRecovery",
+          "when": "soterai.advancedCommands"
+        },
+        {
+          "command": "soterai.importVaultRecovery",
+          "when": "soterai.advancedCommands"
+        }
+      ],
+      "view/item/context": [
+        {
+          "command": "soterai.manageAIRules",
+          "when": "view == soterai-protected-items && viewItem == soterai.savedRestriction",
+          "group": "inline"
         }
       ]
     },
     "walkthroughs": [
       {
         "id": "soterai.gettingStarted",
-        "title": "Get started with SoterAI Guard",
-        "description": "See a real security result, protect project secrets, then connect supported AI tools — all local by default.",
+        "title": "Get started with SoterAI Secret Guard",
+        "description": "Try a local scan, review project secrets, and optionally configure a supported AI tool.",
         "steps": [
           {
             "id": "demoScan",
@@ -3621,11 +4043,17 @@
     "dist/extension.js",
     "dist/local-ai-broker.js",
     "dist/soterai-mcp-server.js",
+    "dist/pre-commit-client.js",
     "media/icon.svg",
     "media/logo_circle_whiter.png",
+    "media/readme-hero.png",
     "media/walkthrough/*.md",
     "README.md",
+    "USER-GUIDE.md",
     "CHANGELOG.md",
-    "LICENSE.md"
+    "LICENSE.md",
+    "PRIVACY.md",
+    "SBOM.cdx.json",
+    "THIRD-PARTY-NOTICES.md"
   ]
 }

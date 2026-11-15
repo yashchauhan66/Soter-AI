@@ -1,48 +1,37 @@
 "use client";
 
-import dynamic from "next/dynamic";
-import { useEffect, useState } from "react";
+import { useState, type ComponentType } from "react";
+import { Bot, Loader2 } from "lucide-react";
 
-// The assistant is a large client component (chat state, markdown renderer,
-// per-page context map). It is non-critical UI, so we keep it out of the
-// initial bundle entirely (ssr: false) and only mount it once the browser is
-// idle or the visitor first interacts with the page. This stops it from
-// competing with initial render/hydration on marketing & SEO landing pages.
-const AiAssistant = dynamic(
-  () => import("./AiAssistant").then((m) => m.AiAssistant),
-  { ssr: false },
-);
-
+// The assistant is non-critical. Import its chat state and markdown renderer
+// only when its own control is activated, not on idle, scroll or unrelated input.
+// This keeps the chunk from competing with marketing render and hydration.
 export function AiAssistantLoader() {
-  const [ready, setReady] = useState(false);
+  const [Loaded, setLoaded] = useState<ComponentType<{ initialOpen?: boolean }> | null>(null);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(false);
 
-  useEffect(() => {
-    if (ready) return;
-
-    let idleId: number | undefined;
-    let timeoutId: ReturnType<typeof setTimeout> | undefined;
-    const trigger = () => setReady(true);
-
-    // Whichever comes first: the browser goes idle, a short fallback timer
-    // elapses, or the visitor interacts with the page.
-    if (typeof window.requestIdleCallback === "function") {
-      idleId = window.requestIdleCallback(trigger, { timeout: 3000 });
-    } else {
-      timeoutId = setTimeout(trigger, 1500);
+  async function activate() {
+    if (loading) return;
+    setLoading(true);
+    setError(false);
+    try {
+      const assistantExports = await import("./AiAssistant");
+      setLoaded(() => assistantExports.AiAssistant);
+    } catch {
+      setError(true);
+    } finally {
+      setLoading(false);
     }
+  }
 
-    const opts: AddEventListenerOptions = { once: true, passive: true };
-    const events = ["pointerdown", "keydown", "touchstart", "scroll"] as const;
-    events.forEach((e) => window.addEventListener(e, trigger, opts));
-
-    return () => {
-      if (idleId !== undefined && typeof window.cancelIdleCallback === "function") {
-        window.cancelIdleCallback(idleId);
-      }
-      if (timeoutId !== undefined) clearTimeout(timeoutId);
-      events.forEach((e) => window.removeEventListener(e, trigger));
-    };
-  }, [ready]);
-
-  return ready ? <AiAssistant /> : null;
+  if (Loaded) return <Loaded initialOpen />;
+  return (
+    <div className="fixed bottom-4 right-4 z-50 sm:bottom-6 sm:right-6">
+      {error && <p role="status" className="mb-2 max-w-60 rounded-lg border border-slate-700 bg-panel p-3 text-sm text-slate-200">Assistant could not load. Use the button to try again.</p>}
+      <button type="button" onClick={activate} disabled={loading} aria-busy={loading} aria-label={loading ? "Loading AI assistant" : "Open AI assistant"} className="flex h-12 w-12 items-center justify-center rounded-full border border-cyan bg-cyan text-white shadow-elevation-2 transition-colors hover:bg-cyan-press disabled:opacity-60">
+        {loading ? <Loader2 size={22} aria-hidden="true" className="animate-spinner" /> : <Bot size={22} aria-hidden="true" />}
+      </button>
+    </div>
+  );
 }

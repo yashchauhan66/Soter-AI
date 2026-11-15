@@ -3,7 +3,7 @@ import { buildMetadata } from "@/lib/seo/metadata";
 import { FeatureLanding, type FeatureLandingData } from "@/components/marketing/FeatureLanding";
 
 export const metadata: Metadata = buildMetadata({
-  title: "AI Safe Mode — Guardrails for AI Coding Sessions",
+  title: "AI Safe Mode: Guardrails for AI Coding Sessions",
   description:
     "AI Safe Mode applies local rules that restrict what context AI assistants can read and what actions they can trigger during a coding session.",
   path: "/ai-safe-mode",

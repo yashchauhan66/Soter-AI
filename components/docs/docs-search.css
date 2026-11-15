@@ -1,0 +1,57 @@
+/* Command + Inspect: a quiet, keyboard-first extension of the docs workspace. */
+.docs-search-trigger {
+  display: flex; align-items: center; gap: 12px; width: 100%; min-height: 42px;
+  padding: 8px 12px; border: 1px solid var(--docs-line, #d9d3c9); border-radius: 6px;
+  background: var(--docs-well, #f4f0e9); color: var(--docs-muted, #625d54); text-align: left;
+  font-size: 14px; line-height: 1.5; transition: border-color 120ms, background-color 120ms;
+}
+.docs-search-trigger > span { flex: 1; }
+.docs-search-trigger > svg { flex-shrink: 0; }
+.docs-search-trigger:hover { border-color: var(--docs-muted, #625d54); background: var(--docs-paper, #fbf9f5); }
+.docs-search-trigger kbd { flex-shrink: 0; padding: 1px 5px; border: 1px solid var(--docs-line, #d9d3c9); border-radius: 3px; font: 11px/1.6 var(--font-sa-mono, ui-monospace), monospace; }
+.docs-search-dialog {
+  position: fixed; inset: 11vh 0 auto; width: min(720px, calc(100vw - 32px)); max-width: none;
+  max-height: 80dvh; margin: 0 auto; padding: 0; overflow: hidden; color: var(--docs-ink, #25221d);
+  background: var(--docs-paper, #fbf9f5); border: 1px solid var(--docs-line, #d9d3c9); border-radius: 10px;
+  box-shadow: 0 24px 80px rgb(24 20 15 / 22%); font-family: "Segoe UI", -apple-system, BlinkMacSystemFont, Arial, sans-serif;
+  font-size: 14px; line-height: 1.5;
+}
+.docs-search-dialog:not([open]) { display: none; }
+.docs-search-dialog[open] { display: flex; flex-direction: column; }
+.docs-search-dialog::backdrop { background: rgb(28 25 21 / 40%); }
+.docs-search-dialog :where(button, input):focus-visible { outline: 2px solid var(--docs-accent, #b5420f); outline-offset: 2px; }
+.docs-search-field { flex: 0 0 auto; display: flex; align-items: center; gap: 14px; padding: 12px 16px 12px 22px; border-bottom: 1px solid var(--docs-line, #d9d3c9); }
+.docs-search-field > svg { flex: 0 0 auto; color: var(--docs-muted, #625d54); }
+.docs-search-field input { width: 100%; min-width: 0; min-height: 42px; border: 0; background: transparent; color: inherit; font-size: 17px; }
+.docs-search-field input:focus-visible { outline: none; }
+.docs-search-field:focus-within { box-shadow: inset 0 -2px var(--docs-accent, #b5420f); }
+.docs-search-field input::placeholder { color: var(--docs-muted, #625d54); opacity: 1; }
+.docs-search-field input::-webkit-search-cancel-button { -webkit-appearance: none; }
+.docs-search-close { display: grid; place-items: center; flex: 0 0 42px; width: 42px; height: 42px; border: 1px solid transparent; border-radius: 5px; color: var(--docs-muted, #625d54); }
+.docs-search-close:hover { border-color: var(--docs-line, #d9d3c9); background: var(--docs-well, #f4f0e9); }
+.docs-search-context { flex: 0 0 auto; display: flex; justify-content: space-between; align-items: center; gap: 12px; min-height: 40px; padding: 10px 24px 6px; color: var(--docs-muted, #625d54); font-size: 12px; }
+.docs-search-context button, .docs-search-empty button { color: var(--docs-accent, #b5420f); font-weight: 600; text-decoration: underline; text-underline-offset: 3px; }
+.docs-search-results { min-height: 0; max-height: 54dvh; margin: 0; padding: 4px 12px 12px; overflow-y: auto; overscroll-behavior: contain; list-style: none; }
+.docs-search-result { display: block; width: 100%; padding: 13px 12px; border: 1px solid transparent; border-radius: 5px; background: transparent; color: inherit; text-align: left; }
+.docs-search-result[aria-selected="true"] { border-color: var(--docs-line, #d9d3c9); background: var(--docs-well, #f4f0e9); }
+.docs-search-result-meta { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 5px; color: var(--docs-muted, #625d54); font-size: 11px; letter-spacing: .025em; }
+.docs-search-result-meta > span { font-size: 10px; }
+.docs-search-result-title { display: flex; justify-content: space-between; gap: 12px; font-size: 16px; font-weight: 600; line-height: 1.5; }
+.docs-search-result-title > svg { margin-top: 4px; flex-shrink: 0; color: var(--docs-accent, #b5420f); }
+.docs-search-result-heading { display: block; margin-top: 3px; color: var(--docs-accent, #b5420f); font-size: 12px; }
+.docs-search-result-excerpt { display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; margin-top: 5px; color: var(--docs-muted, #625d54); font-size: 13px; line-height: 1.6; overflow-wrap: anywhere; }
+.docs-search-empty { padding: 32px 24px 40px; }
+.docs-search-empty strong { display: block; overflow-wrap: anywhere; font-size: 17px; font-weight: 600; }
+.docs-search-empty p { margin: 8px 0 16px; color: var(--docs-muted, #625d54); }
+.docs-search-footer { flex: 0 0 auto; display: flex; justify-content: space-between; flex-wrap: wrap; gap: 8px 24px; border-top: 1px solid var(--docs-line, #d9d3c9); padding: 13px 24px; background: var(--docs-well, #f4f0e9); color: var(--docs-muted, #625d54); font-size: 11px; }
+.docs-search-footer kbd { margin-left: 12px; color: var(--docs-ink, #25221d); }
+.docs-search-footer kbd:first-child { margin-left: 0; }
+@media (max-width: 639px) {
+  .docs-search-trigger kbd { display: none; }
+  .docs-search-dialog { top: 5dvh; max-height: 90dvh; }
+  .docs-search-field { gap: 8px; padding-left: 14px; }
+  .docs-search-field input { font-size: 16px; }
+  .docs-search-context, .docs-search-footer { padding-inline: 16px; }
+  .docs-search-results { max-height: 65dvh; padding-inline: 8px; }
+}
+@media (prefers-reduced-motion: reduce) { .docs-search-trigger { transition: none; } }

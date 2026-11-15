@@ -1,5 +1,7 @@
 import * as vscode from "vscode";
 import { SENSITIVE_FILE_GLOBS, isSensitiveFilePath } from "@soterai/guard-core";
+import { ownedSinkMetadata } from "../../../core/src/OwnedSinkMetadata";
+import { selfHygieneEnabled } from "../self-hygiene/SelfHygieneFlags";
 
 export interface SentinelEvent {
     id: string;
@@ -39,6 +41,16 @@ const REPO_INSTRUCTION_FILES = [
 ];
 
 const SENTINEL_ENABLED_KEY = "soterai.sentinel.enabledState";
+const EVENT_TYPES = new Set(["file_change", "protected_access", "mcp_config_change", "repo_instruction_change", "canary_hit", "extension_change", "config_change", "terminal_command"]);
+
+function minimizedEvent(event: Omit<SentinelEvent, "id" | "timestamp">, timestamp = Date.now()): SentinelEvent | undefined {
+    if (!event || !EVENT_TYPES.has(event.type) || !["low", "medium", "high", "critical"].includes(event.risk)
+        || !Number.isFinite(timestamp) || timestamp < 0 || timestamp > 8640000000000000) return undefined;
+    const metadata = ownedSinkMetadata(event.type, event.decision);
+    return Object.freeze({ id: `sent_${Date.now()}_${Math.random().toString(36).slice(2, 8)}`, timestamp,
+        type: event.type, risk: event.risk, source: "sentinel", decision: metadata.decision,
+        redactedEvidence: "Observed activity metadata only." });
+}
 
 const INJECTION_PATTERNS = [
     /ignore previous instructions/i,
@@ -59,83 +71,129 @@ const INJECTION_PATTERNS = [
 
 export class AISentinel implements vscode.Disposable {
     private enabled = false;
+    private disposed = false;
+    private generation = 0;
+    private persistence: "UNVERIFIED" | "PENDING" | "OBSERVED_API_UPDATE" | "INCOMPLETE" = "UNVERIFIED";
+    private persistenceRevision = 0;
     private events: SentinelEvent[] = [];
     private watchers: vscode.FileSystemWatcher[] = [];
+    private watcherSubscriptions: vscode.Disposable[] = [];
     private statusBarItem: vscode.StatusBarItem;
     private disposables: vscode.Disposable[] = [];
     private readonly maxEvents = 500;
+    private persistEvents(): void {
+        const snapshot = [...this.events];
+        const revision = ++this.persistenceRevision;
+        this.persistence = "PENDING";
+        try {
+            void Promise.resolve(this.context.globalState.update("soterai.sentinelEvents", snapshot))
+                .then(() => { if (!this.disposed && revision === this.persistenceRevision) this.persistence = "OBSERVED_API_UPDATE"; })
+                .catch(() => { if (revision === this.persistenceRevision) this.persistence = "INCOMPLETE"; });
+        } catch { this.persistence = "INCOMPLETE"; }
+    }
 
     constructor(private readonly context: vscode.ExtensionContext) {
         this.statusBarItem = vscode.window.createStatusBarItem(vscode.StatusBarAlignment.Right, 95);
         this.statusBarItem.command = "soterai.showAITimeline";
         context.subscriptions.push(this.statusBarItem);
+        this.disposables.push(vscode.workspace.onDidChangeConfiguration(event => {
+            if (!event.affectsConfiguration("soterai.lite.selfHygiene")) return;
+            this.generation++;
+            if (!selfHygieneEnabled()) { this.events = []; this.stopWatching(); }
+            else if (this.enabled) this.startWatching();
+            this.updateStatusBar();
+        }));
         this.updateStatusBar();
 
         const stored = context.globalState.get<SentinelEvent[]>("soterai.sentinelEvents");
-        if (stored) this.events = stored;
-        this.enabled = context.globalState.get<boolean>(SENTINEL_ENABLED_KEY) ?? false;
+        if (selfHygieneEnabled() && Array.isArray(stored)) {
+            this.events = stored.slice(-this.maxEvents).flatMap(event => {
+                const safe = minimizedEvent(event, event?.timestamp);
+                return safe ? [safe] : [];
+            });
+            this.persistEvents();
+        }
+        this.enabled = context.globalState.get<boolean>(SENTINEL_ENABLED_KEY) === true;
         this.pruneExpired();
         if (this.enabled) this.startWatching();
         this.updateStatusBar();
     }
 
-    get isEnabled(): boolean { return this.enabled; }
+    get isEnabled(): boolean { return !this.disposed && this.enabled && selfHygieneEnabled(); }
 
     async enable(): Promise<void> {
+        if (this.disposed) throw new Error("Owned activity sink is disposed.");
+        if (!selfHygieneEnabled()) throw new Error("Owned activity sink is disabled.");
         if (this.enabled) return;
+        this.generation++;
         this.enabled = true;
-        await this.context.globalState.update(SENTINEL_ENABLED_KEY, true);
+        try { await this.context.globalState.update(SENTINEL_ENABLED_KEY, true); }
+        catch {
+            this.enabled = false; this.stopWatching(); this.persistence = "INCOMPLETE"; this.updateStatusBar();
+            throw new Error("Owned activity preference unavailable.");
+        }
         this.startWatching();
         this.updateStatusBar();
     }
 
     async disable(): Promise<void> {
         if (!this.enabled) return;
+        this.generation++;
         this.enabled = false;
-        await this.context.globalState.update(SENTINEL_ENABLED_KEY, false);
+        try { await this.context.globalState.update(SENTINEL_ENABLED_KEY, false); }
+        catch {
+            this.stopWatching(); this.persistence = "INCOMPLETE"; this.updateStatusBar();
+            throw new Error("Owned activity preference unavailable.");
+        }
         this.stopWatching();
         this.updateStatusBar();
     }
 
-    getEvents(): ReadonlyArray<SentinelEvent> { return this.events; }
+    getEvents(): ReadonlyArray<SentinelEvent> {
+        if (this.disposed || !selfHygieneEnabled()) { this.events = []; return []; }
+        return [...this.events];
+    }
 
     getHighRiskEvents(): SentinelEvent[] {
-        return this.events.filter((e) => e.risk === "high" || e.risk === "critical");
+        return this.getEvents().filter((e) => e.risk === "high" || e.risk === "critical");
     }
 
     recordEvent(event: Omit<SentinelEvent, "id" | "timestamp">, options?: { notify?: boolean }): void {
+        if (this.disposed || !selfHygieneEnabled()) { this.events = []; return; }
+        const full = minimizedEvent(event);
+        if (!full) return;
         this.pruneExpired();
-        const full: SentinelEvent = { ...event, id: `sent_${Date.now()}_${Math.random().toString(36).slice(2, 8)}`, timestamp: Date.now() };
         this.events.push(full);
         if (this.events.length > this.maxEvents) this.events.splice(0, this.events.length - this.maxEvents);
-        void this.context.globalState.update("soterai.sentinelEvents", this.events);
+        this.persistEvents();
 
         // `notify: false` is for callers that already told the user themselves.
         // The terminal watcher (Gap 4) shows a modal naming the matched pattern,
         // and a second generic Sentinel toast for the same event would read as
         // two findings.
         if (options?.notify === false) return;
-        if (event.risk === "high" || event.risk === "critical") {
-            vscode.window.showWarningMessage(`[SoterAI Sentinel] ${event.risk.toUpperCase()}: ${event.redactedEvidence}`);
+        if (full.risk === "high" || full.risk === "critical") {
+            try {
+                void Promise.resolve(vscode.window.showWarningMessage(`[SoterAI Sentinel] ${full.risk.toUpperCase()}: ${full.redactedEvidence}`)).catch(() => undefined);
+            } catch { /* An unavailable UI must not echo exception text. */ }
         }
     }
 
     clearEvents(): void {
         this.events = [];
-        void this.context.globalState.update("soterai.sentinelEvents", this.events);
+        this.persistEvents();
     }
 
     exportReport(): string {
-        const safe = this.events.map((e) => ({
+        const safe = this.getEvents().map((e) => ({
             timestamp: new Date(e.timestamp).toISOString(),
             type: e.type,
             risk: e.risk,
             source: e.source,
-            filePath: e.filePath,
             decision: e.decision,
             redactedEvidence: e.redactedEvidence,
         }));
-        return JSON.stringify({ exportedAt: new Date().toISOString(), privacyMode: "metadata_and_redacted_evidence", retentionDays: this.retentionDays, eventCount: safe.length, events: safe }, null, 2);
+        return JSON.stringify({ exportedAt: new Date().toISOString(), privacyMode: "metadata_only", persistence: this.persistence, retentionDays: this.retentionDays, eventCount: safe.length, events: safe }, null, 2);
     }
 
     private get retentionDays(): number {
@@ -147,11 +205,12 @@ export class AISentinel implements vscode.Disposable {
         const retained = this.events.filter((event) => event.timestamp >= cutoff);
         if (retained.length !== this.events.length) {
             this.events = retained;
-            void this.context.globalState.update("soterai.sentinelEvents", this.events);
+            this.persistEvents();
         }
     }
 
     private startWatching(): void {
+        if (!this.isEnabled || this.watchers.length > 0) return;
         const folder = vscode.workspace.workspaceFolders?.[0];
         if (!folder) return;
 
@@ -166,10 +225,9 @@ export class AISentinel implements vscode.Disposable {
             watcher.onDidCreate((uri) => this.onFileChange(uri, "create"));
             watcher.onDidDelete((uri) => this.onFileChange(uri, "delete"));
             this.watchers.push(watcher);
-            this.disposables.push(watcher);
         }
 
-        this.disposables.push(
+        this.watcherSubscriptions.push(
             vscode.extensions.onDidChange(() => {
                 this.recordEvent({
                     type: "extension_change",
@@ -185,9 +243,13 @@ export class AISentinel implements vscode.Disposable {
     private stopWatching(): void {
         for (const w of this.watchers) w.dispose();
         this.watchers = [];
+        for (const subscription of this.watcherSubscriptions) subscription.dispose();
+        this.watcherSubscriptions = [];
     }
 
     private async onFileChange(uri: vscode.Uri, changeType: string): Promise<void> {
+        if (!this.isEnabled) return;
+        const generation = this.generation;
         const rel = vscode.workspace.asRelativePath(uri);
         const isRepoInstruction = REPO_INSTRUCTION_FILES.some((f) => rel.endsWith(f) || rel.includes(f));
 
@@ -199,6 +261,7 @@ export class AISentinel implements vscode.Disposable {
             risk = "high";
             try {
                 const doc = await vscode.workspace.openTextDocument(uri);
+                if (!this.isEnabled || generation !== this.generation) return;
                 const text = doc.getText();
                 const hasInjection = INJECTION_PATTERNS.some((p) => p.test(text));
                 if (hasInjection) {
@@ -221,6 +284,7 @@ export class AISentinel implements vscode.Disposable {
             risk = "medium";
         }
 
+        if (!this.isEnabled || generation !== this.generation) return;
         this.recordEvent({ type, risk, source: "sentinel", filePath: rel, decision: "monitor", redactedEvidence: `${changeType} on ${rel}` });
     }
 
@@ -229,7 +293,7 @@ export class AISentinel implements vscode.Disposable {
         // status, it is clutter. The consolidated item in extension.ts already
         // reports Sentinel state in its tooltip, so this entry appears only
         // while the Sentinel is actually recording.
-        if (!this.enabled) {
+        if (!this.isEnabled) {
             this.statusBarItem.hide();
             return;
         }
@@ -240,6 +304,9 @@ export class AISentinel implements vscode.Disposable {
     }
 
     dispose(): void {
+        this.disposed = true;
+        this.generation++;
+        this.events = [];
         this.stopWatching();
         for (const d of this.disposables) d.dispose();
         this.statusBarItem.dispose();

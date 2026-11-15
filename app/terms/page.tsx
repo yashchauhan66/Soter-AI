@@ -6,6 +6,7 @@ export const metadata: Metadata = {
     "SoterAI terms of service: defense-in-depth AI security software, acceptable use, API responsibilities, marketplace integrations, and service limitations.",
   alternates: { canonical: "/terms" },
   openGraph: {
+    images: [{ url: "/og-card/default.png", width: 1200, height: 630, alt: "SoterAI, the AI security command layer" }],
     title: "Terms of Service | SoterAI",
     description:
       "SoterAI terms of service: defense-in-depth AI security software, acceptable use, API responsibilities, marketplace integrations, and service limitations.",

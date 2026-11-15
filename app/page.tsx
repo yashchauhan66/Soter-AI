@@ -1,358 +1,336 @@
-import Link from "next/link";
-import type { Metadata } from "next";
-import { ArrowRight } from "lucide-react";
-import { DemoVideo } from "@/components/marketing/DemoVideo";
-import { Evidence } from "@/components/marketing/Evidence";
-import { FAQ } from "@/components/marketing/FAQ";
-import { Features } from "@/components/marketing/Features";
-import { Hero } from "@/components/marketing/Hero";
-import { HowItWorks } from "@/components/marketing/HowItWorks";
-import { Surfaces } from "@/components/marketing/Surfaces";
-import { TwoProducts } from "@/components/marketing/TwoProducts";
-import { SectionHeading } from "@/components/ui/SectionHeading";
-import { safeJsonLd } from "@/lib/seo/jsonLd";
-
-const siteUrl = "https://soterai.in";
-
-export const metadata: Metadata = {
-  // Rendered as "<title> | SoterAI" by the root layout template, so the authored
-  // string must stay <= 50 chars to survive Google's ~60-char SERP truncation.
-  title: "AI Agent Security & LLM Firewall",
-  description:
-    "Stop prompt injection, data leaks, unsafe outputs, and risky tool calls across LLM apps, RAG, browsers, IDEs, and workflows. Test SoterAI free.",
-  alternates: { canonical: "/" },
-  openGraph: {
-    title: "Stop AI Data Leaks and Risky Agent Actions | SoterAI",
-    description:
-      "Inspect prompts and outputs, redact secrets and Indian PII, and stop risky agent tool calls before execution. Try the public AI security playground without signup.",
-    images: [{ url: "/opengraph-image.png", width: 1200, height: 630, alt: "SoterAI AI security control layer" }],
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: "Stop AI Data Leaks and Risky Agent Actions | SoterAI",
-    description:
-      "Inspect prompts and outputs, redact secrets and Indian PII, and stop risky agent tool calls before execution. Test it free without signup.",
-    images: ["/opengraph-image.png"],
-  },
-};
+import type { Metadata } from 'next';
+import Link from 'next/link';
+import { PLAYGROUND_CTA_LABEL } from '@/lib/marketing/cta';
+import { Faq, faqJsonLd, type FaqItem } from '@/components/sa/Faq';
+import { HeroDemo } from '@/components/sa/HeroDemo';
+import { HomeIntro } from '@/components/sa/HomeIntro';
+import '@/components/sa/home-refresh.css';
+import { DataTable, SaLinkButton, StatusBadge } from '@/components/sa/primitives';
+import { SaRoot } from '@/components/sa/SaRoot';
+import { NUMBERS_WITH_LIMITS, BLIND_RECALL, LATENCY_SENTENCE } from '@/lib/sa/claims';
+import { SURFACES } from '@/lib/sa/surfaces';
+import { safeJsonLd } from '@/lib/seo/jsonLd';
+import { buildMetadata } from '@/lib/seo/metadata';
 
 /**
- * Homepage structured data. The visible sections that used to live in this file
- * — deployment surfaces, the benchmark/OWASP/India evidence block — moved into
- * `components/marketing/Surfaces.tsx` and `Evidence.tsx`, so this file is now
- * metadata, JSON-LD, and section order.
+ * Home. Written from the approved copy deck (Phase 3), and held to the claims
+ * register: every number comes from lib/sa/claims.ts, nothing is typed in by hand.
+ * The two benign-control counts (1,000 and 322) are different test sets, the public
+ * benchmark and the regression run, and each row names its own set.
+ *
+ * Title: 58 characters. Description: 140.
  */
+// buildMetadata() returns the title as absolute here because it already names the
+// brand, and it fills in og:site_name, og:type, og:url and the image, which a
+// hand-written openGraph object would replace instead of merge.
+export const metadata: Metadata = buildMetadata({
+  title: 'AI Security Command Layer for LLMs and Agents | SoterAI',
+  description:
+    'Check prompts and AI replies, redact secrets and personal data, flag prompt injection, and hold risky agent actions. Try it free, no signup.',
+  path: '/',
+  ogTitle: 'Detect prompt injection. Redact sensitive data. | SoterAI',
+  ogDescription:
+    'The AI security command layer. It checks prompts and replies, redacts secrets and personal data, flags prompt injection, and holds risky agent actions for approval.',
+});
 
-const homepageJsonLd = {
-  "@context": "https://schema.org",
-  // Organization + WebSite entity nodes are injected site-wide from the root
-  // layout (lib/seo/schema.ts); the nodes below reference them via @id.
-  "@graph": [
+const siteUrl = 'https://soterai.in';
+
+/*
+ * Visible FAQ and FAQPage schema come from this one array, so they cannot differ.
+ * The latency answer quotes the live sample, not a promise. The old page said
+ * "under 50 milliseconds"; the repo's own changelog (2026-06-27) records that a
+ * similar claim was false.
+ */
+const FAQ: FaqItem[] = [
+  {
+    q: 'What is a command layer?',
+    a: 'A command layer decides, for every prompt, reply and agent action, whether to allow, redact, block or hold it for approval, and keeps the record.',
+  },
+  {
+    q: 'Does it guarantee security?',
+    a: `No. It lowers risk and it misses things. On ${BLIND_RECALL.of} blind test cases it caught ${BLIND_RECALL.caught}.`,
+  },
+  {
+    q: 'How fast is it?',
+    a: `${LATENCY_SENTENCE} See the method on the benchmarks page.`,
+  },
+  {
+    q: 'Does my text stay private?',
+    a: 'The public playground sends your text to our server for analysis and is rate limited. Use sample data. To keep text on your own systems, self-host with Docker, Postgres and Redis.',
+  },
+  {
+    q: 'Which languages and data types does it cover?',
+    a: 'It finds email, phone numbers, card-like numbers, IBAN-like identifiers, SSN-like identifiers, common API keys, and Indian identifiers such as PAN and UPI IDs. In a smoke test, one instruction override in each of ten non-English languages was flagged. The known gaps are listed on this page.',
+  },
+  {
+    q: 'Who builds it?',
+    a: 'SoterAI is built and run by Yash Chauhan, a solo founder in India.',
+  },
+];
+
+const homeJsonLd = {
+  '@context': 'https://schema.org',
+  '@graph': [
     {
-      "@type": "WebPage",
-      "@id": siteUrl,
-      "url": siteUrl,
-      "name": "SoterAI | AI Security Command Layer",
-      "description": "Protect your AI chatbots, RAG apps, and agents from prompt injection, data leakage, unsafe outputs, and agent abuse with SoterAI\u2019s observable security gateway.",
-      "inLanguage": "en",
-      "isPartOf": { "@id": `${siteUrl}#website` },
-      "about": { "@id": `${siteUrl}#organization` },
-      "primaryImageOfPage": {
-        "@type": "ImageObject",
-        "url": `${siteUrl}/opengraph-image.png`,
-      },
-      "breadcrumb": {
-        "@type": "BreadcrumbList",
-        "itemListElement": [
-          { "@type": "ListItem", "position": 1, "name": "Home", "item": siteUrl },
-        ],
-      },
-      "mainEntity": [
-        { "@type": "SoftwareApplication", "@id": `${siteUrl}#softwareapplication` },
-        { "@type": "FAQPage", "@id": `${siteUrl}#faq` },
-      ],
+      '@type': 'WebPage',
+      '@id': `${siteUrl}/#webpage`,
+      url: siteUrl,
+      name: 'AI Security Command Layer for LLMs and Agents',
+      description: 'Check prompts and AI replies, redact secrets and personal data, flag prompt injection, and hold risky agent actions.',
+      isPartOf: { '@id': `${siteUrl}#website` },
+      about: { '@id': `${siteUrl}#organization` },
+      inLanguage: 'en-IN',
+      breadcrumb: { '@type': 'BreadcrumbList', itemListElement: [{ '@type': 'ListItem', position: 1, name: 'Home', item: siteUrl }] },
     },
-    {
-      "@type": "SoftwareApplication",
-      "@id": `${siteUrl}#softwareapplication`,
-      "name": "SoterAI",
-      "applicationCategory": "SecurityApplication",
-      "operatingSystem": "Linux, macOS, Windows",
-      "description": "AI security command layer for chatbots, RAG apps, and autonomous agents. Protects against prompt injection, jailbreaks, PII leakage, unsafe outputs, and agent abuse.",
-      "url": siteUrl,
-      "author": { "@id": `${siteUrl}#organization` },
-      "creator": {
-        "@type": "Person",
-        "name": "Yash Chauhan",
-        "jobTitle": "Founder & CEO",
-        "address": { "@type": "PostalAddress", "addressCountry": "IN" },
-      },
-      "offers": [
-        {
-          "@type": "Offer",
-          "name": "Free",
-          "price": "0",
-          "priceCurrency": "INR",
-          "priceValidUntil": "2026-12-31",
-          "availability": "https://schema.org/InStock",
-        },
-        {
-          "@type": "Offer",
-          "name": "Starter",
-          "price": "999",
-          "priceCurrency": "INR",
-          "priceValidUntil": "2026-12-31",
-          "availability": "https://schema.org/InStock",
-        },
-        {
-          "@type": "Offer",
-          "name": "Pro",
-          "price": "2999",
-          "priceCurrency": "INR",
-          "priceValidUntil": "2026-12-31",
-          "availability": "https://schema.org/InStock",
-        },
-      ],
-      "featureList": "Input Guard, Output Guard, RAG Security, Agent Firewall, Policy Engine, India PII Detection, Self-Hosted, Enterprise SSO",
-      "screenshot": `${siteUrl}/opengraph-image.png`,
-      "softwareVersion": "2.0",
-      "releaseNotes": `${siteUrl}/docs`,
-      "applicationSubCategory": "AI Security",
-      "requirements": "Node.js 18+ or Python 3.9+",
-      "additionalProperty": [
-        { "@type": "PropertyValue", "name": "Input Guard", "value": "Yes" },
-        { "@type": "PropertyValue", "name": "Output Guard", "value": "Yes" },
-        { "@type": "PropertyValue", "name": "RAG Security", "value": "Yes" },
-        { "@type": "PropertyValue", "name": "Agent Firewall", "value": "Yes" },
-        { "@type": "PropertyValue", "name": "Policy Engine", "value": "Yes" },
-        { "@type": "PropertyValue", "name": "India PII Detection", "value": "Yes" },
-        { "@type": "PropertyValue", "name": "Self-Hosted", "value": "Yes" },
-        { "@type": "PropertyValue", "name": "Enterprise SSO", "value": "Yes" },
-        { "@type": "PropertyValue", "name": "Phase 9 Public Benchmark F1", "value": "1.0000 on synthetic public dataset" },
-      ],
-    },
-    {
-      "@type": "Dataset",
-      "name": "SoterAI Phase 9 Public Benchmark",
-      "description": "Self-maintained synthetic public benchmark with published dataset, methodology, limitations, and downloadable results. Latest generated run: 100% recall, 0% false-positive rate, 0% false-negative rate, and 17.83 ms p95 analyzer latency on 3,200 synthetic cases. Not an independent third-party benchmark.",
-      "url": `${siteUrl}/benchmark`,
-      "mainEntityOfPage": { "@type": "WebPage", "@id": `${siteUrl}/benchmark` },
-      "creator": { "@id": `${siteUrl}#organization` },
-      "datePublished": "2026-07-15",
-      "dateModified": "2026-07-15",
-      "measurementTechnique": "Synthetic JSONL public dataset evaluated with the production SoterAI guard detector",
-      "keywords": "prompt injection, jailbreak, PII detection, security benchmark, AI guardrails",
-      "variableMeasured": [
-        { "name": "F1 Score", "value": "1.0000" },
-        { "name": "Precision", "value": "1.0000" },
-        { "name": "Recall", "value": "1.0000" },
-        { "name": "False Positive Rate", "value": "0.00%" },
-        { "name": "False Negative Rate", "value": "0.00%" },
-        { "name": "Dataset Rows", "value": "3200" },
-        { "name": "Attack Categories", "value": "10" },
-      ],
-    },
-    {
-      "@type": "FAQPage",
-      "@id": `${siteUrl}#faq`,
-      "mainEntity": [
-        {
-          "@type": "Question",
-          "name": "What is SoterAI?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "SoterAI is an AI security command layer that protects chatbots, RAG apps, and autonomous agents from prompt injection, jailbreaks, data leakage, unsafe outputs, and agent abuse. It sits between users, models, and tools to inspect every AI interaction in real time.",
-          },
-        },
-        {
-          "@type": "Question",
-          "name": "Does SoterAI guarantee complete security?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "No. SoterAI is a defense-in-depth risk reduction layer. It should be combined with secure application design, identity controls, monitoring, and human review.",
-          },
-        },
-        {
-          "@type": "Question",
-          "name": "What does SoterAI protect?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "SoterAI inspects AI inputs and outputs for prompt injection, jailbreaks, sensitive data, unsafe responses, and risky agent behavior across chatbots, RAG pipelines, and autonomous agents.",
-          },
-        },
-        {
-          "@type": "Question",
-          "name": "How does SoterAI detect prompt injection and jailbreak attacks?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "SoterAI uses a multi-layer detection engine that analyzes user inputs for instruction overrides, jailbreak personas (like DAN), prompt extraction attempts, encoding obfuscation, multilingual attacks, and indirect injection through retrieved documents.",
-          },
-        },
-        {
-          "@type": "Question",
-          "name": "Is SoterAI free to use?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "Yes. SoterAI offers a Free plan at INR 0 per month to validate a small AI workflow. Paid plans start at INR 999 per month for production chatbot traffic with team controls and deeper reporting.",
-          },
-        },
-        {
-          "@type": "Question",
-          "name": "Can I self-host SoterAI?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "Yes. The production stack runs with Docker, Postgres, Redis, and optional vector storage, so teams can keep full control of deployment and data boundaries on their own infrastructure.",
-          },
-        },
-        {
-          "@type": "Question",
-          "name": "Are raw secrets stored in SoterAI?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "No. Secret-bearing and sensitive payloads are persisted only in redacted or hashed form where practical. SoterAI is designed to minimize data retention of sensitive content.",
-          },
-        },
-        {
-          "@type": "Question",
-          "name": "Can SoterAI detect Indian PII like Aadhaar and PAN?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "Yes. SoterAI is built with India-specific PII detection including Aadhaar-like patterns, PAN, GSTIN, UPI ID, IFSC codes, Indian mobile numbers, and contextual student, patient, and bank identifiers.",
-          },
-        },
-        {
-          "@type": "Question",
-          "name": "How fast is SoterAI's security check?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "SoterAI performs input and output guard checks in under 50 milliseconds, making it suitable for real-time chatbot and agent interactions without noticeable latency.",
-          },
-        },
-        {
-          "@type": "Question",
-          "name": "How do I integrate SoterAI with my chatbot?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "Create a project, keep your API key on the server, call the input guard before your LLM, and call the output guard before returning the response to the user. SDKs are available for JavaScript, Python, Next.js, Express, and more.",
-          },
-        },
-        {
-          "@type": "Question",
-          "name": "What programming languages does SoterAI support?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "SoterAI provides native SDKs for JavaScript/TypeScript and Python, plus a REST API that works with any language including Java, Go, PHP, C#, Ruby, Rust, and more.",
-          },
-        },
-        {
-          "@type": "Question",
-          "name": "Can I use SoterAI with LangChain or RAG pipelines?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "Yes. SoterAI integrates with LangChain chains, LlamaIndex query engines, and custom RAG pipelines. It inspects retrieved context, applies document trust scoring, and prevents sensitive data from leaking into model responses.",
-          },
-        },
-      ],
-    },
-  ],
+    faqJsonLd(FAQ),
+  ].map((node) => {
+    // faqJsonLd returns its own @context; inside a @graph the nodes must not repeat it.
+    const { ['@context']: _ctx, ...rest } = node as Record<string, unknown>;
+    return rest;
+  }),
 };
 
 export default function Home() {
+  // A row can be held back by giving it a `blocked` reason in lib/sa/claims.ts.
+  const numbers = NUMBERS_WITH_LIMITS.filter((n) => !n.blocked);
+  const summaryNumbers = numbers.filter((n) => n.test.startsWith('Server handling time'));
+
   return (
-    <main>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: safeJsonLd(homepageJsonLd) }}
-      />
-      <Hero />
+    <SaRoot>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: safeJsonLd(homeJsonLd) }} />
 
-      {/* Section order is deliberate, and it is the redesign: identity (Hero) →
-          where it installs (Surfaces) → who it is for (TwoProducts) → how it
-          runs (HowItWorks) → what it detects (Features) → proof (Evidence) →
-          see it (DemoVideo) → objections (FAQ) → act (CTA).
+      <main className="sa-home soter-home">
+        <div className="sa-page">
+          <section className="soter-home__hero" aria-labelledby="hero-title">
+            <HomeIntro />
+            <HeroDemo />
+          </section>
 
-          Nine stops, down from fifteen. Four of the removed sections were
-          duplicates of ones that remain: a loose pair of Browser/IDE Guard cards
-          that the Surfaces grid already lists, an "AI security platform" grid
-          whose four topics restate the four capability cards in Features, a
-          seven-link SEO badge row that only repeats the header navigation, and a
-          playground CTA one screen above the closing CTA. */}
-      <Surfaces />
-
-      <TwoProducts />
-      <HowItWorks />
-      <Features />
-      <Evidence />
-
-      {/* Tinted. Section backgrounds alternate strictly from here to the footer —
-          Surfaces white, TwoProducts tinted, HowItWorks white, Features tinted,
-          Evidence white, this one tinted, FAQ white. The old page had five
-          consecutive `bg-slate-950/40` sections, which is why a long scroll read
-          as one undifferentiated column: when almost everything is the alternate
-          shade, the shade stops marking anything. */}
-      <section className="section border-y border-slate-800 bg-slate-950/40">
-        <div className="container-page">
-          <SectionHeading
-            center
-            eyebrow="See it in action"
-            title="Watch SoterAI block attacks in real time"
-            copy="An interactive walkthrough of prompt-injection blocking, India PII redaction, secret detection, jailbreak prevention, and the public benchmark."
-          />
-          <div className="mx-auto mt-10 max-w-5xl">
-            <DemoVideo />
-          </div>
-          <div className="mt-10 text-center">
-            <Link href="/demo" className="button-secondary">
-              View all demos <ArrowRight size={18} aria-hidden="true" />
-            </Link>
-          </div>
-        </div>
-      </section>
-
-      <FAQ />
-
-      {/* Closing CTA. The old version used a one-off emerald button that appeared
-          nowhere else on the site and a hand-rolled bordered link, so the most
-          important conversion point on the page was the least consistent element
-          on it. Brand primary + secondary now carry it. */}
-      <section className="section-tight">
-        <div className="container-page">
-          <div className="gradient-border overflow-hidden p-10 text-center sm:p-14">
-            <p className="eyebrow">Get started</p>
-            <h2 className="heading-2 mt-3">Add observable controls to every AI turn.</h2>
-            <p className="mx-auto mt-4 max-w-prose leading-7 text-slate-300">
-              Free tier available. Create a project, get an API key, and protect your first AI workflow in under ten
-              minutes.
-            </p>
-            <div className="mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row">
-              <Link href="/signup" className="button-primary button-lg">
-                Create free account <ArrowRight size={18} aria-hidden="true" />
-              </Link>
-              <Link href="/docs" className="button-secondary button-lg">
-                Read integration docs
-              </Link>
+          <section className="sa-section sa-home__paths" aria-labelledby="paths">
+            <div className="sa-section__head">
+              <p className="sa-eyebrow">Choose your starting point</p>
+              <h2 className="sa-h2" id="paths">Your workflow. A clear way in.</h2>
+              <p className="sa-body sa-muted">Build with the API, review team controls, or connect an existing workflow.</p>
             </div>
-            {/* Direct links to the two pillar pages. The homepage previously
-                reached them only through <TwoProducts />, so the pages that are
-                meant to rank for the head terms had no link from the body of the
-                highest-authority page on the site. */}
-            <p className="mt-6 text-sm text-slate-400">
-              Not sure where to start? Compare{" "}
-              <Link href="/ai-agent-security" className="font-medium text-cyan hover:underline">
+            <ol className="sa-pathlist">
+              <li>
+                <div>
+                  <h3 className="sa-h3">For developers</h3>
+                  <p>Check the prompt before your model, and the reply before your user.</p>
+                </div>
+                <Link className="sa-link" href="/docs/quickstart">Build with the API <span aria-hidden="true">↗</span></Link>
+              </li>
+              <li>
+                <div>
+                  <h3 className="sa-h3">For security teams</h3>
+                  <p>Review the controls for ChatGPT, browser tools and coding assistants.</p>
+                </div>
+                <Link className="sa-link" href="/ai-user-security">Explore team controls <span aria-hidden="true">↗</span></Link>
+              </li>
+              <li>
+                <div>
+                  <h3 className="sa-h3">An automated workflow</h3>
+                  <p>Find an integration, check its maturity, and inspect the action before continuing.</p>
+                </div>
+                <Link className="sa-link" href="/integrations">Browse integrations <span aria-hidden="true">↗</span></Link>
+              </li>
+            </ol>
+          </section>
+
+          <section className="sa-section" aria-labelledby="numbers">
+            <div className="sa-section__head">
+              <p className="sa-eyebrow">Evidence, not a guarantee</p>
+              <h2 className="sa-h2" id="numbers">Every number comes with the test it came from.</h2>
+              <p className="sa-body sa-muted">The limit sits next to the number, in the same view, so you can decide how much to trust it.</p>
+            </div>
+            <dl className="sa-evidence-summary">
+              {summaryNumbers.map((n) => (
+                <div key={n.test}>
+                  <dt>{n.number}</dt>
+                  <dd><p>{n.test}</p><p className="sa-muted">{n.limit}</p></dd>
+                </div>
+              ))}
+            </dl>
+            <details className="sa-disclosure sa-home__evidence">
+              <summary>All results, test conditions &amp; limits</summary>
+              <DataTable
+                caption="Results, the test behind each one, and why not to over-trust it"
+                columns={[
+                  { key: 'number', header: 'Number', numeric: true },
+                  { key: 'test', header: 'Test' },
+                  { key: 'limit', header: 'Why not to over-trust it' },
+                ]}
+                rows={numbers.map((n) => ({ number: n.number, test: n.test, limit: n.limit }))}
+              />
+            </details>
+            <Link className="sa-link" href="/benchmarks">Read the method and the limits.</Link>
+          </section>
+
+          <section className="sa-section sa-home__next" aria-labelledby="pricing">
+            <div>
+              <p className="sa-eyebrow">Choose a plan</p>
+              <h2 className="sa-h2" id="pricing">Free to start. Every plan runs the same detection engine.</h2>
+              <p className="sa-body">Higher plans raise limits and add team controls. They do not unlock stronger detection.</p>
+              <SaLinkButton href="/pricing" variant="secondary">See plans</SaLinkButton>
+            </div>
+            <div>
+              <p className="sa-eyebrow">Build with it</p>
+              <h3 className="sa-h2">From a check to your own code.</h3>
+              <p className="sa-body">Start with the API contract, then choose a framework or integration. The docs explain what to send, what comes back, and when to stop.</p>
+              <div className="sa-home__next-actions">
+                <SaLinkButton href="/docs/quickstart">Read the quickstart</SaLinkButton>
+                <Link className="sa-link" href="/docs">Browse documentation</Link>
+              </div>
+            </div>
+          </section>
+
+          <section className="sa-section" aria-labelledby="decides">
+            <div className="sa-section__head">
+              <h2 className="sa-h2" id="decides">
+                One place for three decisions.
+              </h2>
+            </div>
+            <ul className="sa-strip">
+              <li>
+                <span className="sa-strip__word">See</span>
+                <p className="sa-body" style={{ margin: 0 }}>
+                  Prompts are checked for injection, jailbreaks, secrets and personal data before the model reads them.
+                </p>
+              </li>
+              <li>
+                <span className="sa-strip__word">Say</span>
+                <p className="sa-body" style={{ margin: 0 }}>
+                  Replies that carry personal data or secrets are redacted or refused before the user sees them.
+                </p>
+              </li>
+              <li>
+                <span className="sa-strip__word">Do</span>
+                <p className="sa-body" style={{ margin: 0 }}>
+                  Risky tool calls are blocked or sent to a person to approve, and each decision is logged.
+                </p>
+              </li>
+            </ul>
+            {/* Two entry points into the same engine. Links to both pillar pages keep them
+                reachable from the homepage (tests/seo-user-security.test.ts requires it). */}
+            <p className="sa-body sa-muted" style={{ marginTop: 'var(--sa-space-5)' }}>
+              Building an AI app or agent? See{' '}
+              <Link className="sa-link" href="/ai-agent-security">
                 AI agent security
-              </Link>{" "}
-              for the systems you build, and{" "}
-              <Link href="/ai-user-security" className="font-medium text-cyan hover:underline">
+              </Link>
+              . Setting rules for how your own team uses ChatGPT and coding assistants? See{' '}
+              <Link className="sa-link" href="/ai-user-security">
                 AI user security
-              </Link>{" "}
-              for the tools your employees already use.
+              </Link>
+              .
             </p>
-          </div>
+          </section>
+
+          <section className="sa-section" aria-labelledby="where">
+            <div className="sa-section__head">
+              <h2 className="sa-h2" id="where">
+                Pick the place your team already works.
+              </h2>
+              <p className="sa-body sa-muted">
+                Each surface has its own status.{' '}
+                <Link className="sa-link" href="/pricing#status">
+                  What Stable, Beta and Labs mean.
+                </Link>
+              </p>
+            </div>
+            <DataTable
+              caption="Where it runs, how mature it is, and what it does not do yet"
+              columns={[
+                { key: 'name', header: 'Surface' },
+                { key: 'status', header: 'Status' },
+                { key: 'does', header: 'What it does' },
+                { key: 'gap', header: 'Known gap' },
+              ]}
+              rows={SURFACES.map((s) => ({
+                name: (
+                  <Link className="sa-link" href={s.href}>
+                    {s.name}
+                  </Link>
+                ),
+                status: <StatusBadge status={s.status} />,
+                does: s.does,
+                gap: s.gap,
+              }))}
+            />
+          </section>
+
+
+          <section className="sa-section" aria-labelledby="finds">
+            <div className="sa-section__head">
+              <h2 className="sa-h2" id="finds">
+                Global identifiers and local ones.
+              </h2>
+            </div>
+            <div className="sa-cols sa-cols--2">
+              <div>
+                <h3 className="sa-h3">Secrets</h3>
+                <p className="sa-body">API keys and tokens, for example AWS keys, GitHub tokens and OpenAI-style keys.</p>
+                <h3 className="sa-h3" style={{ marginTop: 'var(--sa-space-5)' }}>
+                  Personal data
+                </h3>
+                <p className="sa-body">
+                  Email, phone numbers, card-like numbers, IBAN-like identifiers and SSN-like identifiers.
+                </p>
+              </div>
+              <div>
+                <h3 className="sa-h3">India</h3>
+                <p className="sa-body">
+                  Aadhaar-like numbers, PAN, GSTIN, UPI IDs, IFSC codes and mobile numbers.{' '}
+                  <Link className="sa-link" href="/ai-security-india">
+                    Indian identifiers and DPDP.
+                  </Link>
+                </p>
+                <h3 className="sa-h3" style={{ marginTop: 'var(--sa-space-5)' }}>
+                  Languages
+                </h3>
+                <p className="sa-body">
+                  In a smoke test, one instruction override in each of ten non-English languages was flagged: Spanish,
+                  French, German, Portuguese, Russian, Chinese, Japanese, Arabic, Hindi and Hinglish. One phrase per
+                  language is not a benchmark.
+                </p>
+              </div>
+            </div>
+            <div style={{ marginTop: 'var(--sa-space-6)' }} className="sa-callout sa-callout--limit">
+              <p className="sa-callout__title">Known gaps</p>
+              <p className="sa-callout__body">
+                UK National Insurance numbers are not named. The Aadhaar-like rule can also fire on some card and IBAN
+                digits, and it does not check the number&rsquo;s checksum yet.
+              </p>
+            </div>
+          </section>
+
+
+          <section className="sa-section" aria-labelledby="faq">
+            <div className="sa-section__head">
+              <h2 className="sa-h2" id="faq">
+                Questions
+              </h2>
+            </div>
+            <Faq items={FAQ} />
+          </section>
+
+          <section className="sa-closing" aria-labelledby="closing">
+            <h2 className="sa-h2" id="closing">
+              Test it on text you already have.
+            </h2>
+            <div className="sa-hero__actions">
+              <SaLinkButton href="/playground" large>
+                {PLAYGROUND_CTA_LABEL}
+              </SaLinkButton>
+              <SaLinkButton href="/signup" variant="secondary">
+                Create a free account
+              </SaLinkButton>
+              <SaLinkButton href="/contact-sales" variant="ghost">
+                Book a security review
+              </SaLinkButton>
+            </div>
+          </section>
         </div>
-      </section>
-    </main>
+      </main>
+    </SaRoot>
   );
 }
-
-
-

@@ -1,61 +1,39 @@
 import type { Metadata } from "next";
 import { VsCompetitor, type VsContent } from "@/components/marketing/VsCompetitor";
+import { buildMetadata } from "@/lib/seo/metadata";
 
-export const metadata: Metadata = {
-  title: { absolute: "SoterAI vs Prompt Security | AI Security Comparison" },
+export const metadata: Metadata = buildMetadata({
+  title: "SoterAI vs Prompt Security: Facts and Dates",
   description:
-    "SoterAI vs Prompt Security (SentinelOne): developer runtime guardrails vs employee/SaaS AI governance. RAG security, agent firewall and self-hosting.",
-  alternates: { canonical: "/comparison/prompt-security" },
-  openGraph: {
-    title: "SoterAI vs Prompt Security — AI Security Comparison",
-    description:
-      "Prompt Security focuses on workforce AI and SaaS governance. SoterAI focuses on developer-integrated chatbot/RAG/agent runtime enforcement.",
-  },
-};
+    "Prompt Security is now part of SentinelOne. Facts from SentinelOne’s own announcement, facts about SoterAI, and when each is the better choice.",
+  path: "/comparison/prompt-security",
+});
 
 const data: VsContent = {
   slug: "prompt-security",
   competitor: "Prompt Security",
-  competitorNote: "Acquired by SentinelOne (2025)",
-  tagline:
-    "Prompt Security secures employee AI usage and SaaS access. SoterAI secures the AI you build — chatbots, RAG apps, and autonomous agents — with inline runtime enforcement.",
-  intro:
-    "Prompt Security (now part of SentinelOne) is strong at workforce AI visibility: discovering shadow AI usage, governing browser and SaaS access, and applying data controls across employees. SoterAI sits in a different place in the stack — it protects the AI applications your team ships. It guards model input and output inline, scans RAG context, authorizes agent tool calls, and produces signed audit trails, with the option to self-host.",
-  theirStrength:
-    "Prompt Security is purpose-built for enterprise workforce AI governance — discovering and controlling how employees use AI across browsers and SaaS, backed by SentinelOne's endpoint security platform.",
-  soterEdge: [
-    "Developer-integrated runtime enforcement (block / redact / approve) before risky actions execute",
-    "RAG security: document scanning, quarantine, and ACL continuity",
-    "Agent firewall: tool-call authorization, passports, approvals, escrow",
-    "Self-hostable in your own VPC with full data residency",
-    "Framework SDKs: LangChain, Vercel AI, Next.js, Express, FastAPI, WordPress",
-    "HMAC-signed audit exports for SIEM pipelines",
+  kind: "Vendor platform, now part of SentinelOne",
+  readOn: "2026-11-10",
+  summary:
+    "Prompt Security is an AI runtime security vendor that SentinelOne agreed to acquire in 2025. Both aim to control AI use and data leakage, and they differ in size and in how you buy.",
+  facts: [
+    { label: "Owner", value: "SentinelOne announced a definitive agreement to acquire Prompt Security on 2025-08-05. A later SentinelOne release describes the acquisition as completed." },
+    { label: "What the owner says it does", value: "Secures AI in runtime, prevents AI-related data leakage and protects agents." },
+    { label: "Terms", value: "Commercial. Pricing was not checked for this page." },
   ],
-  theirEdge: [
-    "Employee/SaaS AI discovery and browser-proxy governance at scale",
-    "SentinelOne endpoint and enterprise security graph integration",
-    "Workforce data-loss controls across third-party AI tools",
+  chooseThem: [
+    "You already use SentinelOne and want AI controls from the same vendor.",
+    "You want a vendor with a large security company behind it and enterprise contracts.",
   ],
-  rows: [
-    { feature: "Input guard (prompt injection)", soter: "yes", them: "yes" },
-    { feature: "Output guard (unsafe content)", soter: "yes", them: "yes" },
-    { feature: "Developer SDK runtime enforcement", soter: "yes", them: "Partial" },
-    { feature: "RAG security", desc: "Doc scan + quarantine", soter: "yes", them: "no" },
-    { feature: "Agent firewall", desc: "Tool-call authorization", soter: "yes", them: "no" },
-    { feature: "Employee AI / SaaS governance", desc: "Browser + proxy", soter: "no", them: "yes" },
-    { feature: "Self-hosted (Docker)", soter: "yes", them: "no" },
-    { feature: "Signed audit exports", soter: "yes", them: "Partial" },
-    { feature: "India PII", soter: "yes", them: "Partial" },
-    { feature: "Free tier", soter: "yes", them: "no" },
+  chooseUs: [
+    "You want a free plan and a no-signup playground on the real engine.",
+    "You want published limits and known gaps next to every number.",
+    "You want to self-host with Docker, Postgres and Redis.",
   ],
-  bestFor: {
-    soter:
-      "You are building AI features (chatbot, RAG, agents) and need inline guardrails and audit baked into your application.",
-    them:
-      "Your priority is governing how employees use third-party AI tools across browsers and SaaS at enterprise scale.",
-  },
-  sourceUrl: "https://www.prompt.security/",
-  sourceLabel: "Prompt Security",
+  sources: [
+    { label: "SentinelOne: to acquire Prompt Security, 2025-08-05", href: "https://www.sentinelone.com/press/sentinelone-to-acquire-prompt-security-to-advance-genai-security/" },
+    { label: "SentinelOne release naming the completed acquisition (via Nasdaq)", href: "https://www.nasdaq.com/press-release/sentineloner-named-leader-gartnerr-magic-quadranttm-endpoint-protection-platforms-6th" },
+  ],
 };
 
 export default function Page() {

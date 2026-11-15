@@ -21,6 +21,7 @@ export const metadata: Metadata = {
     "Install SoterAI Browser Guard for Google Chrome: real-time prompt scanning, secret & PII redaction and org policy enforcement across 20+ AI tools.",
   alternates: { canonical: "/extensions/browser/chrome" },
   openGraph: {
+    images: [{ url: "/og-card/default.png", width: 1200, height: 630, alt: "SoterAI, the AI security command layer" }],
     title: "SoterAI for Chrome — AI Security Extension",
     description:
       "Guard every AI conversation in Chrome. Scan prompts, redact secrets and PII, and enforce org policy across ChatGPT, Claude, Gemini, and more.",

@@ -16,7 +16,7 @@ const manifest = { ...source, name: identity.liteName, publisher: identity.publi
   displayName: identity.liteDisplayName, version: identity.liteVersion, preview: true,
   description: 'Local managed secret protection for cooperative AI tools, with approved masked reads and bundled broker. No VM or account required.',
   repository: { ...source.repository, directory: 'packages/soterai-lite' },
-  files: ['dist/extension.js', 'dist/local-ai-broker.js', 'dist/soterai-mcp-server.js',
+  files: ['dist/extension.js', 'dist/local-ai-broker.js', 'dist/soterai-mcp-server.js', 'dist/pre-commit-client.js',
     'media/icon.svg', 'media/logo_circle_whiter.png', 'media/walkthrough/*.md',
     'README.md', 'CHANGELOG.md', 'LICENSE.md'],
   scripts: { typecheck: 'tsc --noEmit -p tsconfig.json', lint: 'npm run typecheck',

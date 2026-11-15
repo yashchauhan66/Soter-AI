@@ -1,20 +1,26 @@
 import type { Metadata, Viewport } from "next";
-import Script from "next/script";
-import { GoogleAnalytics } from "@next/third-parties/google";
-import { inter, jetbrainsMono } from "@/app/fonts";
+import { OptionalAnalytics } from "@/components/privacy/OptionalAnalytics";
+import { saDisplay, saMono } from "@/components/sa/fonts";
 import { AuthProvider } from "@/components/auth/AuthProvider";
 import { SiteChrome } from "@/components/layout/SiteChrome";
+import { getBrandPreviewIcon } from "@/components/layout/Logo";
 import { SiteFooter } from "@/components/layout/SiteFooter";
 import { JsonLd } from "@/components/seo/JsonLd";
-import { siteJsonLd } from "@/lib/seo/schema";
+import { SITE_NAME, siteJsonLd } from "@/lib/seo/schema";
 import "./globals.css";
-;
+import "@/components/layout/brand-lettering.css";
 
+// Empty until the owner sets NEXT_PUBLIC_GA_MEASUREMENT_ID. The live site loaded
+// gtag/js?id= with no ID, which measures nothing and costs a request.
+const GA_ID = process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID?.trim() || "";
 
 const siteUrl = process.env.NEXT_PUBLIC_APP_URL ?? "https://soterai.in";
-const siteName = "SoterAI";
+const siteName = SITE_NAME;
+const brandPreviewIcon = getBrandPreviewIcon();
+// Same sentence the homepage uses, so a page that sets no description of its
+// own still describes the product the way the homepage does (140 characters).
 const siteDescription =
-  "Protect AI apps and agents from prompt injection, data leaks, unsafe outputs, and risky tool calls with SoterAI's runtime security platform.";
+  "Check prompts and AI replies, redact secrets and personal data, flag prompt injection, and hold risky agent actions. Try it free, no signup.";
 
 export const viewport: Viewport = {
   width: "device-width",
@@ -24,7 +30,7 @@ export const viewport: Viewport = {
   // permitted (WCAG 1.4.4). Never set maximumScale or userScalable=false here.
   maximumScale: 5,
   userScalable: true,
-  // Matches --surface-0 (#ffffff) from globals.css. Mobile browser chrome frames
+  // Matches --surface-0 (#fbfaf7, warm paper) from globals.css. Mobile browser chrome frames
   // the page, so any drift between these two values renders as a visible seam at
   // the top of the viewport on iOS and Android. Update both together.
   //
@@ -32,8 +38,8 @@ export const viewport: Viewport = {
   // dark theme-color to a device in dark mode would tint the browser chrome
   // against a white page.
   themeColor: [
-    { media: "(prefers-color-scheme: dark)", color: "#ffffff" },
-    { media: "(prefers-color-scheme: light)", color: "#ffffff" },
+    { media: "(prefers-color-scheme: dark)", color: "#fbfaf7" },
+    { media: "(prefers-color-scheme: light)", color: "#fbfaf7" },
   ],
   colorScheme: "light",
 };
@@ -41,49 +47,21 @@ export const viewport: Viewport = {
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   title: {
-    // Homepage title. Kept under ~60 chars so Google renders it whole instead of
-    // truncating the tail; the dropped keywords ("prompt injection", "RAG",
-    // "agent security") are each carried by their own dedicated landing page.
-    default: `${siteName} | AI Security Platform for LLMs & Agents`,
+    // Fallback for a page that sets no title of its own. Same text as the
+    // homepage title (58 characters).
+    default: `AI Security Command Layer for LLMs and Agents | ${siteName}`,
+    // The suffix is 13 characters, so a plain page title must be 47 or fewer to
+    // keep the rendered title within 60. Titles that already name the brand
+    // are made absolute by buildMetadata() in lib/seo/metadata.ts.
     template: `%s | ${siteName}`,
   },
   description: siteDescription,
-  keywords: [
-    "AI security",
-    "AI security platform",
-    "AI security guard",
-    "AI security guardrails",
-    "prompt injection protection",
-    "prompt injection detector",
-    "LLM guardrails",
-    "LLM security",
-    "LLM firewall",
-    "chatbot security",
-    "jailbreak detection",
-    "PII redaction",
-    "RAG security",
-    "RAG security platform",
-    "AI agent firewall",
-    "AI agent security",
-    "OWASP LLM Top 10",
-    "India PII detection",
-    "agent security",
-    "SoterAI",
-    "AI safety",
-    "AI guardrail platform",
-    "AI security India",
-    "Aadhaar PII detection",
-    "Indian AI compliance",
-    "generative AI security",
-    "LLM security India",
-    "chatbot security India",
-    "AI agent protection",
-    "enterprise AI security",
-    "AI data leakage prevention",
-  ],
+  // No `keywords`: Google has ignored the tag since 2009, and the old list
+  // (31 terms, several India-only) described a different product than the one
+  // on the page. Topic targeting lives in each page's title, headings and copy.
   authors: [
     { name: "Yash Chauhan", url: `${siteUrl}/about` },
-    { name: "SoterAI", url: siteUrl },
+    { name: siteName, url: siteUrl },
   ],
   creator: "Yash Chauhan",
   publisher: "Yash Chauhan",
@@ -103,42 +81,41 @@ export const metadata: Metadata = {
     locale: "en_US",
     url: siteUrl,
     siteName,
-    title: `${siteName} - AI Security Platform for LLM Apps and AI Agents`,
+    title: `AI Security Command Layer for LLMs and Agents | ${siteName}`,
     description: siteDescription,
     images: [
       {
-        url: "/opengraph-image.png",
+        url: "/og-card/default.png",
         width: 1200,
         height: 630,
-        alt: "SoterAI AI security platform",
+        alt: "SoterAI, the AI security command layer",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: `${siteName} - AI Security Platform`,
+    title: `AI Security Command Layer | ${siteName}`,
     description: siteDescription,
-    images: ["/opengraph-image.png"],
-    site: "@soterai",
+    images: ["/og-card/default.png"],
   },
   category: "technology",
-  icons: {
-    icon: [{ url: "/icon.png", sizes: "32x32" }, { url: "/icon-192.png", sizes: "192x192" }],
-    apple: [{ url: "/apple-icon.png", sizes: "180x180" }],
+  icons: brandPreviewIcon ? {
+    icon: [{ url: brandPreviewIcon, sizes: "223x223", type: "image/png" }],
+    apple: [{ url: brandPreviewIcon, sizes: "223x223" }],
+  } : {
+    icon: [{ url: "/brand/selected/icon.png", sizes: "32x32" }, { url: "/brand/selected/icon-192.png", sizes: "192x192" }],
+    apple: [{ url: "/brand/selected/apple-icon.png", sizes: "180x180" }],
   },
   manifest: "/manifest.webmanifest",
   classification: "AI Security",
   verification: {
     google: process.env.NEXT_PUBLIC_GOOGLE_VERIFICATION || "02ofzVC3PhtpFHCtRZ4s7lsPIoZA0mTJ4-zFS5Og4Aw",
   },
+  // The author tag comes from `authors` above. The old `founder`, `owner`,
+  // `geo.region`, `geo.placename` and `country` tags are gone: none is a
+  // standard search signal, and the geo tags described a single-country site.
   other: {
     "mobile-web-app-capable": "yes",
-    author: "Yash Chauhan",
-    founder: "Yash Chauhan",
-    owner: "Yash Chauhan",
-    "geo.region": "IN",
-    "geo.placename": "India",
-    country: "India",
   },
   alternates: {
     // en and x-default only. Hindi (hi) and en-IN removed — no Hindi content
@@ -154,19 +131,9 @@ export const metadata: Metadata = {
 
 export default async function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en" data-scroll-behavior="smooth" className={`${inter.variable} ${jetbrainsMono.variable}`}>
+    <html lang="en-IN" data-scroll-behavior="smooth" className={`${saDisplay.variable} ${saMono.variable}`}>
       <head>
-        <meta name="author" content="Yash Chauhan" />
-        <meta name="founder" content="Yash Chauhan" />
-        <meta name="owner" content="Yash Chauhan" />
-        <meta name="geo.region" content="IN" />
-        <meta name="geo.placename" content="India" />
-        {/* Performance hints: warm up the Google Analytics connection so the
-            tag loads off the critical path (better LCP / INP → better ranking). */}
-        <link rel="preconnect" href="https://www.googletagmanager.com" crossOrigin="anonymous" />
-        <link rel="dns-prefetch" href="https://www.googletagmanager.com" />
-        <link rel="preconnect" href="https://www.google-analytics.com" crossOrigin="anonymous" />
-        <link rel="dns-prefetch" href="https://www.google-analytics.com" />
+        <link rel="preload" href="/brand/soterai-signature.woff" as="font" type="font/woff" crossOrigin="anonymous" />
       </head>
       <body className="font-sans">
         <JsonLd data={siteJsonLd} />
@@ -179,18 +146,11 @@ export default async function RootLayout({ children }: Readonly<{ children: Reac
         <AuthProvider>
           {/* The footer is passed as a prop, not imported by SiteChrome, so it
               stays a server component. See the note in SiteChrome. */}
-          <SiteChrome footer={<SiteFooter currentYear={new Date().getFullYear()} />}>
+          <SiteChrome footer={<><SiteFooter currentYear={new Date().getFullYear()} /><OptionalAnalytics gaId={GA_ID} cloudflareToken="48b07d6eac054c2a9337aac571e5c563" /></>}>
             {children}
           </SiteChrome>
         </AuthProvider>
-        <GoogleAnalytics gaId={process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID || ""} />
-        {/* Cloudflare Web Analytics (RUM) — Privacy-first, zero-cookie, real human tracking */}
-        <Script
-          defer
-          src="https://static.cloudflareinsights.com/beacon.min.js"
-          data-cf-beacon='{"token": "48b07d6eac054c2a9337aac571e5c563"}'
-          strategy="afterInteractive"
-        />
+
       </body>
     </html>
   );

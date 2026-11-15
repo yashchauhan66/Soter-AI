@@ -1,0 +1,89 @@
+import assert from "node:assert/strict";
+import { createHash, randomUUID } from "node:crypto";
+import { mkdtemp, mkdir, writeFile, readFile, rename, symlink, lstat } from "node:fs/promises";
+import { tmpdir } from "node:os";
+import { join } from "node:path";
+import { test } from "node:test";
+import { pushRootIdentity } from "../history-hooks/PushRootSnapshot";
+import { prepareCheckedPushRefs, isCheckedPushRefs } from "../history-hooks/CheckedPushRefs";
+
+// Retained synthetic physical metadata only; no Git process/push or object body
+// read. The fixed executable is observed by the production metadata adapter.
+const options = { skip: process.platform !== "win32", timeout: 10000 };
+const TRANSCRIPT = Buffer.from("refs/heads/main " + "1".repeat(40) + " refs/heads/main " + "0".repeat(40) + "\n");
+const CONFIG = "[core]\n repositoryformatversion = 0\n bare = false\n";
+const ambient = () => ({ SystemRoot: process.env.SystemRoot, WINDIR: process.env.WINDIR, COMSPEC: process.env.COMSPEC });
+async function fixture() {
+    const root = await mkdtemp(join(tmpdir(), "soter-f26b-root-"));
+    for (const name of ["objects/info", "objects/pack", "refs/heads"]) await mkdir(join(root, ".git", name), { recursive: true });
+    await writeFile(join(root, ".git", "config"), CONFIG, { flag: "wx" });
+    await writeFile(join(root, ".git", "HEAD"), "ref: refs/heads/main\n", { flag: "wx" });
+    return { root, prepare: (valid = () => true, raw = TRANSCRIPT, env: NodeJS.ProcessEnv = ambient()) => prepareCheckedPushRefs(root, raw, env, valid) };
+}
+test("F26b physical root identity is stable case-insensitive and contains no file contents", options, async () => {
+    const f = await fixture(), before = pushRootIdentity(f.root); assert(before && /^[a-f0-9]{64}$/.test(before));
+    assert.equal(pushRootIdentity(f.root), before); assert.equal(pushRootIdentity(f.root.toLowerCase()), before);
+    await writeFile(join(f.root, "private-worktree.txt"), "TEST_ONLY_F26B_ROOT_PRIVATE_VALUE", { flag: "wx" });
+    assert.equal(pushRootIdentity(f.root), before, "Ordinary worktree modifications must not masquerade as root replacement.");
+});
+test("F26b physical identity refuses relative UNC drive-relative noncanonical control and nonstring inputs", options, async () => {
+    const f = await fixture(); let invoked = 0;
+    for (const value of ["", ".", "D:relative", "\\\\server\\share", f.root + "\\..\\" + f.root.split("\\").at(-1), f.root + "\\", f.root.replaceAll("\\", "/"), f.root + "\u200b", f.root + "\0", "D:\\" + "x".repeat(2049), null, {}, new Proxy({}, { get() { invoked++; throw Error(); } })])
+        assert.equal(pushRootIdentity(value as string), undefined);
+    assert.equal(invoked, 0, "Nonstring root inputs must not invoke caller-controlled coercion.");
+});
+test("F26b file or missing root cannot be converted into directory identity", options, async () => {
+    const f = await fixture(), file = join(f.root, "file.txt"); await writeFile(file, "public", { flag: "wx" });
+    assert.equal(pushRootIdentity(file), undefined); assert.equal(pushRootIdentity(join(f.root, "missing")), undefined);
+});
+test("F26b junction root and junction ancestor refuse without following worktree contents", options, async () => {
+    const f = await fixture(), target = join(f.root, "target"), link = join(f.root, "junction"); await mkdir(join(target, "nested"), { recursive: true });
+    await symlink(target, link, "junction"); assert((await lstat(link)).isSymbolicLink());
+    assert.equal(pushRootIdentity(link), undefined); assert.equal(pushRootIdentity(join(link, "nested")), undefined);
+});
+test("F26b root replacement changes physical identity with unchanged directory name", options, async () => {
+    const f = await fixture(), identity = pushRootIdentity(f.root), retained = f.root + ".retained-" + randomUUID(); assert(identity);
+    await rename(f.root, retained); await mkdir(f.root); assert.notEqual(pushRootIdentity(f.root), identity);
+});
+test("F26b genuine checked refs freeze exact transcript digest and structured updates", options, async () => {
+    const f = await fixture(), raw = Buffer.from(TRANSCRIPT), refs = await f.prepare(() => true, raw); assert(refs && isCheckedPushRefs(refs));
+    assert(Object.isFrozen(refs) && Object.isFrozen(refs.updates) && refs.updates.every(Object.isFrozen));
+    assert.equal(refs.transcriptSha256, createHash("sha256").update(TRANSCRIPT).digest("hex")); assert.equal(refs.rootIdentity, pushRootIdentity(f.root));
+    raw.fill(0); assert(refs.available()); assert.equal(refs.updates[0].localOid, "1".repeat(40));
+    assert.equal(isCheckedPushRefs({ ...refs }), false); assert.equal(isCheckedPushRefs(Object.create(refs)), false);
+});
+test("F26b checked refs empty and deletion transcripts retain their exact meanings", options, async () => {
+    const f = await fixture();
+    for (const raw of [Buffer.alloc(0), Buffer.from("(delete) " + "0".repeat(40) + " refs/heads/main " + "2".repeat(40) + "\n")]) {
+        const refs = await f.prepare(() => true, raw); assert(refs); assert.equal(refs.transcriptSha256, createHash("sha256").update(raw).digest("hex"));
+        assert.equal(refs.updates.length, raw.length ? 1 : 0);
+    }
+});
+test("F26b checked refs malformed transcript flag exceptions or initially disabled admission refuse", options, async () => {
+    const f = await fixture(); assert.equal(await f.prepare(() => false), undefined);
+    assert.equal(await f.prepare(() => { throw Error("TEST_ONLY"); }), undefined);
+    for (const raw of [Buffer.from("malformed\n"), Buffer.concat([TRANSCRIPT, TRANSCRIPT]), Buffer.alloc(32769, 32)]) assert.equal(await f.prepare(() => true, raw), undefined);
+});
+test("F26b checked refs withdrawal latches across disable and reenable", options, async () => {
+    const f = await fixture(); let enabled = true; const refs = await f.prepare(() => enabled); assert(refs && refs.available());
+    enabled = false; assert.equal(refs.available(), false); enabled = true; assert.equal(refs.available(), false);
+});
+test("F26b checked refs physical root replacement permanently withdraws held authority", options, async () => {
+    const f = await fixture(), refs = await f.prepare(); assert(refs && refs.available());
+    await rename(f.root, f.root + ".retained-" + randomUUID()); await mkdir(f.root); assert.equal(refs.available(), false);
+});
+test("F26b checked refs metadata changes and byte-identical replacement revoke final authority", options, async () => {
+    for (const replace of [false, true]) {
+        const f = await fixture(), refs = await f.prepare(), config = join(f.root, ".git", "config"); assert(refs && refs.available());
+        if (replace) { const incoming = config + ".incoming-" + randomUUID(); await writeFile(incoming, await readFile(config), { flag: "wx" }); await rename(config, config + ".retained"); await rename(incoming, config); }
+        else { await writeFile(config + ".retained", await readFile(config), { flag: "wx" }); await writeFile(config, CONFIG + "[user]\n name = Synthetic\n"); }
+        assert.equal(refs.available(), false);
+    }
+});
+test("F26b checked refs sanitize ambient process credentials hooks and config authority", options, async () => {
+    const f = await fixture(), marker = "TEST_ONLY_F26B_AMBIENT_VALUE", refs = await f.prepare(() => true, TRANSCRIPT, {
+        ...ambient(), PATH: marker, NODE_OPTIONS: marker, OPENAI_API_KEY: marker, GIT_CONFIG_GLOBAL: marker, GIT_DIR: marker, GIT_WORK_TREE: marker, GIT_INDEX_FILE: marker, GIT_SSH_COMMAND: marker,
+    } as NodeJS.ProcessEnv); assert(refs);
+    assert(!JSON.stringify(refs.environment).includes(marker)); assert(Object.isFrozen(refs.environment));
+    assert.equal(refs.environment.GIT_NO_LAZY_FETCH, "1"); assert.equal(refs.environment.GIT_NO_REPLACE_OBJECTS, "1");
+});

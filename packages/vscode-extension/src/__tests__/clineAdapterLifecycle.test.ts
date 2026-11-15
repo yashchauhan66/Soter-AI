@@ -7,6 +7,8 @@ import { tmpdir } from "node:os";
 import { randomUUID } from "node:crypto";
 import * as stub from "./phase2/vscode-stub";
 import { ClineAdapter } from "../adapters/ClineAdapter";
+import { CLINE_PIN } from "../adapters/ClineAdapterPolicy";
+import { clineSessionSelection } from "../adapters/ClineSessionPolicy";
 import { managedEmptyStoreIdentity } from "../terminal/ManagedOutputBinding";
 
 test("F18 fresh ticket storage preserves the captured empty vault identity through cancelled setup", async t => {
@@ -26,8 +28,11 @@ test("F18 fresh ticket storage preserves the captured empty vault identity throu
     const adapter = new ClineAdapter(context as never, manager as never, { isEnabled: () => true } as never);
     t.after(() => adapter.dispose());
     // Artifact/prerequisite fixtures are synthetic; storage and DPAPI paths are actual.
-    t.mock.method(adapter as any, "artifact", async () => undefined);
-    t.mock.method(adapter as any, "eligible", async () => true);
+    t.mock.method(adapter as any, "artifact", async () => CLINE_PIN);
+    t.mock.method(stub.extensions as any, "getExtension", () => ({ packageJSON: { version: CLINE_PIN.version } }));
+    t.mock.method(adapter as any, "prerequisiteStatus", async () => "READY");
+    t.mock.method(adapter as any, "selection", async () => clineSessionSelection({ planModeApiProvider: "openai", actModeApiProvider: "openai",
+        planModeOpenAiModelId: "fixture", actModeOpenAiModelId: "fixture", mode: "act" }));
     t.mock.method(adapter as any, "paths", () => paths);
     t.mock.method(stub.window, "showWarningMessage", async () => undefined);
     assert.equal((await adapter.configure() as { status: string }).status, "CANCELLED");

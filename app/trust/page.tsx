@@ -1,329 +1,251 @@
-import type { Metadata } from "next";
-import Link from "next/link";
-import {
-  ShieldCheck,
-  FlaskConical,
-  Database,
-  Lock,
-  Server,
-  Bug,
-  CheckCircle2,
-  ArrowRight,
-  Activity,
-  Eye,
-  KeyRound,
-} from "lucide-react";
-import { trustProof } from "@/lib/marketing/launchStatus";
+import type { Metadata } from 'next';
+import Link from 'next/link';
+import { PLAYGROUND_CTA_LABEL } from '@/lib/marketing/cta';
+import { Callout, DataTable, SaLinkButton } from '@/components/sa/primitives';
+import { SaRoot } from '@/components/sa/SaRoot';
+import { JsonLd } from '@/components/seo/JsonLd';
+import { buildMetadata } from '@/lib/seo/metadata';
+import { breadcrumbList } from '@/lib/seo/schema';
 
-export const metadata: Metadata = {
-  title: "Trust Center: Live Security Status",
+/**
+ * Trust center. It lists what exists and what does not, in that order of honesty:
+ * certifications and audits first, then data handling, controls and deployment.
+ *
+ * What the old page showed and this one does not:
+ *  - A green "OPERATIONAL" light and progress meters (100%, 100%, 90%). They were fixed
+ *    values, not live data, and a meter for "OWASP aligned" had no measurement behind it.
+ *    Live service status is on /status.
+ *  - A "Secrets hygiene" control that said the repository is scanned for keys. Not verified.
+ *
+ * Title: 50 characters with the brand suffix. Description: 152.
+ */
+export const metadata: Metadata = buildMetadata({
+  title: 'Trust Center: What We Hold and Do Not',
   description:
-    "SoterAI trust center: live test status, data handling, security controls, deployment model and responsible disclosure — aligned to the OWASP LLM Top 10.",
-  alternates: { canonical: "/trust" },
-  openGraph: {
-    title: "Trust Center | SoterAI",
-    description:
-      "Test status, data handling, security controls, deployment model, and responsible disclosure — transparent AI security aligned to OWASP LLM Top 10.",
+    'Certifications and audits we hold (none yet), how data is handled, the security controls we run, deployment options, and how to report a vulnerability.',
+  path: '/trust',
+});
+
+const HELD: Array<{ item: string; status: string; note: React.ReactNode }> = [
+  {
+    item: 'SOC 2',
+    status: 'Not held',
+    note: (
+      <>
+        Readiness content only. See <Link className="sa-link" href="/compliance/soc2-readiness">SOC 2 readiness</Link>.
+      </>
+    ),
   },
-};
-
-const testStatus = [
-  { label: "Public benchmark", value: "3,200 rows", note: "Self-maintained synthetic dataset with public methodology" },
-  { label: "Latest benchmark run", value: "100% recall", note: "0.00% false-positive rate on 1,000 synthetic benign controls" },
-  { label: "Unit + integration suites", value: "60+ files", note: "Guard, agent-firewall, auth, billing, retention" },
-  { label: "E2E guard scenarios", value: "Playwright", note: "Real attack flows against a live build" },
+  {
+    item: 'ISO 27001',
+    status: 'Not held',
+    note: (
+      <>
+        Readiness content only. See <Link className="sa-link" href="/compliance/iso27001-readiness">ISO 27001 readiness</Link>.
+      </>
+    ),
+  },
+  { item: 'HIPAA', status: 'Not held', note: 'No HIPAA certification or business associate program is claimed.' },
+  {
+    item: 'External penetration test',
+    status: 'No independent report',
+    note: 'Self-testing is tracked separately. Enterprise claims stay blocked until an independent report exists.',
+  },
+  {
+    item: 'Independent benchmark validation',
+    status: 'None',
+    note: (
+      <>
+        Every test is self-written. See the <Link className="sa-link" href="/benchmarks">numbers and their limits</Link>.
+      </>
+    ),
+  },
+  {
+    item: 'OWASP LLM Top 10',
+    status: 'Mapping, not certification',
+    note: (
+      <>
+        An alignment mapping of what the engine does and does not cover. See{' '}
+        <Link className="sa-link" href="/compliance/owasp-llm-top-10">OWASP LLM Top 10</Link>.
+      </>
+    ),
+  },
+  {
+    item: 'Marketplace listing',
+    status: 'Listed, Beta',
+    note: 'IDE Guard is listed on the VS Code Marketplace. No marketplace approval or endorsement is claimed beyond the listing.',
+  },
 ];
 
-const dataHandling = [
-  "Guard analysis runs inline; request text is evaluated against detection rules and not used to train models.",
-  "Sensitive values (PII, secrets) are redacted before logs are persisted — original text is not stored on redaction paths.",
-  "Audit logs and reports are scoped per project and per organization with row-level ownership checks on every read.",
-  "Data retention is configurable; enterprise workspaces can set automated purge windows for guard logs.",
-  "Demo workspace data is synthetic and resettable via an authenticated, confirmation-gated script.",
+const DATA_HANDLING = [
+  'Guard analysis runs inline. Request text is checked against detection rules and is not used to train models.',
+  'Sensitive values such as personal data and secrets are redacted before logs are saved. Original text is not stored on redaction paths.',
+  'Audit logs and reports are scoped per project and per organization, with ownership checks on every read.',
+  'Retention is configurable. Enterprise workspaces can set automatic purge windows for guard logs.',
+  'The public playground sends your text to the soterai.in server and is rate limited. Use sample data. To keep text on your own systems, self-host.',
 ];
 
-const securityControls = [
-  { title: "Defense-in-depth detection", desc: "Layered rules for prompt injection, jailbreaks, encoding/obfuscation, multilingual bypass, PII, secrets, and unsafe output." },
-  { title: "Strict transport + headers", desc: "HSTS in production, strict Content-Security-Policy, X-Frame-Options DENY, nosniff, and a locked-down Permissions-Policy." },
-  { title: "Authn & authz", desc: "Session-based auth with CSRF protection; per-project API keys are stored only as hashes, never in plaintext." },
-  { title: "Signed audit exports", desc: "HMAC-signed JSONL/CSV exports so downstream SIEM and compliance pipelines can verify integrity." },
-  { title: "Agent firewall", desc: "Tool-call authorization, agent passports, approvals, and escrow for autonomous workflows before risky actions execute." },
-  { title: "Secrets hygiene", desc: "Secrets live in environment configuration (gitignored); the repo is scanned to keep keys and tokens out of source control." },
+const CONTROLS: Array<{ title: string; desc: string }> = [
+  {
+    title: 'Layered detection',
+    desc: 'Rules for prompt injection, jailbreaks, encoding and obfuscation, multilingual attacks, personal data, secrets and unsafe output. Detection is heuristic and misses things.',
+  },
+  {
+    title: 'Transport and headers',
+    desc: 'HSTS in production, a strict Content-Security-Policy, X-Frame-Options DENY, nosniff and a locked-down Permissions-Policy.',
+  },
+  {
+    title: 'Authentication and authorization',
+    desc: 'Session-based sign-in with CSRF protection. Per-project API keys are stored only as hashes.',
+  },
+  {
+    title: 'Signed audit exports',
+    desc: 'HMAC-signed JSONL and CSV exports, so SIEM and compliance pipelines can check integrity.',
+  },
+  {
+    title: 'Agent controls',
+    desc: 'Tool-call authorization, agent passports and approvals for autonomous workflows before risky actions run. The MCP and agent guard is in Labs.',
+  },
 ];
 
-const deploymentModel = [
-  { mode: "Managed SaaS", detail: "Hosted guard APIs, dashboard, and audit storage. Fastest path to production." },
-  { mode: "Self-hosted (Docker)", detail: "Run the full stack in your own VPC for data residency and isolation requirements." },
-  { mode: "Hybrid", detail: "Inline SDK detection at the edge with centralized policy, reporting, and audit." },
-];
-
-// Compact, honest posture signals shown in the hero status board.
-const posture = [
-  { label: "Public benchmark", value: "100% recall", meter: 100, tone: "cyan" as const },
-  { label: "False-positive rate", value: "0.00% on Phase 9 dataset", meter: 100, tone: "lime" as const },
-  { label: "OWASP LLM Top 10", value: "Aligned coverage", meter: 90, tone: "cyan" as const },
-];
-
-const guarantees = [
-  { Icon: Eye, label: "PII redacted before logging" },
-  { Icon: KeyRound, label: "No raw secret storage" },
-  { Icon: ShieldCheck, label: "Per-project row-level isolation" },
+const DEPLOYMENT: Array<{ mode: string; detail: string }> = [
+  { mode: 'Hosted by SoterAI', detail: 'Hosted guard API, dashboard and audit storage. The quickest way to start.' },
+  { mode: 'Self-hosted', detail: 'Run the stack yourself with Docker, Postgres and Redis, with an optional vector store, for data residency and isolation.' },
+  { mode: 'Hybrid', detail: 'Check text in your own code with the SDK, with central policy and audit.' },
 ];
 
 export default function TrustPage() {
   return (
-    <main>
-      {/* ── Futuristic hero ───────────────────────────────────────── */}
-      <section className="relative overflow-hidden hero-wash border-b border-slate-800 py-16 sm:py-20">
-        <div className="pointer-events-none absolute inset-0 -z-10 grid-fade-anim opacity-50" />
-        <div className="pointer-events-none absolute -right-40 -top-40 -z-10 h-[460px] w-[460px] rounded-full bg-cyan/10 blur-[120px]" />
-
-        <div className="container-page grid items-center gap-12 lg:grid-cols-[1.05fr_.95fr]">
-          <div>
-            <span className="inline-flex items-center gap-2 rounded-full border border-cyan/30 bg-cyan/10 px-3 py-1 text-xs font-semibold text-cyan">
-              <ShieldCheck size={14} aria-hidden="true" />
-              Trust Center · transparent by design
-            </span>
-            <h1 className="mt-5 text-4xl font-bold tracking-tight sm:text-5xl">
-              Security you can{" "}
-              <span className="bg-gradient-to-r from-cyan to-lime bg-clip-text text-transparent">verify</span>,
-              not just trust.
-            </h1>
-            <div className="mt-6 max-w-2xl space-y-4 leading-7 text-slate-200">
-              <p>
-                SoterAI protects company data and AI-agent actions before sensitive context reaches external AI systems.
-                This page documents what we test, how we handle data, the controls we run, how you can deploy us,
-                and how to report a vulnerability.
-              </p>
-              <p>
-                We do not claim complete protection or certification. Customers remain responsible for secure design,
-                access control, monitoring, incident response, and human oversight.
-              </p>
-            </div>
-            <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-              <Link href="/benchmark" className="button-primary gap-2">
-                View the benchmark <ArrowRight size={18} aria-hidden="true" />
-              </Link>
-              <Link href="/status" className="button-secondary gap-2">
-                Live system status
-              </Link>
-            </div>
-          </div>
-
-          {/* Posture status board */}
-          <div className="card animate-pulse-glow overflow-hidden p-0">
-            <div className="flex items-center justify-between border-b border-slate-800 bg-slate-950/80 px-5 py-3.5">
-              <p className="font-mono text-xs text-slate-200">soterai · security posture</p>
-              <span className="flex items-center gap-2 rounded-md border border-lime/30 bg-lime/10 px-2.5 py-1 text-[11px] font-bold text-lime">
-                <span className="relative flex h-2 w-2">
-                  <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-lime opacity-60" />
-                  <span className="relative inline-flex h-2 w-2 rounded-full bg-lime" />
-                </span>
-                OPERATIONAL
-              </span>
-            </div>
-
-            <div className="space-y-5 p-5 sm:p-6">
-              {posture.map((p) => (
-                <div key={p.label}>
-                  <div className="flex items-center justify-between text-sm">
-                    <span className="text-slate-200">{p.label}</span>
-                    <span className={`font-mono font-semibold ${p.tone === "lime" ? "text-lime" : "text-cyan"}`}>
-                      {p.value}
-                    </span>
-                  </div>
-                  <div className="mt-2 h-1.5 w-full overflow-hidden rounded-full bg-slate-800">
-                    <div
-                      className={`h-full rounded-full ${p.tone === "lime" ? "bg-lime" : "bg-cyan"} transition-all duration-700`}
-                      style={{ width: `${p.meter}%` }}
-                    />
-                  </div>
-                </div>
-              ))}
-
-              <div className="grid gap-2 border-t border-slate-800 pt-4">
-                {guarantees.map((g) => (
-                  <div key={g.label} className="flex items-center gap-2.5 text-sm text-slate-300">
-                    <g.Icon size={16} className="shrink-0 text-cyan" aria-hidden="true" />
-                    {g.label}
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            <div className="flex items-center gap-2 border-t border-slate-800 bg-slate-950/60 px-5 py-3 font-mono text-[11px] text-slate-300">
-              <Activity size={12} className="text-cyan" aria-hidden="true" />
-              Honest scope · self-authored evidence · independent audit welcomed
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <div className="container-page py-16">
-        {/* Test status */}
-        <section>
-          <h2 className="flex items-center gap-3 text-2xl font-bold">
-            <span className="rounded-lg border border-cyan/20 bg-cyan/10 p-2">
-              <FlaskConical className="text-cyan" size={20} aria-hidden="true" />
-            </span>
-            Test status
-          </h2>
-          <p className="mt-2 text-sm text-slate-200">
-            Self-authored regression and adversarial coverage. Independent third-party auditing is recommended and welcomed.
+    <SaRoot>
+      <JsonLd
+        data={breadcrumbList([
+          { name: 'Home', path: '/' },
+          { name: 'Trust center', path: '/trust' },
+        ])}
+      />
+      <main className="sa-page" style={{ paddingBlock: 'var(--sa-space-7) var(--sa-space-9)' }}>
+        <header>
+          <p className="sa-eyebrow">Evidence</p>
+          <h1 className="sa-h1" style={{ marginTop: 'var(--sa-space-3)' }}>
+            What we hold, and what we do not.
+          </h1>
+          <p className="sa-lede" style={{ marginTop: 'var(--sa-space-4)' }}>
+            SoterAI is built and run by one person. This page lists the certifications and audits that exist (none yet), how data
+            is handled, the controls we run, and how to report a vulnerability. You remain responsible for secure design, access
+            control, monitoring and human oversight.
           </p>
-          <div className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-            {testStatus.map((t) => (
-              <div key={t.label} className="card p-5 transition hover:border-cyan/40">
-                <div className="text-3xl font-black text-cyan">{t.value}</div>
-                <p className="mt-2 text-sm font-medium text-slate-200">{t.label}</p>
-                <p className="mt-1 text-xs text-slate-300">{t.note}</p>
-              </div>
-            ))}
+          <div className="sa-hero__actions">
+            <SaLinkButton href="/benchmarks" large>
+              Read the numbers and limits
+            </SaLinkButton>
+            <SaLinkButton href="/status" variant="ghost">
+              Live service status
+            </SaLinkButton>
           </div>
-          <p className="mt-4 text-xs text-slate-300">
-            Full benchmark data:{" "}
-            <Link href="/benchmark" className="text-cyan underline underline-offset-2 hover:text-cyan/80">
-              /benchmark
-            </Link>{" "}
-            · live system status:{" "}
-            <Link href="/status" className="text-cyan underline underline-offset-2 hover:text-cyan/80">
-              /status
-            </Link>
-          </p>
+        </header>
+
+        <section className="sa-section" aria-labelledby="held">
+          <div className="sa-section__head">
+            <h2 className="sa-h2" id="held">
+              Certifications and audits
+            </h2>
+            <p className="sa-body sa-muted">This table does not show live status. The status page does.</p>
+          </div>
+          <DataTable
+            caption="Certifications, audits and listings: what exists today"
+            columns={[
+              { key: 'item', header: 'Item' },
+              { key: 'status', header: 'Status' },
+              { key: 'note', header: 'Note' },
+            ]}
+            rows={HELD}
+          />
         </section>
 
-        <section className="mt-16">
-          <h2 className="flex items-center gap-3 text-2xl font-bold">
-            <span className="rounded-lg border border-cyan/20 bg-cyan/10 p-2">
-              <ShieldCheck className="text-cyan" size={20} aria-hidden="true" />
-            </span>
-            Enterprise trust status
-          </h2>
-          <div className="mt-6 grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-            {trustProof.map((item) => (
-              <article key={item.label} className="card p-5">
-                <p className="text-sm font-semibold text-slate-200">{item.label}</p>
-                <p className="mt-2 text-lg font-bold text-cyan">{item.value}</p>
-                <p className="mt-2 text-sm leading-6 text-slate-200">{item.note}</p>
-              </article>
-            ))}
+        <section className="sa-section" aria-labelledby="data">
+          <div className="sa-section__head">
+            <h2 className="sa-h2" id="data">
+              Data handling
+            </h2>
           </div>
-          <p className="mt-4 text-sm text-slate-300">
-            SOC2: readiness in progress. Pentest: EVIDENCE REQUIRED unless a signed external report is added. Security contact: support@soterai.in.
-          </p>
-        </section>
-
-        {/* Data handling */}
-        <section className="mt-16">
-          <h2 className="flex items-center gap-3 text-2xl font-bold">
-            <span className="rounded-lg border border-cyan/20 bg-cyan/10 p-2">
-              <Database className="text-cyan" size={20} aria-hidden="true" />
-            </span>
-            Data handling
-          </h2>
-          <ul className="mt-6 space-y-3">
-            {dataHandling.map((d) => (
-              <li key={d} className="flex gap-3 rounded-lg border border-slate-800 bg-panel/40 p-4 text-sm leading-6 text-slate-300">
-                <CheckCircle2 className="mt-0.5 shrink-0 text-lime" size={18} aria-hidden="true" />
-                <span>{d}</span>
+          <ul className="sa-rules">
+            {DATA_HANDLING.map((d) => (
+              <li key={d}>
+                <p>{d}</p>
               </li>
             ))}
           </ul>
-          <p className="mt-4 text-xs text-slate-300">
-            See also our{" "}
-            <Link href="/privacy" className="text-cyan underline underline-offset-2 hover:text-cyan/80">privacy policy</Link>,{" "}
-            <Link href="/subprocessors" className="text-cyan underline underline-offset-2 hover:text-cyan/80">subprocessors</Link>, and{" "}
-            <Link href="/data-retention" className="text-cyan underline underline-offset-2 hover:text-cyan/80">data retention</Link>.
+          <p className="sa-body sa-muted" style={{ marginTop: 'var(--sa-space-4)' }}>
+            Terms and detail: <Link className="sa-link" href="/privacy">privacy policy</Link>,{' '}
+            <Link className="sa-link" href="/subprocessors">subprocessors</Link>,{' '}
+            <Link className="sa-link" href="/data-retention">data retention</Link>.
           </p>
         </section>
 
-        {/* Security controls */}
-        <section className="mt-16">
-          <h2 className="flex items-center gap-3 text-2xl font-bold">
-            <span className="rounded-lg border border-cyan/20 bg-cyan/10 p-2">
-              <Lock className="text-cyan" size={20} aria-hidden="true" />
-            </span>
-            Security controls
-          </h2>
-          <div className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-            {securityControls.map((c) => (
-              <div key={c.title} className="card p-5 transition hover:border-cyan/40">
-                <div className="flex items-center gap-2">
-                  <ShieldCheck className="shrink-0 text-cyan" size={18} aria-hidden="true" />
-                  <h3 className="font-semibold">{c.title}</h3>
-                </div>
-                <p className="mt-2 text-sm leading-6 text-slate-200">{c.desc}</p>
-              </div>
-            ))}
+        <section className="sa-section" aria-labelledby="controls">
+          <div className="sa-section__head">
+            <h2 className="sa-h2" id="controls">
+              Security controls
+            </h2>
           </div>
-          <p className="mt-4 text-xs text-slate-300">
-            Control details and posture:{" "}
-            <Link href="/security" className="text-cyan underline underline-offset-2 hover:text-cyan/80">/security</Link>{" "}
-            ·{" "}
-            <Link href="/compliance/owasp-llm-top-10" className="text-cyan underline underline-offset-2 hover:text-cyan/80">/compliance/owasp-llm-top-10</Link>
+          <ul className="sa-rules sa-rules--2">
+            {CONTROLS.map((c) => (
+              <li key={c.title}>
+                <h3>{c.title}</h3>
+                <p>{c.desc}</p>
+              </li>
+            ))}
+          </ul>
+          <p className="sa-body sa-muted" style={{ marginTop: 'var(--sa-space-4)' }}>
+            More on <Link className="sa-link" href="/security">security</Link>. What the controls miss is on the{' '}
+            <Link className="sa-link" href="/limitations">limits page</Link>.
           </p>
         </section>
 
-        {/* Deployment model */}
-        <section className="mt-16">
-          <h2 className="flex items-center gap-3 text-2xl font-bold">
-            <span className="rounded-lg border border-cyan/20 bg-cyan/10 p-2">
-              <Server className="text-cyan" size={20} aria-hidden="true" />
-            </span>
-            Deployment model
-          </h2>
-          <div className="mt-6 grid gap-4 sm:grid-cols-3">
-            {deploymentModel.map((d) => (
-              <div key={d.mode} className="card p-5 transition hover:border-cyan/40">
-                <h3 className="font-semibold text-slate-100">{d.mode}</h3>
-                <p className="mt-2 text-sm leading-6 text-slate-200">{d.detail}</p>
-              </div>
+        <section className="sa-section" aria-labelledby="deploy">
+          <div className="sa-section__head">
+            <h2 className="sa-h2" id="deploy">
+              Deployment options
+            </h2>
+          </div>
+          <ul className="sa-rules sa-rules--2">
+            {DEPLOYMENT.map((d) => (
+              <li key={d.mode}>
+                <h3>{d.mode}</h3>
+                <p>{d.detail}</p>
+              </li>
             ))}
-          </div>
+          </ul>
         </section>
 
-        {/* Responsible disclosure */}
-        <section className="mt-16">
-          <h2 className="flex items-center gap-3 text-2xl font-bold">
-            <span className="rounded-lg border border-amber-400/20 bg-amber-400/10 p-2">
-              <Bug className="text-amber-300" size={20} aria-hidden="true" />
-            </span>
-            Responsible disclosure
+        <section className="sa-section" aria-labelledby="disclosure">
+          <div className="sa-section__head">
+            <h2 className="sa-h2" id="disclosure">
+              Report a vulnerability
+            </h2>
+          </div>
+          <Callout kind="note" title="Security contact">
+            Email <a className="sa-link" href="mailto:support@soterai.in">support@soterai.in</a> with the affected URL, the impact,
+            steps to reproduce, and whether any data was accessed. Test only systems you own or may assess. Do not access, change,
+            delete or copy data that is not yours. Read the{' '}
+            <Link className="sa-link" href="/responsible-disclosure">full disclosure policy</Link>.
+          </Callout>
+        </section>
+
+        <section className="sa-closing" aria-labelledby="closing">
+          <h2 className="sa-h2" id="closing">
+            Security questions before you ship?
           </h2>
-          <div className="card mt-6 border-amber-400/20 p-6">
-            <p className="text-sm leading-7 text-slate-200">
-              Report suspected vulnerabilities to the security contact listed in your enterprise agreement or deployment
-              runbook. Include affected URLs, impact, reproduction steps, and whether any data was accessed. Only test
-              systems you own or are authorized to assess — do not access, modify, delete, or exfiltrate data that is not
-              yours.
-            </p>
-            <Link
-              href="/responsible-disclosure"
-              className="mt-5 inline-flex items-center gap-2 text-sm font-semibold text-cyan hover:text-cyan/80"
-            >
-              Read the full disclosure policy <ArrowRight size={16} aria-hidden="true" />
-            </Link>
+          <div className="sa-hero__actions">
+            <SaLinkButton href="/playground" large>
+              {PLAYGROUND_CTA_LABEL}
+            </SaLinkButton>
+            <SaLinkButton href="/contact-sales" variant="secondary">
+              Book a security review
+            </SaLinkButton>
           </div>
         </section>
-
-        {/* CTA */}
-        <section className="mt-16">
-          <div className="relative overflow-hidden rounded-3xl bg-cyan p-10 text-center text-white">
-            <h2 className="text-3xl font-black">Security questions before you ship?</h2>
-            <p className="mx-auto mt-3 max-w-2xl text-[0.9375rem] leading-7 text-white">
-              Try the live playground, review the benchmark, or talk to us about self-hosting.
-            </p>
-            <div className="mt-7 flex flex-col items-center justify-center gap-3 sm:flex-row">
-              <Link href="/playground" className="inline-flex items-center gap-2 rounded-xl bg-ink px-6 py-3 font-semibold text-slate-100">
-                Try the playground <ArrowRight size={18} aria-hidden="true" />
-              </Link>
-              <Link href="/contact-sales" className="inline-flex items-center gap-2 rounded-xl border border-white/50 px-6 py-3 font-semibold text-white">
-                Talk to us
-              </Link>
-            </div>
-          </div>
-        </section>
-      </div>
-    </main>
+      </main>
+    </SaRoot>
   );
 }

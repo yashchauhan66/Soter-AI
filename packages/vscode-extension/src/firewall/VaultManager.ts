@@ -35,6 +35,7 @@ import { ciFormatForPath } from "../config-scanners/CiSecretPlan";
 import { sourceSyntaxForPath } from "../config-scanners/SourceSecretPlan";
 import { containerFormatForPath } from "../config-scanners/ContainerSecretPlan";
 import { containerScannerEnabled } from "../config-scanners/ContainerScannerFlags";
+import { PortableVaultRecovery, assertNoPortableImport, type PortableVaultRecord } from "./PortableVaultRecovery";
 
 const KEY_ID = "soterai.vaultKey", PENDING = "vault-pending.json", VAULT = "soterai-vault.enc";
 const UUID = /^[a-f0-9]{8}-[a-f0-9]{4}-4[a-f0-9]{3}-[89ab][a-f0-9]{3}-[a-f0-9]{12}$/i;
@@ -64,9 +65,9 @@ export function vaultRuntimeEnabled(): boolean {
         });
     } catch { return false; }
 }
-export function managedPowerShellOutputEnabled(route: "ps51" | "cmd" | "gitBash" = "ps51"): boolean {
+export function managedPowerShellOutputEnabled(route: "ps51" | "ps7" | "cmd" | "gitBash" = "ps51"): boolean {
     try {
-        const flag = route === "ps51" ? "lite.ps51Terminal" : route === "cmd" ? "lite.cmdTerminal" : route === "gitBash" ? "lite.gitBashTerminal" : undefined;
+        const flag = route === "ps51" ? "lite.ps51Terminal" : route === "ps7" ? "lite.ps7Terminal" : route === "cmd" ? "lite.cmdTerminal" : route === "gitBash" ? "lite.gitBashTerminal" : undefined;
         if (!flag) return false;
         const config = vscode.workspace.getConfiguration("soterai");
         return vaultModeEnabled() && !vscode.env.remoteName && [flag, "lite.secretMatching", "lite.outputRedactor"].every(name => {
@@ -111,10 +112,11 @@ export class VaultManager {
         context.subscriptions.push(onDidChangeBoundaryRules(() => { this.runtimeEpoch++; }), onDidChangeOwnerPolicySession(() => { this.runtimeEpoch++; }));
         context.subscriptions.push(context.secrets.onDidChange(event => { if (event.key === KEY_ID) this.runtimeEpoch++; }));
     }
-    private alive(epoch?: number): void {
+    private alive(epoch?: number, allowPortableImport = false): void {
         const storage = this.context.globalStorageUri;
         if (this.mutationGuard && this.mutationGuard() !== true || !vaultModeEnabled() || !["file", "vscode-userdata"].includes(storage.scheme) || storage.scheme === "vscode-userdata" && !!vscode.env.remoteName || storage.authority
             || this.context.globalStorageUri.query || this.context.globalStorageUri.fragment || epoch !== undefined && epoch !== this.epoch) return vaultUnavailable();
+        if (!allowPortableImport) assertNoPortableImport(this.storage.directory);
     }
     private async capture(uri: vscode.Uri, ownerDamagedRecovery = false): Promise<Basis> {
         this.alive();
@@ -141,6 +143,7 @@ export class VaultManager {
         return current;
     }
     private async key(create: boolean): Promise<string> {
+        assertNoPortableImport(this.storage.directory);
         let key = await this.context.secrets.get(KEY_ID);
         if (!key && create) {
             if (await this.storage.read(VAULT) !== undefined || await this.storage.read(PENDING, 16384) !== undefined || await this.storage.hasGenerations()) return vaultUnavailable();
@@ -150,7 +153,14 @@ export class VaultManager {
         return key;
     }
     private async vault(key?: string): Promise<{ text: string | null; data: VaultFile }> {
-        const text = await this.storage.read(VAULT); if (text === undefined) return { text: null, data: { version: 2, entries: [] } };
+        assertNoPortableImport(this.storage.directory);
+        const text = await this.storage.read(VAULT);
+        if (text === undefined) {
+            // Retained encrypted generations mean this is recovery state, not
+            // a fresh empty store. Do not silently replace lost committed data.
+            if (await this.storage.hasGenerations()) return vaultUnavailable();
+            return { text: null, data: { version: 2, entries: [] } };
+        }
         return { text, data: parseVault(await decryptVault(text, key ?? await this.key(false))) };
     }
     private pointer(uri: vscode.Uri): string { return "vault-source-" + digest(uri.toString()).slice(0, 32) + ".json"; }
@@ -174,7 +184,56 @@ export class VaultManager {
         parseVault(await decryptVault(value.vaultAfter as string, await this.key(false)));
         return value as unknown as Checkpoint;
     }
-    private async noPending(): Promise<void> { if (await this.storage.read(PENDING, 16384) !== undefined) return vaultUnavailable(); }
+    private async noPending(): Promise<void> { assertNoPortableImport(this.storage.directory); if (await this.storage.read(PENDING, 16384) !== undefined) return vaultUnavailable(); }
+
+    private async validatePortableRecords(records: readonly PortableVaultRecord[], key: string): Promise<void> {
+        if (!keyValid(key)) return vaultUnavailable();
+        const byName = new Map(records.map(record => [record.name, record.text]));
+        const current = byName.get(VAULT); if (!current) return vaultUnavailable();
+        parseVault(await decryptVault(current, key));
+        const generations = new Map<string, { source: string; root: string; cipher: string }>();
+        for (const record of records.filter(record => record.name.startsWith("vault-generation-"))) {
+            const value = vaultObject(vaultJson(await decryptVault(record.text, key)),
+                ["schemaVersion", "id", "source", "root", "original", "masked", "example", "identity", "vaultBefore", "vaultAfter", "count"]);
+            if (value.schemaVersion !== 1 || typeof value.id !== "string" || !UUID.test(value.id) || record.name !== "vault-generation-" + value.id + ".enc"
+                || typeof value.source !== "string" || typeof value.root !== "string" || !Number.isSafeInteger(value.count) || (value.count as number) < 1 || (value.count as number) > 256
+                || value.vaultBefore !== null && typeof value.vaultBefore !== "string" || typeof value.vaultAfter !== "string") return vaultUnavailable();
+            const source = vscode.Uri.parse(value.source), root = vscode.Uri.parse(value.root);
+            for (const uri of [source, root]) if (uri.scheme !== "file" || uri.authority || uri.query || uri.fragment || !path.isAbsolute(uri.fsPath)
+                || vscode.Uri.file(uri.fsPath).toString() !== uri.toString()) return vaultUnavailable();
+            if (!isPathWithin(root.fsPath, source.fsPath) || samePath(root.fsPath, source.fsPath)) return vaultUnavailable();
+            for (const field of ["original", "masked", "example", "identity"]) if (typeof value[field] !== "string" || Buffer.byteLength(value[field] as string) > 65536) return vaultUnavailable();
+            if ((value.example as string).split("\n").some(line => line && !/^[A-Za-z_][A-Za-z0-9_]{0,127}=$/.test(line))) return vaultUnavailable();
+            parseVault(await decryptVault(value.vaultAfter as string, key));
+            if (value.vaultBefore !== null) parseVault(await decryptVault(value.vaultBefore as string, key));
+            generations.set(value.id, { source: value.source, root: value.root, cipher: record.text });
+        }
+        for (const record of records.filter(record => record.name.startsWith("vault-source-"))) {
+            const pointer = this.issued(record.text), generation = generations.get(pointer.id);
+            if (!generation || record.name !== "vault-source-" + digest(pointer.source).slice(0, 32) + ".json"
+                || generation.source !== pointer.source || generation.root !== pointer.root || digest(generation.cipher) !== pointer.digest) return vaultUnavailable();
+        }
+    }
+    /** Trusted command implementation only; never register these value-bearing
+     * methods directly as commands or return their material to an agent. */
+    async exportPortableRecovery(passphrase: string): Promise<Uint8Array> {
+        return this.mutation(async () => {
+            const epoch = this.epoch;
+            return new PortableVaultRecovery(this.storage, this.context.secrets,
+                (records, key) => this.validatePortableRecords(records, key), () => this.alive(epoch)).export(passphrase);
+        });
+    }
+    async importPortableRecovery(envelope: Uint8Array, passphrase: string, expectedEnvelopeSha256: string): Promise<{ status: "IMPORTED"; recordCount: number }> {
+        // Import uses the same cross-instance queue but deliberately admits its
+        // own journal. Every ordinary operation/lease still withholds on it.
+        const result = VaultManager.mutationQueue.then(async () => {
+            const epoch = this.epoch; this.alive(epoch, true); this.runtimeEpoch++;
+            return new PortableVaultRecovery(this.storage, this.context.secrets,
+                (records, key) => this.validatePortableRecords(records, key), () => this.alive(epoch, true)).import(envelope, passphrase, expectedEnvelopeSha256);
+        });
+        VaultManager.mutationQueue = result.then(() => undefined, () => undefined);
+        try { return await result; } catch { return vaultUnavailable(); }
+    }
     private async protect(uri: vscode.Uri, basis: Basis): Promise<Basis> {
         if (!restrictionSaveEnabled()) return vaultUnavailable();
         const folder = vscode.workspace.getWorkspaceFolder(uri); if (!folder || folder.uri.toString() !== basis.root) return vaultUnavailable();
@@ -298,7 +357,7 @@ export class VaultManager {
                 } catch { return false; }
             };
             if (!guard()) return vaultUnavailable();
-            const detail = JSON.stringify({ program: descriptor.program, cwd: descriptor.cwd, arguments: descriptor.args,
+            const detail = JSON.stringify({ program: descriptor.program, artifactDigest: descriptor.artifactDigest, cwd: descriptor.cwd, arguments: descriptor.args,
                 selectedNames: descriptor.selections.map(s => s.name), output: "Completed output is bounded and filtered; overflow is withheld",
                 warning: "Selected app code and its dependencies can inspect, write, print or upload injected values. This is cooperative local tooling, not app confinement." }, null, 2);
             if (await vscode.window.showWarningMessage("Run this app with the selected vault variables?", { modal: true, detail }, "Run selected app") !== "Run selected app" || !guard()) return vaultUnavailable();
@@ -319,7 +378,7 @@ export class VaultManager {
     }
     /** Internal filter capability only: no plaintext values, original files,
      * recovery-source fallback, key generation or value-bearing public result. */
-    async createManagedOutputFilter(root: vscode.Uri, enabled: () => boolean, route: "ps51" | "cmd" | "gitBash" = "ps51"): Promise<ManagedOutputFilter> {
+    async createManagedOutputFilter(root: vscode.Uri, enabled: () => boolean, route: "ps51" | "ps7" | "cmd" | "gitBash" = "ps51"): Promise<ManagedOutputFilter> {
         try {
             const epoch = this.epoch, runtimeEpoch = this.runtimeEpoch;
             this.alive(epoch);

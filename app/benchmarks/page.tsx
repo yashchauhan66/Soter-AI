@@ -1,448 +1,416 @@
-import { readFileSync } from "node:fs";
-import { join } from "node:path";
-import { ArrowRight, ShieldCheck, AlertTriangle, BarChart3, Gauge, Zap, Layers } from "lucide-react";
-import Link from "next/link";
-import type { Metadata } from "next";
-import { safeJsonLd } from "@/lib/seo/jsonLd";
+import { readFileSync } from 'node:fs';
+import { join } from 'node:path';
+import type { Metadata } from 'next';
+import Link from 'next/link';
+import { PLAYGROUND_CTA_LABEL } from '@/lib/marketing/cta';
+import { CodeBlock } from '@/components/sa/CodeBlock';
+import { Faq, faqJsonLd, type FaqItem } from '@/components/sa/Faq';
+import { Callout, DataTable, SaLinkButton } from '@/components/sa/primitives';
+import { SaRoot } from '@/components/sa/SaRoot';
+import {
+  BLIND_RECALL,
+  BLIND_RECALL_INTERVAL,
+  GENERAL_LIMIT,
+  NUMBERS_WITH_LIMITS,
+  PUBLIC_BENCHMARK,
+  REGRESSION,
+} from '@/lib/sa/claims';
+import { safeJsonLd } from '@/lib/seo/jsonLd';
+import { buildMetadata } from '@/lib/seo/metadata';
+import { breadcrumbList, SITE_URL } from '@/lib/seo/schema';
 
-export const metadata: Metadata = {
-  title: "Adversarial Benchmark: Recall & ROC-AUC",
+/**
+ * Evidence hub. Three rules shape this page:
+ *  1. A number is never shown without the test behind it and the reason not to trust it
+ *     too far, in the same view.
+ *  2. The weakest results come first. The list of categories starts with the ones that
+ *     missed.
+ *  3. Every figure is read from lib/sa/claims.ts or from scripts/guard-benchmark/
+ *     honest-results.json at build time. Nothing is typed in by hand.
+ *
+ * Title: 54 characters with the brand suffix. Description: 154.
+ */
+export const metadata: Metadata = buildMetadata({
+  title: 'Benchmarks: Numbers With Their Limits',
   description:
-    "Reproducible adversarial benchmark of the SoterAI guard: recall at 1% FPR, ROC-AUC, multi-turn Crescendo detection and latency.",
-  alternates: { canonical: "/benchmarks" },
-  openGraph: {
-    title: "SoterAI Adversarial Benchmark — Recall, ROC-AUC and Multi-Turn Detection",
-    description:
-      "Recall at a 1% false-positive budget, ROC-AUC, multi-turn (Crescendo) detection and latency — measured with the exact production classifier on a disclosed corpus.",
-  },
-};
+    'Recall, false positives and latency for SoterAI, each next to its test and its limits. Self-written tests, no outside audit, weakest results first.',
+  path: '/benchmarks',
+});
 
-// Shape of scripts/guard-benchmark/honest-results.json (written by
-// `npm run benchmark:honest`). Kept in sync with lib/benchmarks/honestBenchmark.ts.
 interface HonestResults {
   singleTurn: {
     generatedAtIso: string;
-    corpus: {
-      total: number;
-      attacks: number;
-      benign: number;
-      sources: Record<string, { total: number; attacks: number; benign: number }>;
-    };
-    production: {
-      precision: number;
-      recall: number;
-      f1: number;
-      falsePositiveRate: number;
-      falseNegativeRate: number;
-      blockOrReviewRate: number;
-    };
-    recallAtFpr: Array<{
-      targetFpr: number;
-      threshold: number;
-      recall: number;
-      fprAchieved: number;
-      allowedFalsePositives: number;
-    }>;
+    corpus: { total: number; attacks: number; benign: number; sources: Record<string, { total: number; attacks: number; benign: number }> };
+    production: { precision: number; recall: number; f1: number; falsePositiveRate: number; blockOrReviewRate: number };
+    recallAtFpr: Array<{ targetFpr: number; threshold: number; recall: number; fprAchieved: number }>;
     rocAuc: number;
     perCategory: Array<{ category: string; total: number; detected: number; recall: number }>;
     latencyMs: { p50: number; p95: number; p99: number; max: number };
     limitations: string[];
   };
-  multiTurn: {
-    total: number;
-    attacks: number;
-    benign: number;
-    recall: number;
-    falsePositiveRate: number;
-    meanTurnsToDetect: number;
-  };
+  multiTurn: { total: number; attacks: number; benign: number; recall: number; falsePositiveRate: number; meanTurnsToDetect: number };
 }
 
 function loadData(): HonestResults | null {
   try {
-    const filePath = join(process.cwd(), "scripts/guard-benchmark/honest-results.json");
-    return JSON.parse(readFileSync(filePath, "utf-8")) as HonestResults;
+    return JSON.parse(readFileSync(join(process.cwd(), 'scripts/guard-benchmark/honest-results.json'), 'utf-8')) as HonestResults;
   } catch {
     return null;
   }
 }
 
-const pct = (n: number) => `${(n * 100).toFixed(1)}%`;
+const pct = (n: number, digits = 2) => `${(n * 100).toFixed(digits)}%`;
+const fmtInt = (n: number) => n.toLocaleString('en-US');
+const fmtDate = (iso: string) => new Date(iso).toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric', timeZone: 'UTC' });
 
-function formatDate(iso: string): string {
-  try {
-    return new Date(iso).toLocaleDateString("en-US", {
-      year: "numeric",
-      month: "long",
-      day: "numeric",
-    });
-  } catch {
-    return iso;
-  }
+/** 95% Wilson score interval for k successes in n trials. Computed here, not published by anyone. */
+function wilson(k: number, n: number): { low: number; high: number } {
+  const z = 1.96;
+  const p = k / n;
+  const denom = 1 + (z * z) / n;
+  const centre = (p + (z * z) / (2 * n)) / denom;
+  const margin = (z * Math.sqrt((p * (1 - p)) / n + (z * z) / (4 * n * n))) / denom;
+  return { low: Math.max(0, centre - margin), high: Math.min(1, centre + margin) };
 }
 
-function recallBarColor(recall: number): string {
-  if (recall >= 0.85) return "from-cyan to-lime";
-  if (recall >= 0.6) return "from-amber-400 to-cyan";
-  return "from-rose-500 to-amber-400";
-}
-
-// Comprehensive adversarial battery — service-by-service hardening scenarios.
-// This is a service-hardening regression suite (does each service reject its
-// abuse cases), distinct from the detection-accuracy numbers above.
-const BATTERY = {
-  date: "2026-06-29",
-  total: 101,
-  passed: 101,
-  serviceCount: 21,
-} as const;
-
-function jsonLd(data: HonestResults) {
-  const st = data.singleTurn;
-  const at1 = st.recallAtFpr.find((r) => r.targetFpr === 0.01);
-  return {
-    "@context": "https://schema.org",
-    "@graph": [
-      {
-        "@type": "SoftwareApplication",
-        name: "SoterAI",
-        applicationCategory: "SecurityApplication",
-        operatingSystem: "Linux, macOS, Windows",
-        mainEntityOfPage: { "@type": "WebPage", "@id": "https://soterai.in/benchmarks" },
-        description:
-          "AI security guardrail platform protecting against prompt injection, jailbreaks, PII leakage, and unsafe outputs.",
-        offers: { "@type": "Offer", price: "0", priceCurrency: "USD" },
-        url: "https://soterai.in/benchmarks",
-      },
-      {
-        "@type": "Dataset",
-        name: "SoterAI Guard Benchmark",
-        description: `Honest guard benchmark on a disclosed ${st.corpus.total}-case corpus (${st.corpus.attacks} attacks / ${st.corpus.benign} benign): ROC-AUC ${st.rocAuc.toFixed(3)}, Recall@1%FPR ${at1 ? pct(at1.recall) : "n/a"}. Measured with the exact production classifier.`,
-        url: "https://soterai.in/benchmarks",
-        datePublished: st.generatedAtIso,
-        mainEntityOfPage: { "@type": "WebPage", "@id": "https://soterai.in/benchmarks" },
-        creator: { "@type": "Organization", name: "Soter" },
-        variableMeasured: [
-          { name: "ROC-AUC", value: st.rocAuc.toFixed(4) },
-          { name: "Recall@1%FPR", value: at1 ? at1.recall.toFixed(4) : "n/a" },
-          { name: "Production Precision", value: st.production.precision.toFixed(4) },
-          { name: "Production F1", value: st.production.f1.toFixed(4) },
-          { name: "False Positive Rate", value: pct(st.production.falsePositiveRate) },
-          { name: "p50 Latency", value: `${st.latencyMs.p50.toFixed(1)}ms` },
-          { name: "Multi-turn Recall", value: data.multiTurn.recall.toFixed(4) },
-        ],
-        measurementTechnique: "Recall at fixed false-positive budget (Recall@1%FPR) + ROC-AUC over a disclosed corpus, run with the production analyzeText classifier",
-      },
-    ],
-  };
-}
+const FAQ: FaqItem[] = [
+  {
+    q: 'Is a 100% recall figure believable?',
+    a: `Not on its own. The ${fmtInt(PUBLIC_BENCHMARK.attacks)} attacks in the public benchmark were written by us, and the engine was tuned against them. The figure closest to real use is ${BLIND_RECALL.caught} of ${BLIND_RECALL.of} on a blind set.`,
+  },
+  {
+    q: 'Why publish a 61.54% figure?',
+    a: `Because it is the honest one. ${BLIND_RECALL.caught} of ${BLIND_RECALL.of} cases that no detector was tuned against were caught. The sample is small, so the plausible range is wide: about ${Math.round(BLIND_RECALL_INTERVAL.low)} to ${Math.round(BLIND_RECALL_INTERVAL.high)}%.`,
+  },
+  {
+    q: 'Has anyone outside audited these numbers?',
+    a: 'No. Every test is written and maintained by the same person who builds the engine. There is no third-party certification.',
+  },
+  {
+    q: 'Can I reproduce them?',
+    a: 'Yes, from the repository. The commands are on this page. Results depend on your machine, and the numbers are not a promise about your traffic.',
+  },
+];
 
 export default function BenchmarksPage() {
   const data = loadData();
+  const numbers = NUMBERS_WITH_LIMITS.filter((n) => !n.blocked);
+
+  const pageLd: Record<string, unknown>[] = [
+    breadcrumbList([
+      { name: 'Home', path: '/' },
+      { name: 'Benchmarks', path: '/benchmarks' },
+    ]) as Record<string, unknown>,
+    faqJsonLd(FAQ) as Record<string, unknown>,
+  ];
 
   if (!data) {
     return (
-      <main className="container-page py-24 text-center">
-        <p className="eyebrow">Benchmark</p>
-        <h2 className="mt-4 text-4xl font-bold">Results not available</h2>
-        <p className="mx-auto mt-4 max-w-xl text-slate-200">Generate the honest benchmark artifact first:</p>
-        <pre className="mx-auto mt-6 max-w-lg rounded-xl border border-slate-800 bg-slate-950 p-4 text-left text-sm text-slate-300">
-          npm run benchmark:honest
-        </pre>
-      </main>
+      <SaRoot>
+        {pageLd.map((ld, i) => (
+          <script key={i} type="application/ld+json" dangerouslySetInnerHTML={{ __html: safeJsonLd(ld) }} />
+        ))}
+        <main className="sa-page" style={{ paddingBlock: 'var(--sa-space-7) var(--sa-space-9)' }}>
+          <h1 className="sa-h1">Benchmarks: numbers with their limits.</h1>
+          <section className="sa-section" aria-labelledby="numbers">
+            <h2 className="sa-h2" id="numbers" style={{ marginBottom: 'var(--sa-space-4)' }}>
+              The numbers
+            </h2>
+            <DataTable
+              caption="Results, the test behind each one, and why not to over-trust it"
+              columns={[
+                { key: 'number', header: 'Number', numeric: true },
+                { key: 'test', header: 'Test' },
+                { key: 'limit', header: 'Why not to over-trust it' },
+              ]}
+              rows={numbers.map((n) => ({ number: n.number, test: n.test, limit: n.limit }))}
+            />
+          </section>
+        </main>
+      </SaRoot>
     );
   }
 
   const { singleTurn: st, multiTurn: mt } = data;
-  const at1 = st.recallAtFpr.find((r) => r.targetFpr === 0.01);
+  const attacks = st.corpus.attacks;
+  const benign = st.corpus.benign;
   const at01 = st.recallAtFpr.find((r) => r.targetFpr === 0.001);
+  const caught = Math.round(st.production.recall * attacks);
+  const flagged = Math.round(st.production.falsePositiveRate * benign);
+  const ci = wilson(caught, attacks);
+  const generated = fmtDate(st.generatedAtIso);
+
+  const weakest = [...st.perCategory].sort((a, b) => a.recall - b.recall || b.total - a.total);
+  const misses = weakest.filter((c) => c.recall < 1);
+  const perfect = weakest.filter((c) => c.recall === 1);
+  const maxPerCategory = Math.max(...st.perCategory.map((c) => c.total));
+  const minPerCategory = Math.min(...st.perCategory.map((c) => c.total));
+
+  pageLd.push({
+    '@context': 'https://schema.org',
+    '@type': 'Dataset',
+    name: 'SoterAI guard adversarial run',
+    description: `A ${fmtInt(st.corpus.total)}-case run (${attacks} attacks, ${fmtInt(benign)} benign) of the production classifier, ${generated}. Self-written corpus, no outside audit.`,
+    url: `${SITE_URL}/benchmarks`,
+    datePublished: st.generatedAtIso,
+    creator: { '@type': 'Organization', name: 'SoterAI', url: SITE_URL },
+    measurementTechnique: 'Recall at a fixed false-positive budget and ROC-AUC over a disclosed corpus, using the production analyzeText classifier.',
+    variableMeasured: [
+      { '@type': 'PropertyValue', name: 'Recall at 1% false-positive budget', value: pct(st.production.recall) },
+      { '@type': 'PropertyValue', name: 'False-positive rate achieved', value: pct(st.production.falsePositiveRate) },
+      { '@type': 'PropertyValue', name: 'ROC-AUC', value: st.rocAuc.toFixed(3) },
+    ],
+  });
 
   return (
-    <main className="py-16 sm:py-24">
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: safeJsonLd(jsonLd(data)) }} />
-      <div className="container-page">
-        {/* Header */}
-        <div className="text-center">
-          <p className="eyebrow">Adversarial Benchmark</p>
-          <h1 className="mt-4 text-4xl font-bold tracking-tight sm:text-5xl">
-            Recall <span className="text-cyan">{at1 ? pct(at1.recall) : "—"}</span> at a 1% false-positive budget
+    <SaRoot>
+      {pageLd.map((ld, i) => (
+        <script key={i} type="application/ld+json" dangerouslySetInnerHTML={{ __html: safeJsonLd(ld) }} />
+      ))}
+      <main className="sa-page" style={{ paddingBlock: 'var(--sa-space-7) var(--sa-space-9)' }}>
+        <header>
+          <p className="sa-eyebrow">Evidence</p>
+          <h1 className="sa-h1" style={{ marginTop: 'var(--sa-space-3)' }}>
+            Every number, with the test behind it and its limits.
           </h1>
-          <p className="mx-auto mt-4 max-w-2xl text-lg leading-7 text-slate-200">
-            Measured with the <em>exact</em> production classifier over a disclosed corpus of {st.corpus.total.toLocaleString()} cases
-            ({st.corpus.attacks} attacks, {st.corpus.benign.toLocaleString()} benign). We publish the metric that actually matters —
-            recall at a fixed false-positive rate — not a &ldquo;100%&rdquo; score. Reproduce it with{" "}
-            <code className="text-cyan">npm run benchmark:honest</code>.
+          <p className="sa-lede" style={{ marginTop: 'var(--sa-space-4)' }}>
+            We wrote every test on this page ourselves, and nobody outside has audited them. The weakest results come first, and each
+            number sits next to the reason not to over-trust it.
           </p>
-          <div className="mt-4 text-sm text-slate-300">Run date: {formatDate(st.generatedAtIso)}</div>
-        </div>
+          <div style={{ marginTop: 'var(--sa-space-6)', maxWidth: 'var(--sa-measure)' }}>
+            <Callout kind="limit" title="Read this first">
+              {GENERAL_LIMIT} The 100% figures are on sets we wrote and tuned against. Treat them as regression checks.
+            </Callout>
+          </div>
+        </header>
 
-        {/* "How to read this" */}
-        <div className="mx-auto mt-8 max-w-3xl rounded-2xl border border-cyan/20 bg-cyan/5 p-5 text-sm leading-6 text-slate-300">
-          <p className="flex items-center gap-2 font-semibold text-cyan">
-            <AlertTriangle size={16} aria-hidden="true" /> How to read this
-          </p>
-          <p className="mt-2">
-            A guard is only useful if it catches attacks <strong>without</strong> flooding real users with false blocks.
-            <strong> Recall@1%FPR</strong> answers exactly that: &ldquo;if we tune the guard so at most 1 in 100 benign
-            messages is flagged, what fraction of real attacks do we still catch?&rdquo; It is the metric industry
-            benchmarks (Lakera PINT, Meta PromptGuard-2) report — and it is far more honest than a headline accuracy number.
-          </p>
-        </div>
-
-        {/* Hero Score Cards */}
-        <div className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-          <div className="card p-6 text-center">
-            <div className="text-4xl font-black text-cyan">{at1 ? pct(at1.recall) : "—"}</div>
-            <p className="mt-2 text-sm text-slate-200">Recall @ 1% FPR</p>
-            <p className="text-xs text-slate-300">Attacks caught within a 1% false-positive budget</p>
-          </div>
-          <div className="card p-6 text-center">
-            <div className="text-4xl font-black text-lime">{st.rocAuc.toFixed(3)}</div>
-            <p className="mt-2 text-sm text-slate-200">ROC-AUC</p>
-            <p className="text-xs text-slate-300">Threshold-independent separability</p>
-          </div>
-          <div className="card p-6 text-center">
-            <div className="text-4xl font-black text-emerald">{pct(st.production.precision)}</div>
-            <p className="mt-2 text-sm text-slate-200">Precision</p>
-            <p className="text-xs text-slate-300">FPR {pct(st.production.falsePositiveRate)} on {st.corpus.benign.toLocaleString()} benign</p>
-          </div>
-          <div className="card p-6 text-center">
-            <div className="text-4xl font-black text-cyan">{st.latencyMs.p50.toFixed(1)}ms</div>
-            <p className="mt-2 text-sm text-slate-200">p50 Latency</p>
-            <p className="text-xs text-slate-300">Analyzer CPU time, no network</p>
-          </div>
-        </div>
-
-        {/* Production-threshold detail */}
-        <div className="mt-8 grid gap-4 sm:grid-cols-3">
-          <div className="card p-5">
-            <div className="flex items-center gap-2 text-sm text-slate-200">
-              <Zap size={16} aria-hidden="true" /> Mitigation recall
-            </div>
-            <p className="mt-2 text-2xl font-bold">{pct(st.production.recall)}</p>
-            <p className="text-xs text-slate-300">Attacks blocked, reviewed, rewritten or redacted</p>
-          </div>
-          <div className="card p-5">
-            <div className="flex items-center gap-2 text-sm text-slate-200">
-              <ShieldCheck size={16} aria-hidden="true" /> Hard block / review
-            </div>
-            <p className="mt-2 text-2xl font-bold">{pct(st.production.blockOrReviewRate)}</p>
-            <p className="text-xs text-slate-300">Strictest — fully stopped or escalated</p>
-          </div>
-          <div className="card p-5">
-            <div className="flex items-center gap-2 text-sm text-slate-200">
-              <BarChart3 size={16} aria-hidden="true" /> Production F1
-            </div>
-            <p className="mt-2 text-2xl font-bold">{st.production.f1.toFixed(3)}</p>
-            <p className="text-xs text-slate-300">
-              Recall@0.1%FPR drops to {at01 ? pct(at01.recall) : "—"} — the deterministic-engine ceiling
+        <section className="sa-section" aria-labelledby="numbers">
+          <div className="sa-section__head">
+            <h2 className="sa-h2" id="numbers">
+              The numbers
+            </h2>
+            <p className="sa-body sa-muted">
+              Regression and blind figures re-run on {REGRESSION.asOf}. The public benchmark was generated {PUBLIC_BENCHMARK.generated}.
+              The adversarial run below was generated {generated}.
             </p>
           </div>
-        </div>
-
-        {/* Multi-turn / adaptive */}
-        <section className="mt-16">
-          <div className="flex items-center gap-3">
-            <Layers className="text-cyan" size={24} aria-hidden="true" />
-            <h2 className="text-2xl font-bold">Multi-turn / adaptive (Crescendo)</h2>
-          </div>
-          <p className="mt-2 max-w-3xl text-sm text-slate-200">
-            Static single-turn benchmarks miss the most realistic attack shape: the slow escalation where each message is
-            individually mild but the session as a whole builds toward a bypass. We evaluate the session-level defense
-            separately across {mt.total} conversations (including benign sessions that reuse &ldquo;as we discussed / go
-            deeper&rdquo; phrasing, to measure false escalation honestly).
-          </p>
-          <div className="mt-6 grid gap-4 sm:grid-cols-3">
-            <div className="card p-6 text-center">
-              <div className="text-4xl font-black text-cyan">{pct(mt.recall)}</div>
-              <p className="mt-2 text-sm text-slate-200">Multi-turn recall</p>
-              <p className="text-xs text-slate-300">Escalating attack sessions caught</p>
-            </div>
-            <div className="card p-6 text-center">
-              <div className="text-4xl font-black text-lime">{pct(mt.falsePositiveRate)}</div>
-              <p className="mt-2 text-sm text-slate-200">Benign escalation rate</p>
-              <p className="text-xs text-slate-300">Benign sessions wrongly escalated</p>
-            </div>
-            <div className="card p-6 text-center">
-              <div className="text-4xl font-black text-emerald">{mt.meanTurnsToDetect.toFixed(1)}</div>
-              <p className="mt-2 text-sm text-slate-200">Mean turns to catch</p>
-              <p className="text-xs text-slate-300">How fast the session defense fires</p>
-            </div>
-          </div>
-        </section>
-
-        {/* Per-category recall (weakest first) */}
-        <section className="mt-16">
-          <div className="flex items-center gap-3">
-            <ShieldCheck className="text-cyan" size={24} aria-hidden="true" />
-            <h2 className="text-2xl font-bold">Detection by attack category</h2>
-          </div>
-          <p className="mt-2 text-sm text-slate-200">
-            Weakest categories first — we show where the guard is strong <em>and</em> where it has room to improve, because
-            an honest benchmark is how detection actually gets better.
-          </p>
-          <div className="mt-6 grid gap-4">
-            {st.perCategory.map((cat) => {
-              const p = cat.recall * 100;
-              return (
-                <div key={cat.category} className="card p-5 sm:p-6">
-                  <div className="flex flex-wrap items-start justify-between gap-3">
-                    <div>
-                      <h3 className="font-semibold">{cat.category}</h3>
-                      <p className="text-sm text-slate-300">{cat.total} attack prompt{cat.total === 1 ? "" : "s"}</p>
-                    </div>
-                    <div className="text-right">
-                      <span className={`text-lg font-bold ${cat.recall >= 0.85 ? "text-lime" : cat.recall >= 0.6 ? "text-amber-300" : "text-rose-400"}`}>
-                        {cat.detected}/{cat.total}
-                      </span>
-                      <span className="ml-2 text-sm text-slate-200">({p.toFixed(0)}%)</span>
-                    </div>
-                  </div>
-                  <div className="mt-3 h-2 overflow-hidden rounded-full bg-slate-800">
-                    <div className={`h-full rounded-full bg-gradient-to-r ${recallBarColor(cat.recall)} transition-all`} style={{ width: `${p}%` }} />
-                  </div>
-                </div>
-              );
-            })}
-          </div>
-        </section>
-
-        {/* Corpus provenance */}
-        <section className="mt-16">
-          <div className="flex items-center gap-3">
-            <BarChart3 className="text-cyan" size={24} aria-hidden="true" />
-            <h2 className="text-2xl font-bold">Corpus &amp; provenance</h2>
-          </div>
-          <p className="mt-2 text-sm text-slate-200">
-            Every case is labeled with its source so you can audit exactly what these numbers were measured against.
-          </p>
-          <div className="mt-6 grid gap-3 sm:grid-cols-3">
-            {Object.entries(st.corpus.sources).map(([source, s]) => (
-              <div key={source} className="card p-5">
-                <p className="font-mono text-sm text-cyan">{source}</p>
-                <p className="mt-2 text-2xl font-bold">{s.total.toLocaleString()}</p>
-                <p className="text-xs text-slate-300">{s.attacks} attack · {s.benign.toLocaleString()} benign</p>
-              </div>
-            ))}
-          </div>
-        </section>
-
-        {/* Latency */}
-        <section className="mt-16">
-          <div className="flex items-center gap-3">
-            <Gauge className="text-cyan" size={24} aria-hidden="true" />
-            <h2 className="text-2xl font-bold">Latency</h2>
-          </div>
-          <p className="mt-2 text-sm text-slate-200">
-            Per-input analyzer CPU time (deterministic engine, no model, no network). The one-off cold-start outlier
-            (~{st.latencyMs.max.toFixed(0)}ms max) is JIT/module warm-up, not steady-state.
-          </p>
-          <div className="mt-6 grid gap-4 sm:grid-cols-3">
-            <div className="card p-5">
-              <p className="text-sm text-slate-200">p50 (Median)</p>
-              <p className="mt-1 text-3xl font-bold text-cyan">{st.latencyMs.p50.toFixed(1)}ms</p>
-            </div>
-            <div className="card p-5">
-              <p className="text-sm text-slate-200">p95</p>
-              <p className="mt-1 text-3xl font-bold text-cyan">{st.latencyMs.p95.toFixed(1)}ms</p>
-            </div>
-            <div className="card p-5">
-              <p className="text-sm text-slate-200">p99</p>
-              <p className="mt-1 text-3xl font-bold text-cyan">{st.latencyMs.p99.toFixed(1)}ms</p>
-            </div>
-          </div>
-        </section>
-
-        {/* Comprehensive Adversarial Battery (service hardening) */}
-        <section className="mt-16">
-          <div className="flex items-center gap-3">
-            <ShieldCheck className="text-cyan" size={24} aria-hidden="true" />
-            <h2 className="text-2xl font-bold">Service-hardening battery</h2>
-          </div>
-          <p className="mt-2 max-w-3xl text-sm text-slate-200">
-            Separate from detection accuracy: an end-to-end regression suite asserting each security service rejects its
-            abuse cases — agent firewall bypass, passport forgery, delegation abuse, egress exfiltration, evidence
-            tampering. It exits non-zero if any scenario regresses.
-          </p>
-          <div className="mt-6 grid gap-4 sm:grid-cols-3">
-            <div className="card p-6 text-center">
-              <div className="text-4xl font-black text-lime">{BATTERY.passed}/{BATTERY.total}</div>
-              <p className="mt-2 text-sm text-slate-200">Scenarios passing</p>
-              <p className="text-xs text-slate-300">Across {BATTERY.serviceCount} services</p>
-            </div>
-            <div className="card p-6 text-center">
-              <div className="text-4xl font-black text-cyan">{BATTERY.serviceCount}</div>
-              <p className="mt-2 text-sm text-slate-200">Services covered</p>
-              <p className="text-xs text-slate-300">Guard, agents, identity, evidence, SIEM</p>
-            </div>
-            <div className="card p-6 text-center">
-              <div className="text-4xl font-black text-emerald">0</div>
-              <p className="mt-2 text-sm text-slate-200">Failing scenarios</p>
-              <p className="text-xs text-slate-300">Run {formatDate(BATTERY.date)}</p>
-            </div>
-          </div>
-          <p className="mt-4 text-xs text-slate-300">
-            Command: <code className="text-cyan">npx tsx tests/comprehensive-adversarial-test-battery.ts</code>. This is a
-            service-hardening suite, <strong>not</strong> a detection-accuracy score — those are the honest metrics above.
+          <DataTable
+            caption="Results, the test behind each one, and why not to over-trust it"
+            columns={[
+              { key: 'number', header: 'Number', numeric: true },
+              { key: 'test', header: 'Test' },
+              { key: 'limit', header: 'Why not to over-trust it' },
+            ]}
+            rows={numbers.map((n) => ({ number: n.number, test: n.test, limit: n.limit }))}
+          />
+          <p className="sa-body sa-muted" style={{ marginTop: 'var(--sa-space-4)' }}>
+            The 3,200-case public synthetic benchmark has its own report on the{' '}
+            <Link className="sa-link" href="/benchmark">
+              benchmark page
+            </Link>{' '}
+            and its method on the{' '}
+            <Link className="sa-link" href="/benchmark/methodology">
+              methodology page
+            </Link>
+            .
           </p>
         </section>
 
-        {/* Methodology & Limitations */}
-        <section className="mt-16">
-          <div className="flex items-center gap-3">
-            <AlertTriangle className="text-cyan" size={24} aria-hidden="true" />
-            <h2 className="text-2xl font-bold">Methodology &amp; limitations</h2>
-          </div>
-          <div className="mt-4 grid gap-4 sm:grid-cols-2">
-            <div className="card p-5">
-              <h3 className="font-semibold">Method</h3>
-              <p className="mt-2 text-sm leading-6 text-slate-200">
-                The exact production classifier (<code className="text-cyan">analyzeText</code>) scores every case. We sweep
-                its risk score to find the threshold that keeps benign false positives at or below 1%, then report attack
-                recall there (Recall@1%FPR), plus ROC-AUC, per-category recall, a multi-turn Crescendo evaluation, and
-                latency. Reproduce with <code className="text-cyan">npm run benchmark:honest</code>.
-              </p>
-            </div>
-            <div className="card p-5">
-              <h3 className="font-semibold">Limitations we disclose</h3>
-              <ul className="mt-2 space-y-2 text-sm leading-6 text-slate-200">
-                {st.limitations.map((lim, i) => (
-                  <li key={i} className="flex gap-2">
-                    <span className="text-cyan">{i + 1}.</span>
-                    <span>{lim}</span>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          </div>
-        </section>
-
-        {/* CTA */}
-        <section className="mt-16">
-          <div className="rounded-3xl bg-cyan p-10 text-center text-white">
-            <h2 className="text-3xl font-black">Test your own chatbot flow.</h2>
-            <p className="mx-auto mt-3 max-w-2xl text-[0.9375rem] leading-7 text-white">
-              Try the interactive playground, then protect both sides of your model call.
+        <section className="sa-section" aria-labelledby="adversarial">
+          <div className="sa-section__head">
+            <h2 className="sa-h2" id="adversarial">
+              Adversarial run: {fmtInt(st.corpus.total)} cases
+            </h2>
+            <p className="sa-body">
+              The production classifier scored {attacks} attack cases and {fmtInt(benign)} benign cases. We pick the threshold that
+              keeps benign false positives at or below 1%, then report how many attacks it still catches. Generated {generated}.
             </p>
-            <div className="mt-7 flex flex-col items-center justify-center gap-3 sm:flex-row">
-              <Link href="/playground" className="inline-flex items-center gap-2 rounded-xl bg-ink px-6 py-3 font-semibold text-slate-100">
-                Try the playground <ArrowRight size={18} aria-hidden="true" />
-              </Link>
-              <Link href="/docs" className="inline-flex items-center gap-2 rounded-xl border border-white/50 px-6 py-3 font-semibold text-white">
-                Read docs
-              </Link>
-            </div>
+          </div>
+          <DataTable
+            caption="Adversarial run results and the limit that goes with each"
+            columns={[
+              { key: 'metric', header: 'Measure' },
+              { key: 'value', header: 'Result', numeric: true },
+              { key: 'limit', header: 'Limit' },
+            ]}
+            rows={[
+              {
+                metric: 'Attacks caught at the 1% false-positive budget',
+                value: `${pct(st.production.recall)} (${caught} of ${attacks})`,
+                limit: `Only ${attacks} attacks. One miss moves the figure by ${(100 / attacks).toFixed(1)} points. The 95% range is about ${(ci.low * 100).toFixed(1)} to ${(ci.high * 100).toFixed(1)}% (computed here).`,
+              },
+              {
+                metric: 'Benign cases flagged',
+                value: `${pct(st.production.falsePositiveRate)} (${flagged} of ${fmtInt(benign)})`,
+                limit: `${fmtInt(st.corpus.sources.expandedSafeInputs?.benign ?? 0)} of the ${fmtInt(benign)} benign cases come from one list of safe inputs that we wrote. Real users write messier text. The run does not record which ${flagged} were flagged.`,
+              },
+              {
+                metric: 'Attacks caught at a 0.1% budget',
+                value: at01 ? `${pct(at01.recall)} (${Math.round(at01.recall * attacks)} of ${attacks})` : 'n/a',
+                limit: 'Tighten the false-positive budget and recall drops sharply. This is the cost of fewer false alarms.',
+              },
+              {
+                metric: 'ROC-AUC',
+                value: st.rocAuc.toFixed(3),
+                limit: 'Separability on this corpus only. It says nothing about attacks outside it.',
+              },
+              {
+                metric: 'Precision',
+                value: pct(st.production.precision),
+                limit: `Precision depends on how many cases are attacks. Here ${pct(attacks / st.corpus.total, 1)} are. Your traffic will differ.`,
+              },
+              {
+                metric: 'Held for review or blocked',
+                value: pct(st.production.blockOrReviewRate),
+                limit: 'The strictest outcomes: blocked or sent to a person, not just redacted or rewritten. Read it against the attack count above.',
+              },
+              {
+                metric: 'Analyzer time per case (p50, p95, p99)',
+                value: `${st.latencyMs.p50.toFixed(1)}, ${st.latencyMs.p95.toFixed(1)}, ${st.latencyMs.p99.toFixed(1)} ms`,
+                limit: `CPU time of the analyzer alone, no network. One case took ${st.latencyMs.max.toFixed(0)} ms and we do not know why.`,
+              },
+            ]}
+          />
+        </section>
+
+        <section className="sa-section" aria-labelledby="categories">
+          <div className="sa-section__head">
+            <h2 className="sa-h2" id="categories">
+              By attack category, weakest first
+            </h2>
+            <p className="sa-body">
+              Each category has {minPerCategory} to {maxPerCategory} cases. That is too few to claim a per-category recall. It is enough to show
+              where the engine missed.
+            </p>
+          </div>
+          {misses.length > 0 ? (
+            <DataTable
+              caption="Categories with at least one miss"
+              columns={[
+                { key: 'category', header: 'Category' },
+                { key: 'result', header: 'Caught', numeric: true },
+                { key: 'note', header: 'Note' },
+              ]}
+              rows={misses.map((c) => ({
+                category: c.category,
+                result: `${c.detected} of ${c.total}`,
+                note: 'Missed in this run.',
+              }))}
+            />
+          ) : (
+            <p className="sa-body">No category had a miss in this run.</p>
+          )}
+          <details className="sa-disclosure" style={{ marginTop: 'var(--sa-space-5)' }}>
+            <summary>Show the {perfect.length} categories with no miss</summary>
+            <DataTable
+              caption="Categories with no miss in this run"
+              columns={[
+                { key: 'category', header: 'Category' },
+                { key: 'result', header: 'Caught', numeric: true },
+              ]}
+              rows={perfect.map((c) => ({ category: c.category, result: `${c.detected} of ${c.total}` }))}
+            />
+          </details>
+        </section>
+
+        <section className="sa-section" aria-labelledby="multi">
+          <div className="sa-section__head">
+            <h2 className="sa-h2" id="multi">
+              Multi-turn: attacks that build over several messages
+            </h2>
+          </div>
+          <DataTable
+            caption="Multi-turn evaluation and its limit"
+            columns={[
+              { key: 'metric', header: 'Measure' },
+              { key: 'value', header: 'Result', numeric: true },
+              { key: 'limit', header: 'Limit' },
+            ]}
+            rows={[
+              {
+                metric: 'Escalating attack conversations caught',
+                value: `${pct(mt.recall, 0)} (${Math.round(mt.recall * mt.attacks)} of ${mt.attacks})`,
+                limit: `${mt.attacks} attack and ${mt.benign} benign conversations that we wrote. Ten is too few to say more than that it worked on these.`,
+              },
+              {
+                metric: 'Benign conversations wrongly escalated',
+                value: `${pct(mt.falsePositiveRate, 0)} (0 of ${mt.benign})`,
+                limit: 'Same small set.',
+              },
+              {
+                metric: 'Turn at which an attack was caught, on average',
+                value: mt.meanTurnsToDetect.toFixed(1),
+                limit: 'As recorded by the harness, over the five attack conversations.',
+              },
+            ]}
+          />
+        </section>
+
+        <section className="sa-section" aria-labelledby="limits">
+          <div className="sa-section__head">
+            <h2 className="sa-h2" id="limits">
+              Method and limits
+            </h2>
+          </div>
+          <ul className="sa-limits">
+            <li>The scores come from the deterministic production classifier. The optional model tier is not in these numbers.</li>
+            <li>
+              The corpus is three lists that live in this repository ({Object.keys(st.corpus.sources).join(', ')}). It is not a
+              third-party benchmark such as PINT, JailbreakBench or HarmBench.
+            </li>
+            <li>Single-turn scores do not reflect adaptive attackers. The multi-turn run above is small.</li>
+            <li>There is no external audit, no replay of production traffic, and no third-party certification.</li>
+            <li>The engine was tuned against most of these sets, so recall on them is a regression check, not a forecast.</li>
+          </ul>
+          <p className="sa-body sa-muted" style={{ marginTop: 'var(--sa-space-4)' }}>
+            Gaps we found by hand are on the <Link className="sa-link" href="/limitations">limits page</Link>, each with a date.
+          </p>
+        </section>
+
+        <section className="sa-section" aria-labelledby="repro">
+          <div className="sa-section__head">
+            <h2 className="sa-h2" id="repro">
+              Run it yourself
+            </h2>
+            <p className="sa-body">
+              These run from the repository. They need Node.js and the project dependencies. Results depend on your machine.
+            </p>
+          </div>
+          <div className="sa-stack">
+            <CodeBlock label="Adversarial run (this section)" language="bash" code="npm run benchmark:honest" />
+            <CodeBlock label="Regression and blind sets" language="bash" code="npx tsx scripts/readme-recall-audit.ts" />
           </div>
         </section>
 
-        <p className="mt-8 text-center text-xs text-slate-600">
-          Full raw results available at{" "}
-          <a href="/api/benchmarks" className="text-cyan underline underline-offset-2 hover:text-cyan/80">
-            /api/benchmarks
-          </a>{" "}
-          (JSON).
-        </p>
-      </div>
-    </main>
+        <section className="sa-section" aria-labelledby="faq">
+          <div className="sa-section__head">
+            <h2 className="sa-h2" id="faq">
+              Questions
+            </h2>
+          </div>
+          <Faq items={FAQ} />
+        </section>
+
+        <section className="sa-closing" aria-labelledby="closing">
+          <h2 className="sa-h2" id="closing">
+            Check it against your own text.
+          </h2>
+          <p className="sa-body" style={{ marginTop: 'var(--sa-space-3)' }}>
+            A number on a page tells you less than a result on your own text. Use sample data, not real secrets.
+          </p>
+          <div className="sa-hero__actions">
+            <SaLinkButton href="/playground" large>
+              {PLAYGROUND_CTA_LABEL}
+            </SaLinkButton>
+            <SaLinkButton href="/limitations" variant="ghost">
+              Read what it misses
+            </SaLinkButton>
+          </div>
+          <p className="sa-body sa-muted" style={{ marginTop: 'var(--sa-space-5)', fontSize: 'var(--sa-text-sm)' }}>
+            Raw results as JSON: <a className="sa-link" href="/api/benchmarks">/api/benchmarks</a>.
+          </p>
+        </section>
+      </main>
+    </SaRoot>
   );
 }

@@ -2,19 +2,23 @@ import { expect, test } from "@playwright/test";
 
 test("landing page and sign-in page load", async ({ page }) => {
   await page.goto("/");
-  // Substring, not the full string: the em-dash in heroCopy.headline has changed
-  // twice, and this assertion was silently stale against the served page both
-  // times. Matching the stable tail can't drift.
+  // The soterai.in redesign replaced the homepage. The H1 is the approved copy
+  // from the Phase 3 deck; if the copy is changed on purpose, change it here too.
   await expect(
-    page.getByRole("heading", { name: "before they become incidents" }),
+    page.getByRole("heading", { level: 1, name: "Decide what your AI can see, say and do." }),
   ).toBeVisible();
-  // The redesign moved the two extension cards into the Surfaces grid, where the
-  // tiles are named "Browser Guard" / "IDE Guard" (no "SoterAI" prefix) under the
-  // section heading below.
   await expect(
-    page.getByRole("heading", { name: "Install it where your team already uses AI" }),
+    page.getByRole("heading", { name: "Pick the place your team already works." }),
   ).toBeVisible();
-  await expect(page.getByRole("heading", { name: "Browser Guard" })).toBeVisible();
+  // The surfaces are rows of a table, not headings. Scope the lookup to that table
+  // by its caption: the header menus also link to "Browser Guard" and sit in the DOM
+  // while closed, so an unscoped link lookup would be ambiguous.
+  const surfaces = page.getByRole("table", {
+    name: "Where it runs, how mature it is, and what it does not do yet",
+  });
+  await expect(surfaces).toBeVisible();
+  await expect(surfaces.getByRole("link", { name: "Browser Guard" })).toBeVisible();
+  await expect(surfaces.getByRole("link", { name: "IDE Guard" })).toBeVisible();
 
   await page.goto("/signin");
   await expect(page.getByRole("heading", { name: "Welcome back" })).toBeVisible();

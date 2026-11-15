@@ -24,12 +24,29 @@ const integrations = [
 ];
 
 export default async function StatusPage() {
-  const incidents = await db.incident.findMany({
-    where: { public: true },
-    include: { updates: { where: { public: true }, orderBy: { createdAt: "desc" } } },
-    orderBy: { startedAt: "desc" },
-    take: 20,
-  });
+  let incidents;
+  try {
+    incidents = await db.incident.findMany({
+      where: { public: true },
+      include: { updates: { where: { public: true }, orderBy: { createdAt: "desc" } } },
+      orderBy: { startedAt: "desc" },
+      take: 20,
+    });
+  } catch {
+    return (
+      <main>
+        <section className="relative overflow-hidden hero-wash border-b border-slate-800 py-16">
+          <div className="container-page">
+            <p className="eyebrow">Service status</p>
+            <h1 className="mt-3 text-3xl font-bold sm:text-4xl">Status unavailable</h1>
+            <p className="mt-4 max-w-2xl text-slate-200">
+              We are unable to load service status right now. Please try again later.
+            </p>
+          </div>
+        </section>
+      </main>
+    );
+  }
   const active = incidents.filter((i) => i.status !== "RESOLVED");
   const allOperational = active.length === 0;
 
@@ -45,22 +62,19 @@ export default async function StatusPage() {
               {allOperational ? "All published systems operational" : "Service advisory in effect"}
             </h1>
             <span
-              className={`inline-flex w-fit items-center gap-2 rounded-full border px-4 py-2 text-sm font-bold ${
-                allOperational
+              className={`inline-flex w-fit items-center gap-2 rounded-full border px-4 py-2 text-sm font-bold ${allOperational
                   ? "border-lime/30 bg-lime/10 text-lime"
                   : "border-amber-400/30 bg-amber-400/10 text-amber-300"
-              }`}
+                }`}
             >
               <span className="relative flex h-2.5 w-2.5">
                 <span
-                  className={`absolute inline-flex h-full w-full animate-ping rounded-full opacity-60 ${
-                    allOperational ? "bg-lime" : "bg-amber-400"
-                  }`}
+                  className={`absolute inline-flex h-full w-full animate-ping rounded-full opacity-60 ${allOperational ? "bg-lime" : "bg-amber-400"
+                    }`}
                 />
                 <span
-                  className={`relative inline-flex h-2.5 w-2.5 rounded-full ${
-                    allOperational ? "bg-lime" : "bg-amber-400"
-                  }`}
+                  className={`relative inline-flex h-2.5 w-2.5 rounded-full ${allOperational ? "bg-lime" : "bg-amber-400"
+                    }`}
                 />
               </span>
               {allOperational ? "OPERATIONAL" : `${active.length} ACTIVE`}
@@ -92,9 +106,8 @@ export default async function StatusPage() {
                 >
                   <span className="font-medium text-slate-200">{component}</span>
                   <span
-                    className={`flex items-center gap-2 text-sm font-semibold ${
-                      advisory ? "text-amber-300" : "text-lime"
-                    }`}
+                    className={`flex items-center gap-2 text-sm font-semibold ${advisory ? "text-amber-300" : "text-lime"
+                      }`}
                   >
                     {advisory ? <AlertTriangle size={15} /> : <CheckCircle2 size={15} />}
                     {advisory ? "Advisory" : "Operational"}
@@ -144,11 +157,10 @@ export default async function StatusPage() {
                   <div className="flex items-center justify-between gap-4">
                     <h3 className="font-semibold">{incident.title}</h3>
                     <span
-                      className={`rounded-full px-2.5 py-1 text-xs font-semibold ${
-                        incident.status === "RESOLVED"
+                      className={`rounded-full px-2.5 py-1 text-xs font-semibold ${incident.status === "RESOLVED"
                           ? "border border-lime/30 bg-lime/10 text-lime"
                           : "border border-amber-400/30 bg-amber-400/10 text-amber-300"
-                      }`}
+                        }`}
                     >
                       {incident.status}
                     </span>

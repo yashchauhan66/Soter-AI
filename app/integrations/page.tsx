@@ -1,153 +1,226 @@
-import Link from "next/link";
-import type { Metadata } from "next";
-import { ArrowRight } from "lucide-react";
-import { buildMetadata } from "@/lib/seo/metadata";
-import { JsonLd } from "@/components/seo/JsonLd";
-import { breadcrumbList } from "@/lib/seo/schema";
+import type { Metadata } from 'next';
+import Link from 'next/link';
+import { PLAYGROUND_CTA_LABEL } from '@/lib/marketing/cta';
+import { DataTable, SaLinkButton, StatusBadge, type Status } from '@/components/sa/primitives';
+import { SaRoot } from '@/components/sa/SaRoot';
+import { JsonLd } from '@/components/seo/JsonLd';
+import { buildMetadata } from '@/lib/seo/metadata';
+import { breadcrumbList } from '@/lib/seo/schema';
 
+/**
+ * Integrations hub. One table per kind of place the engine can run, each row with its
+ * status. Statuses follow public/llms.txt: the REST API and SDKs are Stable; the IDE and
+ * browser extensions, and the n8n, Make and Zapier guards, are Beta.
+ *
+ * Title: 52 characters with the brand suffix. Description: 150.
+ */
 export const metadata: Metadata = buildMetadata({
-  title: "Integrations — Connect SoterAI to n8n, Zapier, Make and More",
+  title: 'Integrations: n8n, Make, Zapier, SDKs, IDE',
   description:
-    "Connect SoterAI Guard to n8n, Zapier, Make.com, LangChain, Vercel AI SDK, Express and FastAPI — real-time prompt injection and data leakage protection.",
-  path: "/integrations",
-  keywords: [
-    "soterai integrations",
-    "ai security integrations",
-    "n8n ai security",
-    "zapier ai security",
-    "make.com ai security",
-    "langchain security",
-    "ai workflow security integrations",
-  ],
+    'Where SoterAI runs: n8n, Make and Zapier workflows, JavaScript and Python SDKs, framework middleware, VS Code and Chrome. Each row shows its status.',
+  path: '/integrations',
 });
 
-const integrations = [
+interface Row {
+  name: string;
+  href: string;
+  status: Status | null;
+  does: string;
+  note: string;
+}
+
+const WORKFLOWS: Row[] = [
   {
-    name: "n8n",
-    description: "Install the SoterAI community node from the n8n marketplace to add prompt injection and PII scanning to any n8n AI workflow.",
-    href: "/integrations/n8n",
-    category: "Workflow Automation",
-    badge: "Available on n8n",
+    name: 'n8n',
+    href: '/integrations/n8n',
+    status: 'Beta',
+    does: 'A community node that checks prompts and replies inside an n8n workflow.',
+    note: 'Package n8n-nodes-soterai. Needs a reachable API and a key.',
   },
   {
-    name: "Zapier",
-    description: "Protect Zapier AI actions with SoterAI's input and output guard before and after each automated AI step.",
-    href: "/integrations/zapier",
-    category: "Workflow Automation",
-    badge: "Guide available",
+    name: 'Make',
+    href: '/integrations/make',
+    status: 'Beta',
+    does: 'Calls the API from a scenario through the HTTP module.',
+    note: 'A guide, not a native module.',
   },
   {
-    name: "Make.com",
-    description: "Integrate SoterAI into Make scenarios via the HTTP module to scan AI inputs and outputs in real time.",
-    href: "/integrations/make",
-    category: "Workflow Automation",
-    badge: "Guide available",
-  },
-  {
-    name: "LangChain",
-    description: "Wrap any LangChain chain with SoterAI's input and output guard middleware using the JavaScript or Python SDK.",
-    href: "/docs/js",
-    category: "AI Framework",
-    badge: "SDK",
-  },
-  {
-    name: "Vercel AI SDK",
-    description: "Use the SoterAI middleware helper to guard streaming AI responses in Next.js and Edge runtime.",
-    href: "/docs/nextjs",
-    category: "AI Framework",
-    badge: "SDK",
-  },
-  {
-    name: "FastAPI",
-    description: "Add SoterAI as a Python middleware to protect FastAPI-based LLM applications.",
-    href: "/docs/fastapi",
-    category: "Backend Framework",
-    badge: "SDK",
-  },
-  {
-    name: "Express",
-    description: "Mount the SoterAI Express middleware to guard all AI routes in your Node.js application.",
-    href: "/docs/express",
-    category: "Backend Framework",
-    badge: "SDK",
-  },
-  {
-    name: "WordPress",
-    description: "Install the SoterAI WordPress plugin to protect AI-powered content and chatbots on WordPress sites.",
-    href: "/docs/wordpress",
-    category: "CMS",
-    badge: "Plugin",
-  },
-  {
-    name: "REST API",
-    description: "Use SoterAI's REST API to integrate with any platform, language, or automation tool.",
-    href: "/docs/rest-api",
-    category: "Universal",
-    badge: "API",
+    name: 'Zapier',
+    href: '/integrations/zapier',
+    status: 'Beta',
+    does: 'Checks the input and output of an AI step in a Zap.',
+    note: 'A guide, not a native app.',
   },
 ];
 
-export default function Page() {
-  const breadcrumb = breadcrumbList([
-    { name: "Home", path: "/" },
-    { name: "Integrations", path: "/integrations" },
-  ]);
+const CODE: Row[] = [
+  {
+    name: 'REST API',
+    href: '/docs/rest-api',
+    status: 'Stable',
+    does: 'Works from any language or tool that can send an HTTP request.',
+    note: 'Needs an API key.',
+  },
+  {
+    name: 'JavaScript and TypeScript SDK',
+    href: '/docs/js',
+    status: 'Stable',
+    does: 'Check input, check output, decide whether to block. Also used with LangChain.',
+    note: 'Package @soterai/core.',
+  },
+  {
+    name: 'Python SDK',
+    href: '/docs/python',
+    status: 'Stable',
+    does: 'A protect_chat helper that wraps your model call.',
+    note: 'Package soter.',
+  },
+  {
+    name: 'Next.js and the Vercel AI SDK',
+    href: '/docs/nextjs',
+    status: 'Stable',
+    does: 'Middleware for routes that call a model.',
+    note: 'No streaming latency has been measured.',
+  },
+  {
+    name: 'FastAPI',
+    href: '/docs/fastapi',
+    status: 'Stable',
+    does: 'Python middleware for FastAPI apps that call a model.',
+    note: 'See the docs for the current version.',
+  },
+  {
+    name: 'Express',
+    href: '/docs/express',
+    status: 'Stable',
+    does: 'Node.js middleware for Express routes that call a model.',
+    note: 'See the docs for the current version.',
+  },
+  {
+    name: 'WordPress',
+    href: '/docs/wordpress',
+    status: null,
+    does: 'A plugin for sites that use an AI model.',
+    note: 'No status is published for this one. Read the docs before you rely on it.',
+  },
+];
 
+const EDITORS: Row[] = [
+  {
+    name: 'IDE Guard',
+    href: '/extensions/ide',
+    status: 'Beta',
+    does: 'Finds secrets and personal data before they reach an AI assistant in VS Code.',
+    note: 'Other editors are not tested.',
+  },
+  {
+    name: 'Browser Guard',
+    href: '/extensions/browser',
+    status: 'Beta',
+    does: 'Visibility and control for AI use in Chrome and Edge.',
+    note: 'Tested on those two browsers only.',
+  },
+];
+
+function table(caption: string, rows: Row[]) {
   return (
-    <main className="container-page py-16">
-      <JsonLd data={breadcrumb} />
-
-      <div className="max-w-3xl">
-        <p className="eyebrow">Integrations</p>
-        <h1 className="mt-3 text-4xl font-bold tracking-tight sm:text-5xl">
-          Connect SoterAI to your AI stack
-        </h1>
-        <p className="mt-5 text-lg leading-8 text-slate-200">
-          Add runtime prompt injection detection, PII redaction, and AI data leakage prevention
-          to any workflow — whether you build with n8n, Zapier, Make, LangChain, or a custom API.
-        </p>
-        <div className="mt-8 flex gap-4">
-          <Link href="/docs/quickstart" className="button-primary gap-2">
-            Quickstart guide <ArrowRight size={16} aria-hidden="true" />
+    <DataTable
+      caption={caption}
+      columns={[
+        { key: 'name', header: 'Integration' },
+        { key: 'status', header: 'Status' },
+        { key: 'does', header: 'What it does' },
+        { key: 'note', header: 'Note' },
+      ]}
+      rows={rows.map((r) => ({
+        name: (
+          <Link className="sa-link" href={r.href}>
+            {r.name}
           </Link>
-          <Link href="/docs/rest-api" className="button-secondary">
-            REST API reference
-          </Link>
-        </div>
-      </div>
+        ),
+        status: r.status ? <StatusBadge status={r.status} /> : 'Not rated',
+        does: r.does,
+        note: r.note,
+      }))}
+    />
+  );
+}
 
-      <div className="mt-16 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-        {integrations.map((integration) => (
-          <Link
-            key={integration.name}
-            href={integration.href}
-            className="group rounded-xl border border-slate-800 bg-panel/40 p-6 transition hover:border-cyan/40"
-          >
-            <div className="flex items-center justify-between">
-              <h2 className="text-lg font-semibold group-hover:text-cyan">{integration.name}</h2>
-              <span className="rounded-full bg-slate-800 px-2.5 py-0.5 text-xs text-slate-200">
-                {integration.badge}
-              </span>
-            </div>
-            <p className="mt-1 text-xs text-slate-300">{integration.category}</p>
-            <p className="mt-3 text-sm leading-6 text-slate-200">{integration.description}</p>
-            <span className="mt-4 inline-flex items-center gap-1 text-sm font-medium text-cyan">
-              View integration <ArrowRight size={14} aria-hidden="true" />
-            </span>
-          </Link>
-        ))}
-      </div>
+export default function IntegrationsPage() {
+  return (
+    <SaRoot>
+      <JsonLd
+        data={breadcrumbList([
+          { name: 'Home', path: '/' },
+          { name: 'Integrations', path: '/integrations' },
+        ])}
+      />
+      <main className="sa-page" style={{ paddingBlock: 'var(--sa-space-7) var(--sa-space-9)' }}>
+        <header>
+          <p className="sa-eyebrow">Integrations</p>
+          <h1 className="sa-h1" style={{ marginTop: 'var(--sa-space-3)' }}>
+            Put the check where your team already works.
+          </h1>
+          <p className="sa-lede" style={{ marginTop: 'var(--sa-space-4)' }}>
+            One engine and one policy, reached from workflows, code, an editor or a browser. Each row shows how mature it is and what it
+            does not do yet.
+          </p>
+          <div className="sa-hero__actions">
+            <SaLinkButton href="/docs/quickstart" large>
+              Open the quickstart
+            </SaLinkButton>
+            <SaLinkButton href="/playground" variant="ghost">
+              {PLAYGROUND_CTA_LABEL}
+            </SaLinkButton>
+          </div>
+        </header>
 
-      <section className="mt-20 rounded-2xl border border-cyan/20 bg-cyan/5 p-8 text-center">
-        <h2 className="text-2xl font-bold">Don&apos;t see your platform?</h2>
-        <p className="mx-auto mt-3 max-w-xl text-sm leading-6 text-slate-200">
-          SoterAI works with any platform via the REST API. If your use case is not covered,
-          contact us and we will help you integrate.
-        </p>
-        <Link href="/contact" className="mt-5 inline-flex items-center gap-2 rounded-lg bg-cyan px-5 py-3 text-sm font-semibold text-white">
-          Request an integration <ArrowRight size={16} aria-hidden="true" />
-        </Link>
-      </section>
-    </main>
+        <section className="sa-section" aria-labelledby="workflows">
+          <div className="sa-section__head">
+            <h2 className="sa-h2" id="workflows">
+              Automation workflows
+            </h2>
+            <p className="sa-body sa-muted">
+              Guard steps for people who build with n8n, Make or Zapier. Interfaces may change while these are in Beta.
+            </p>
+          </div>
+          {table('Automation workflow integrations and their status', WORKFLOWS)}
+        </section>
+
+        <section className="sa-section" aria-labelledby="code">
+          <div className="sa-section__head">
+            <h2 className="sa-h2" id="code">
+              Code, SDKs and frameworks
+            </h2>
+          </div>
+          {table('SDK and framework integrations and their status', CODE)}
+        </section>
+
+        <section className="sa-section" aria-labelledby="editors">
+          <div className="sa-section__head">
+            <h2 className="sa-h2" id="editors">
+              Editors and browsers
+            </h2>
+          </div>
+          {table('Editor and browser extensions and their status', EDITORS)}
+        </section>
+
+        <section className="sa-section" aria-labelledby="missing">
+          <div className="sa-section__head">
+            <h2 className="sa-h2" id="missing">
+              Not on the list?
+            </h2>
+            <p className="sa-body">
+              Anything that can send an HTTP request can call the <Link className="sa-link" href="/docs/rest-api">REST API</Link>.
+              If you want a native integration, <Link className="sa-link" href="/contact">tell us which one</Link>. Nothing is promised
+              on a date.
+            </p>
+          </div>
+          <p className="sa-body sa-muted">
+            What Stable, Beta and Labs mean is on the <Link className="sa-link" href="/limitations">limits page</Link>.
+          </p>
+        </section>
+      </main>
+    </SaRoot>
   );
 }

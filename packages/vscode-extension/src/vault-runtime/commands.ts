@@ -7,10 +7,18 @@ import { readVaultFile, samePath } from "../firewall/VaultStorage";
 import { vaultRuntimeEnabled } from "../firewall/VaultManager";
 import { VaultRuntime } from "./VaultRuntime";
 import { VaultTaskTerminal, VaultDebugAdapter } from "./VaultSurfaces";
+import { captureRuntimeArtifact } from "./RuntimeBinding";
 
 const TYPE = "soterai-vault";
 let active: VaultRuntime | undefined;
-export async function stopVaultRuntime(): Promise<void> { const runtime = active; active = undefined; if (runtime) await runtime.shutdown(); }
+export async function stopVaultRuntime(): Promise<void> {
+    const runtime = active;
+    if (runtime) {
+        await runtime.shutdown();
+        // A failed journal check must remain a withdrawal obligation on retry.
+        if (active === runtime) active = undefined;
+    }
+}
 function definition(value: vscode.TaskDefinition): value is vscode.TaskDefinition & { descriptorId: string } {
     return value?.type === TYPE && typeof value.descriptorId === "string" && Object.keys(value).length === 2;
 }
@@ -18,6 +26,7 @@ function definition(value: vscode.TaskDefinition): value is vscode.TaskDefinitio
  * always owned by VaultManager's fresh modal; no command returns an env object. */
 export function registerVaultRuntimeCommands({ context, vault, requireTrust, refreshViews }: FirewallDeps): void {
     const runtime = new VaultRuntime(context, vault); active = runtime; context.subscriptions.push(runtime);
+    if (runtime.needsArtifactReview()) void vscode.window.showWarningMessage("Previously saved vault apps need setup again to bind their dependencies. Earlier entry-only approvals cannot run; their saved metadata is retained.");
     const reg = (id: string, handler: (...args: unknown[]) => unknown) => context.subscriptions.push(vscode.commands.registerCommand(id, handler));
     const choose = async (requested?: unknown): Promise<VaultAppDescriptor | undefined> => {
         const all = runtime.descriptors();
@@ -37,10 +46,11 @@ export function registerVaultRuntimeCommands({ context, vault, requireTrust, ref
         if (!vaultRuntimeEnabled() || !requireTrust("Vault applications")) return undefined;
         try {
             const app = (await vscode.window.showOpenDialog({ canSelectFiles: true, canSelectFolders: false, canSelectMany: false,
-                title: "Choose a trusted project Node app", filters: { JavaScript: ["js", "cjs", "mjs"] } }))?.[0];
+                title: "Choose a reviewed CommonJS app bundle", filters: { JavaScript: ["js", "cjs"] } }))?.[0];
             if (!app || app.scheme !== "file" || app.authority || app.query || app.fragment) return undefined;
             const folder = vscode.workspace.getWorkspaceFolder(app); if (!folder || folder.uri.scheme !== "file") return undefined;
             const program = await readVaultFile(app.fsPath, 1024 * 1024);
+            const artifact = captureRuntimeArtifact(folder.uri.fsPath, app.fsPath);
             const source = (await vscode.window.showOpenDialog({ canSelectFiles: true, canSelectFolders: false, canSelectMany: false,
                 defaultUri: folder.uri, title: "Choose an already migrated .env file" }))?.[0];
             if (!source || source.scheme !== "file" || source.authority || source.query || source.fragment
@@ -51,12 +61,13 @@ export function registerVaultRuntimeCommands({ context, vault, requireTrust, ref
             if (!selected?.length) return undefined;
             const argsText = await vscode.window.showInputBox({ title: "Optional public app arguments", prompt: "JSON array of literal strings. Values are never substituted.", value: "[]" });
             if (argsText === undefined || argsText.length > 16384) return undefined;
-            const value = parseVaultAppDescriptor({ schemaVersion: 1, id: randomUUID(), root: folder.uri.fsPath, program: app.fsPath, cwd: folder.uri.fsPath,
-                source: source.fsPath, programDigest: createHash("sha256").update(program.text).digest("hex"), args: JSON.parse(argsText), selections: selected.map(item => item.selection) });
+            const value = parseVaultAppDescriptor({ schemaVersion: 2, id: randomUUID(), root: folder.uri.fsPath, program: app.fsPath, cwd: folder.uri.fsPath,
+                source: source.fsPath, programDigest: createHash("sha256").update(program.text).digest("hex"), artifactDigest: artifact.digest,
+                args: JSON.parse(argsText), selections: selected.map(item => item.selection) });
             if (!value) throw new Error(); const saved = await runtime.save(value); refreshViews();
-            void vscode.window.showInformationMessage("Vault app saved. Every run asks for fresh approval; app code can inspect or upload its selected variables.");
+            void vscode.window.showInformationMessage("Vault app and static dependencies saved for review. Changes require setup again. Every run asks for fresh approval; the app can inspect its selected variables. This host runtime is not an OS sandbox.");
             return { id: saved.id, saved: true };
-        } catch { void vscode.window.showErrorMessage("App setup withheld. Choose a regular project Node entry and an already migrated environment file with unique variable names."); return undefined; }
+        } catch { void vscode.window.showErrorMessage("App setup withheld. Choose a CommonJS bundle with static explicit local imports and a migrated environment file. Prebundle ESM and package imports. Dynamic loading and filesystem/network modules are unsupported."); return undefined; }
     });
     reg("soterai.runVaultApp", async requested => {
         if (!vaultRuntimeEnabled() || !requireTrust("Vault applications")) return undefined;

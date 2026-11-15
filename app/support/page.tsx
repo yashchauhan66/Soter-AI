@@ -7,6 +7,7 @@ export const metadata: Metadata = {
     "Get help with SoterAI — API issues, integration support, billing questions, and security vulnerability reporting.",
   alternates: { canonical: "/support" },
   openGraph: {
+    images: [{ url: "/og-card/default.png", width: 1200, height: 630, alt: "SoterAI, the AI security command layer" }],
     title: "Support | SoterAI",
     description:
       "Get help with SoterAI — API issues, integration support, billing, and security.",
@@ -63,7 +64,7 @@ export default function SupportPage() {
           </p>
           <a
             href="mailto:support@soterai.in"
-            className="mt-4 inline-block text-cyan hover:underline"
+            className="mt-4 inline-block text-cyan underline underline-offset-2"
           >
             support@soterai.in
           </a>
@@ -75,7 +76,7 @@ export default function SupportPage() {
           </p>
           <a
             href="mailto:support@soterai.in"
-            className="mt-4 inline-block text-cyan hover:underline"
+            className="mt-4 inline-block text-cyan underline underline-offset-2"
           >
             support@soterai.in
           </a>
@@ -122,7 +123,7 @@ export default function SupportPage() {
             To report a security vulnerability, email{" "}
             <a
               href="mailto:support@soterai.in"
-              className="text-cyan hover:underline"
+              className="text-cyan underline underline-offset-2"
             >
               support@soterai.in
             </a>{" "}

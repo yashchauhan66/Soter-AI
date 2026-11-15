@@ -21,13 +21,11 @@ import {
   BookOpen,
   Bot,
   Boxes,
-  Building2,
   Chrome,
   Code2,
   FileSearch,
   FlaskConical,
   GitBranch,
-  GraduationCap,
   Landmark,
   LifeBuoy,
   Newspaper,
@@ -75,26 +73,28 @@ export interface NavSection {
   };
 }
 
-/* ── Platform ───────────────────────────────────────────────────── */
-const platformGroups: NavGroup[] = [
+/* ── Product ────────────────────────────────────────────────────── */
+const productGroups: NavGroup[] = [
   {
-    label: "Protect AI agents",
-    caption: "Control what agents are allowed to do",
+    label: "Control AI agents",
+    caption: "Decide what agents are allowed to do",
     links: [
-      { href: "/ai-agent-security", label: "AI Agent Security", desc: "Approve, block, and roll back agent actions", icon: Bot },
-      { href: "/mcp-security", label: "MCP & Tool Security", desc: "Review tool calls before they execute", icon: Workflow },
-      { href: "/ai-workflow-security", label: "Workflow Security", desc: "Guard n8n, Make, and Zapier automations", icon: GitBranch },
-      { href: "/model-supply-chain-security", label: "Model Supply Chain", desc: "Scan model artifacts and dependencies", icon: Boxes },
+      { href: "/ai-agent-security", label: "AI agent security", desc: "Approve, block or hold agent actions", icon: Bot },
+      { href: "/mcp-security", label: "MCP and tool security", desc: "Review tool calls before they run", icon: Workflow },
+      { href: "/ai-workflow-security", label: "Workflow security", desc: "Guard n8n, Make and Zapier flows", icon: GitBranch },
+      { href: "/model-supply-chain-security", label: "Model supply chain", desc: "Scan model files and dependencies", icon: Boxes },
     ],
   },
   {
     label: "Protect AI usage",
-    caption: "Govern how people use AI at work",
+    caption: "Check what goes in and what comes out",
     links: [
-      { href: "/ai-user-security", label: "AI User Security", desc: "Policies for employee AI usage", icon: Users },
-      { href: "/ai-data-leakage-prevention", label: "Data Leakage Prevention", desc: "Redact secrets and Indian PII", icon: FileSearch },
-      { href: "/prompt-injection-protection", label: "Prompt Injection Defense", desc: "Block overrides, jailbreaks, extraction", icon: ShieldAlert },
-      { href: "/rag-security", label: "RAG Security", desc: "Inspect retrieved context and citations", icon: BookOpen },
+      { href: "/ai-user-security", label: "AI user security", desc: "Policies for how people use AI at work", icon: Users },
+      { href: "/ai-data-leakage-prevention", label: "Data leakage and PII", desc: "Redact secrets and personal data", icon: FileSearch },
+      { href: "/prompt-injection-protection", label: "Prompt injection", desc: "Flag overrides, jailbreaks and prompt theft", icon: ShieldAlert },
+      { href: "/rag-security", label: "RAG security", desc: "Check retrieved text before the model reads it", icon: BookOpen },
+      { href: "/llm-firewall", label: "LLM firewall", desc: "One policy for every prompt and reply", icon: Scale },
+      { href: "/ai-security-india", label: "Indian identifiers and DPDP", desc: "Aadhaar-like numbers, PAN, GSTIN, UPI, IFSC", icon: Landmark },
     ],
   },
 ];
@@ -102,21 +102,21 @@ const platformGroups: NavGroup[] = [
 /* ── Integrations ───────────────────────────────────────────────── */
 const integrationGroups: NavGroup[] = [
   {
-    label: "Where the guard runs",
+    label: "Where it runs",
     links: [
-      { href: "/extensions/ide", label: "IDE Guard", desc: "VS Code, Cursor, Windsurf, Kiro", icon: Code2, tag: "Beta" },
-      { href: "/extensions/browser", label: "Browser Guard", desc: "Chrome and Microsoft Edge", icon: Chrome, tag: "Beta" },
-      { href: "/integrations", label: "All integrations", desc: "SDKs, REST API, platforms", icon: Puzzle },
-      { href: "/local-ai-broker", label: "Local AI Broker", desc: "Keep inspection on your own machine", icon: Activity },
+      { href: "/extensions/ide", label: "IDE Guard", desc: "VS Code extension", icon: Code2, tag: "Beta" },
+      { href: "/extensions/browser", label: "Browser Guard", desc: "Chrome and Edge extension", icon: Chrome, tag: "Beta" },
+      { href: "/integrations", label: "All integrations", desc: "SDKs, REST API and automation nodes", icon: Puzzle },
+      { href: "/local-ai-broker", label: "Local AI broker", desc: "Keep inspection on your own machine", icon: Activity },
     ],
   },
   {
     label: "Build with SoterAI",
     links: [
-      { href: "/docs", label: "Documentation", desc: "Quickstart, SDKs, API reference", icon: BookOpen },
-      { href: "/docs/rest-api", label: "REST API", desc: "Language-agnostic guard endpoints", icon: Code2 },
-      { href: "/playground", label: "Playground", desc: "Test the guard without signing up", icon: FlaskConical },
-      { href: "/demo", label: "Live demo", desc: "Watch attacks get blocked", icon: PlayCircle },
+      { href: "/docs", label: "Documentation", desc: "Quickstart, SDKs and API reference", icon: BookOpen },
+      { href: "/docs/rest-api", label: "REST API", desc: "Guard endpoints for any language", icon: Code2 },
+      { href: "/playground", label: "Playground", desc: "Try the engine without signing up", icon: FlaskConical },
+      { href: "/demo", label: "Guided demos", desc: "Walkthroughs of blocked attacks", icon: PlayCircle },
     ],
   },
 ];
@@ -125,60 +125,41 @@ const integrationGroups: NavGroup[] = [
 const evidenceGroups: NavGroup[] = [
   {
     label: "Proof",
-    caption: "Published methodology, not marketing claims",
+    caption: "Each number comes with its test and its limits",
     links: [
-      { href: "/benchmarks", label: "Benchmarks", desc: "Detection results and methodology", icon: BarChart3 },
-      { href: "/benchmark", label: "Dataset & limitations", desc: "What the corpus does and does not cover", icon: ScrollText },
-      { href: "/comparison", label: "Compare alternatives", desc: "Honest feature-by-feature view", icon: Scale },
-      { href: "/case-studies", label: "Case studies", desc: "How incidents actually unfold", icon: Newspaper },
+      { href: "/benchmarks", label: "Benchmarks", desc: "Results, method and limits", icon: BarChart3 },
+      { href: "/benchmark", label: "Dataset and method", desc: "What the test set does and does not cover", icon: ScrollText },
+      { href: "/comparison", label: "Compare alternatives", desc: "A factual, dated comparison", icon: Scale },
+      { href: "/case-studies", label: "Threat scenarios", desc: "How attacks unfold, step by step", icon: Newspaper },
     ],
   },
   {
     label: "Trust",
     links: [
-      { href: "/trust", label: "Trust center", desc: "Controls, subprocessors, posture", icon: ShieldCheck },
-      { href: "/compliance/owasp-llm-top-10", label: "OWASP LLM Top 10", desc: "Mapped coverage per risk area", icon: BadgeCheck },
-      { href: "/security", label: "Security overview", desc: "How the platform is built", icon: ShieldCheck },
-      { href: "/limitations", label: "Known limitations", desc: "What SoterAI does not claim", icon: ScrollText },
-    ],
-  },
-];
-
-/* ── Solutions ──────────────────────────────────────────────────── */
-const solutionsGroups: NavGroup[] = [
-  {
-    label: "By team",
-    links: [
-      { href: "/enterprise", label: "Enterprise", desc: "SSO, SCIM, retention, audit evidence", icon: Building2 },
-      { href: "/enterprise-ai-security", label: "Security teams", desc: "One policy across every AI surface", icon: ShieldCheck },
-      { href: "/partners/agency", label: "Agencies & MSPs", desc: "Offer AI security as a service", icon: Landmark },
-      { href: "/student-discount", label: "Students", desc: "Discounted access for learning", icon: GraduationCap },
-    ],
-  },
-  {
-    label: "By need",
-    links: [
-      { href: "/ai-security-india", label: "AI security in India", desc: "Aadhaar, PAN, GSTIN, UPI, IFSC", icon: Landmark },
-      { href: "/compliance", label: "Compliance mapping", desc: "Align controls to frameworks", icon: Scale },
-      { href: "/llm-firewall", label: "LLM Firewall", desc: "Inspect every prompt and response", icon: ShieldAlert },
+      { href: "/trust", label: "Trust center", desc: "Controls, subprocessors and posture", icon: ShieldCheck },
+      { href: "/compliance/owasp-llm-top-10", label: "OWASP LLM Top 10", desc: "Alignment per risk area", icon: BadgeCheck },
+      { href: "/limitations", label: "Known limitations", desc: "What this does not stop", icon: ScrollText },
+      { href: "/changelog", label: "Changelog", desc: "What changed, and when", icon: Newspaper },
     ],
   },
 ];
 
 /**
- * Desktop header sections. The order follows a buyer's actual question
- * sequence: what is it → where does it run → can I believe it → who is it for
- * → what does it cost.
+ * Desktop header sections: five, down from five-plus-about-35-links.
+ *
+ * Every dropdown's links are rendered into the server HTML (hidden until opened),
+ * so crawlers see them. Before this, panels mounted only on hover and ten pages
+ * had no link from anywhere in the HTML.
  */
 export const PRIMARY_NAV: NavSection[] = [
   {
-    label: "Platform",
-    groups: platformGroups,
+    label: "Product",
+    groups: productGroups,
     feature: {
       href: "/playground",
-      eyebrow: "No signup required",
-      title: "Run a real decision",
-      copy: "Paste a prompt and see the findings, redaction, risk score, and the action the guard would take.",
+      eyebrow: "No signup",
+      title: "Run it on your own text",
+      copy: "Paste a prompt, a reply or a tool request. See the verdict, the marks on your text, and how long it took.",
       cta: "Open the playground",
     },
   },
@@ -186,36 +167,95 @@ export const PRIMARY_NAV: NavSection[] = [
     label: "Integrations",
     groups: integrationGroups,
     feature: {
-      href: "/docs",
-      eyebrow: "Under 10 minutes",
+      href: "/docs/quickstart",
+      eyebrow: "Quickstart",
       title: "Guard your first request",
-      copy: "Create a project, keep the key server-side, and wrap one call. Everything else is optional.",
+      copy: "Create a project, keep the key on your server, and wrap one call. Everything else is optional.",
       cta: "Read the quickstart",
     },
   },
   { label: "Evidence", groups: evidenceGroups },
-  { label: "Solutions", groups: solutionsGroups },
+  { label: "Docs", href: "/docs" },
   { label: "Pricing", href: "/pricing" },
 ];
+
+/**
+ * How a link relates to the page the visitor is on.
+ *
+ *  - "page": the link points at this exact page.
+ *  - "true": the link points at a section this page sits inside (`/docs` while on
+ *    `/docs/python`). `aria-current="true"` marks the current item in a set
+ *    without claiming it is the page itself.
+ *  - undefined: unrelated. "/" is never an ancestor, or every page would match it.
+ */
+export type NavCurrent = "page" | "true" | undefined;
+
+export function navCurrent(pathname: string | null | undefined, href: string): NavCurrent {
+  if (!pathname) return undefined;
+  if (pathname === href) return "page";
+  if (href !== "/" && pathname.startsWith(`${href}/`)) return "true";
+  return undefined;
+}
+
+/**
+ * The one top-level item that owns the current page, or null.
+ *
+ * Exactly one item may be marked, because a current-page marker that names two
+ * places is not a marker. The earlier version highlighted both "Integrations" and
+ * "Docs" on every docs page: the Integrations menu links to /docs and
+ * /docs/rest-api, so it matched too.
+ *
+ *  1. An item with its own `href` owns that page and everything below it, so
+ *     /docs/rest-api belongs to Docs even though a menu also links to it.
+ *  2. Otherwise the menu whose link matches the most specific path wins; on a tie
+ *     the earlier item wins.
+ */
+export function activeSectionLabel(
+  pathname: string | null | undefined,
+  nav: NavSection[] = PRIMARY_NAV,
+): string | null {
+  if (!pathname) return null;
+
+  for (const section of nav) {
+    if (section.href && navCurrent(pathname, section.href)) return section.label;
+  }
+
+  let best: { label: string; length: number } | null = null;
+  for (const section of nav) {
+    for (const group of section.groups ?? []) {
+      for (const link of group.links) {
+        if (navCurrent(pathname, link.href) && (!best || link.href.length > best.length)) {
+          best = { label: section.label, length: link.href.length };
+        }
+      }
+    }
+  }
+  return best ? best.label : null;
+}
 
 /* ── Footer ─────────────────────────────────────────────────────── */
 export const FOOTER_NAV: NavGroup[] = [
   {
-    label: "Platform",
+    label: "Product",
     links: [
-      { href: "/ai-agent-security", label: "AI Agent Security" },
-      { href: "/ai-user-security", label: "AI User Security" },
-      { href: "/prompt-injection-protection", label: "Prompt Injection Defense" },
-      { href: "/ai-data-leakage-prevention", label: "Data Leakage Prevention" },
-      { href: "/rag-security", label: "RAG Security" },
-      { href: "/mcp-security", label: "MCP & Tool Security" },
-      { href: "/llm-firewall", label: "LLM Firewall" },
+      { href: "/ai-agent-security", label: "AI agent security" },
+      { href: "/ai-user-security", label: "AI user security" },
+      { href: "/prompt-injection-protection", label: "Prompt injection" },
+      { href: "/jailbreak-detection", label: "Jailbreak detection" },
+      { href: "/ai-data-leakage-prevention", label: "Data leakage and PII" },
+      { href: "/ai-security-india", label: "Indian identifiers and DPDP" },
+      { href: "/rag-security", label: "RAG security" },
+      { href: "/mcp-security", label: "MCP and tool security" },
+      { href: "/llm-firewall", label: "LLM firewall" },
+      { href: "/llm-security", label: "LLM security overview" },
+      { href: "/ai-safe-mode", label: "AI safe mode" },
     ],
   },
   {
     label: "Developers",
     links: [
       { href: "/docs", label: "Documentation" },
+      { href: "/docs/quickstart", label: "Quickstart" },
       { href: "/docs/rest-api", label: "REST API" },
       { href: "/integrations", label: "Integrations" },
       { href: "/extensions/ide", label: "IDE Guard" },
@@ -228,23 +268,28 @@ export const FOOTER_NAV: NavGroup[] = [
     label: "Evidence",
     links: [
       { href: "/benchmarks", label: "Benchmarks" },
-      { href: "/benchmark", label: "Dataset & methodology" },
+      { href: "/benchmark", label: "Dataset and method" },
       { href: "/comparison", label: "Compare alternatives" },
-      { href: "/case-studies", label: "Case studies" },
+      { href: "/case-studies", label: "Threat scenarios" },
       { href: "/limitations", label: "Known limitations" },
-      { href: "/blog", label: "Blog" },
+      { href: "/compliance", label: "Compliance status" },
+      { href: "/trust", label: "Trust center" },
+      { href: "/security", label: "Security" },
+      { href: "/status", label: "Status" },
     ],
   },
   {
     label: "Company",
     links: [
       { href: "/about", label: "About" },
-      { href: "/press", label: "Press & media" },
-      { href: "/trust", label: "Trust center" },
-      { href: "/security", label: "Security" },
-      { href: "/status", label: "Status" },
+      { href: "/blog", label: "Blog" },
+      { href: "/press", label: "Press and media" },
       { href: "/support", label: "Support" },
       { href: "/contact-sales", label: "Contact sales" },
+      { href: "/enterprise", label: "Enterprise" },
+      { href: "/enterprise-ai-security", label: "Security teams" },
+      { href: "/partners/agency", label: "Agencies and MSPs" },
+      { href: "/student-discount", label: "Students" },
       { href: "/responsible-disclosure", label: "Report a vulnerability" },
     ],
   },
@@ -336,6 +381,16 @@ export interface Crumb {
  * Google ignores a single-item BreadcrumbList. Labels come from the URL the
  * visitor is already on, so no data fetch is needed.
  */
+/**
+ * Ancestor paths that are not pages. A breadcrumb built from the URL would link to them
+ * and land on a 404, which the link audit found for /extensions and /partners. Each one
+ * is mapped to the nearest real page and given that page's name.
+ */
+const CRUMB_PARENT_OVERRIDES: Record<string, { name: string; path: string }> = {
+  "/extensions": { name: "Integrations", path: "/integrations" },
+  "/partners": { name: "Partners", path: "/partners/agency" },
+};
+
 export function buildCrumbs(pathname: string): Crumb[] {
   if (!pathname || pathname === "/") return [];
 
@@ -345,10 +400,10 @@ export function buildCrumbs(pathname: string): Crumb[] {
   let accumulated = "";
   for (const segment of segments) {
     accumulated += `/${segment}`;
-    crumbs.push({
-      name: PATH_OVERRIDES[accumulated] ?? formatSegment(segment),
-      path: accumulated,
-    });
+    const redirected = CRUMB_PARENT_OVERRIDES[accumulated];
+    // An ancestor that maps to a page already in the trail would repeat it, so skip it.
+    if (redirected && crumbs.some((c) => c.path === redirected.path)) continue;
+    crumbs.push(redirected ?? { name: PATH_OVERRIDES[accumulated] ?? formatSegment(segment), path: accumulated });
   }
 
   return crumbs;
