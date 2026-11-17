@@ -1,12 +1,24 @@
-![SoterAI Secret Guard — check secrets before your next AI prompt.](https://raw.githubusercontent.com/yashchauhan66/Soter-AI/main/packages/soterai-lite/media/readme-hero.png)
-
 # SoterAI Secret Guard
+
+## [Install in VS Code →](https://marketplace.visualstudio.com/items?itemName=soterai.soterai-ide-guard)
+
+## [Download from Open VSX →](https://open-vsx.org/extension/soterai/soterai-ide-guard)
+
+**Open VSX IDEs: [Antigravity](https://soterai.in/extensions/ide?editor=antigravity#editors) · [Kiro](https://soterai.in/extensions/ide?editor=kiro#editors) · [Windsurf](https://soterai.in/extensions/ide?editor=windsurf#editors) · [VSCodium](https://soterai.in/extensions/ide?editor=vscodium#editors)**
+
+For manual VSIX installation: **[Cursor](https://soterai.in/extensions/ide?editor=cursor#editors)** and **[other compatible desktop editors](https://soterai.in/extensions/ide?editor=other#editors)**, where supported.
+
+**[Choose your IDE on SoterAI →](https://soterai.in/extensions/ide)**
+
+---
+
+![SoterAI Secret Guard — check secrets before your next AI prompt.](https://raw.githubusercontent.com/yashchauhan66/Soter-AI/main/packages/soterai-lite/media/readme-hero.png)
 
 **Review your code before it becomes an AI prompt.**
 
 SoterAI checks code and logs locally for recognized secrets, then helps you review redacted text before pasting it into an AI assistant. Optional vault workflows replace approved values in saved files with placeholders and retain encrypted recovery.
 
-**[Install in VS Code](https://marketplace.visualstudio.com/items?itemName=soterai.soterai-ide-guard)** · **[Open VSX](https://open-vsx.org/extension/soterai/soterai-ide-guard)** · [Quick start](#quick-start) · [User guide](https://github.com/yashchauhan66/Soter-AI/blob/main/packages/soterai-lite/USER-GUIDE.md)
+[Quick start](#quick-start) · [User guide](https://github.com/yashchauhan66/Soter-AI/blob/main/packages/soterai-lite/USER-GUIDE.md)
 
 **Windows x64 · VS Code 1.85 or later · 0.7.0 preview**
 
@@ -23,6 +35,8 @@ code --install-extension soterai.soterai-ide-guard --pre-release
 ```
 
 ### Open VSX or a preview VSIX
+
+[Choose your IDE on SoterAI](https://soterai.in/extensions/ide#editors) for Antigravity, Kiro, Windsurf, VSCodium, Cursor or another compatible desktop editor. Install separately in each IDE.
 
 Use the [Open VSX listing](https://open-vsx.org/extension/soterai/soterai-ide-guard) in an editor that supports that registry. A compatible registry does not establish that the editor itself is supported.
 
