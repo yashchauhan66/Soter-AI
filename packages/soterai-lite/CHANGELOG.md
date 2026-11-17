@@ -2,6 +2,38 @@
 
 [Overview](https://github.com/yashchauhan66/Soter-AI/blob/main/packages/soterai-lite/README.md) · [User guide](https://github.com/yashchauhan66/Soter-AI/blob/main/packages/soterai-lite/USER-GUIDE.md) · [Privacy](https://github.com/yashchauhan66/Soter-AI/blob/main/packages/soterai-lite/PRIVACY.md)
 
+## 0.7.1 — Windows preview candidate
+
+- Preserve the current Cline session across checked atomic state-file replacement races by retrying a bounded fresh read. Unsafe aliases, malformed state, actual selector/configuration changes and exhausted reads remain withheld.
+- Compare Cline file identifiers and timestamps at full precision, and close the owned broker's remaining client connections during shutdown so an incomplete request cannot delay generation revocation.
+- Use the approved pink/purple faceted logo in the extension listing, README and Control Panel, with a theme-aware outline in the activity bar.
+- Make the Control Panel the primary workspace dashboard, with native theme colors, clear section navigation, compact setup disclosure and accessible status icons. Keep native Protection Center companion views available.
+- Rewrite the packaged README around installation, reviewed context and reversible vault workflows, with a portable text opening and explicit preview/integration boundaries. Include prepared artwork separately for later publication.
+- Fix vault key generation and AES-GCM operations on VS Code 1.85's Node 18 runtime when global WebCrypto is absent. Use Node's secure crypto primitives without changing ciphertext format or browser behavior.
+- Generate valid SHA-256 vault metadata on Node 18 while preserving the existing normalization and modern fingerprints. Incomplete or malformed historical records remain refused.
+- Keep Settings and Coverage usable while a reviewed action is pending, preserving the active operation and its result message.
+- Make Sentinel and Protected Workspace follow effective VS Code settings, including administrator policy. Direct actions verify the effective result; legacy preferences migrate without replacing explicit choices.
+- Keep live scans from mutating shared cached results. Preserve detected findings when normalization is incomplete, locate decoded findings on their original source lines, and withhold in-place edits when the source range is approximate.
+- Stop discovery reads after cancellation and invalidate discovered counts and reviews when the workspace folders change.
+- Add isolated runtime rebuild verification and release-workflow checks that compare all four runtime bytes and their input inventories.
+- Keep the reviewed Codex IDE build available after a reinstall changes only VS Code's installation timestamp. All other manifest bytes and the JavaScript/native runtime hashes still require the reviewed pins.
+- Group saved restrictions and coverage details into collapsible native sections with stable expansion state; discard stale items after refresh or opt-out.
+- Preserve the quiet startup and migration repairs below, with categorized native settings and duplicate-action handling.
+- Keep installation instructions inside the packaged README and guide so the unpublished website install route is not required.
+- Add exact-candidate release validation, preserved public-link/advisory checks, and native upgrade/restart/recovery acceptance tooling. Tooling alone does not establish acceptance or publish a release.
+
+### Quiet startup and settings
+
+- Fix workspace migration stopping on a pre-existing `.env.example` or a second environment file with different names. Existing examples are retained unchanged.
+- Remove duplicate outer migration confirmations, coalesce repeated requests, and stop the batch when owner consent is cancelled or a file fails.
+- Show file-specific confirmation and accurate completed/failed batch results while retaining independent admission checks for guarded callers.
+
+- Keep first install and workspace reloads in the editor without automatically opening a walkthrough or migration dialog.
+- Replace per-file migration popups with sidebar discovery counts and optional, compact notifications, off by default.
+- Review workspace secrets in a searchable file selector, then confirm only the selected files. Cancellation never starts migration.
+- Add categorized settings shortcuts, order everyday preferences before advanced flags, and clarify background discovery behavior.
+- Bound background discovery by file count and size, coalesce file events, and apply the discovery setting without a reload.
+
 ## Unreleased: installation and documentation
 
 - Reorganize the IDE/Marketplace README around installation, first use and common workflows, with the existing extension identity preserved.

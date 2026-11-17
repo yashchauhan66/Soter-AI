@@ -2,7 +2,7 @@
 
 [Overview](https://github.com/yashchauhan66/Soter-AI/blob/main/packages/soterai-lite/README.md) · [Privacy](https://github.com/yashchauhan66/Soter-AI/blob/main/packages/soterai-lite/PRIVACY.md) · [Changelog](https://github.com/yashchauhan66/Soter-AI/blob/main/packages/soterai-lite/CHANGELOG.md)
 
-This guide covers the **0.7.0 Windows x64 preview**, packaged under the existing extension ID `soterai.soterai-ide-guard`. Older source files and recovery records may call it **SoterAI Lite**. The visible name changed; the extension identity and storage keys did not.
+This guide covers the **0.7.1 Windows x64 preview**, packaged under the existing extension ID `soterai.soterai-ide-guard`. Older source files and recovery records may call it **SoterAI Lite**. The visible name changed; the extension identity and storage keys did not.
 
 Start with local scanning and reviewed context. You do not need an AI account, Docker, a vault or a configured provider for those workflows. Optional integrations have their own requirements and approvals.
 
@@ -31,30 +31,154 @@ Start with local scanning and reviewed context. You do not need an AI account, D
 | Account | No SoterAI account for local scanning or preview generation |
 | Unsupported environments | Linux, macOS, remote and virtual workspaces; other editors are not implied to be verified by their ability to install a VSIX |
 
-### Install from a registry
+### Choose your IDE
 
-- **VS Code:** open the [Marketplace listing](https://marketplace.visualstudio.com/items?itemName=soterai.soterai-ide-guard). Choose **Install Pre-Release** when available.
-- **Open VSX:** open the [registry listing](https://open-vsx.org/extension/soterai/soterai-ide-guard) in a compatible editor. Verify the available version and `win32-x64` target.
+Choose your editor below and follow its installation steps. These instructions are bundled with the extension for offline reading; the Marketplace and Open VSX links open the available registry versions.
 
-For VS Code's command-line installer:
+Use the steps for the app where you want SoterAI installed:
+
+| Your IDE | Installation steps |
+| --- | --- |
+| Visual Studio Code | [VS Code](#vs-code) |
+| Google Antigravity | [Antigravity](#antigravity) |
+| Windsurf | [Windsurf](#windsurf) |
+| Kiro | [Kiro](#kiro) |
+| Cursor | [Cursor](#cursor) |
+| VSCodium | [VSCodium](#vscodium) |
+| Another compatible desktop editor, or no search result | [Download from Open VSX and install a VSIX](#download-from-open-vsx-and-install-a-vsix) |
+
+**Use this identity in every IDE:**
+
+| Field | Expected value |
+| --- | --- |
+| Extension name | **SoterAI Secret Guard**; older listings may say **SoterAI IDE Guard** |
+| Publisher | `soterai` |
+| Extension ID | `soterai.soterai-ide-guard` |
+| Version described by this guide | `0.7.1` preview |
+| Platform for this preview | Windows x64 (`win32-x64`) |
+
+Open VSX is a website and extension registry used by multiple editors. On the website you can download an extension package, called a **VSIX**. Inside an editor you can search its extension store and install directly. **You do not need an Open VSX browser button that launches your IDE.** No GitHub clone, Node.js setup or terminal command is needed for these installation steps.
+
+The instructions below describe installation routes to try in each editor. They do not certify SoterAI compatibility with every editor version. This preview requires the Windows x64 environment above and an editor with compatible VS Code APIs. Built-in AI assistants are not automatically protected by installing SoterAI.
+
+### VS Code
+
+1. Open the [SoterAI Marketplace listing](https://marketplace.visualstudio.com/items?itemName=soterai.soterai-ide-guard) in your browser.
+2. Choose **Install Pre-Release** when available. Allow the browser to open **Visual Studio Code**, then finish installation in VS Code.
+3. If the browser does not open VS Code, open VS Code yourself. Click **Extensions** in the sidebar or press `Ctrl+Shift+X`.
+4. Search `soterai.soterai-ide-guard`, open the result from **soterai**, and choose **Install Pre-Release** if offered. If it is already installed on the release channel, use **Switch to Pre-Release Version** when available.
+5. Reload if prompted, then [check the installation](#check-the-installation).
+
+Optional terminal shortcut, if the `code` command is already available:
 
 ```sh
 code --install-extension soterai.soterai-ide-guard --pre-release
 ```
 
-Registry links may serve an older version until the maintainer publishes this candidate. A listing or successful install is not proof that version 0.7.0, or a particular feature, is available.
+That command installs into VS Code. For another IDE, follow its own steps below.
 
-### Install a maintainer-provided preview
+### Antigravity
 
-1. Obtain the `.vsix` file and its verification information from the maintainer. Do not use an untrusted re-upload.
-2. Open the Command Palette with `Ctrl+Shift+P`.
-3. Choose **Extensions: Install from VSIX...** and select the file.
-4. Open Extensions (`Ctrl+Shift+X`), search for `@id:soterai.soterai-ide-guard`, and check the installed version.
-5. Open a local test project. Start with synthetic credentials before using real ones.
+1. Open **Antigravity** and your local project in its **editor window**. If you are in the Agent Manager, switch to the editor first.
+2. Click **Extensions** in the editor sidebar, or press `Ctrl+Shift+X`.
+3. Search `soterai.soterai-ide-guard`. If there is no result, try `SoterAI Secret Guard`.
+4. Open the matching extension from publisher **soterai**, and click **Install**. Choose the pre-release option if offered for this preview.
+5. Reload if prompted, then [check the installation](#check-the-installation).
 
-Do not uninstall first just to update. Keep the same extension identity and editor profile, preserve recovery records, and read the changelog. Installed upgrade and recovery evidence applies to the exact package that was tested, not to every later build.
+**Cannot find it?** [Download the VSIX from Open VSX](#download-from-open-vsx-and-install-a-vsix), then run **Extensions: Install from VSIX...** inside **Antigravity**.
 
-If `code` is not recognized, use the editor's installation menu instead. Do not add an unknown executable to your PATH to work around it.
+### Windsurf
+
+1. Open **Windsurf** and a local project.
+2. Click **Extensions** in the sidebar, or press `Ctrl+Shift+X`.
+3. Search `soterai.soterai-ide-guard`. If needed, try `SoterAI Secret Guard`.
+4. Check that the publisher is **soterai**, open the result, and click **Install**. Choose the pre-release option if offered for this preview.
+5. Reload if prompted, then [check the installation](#check-the-installation).
+
+**Cannot find it?** [Download the VSIX from Open VSX](#download-from-open-vsx-and-install-a-vsix), then run **Extensions: Install from VSIX...** inside **Windsurf**.
+
+### Kiro
+
+1. Open the **Kiro desktop IDE** and a local project. These steps use the IDE, not a CLI session.
+2. Click **Extensions** in the sidebar, or press `Ctrl+Shift+X`.
+3. Search `soterai.soterai-ide-guard`. If needed, try `SoterAI Secret Guard`.
+4. Open the matching extension from **soterai**, and click **Install**. Choose the pre-release option if offered for this preview.
+5. Reload if prompted, then [check the installation](#check-the-installation).
+
+**Cannot find it?** [Download the VSIX from Open VSX](#download-from-open-vsx-and-install-a-vsix), then run **Extensions: Install from VSIX...** inside **Kiro**.
+
+### Cursor
+
+1. Open **Cursor** and a local project.
+2. Open **Extensions** with `Ctrl+Shift+X`.
+3. Search `soterai.soterai-ide-guard` or `SoterAI Secret Guard`.
+4. If the matching result from **soterai** is available, click **Install**. Select the pre-release option if offered for this preview.
+5. If it is unavailable in Cursor's current store, use the [Open VSX VSIX steps](#download-from-open-vsx-and-install-a-vsix) inside **Cursor** instead.
+6. Reload if prompted, then [check the installation](#check-the-installation).
+
+### VSCodium
+
+1. Open **VSCodium** and a local project.
+2. Open **Extensions** with `Ctrl+Shift+X`.
+3. Search `soterai.soterai-ide-guard` or `SoterAI Secret Guard`.
+4. Open the matching result from **soterai**, and click **Install**. Select the pre-release option if offered for this preview.
+5. Reload if prompted, then [check the installation](#check-the-installation).
+
+**Cannot find it?** Use the [Open VSX VSIX steps](#download-from-open-vsx-and-install-a-vsix) inside **VSCodium**.
+
+### Download from Open VSX and install a VSIX
+
+Use this route when the extension does not appear in your editor's store, the browser does not open your IDE, or you need a manual installation.
+
+1. **Open the listing in a browser:** [SoterAI on Open VSX](https://open-vsx.org/extension/soterai/soterai-ide-guard).
+2. **Check the package:** publisher **soterai**, extension **soterai-ide-guard**, and the version you need. This guide describes **0.7.1 preview**. If a platform selector is shown, choose **Windows x64 / `win32-x64`** for this preview.
+3. **Download:** choose **Download** for that version and save the file, usually in your **Downloads** folder. Its name must end in `.vsix`. Keep it as one file; do not unzip it or download the repository's source ZIP.
+4. **Open your chosen IDE:** Antigravity, Windsurf, Kiro, Cursor, VSCodium or VS Code. Install from inside that app; double-clicking the file may open a different editor.
+5. **Open the Command Palette:** press `Ctrl+Shift+P`, type `Install from VSIX`, then choose **Extensions: Install from VSIX...**. If available, you can also open Extensions and use the **...** menu → **Install from VSIX...**.
+6. **Select the file:** browse to Downloads, select the `.vsix`, and confirm installation. Reload the IDE if prompted.
+7. **Verify:** follow [Check the installation](#check-the-installation) below.
+
+Registry links may serve an older version until the maintainer publishes this candidate. If the required preview or Windows x64 download is missing, ask the maintainer for its VSIX and verification information. A maintainer-provided preview installs using steps 4–7. Do not use an untrusted re-upload or assume an older registry package has this guide's features.
+
+For an offline machine, download the compatible VSIX on a connected machine and transfer that file before following steps 4–7.
+
+### Other IDEs
+
+For another **VS Code-compatible desktop editor**, first try its Extensions search. If the listing is unavailable and the editor supports **Install from VSIX...**, use the manual steps above. Editor policies, extension API support and platform requirements can still prevent installation or operation.
+
+**This VS Code extension package is not an installer for every IDE.** IntelliJ IDEA, PyCharm, WebStorm, Android Studio, Eclipse, Neovim and Visual Studio (the separate IDE) need their own integrations or plugins. Do not use this Open VSX package in those products. Browser-only and remote workspaces are outside this Windows preview's supported scope.
+
+### Check the installation
+
+1. In the **same IDE and profile** where you installed SoterAI, open Extensions (`Ctrl+Shift+X`) and find the extension under Installed. You can also search its ID; where supported, use `@id:soterai.soterai-ide-guard`.
+2. Confirm publisher **soterai**, the installed **version**, and that the extension is enabled. If the version differs from this guide, check that version's documentation before using preview workflows.
+3. Open a local Windows test folder, then press `Ctrl+Shift+P` and run `SoterAI: Run Safe Demo Scan`.
+4. Confirm that the demo shows a scan result. Then run `SoterAI: Protect This Project Step by Step` for the guided setup.
+
+A working demo checks local scanning; it does not verify protection of another AI tool's traffic. Install separately in each IDE you use. Editor profiles and recovery records are separate; installing in VS Code does not establish that SoterAI is installed or configured in Windsurf, Kiro or Antigravity.
+
+### Updates
+
+For a store installation, check the extension's page in the IDE for an available **Update** and its version or pre-release channel. For a manually installed preview, obtain the newer compatible VSIX and repeat **Install from VSIX...**. Do not assume a manual VSIX installation will receive store updates automatically.
+
+Do not uninstall first just to update. Keep the same extension identity and editor profile, preserve recovery records, and read the [changelog](https://github.com/yashchauhan66/Soter-AI/blob/main/packages/soterai-lite/CHANGELOG.md). Installed upgrade and recovery evidence applies to the exact package that was tested, not to every later build.
+
+### Installation problems
+
+| What you see | What to do |
+| --- | --- |
+| Open VSX has no button that opens my IDE | Use Extensions search inside the IDE, or download the VSIX and install it from the IDE's Command Palette. |
+| The browser opens VS Code when I wanted another IDE | Open the intended IDE yourself and use its Extensions search or **Install from VSIX...**. |
+| Searching the name finds nothing | Clear search filters; try `soterai.soterai-ide-guard` and verify publisher `soterai`. If unavailable, use the manual Open VSX download. |
+| The preview version or Windows x64 download is missing | Ask the maintainer for the compatible preview VSIX. Do not assume another version or platform includes it. |
+| `Ctrl+Shift+X` does not open Extensions | Use the sidebar's Extensions icon or the editor's menu; shortcuts can differ with keymaps. |
+| **Install from VSIX...** is missing | Make sure you are in the desktop editor window. Check that editor's extension support and your organization's policy; this fallback requires VSIX installation support. |
+| The package is incompatible with the editor | Update the editor to a version with compatible VS Code APIs. This preview needs Windows x64 and API `^1.85.0`; updating does not guarantee a fork is supported. Do not edit the package to bypass the check. |
+| Installation is blocked by an organization policy | Ask your administrator to allow the extension or provide an approved installation route. |
+| The extension is installed but SoterAI commands are missing | Check the active IDE/profile and that the extension is enabled. Open a local folder, reload the editor, and retry the demo. If it still fails, report the exact error and editor version. |
+| `code` is not recognized | Use VS Code's Extensions panel or **Install from VSIX...**. The terminal shortcut is optional. |
+
+For unresolved problems, use the [issue tracker](https://github.com/yashchauhan66/Soter-AI/issues) with your IDE name/version, Windows architecture, SoterAI version, installation method and the exact error. Include sanitized details only.
 
 ## Your first local check
 
@@ -102,7 +226,9 @@ A diagnostic or quick fix does not block another extension's direct read or netw
 
 ### Protect secrets stored in project files
 
-Run `SoterAI: Protect Workspace Secrets`, or use the vault action on a finding. Review the detected files and proposed changes before approving anything.
+Run `SoterAI: Review Workspace Secrets`, or use the vault action on a finding. Review the detected files and proposed changes before approving anything.
+
+Select the files to review, then approve each file in its own confirmation. **Cancel** stops the remaining batch. Repeated clicks do not queue more migration windows. Existing `.env.example` files are preserved unchanged; a second environment file does not need to overwrite that example before it can be migrated. The result states how many files completed and whether a failure stopped the remaining work.
 
 Approved migration replaces selected recognized values in the current saved files with placeholders and keeps encrypted recovery outside the workspace. Other copies, Git history, inherited environments and values that were not detected or selected remain separate exposure paths.
 
@@ -120,12 +246,19 @@ Saved path and region restrictions use deny-by-default managed policy. Approved 
 
 Open Settings (`Ctrl+,`) and search for `@ext:soterai.soterai-ide-guard`. Most users can start without changing anything.
 
+The extension starts quietly: no automatic walkthrough, migration dialog or per-file popup. Open the SoterAI sidebar to see **Workspace secrets to review**; local editor findings remain available. Use **Open guided setup** when you want onboarding.
+
+The sidebar's **Settings** section links to Notifications, Local scanning, Vault & recovery, Privacy, AI connections and Advanced. Everyday preferences appear first in the native Settings editor. Advanced flags appear later; their existing defaults and administrator scopes are preserved.
+
+Optional secret-discovery notifications default to **off**. Choose **summary** for at most one compact notification per window session. This preference does not suppress explicit migration confirmations or operation errors.
+
 | Setting | Default | Meaning |
 | --- | --- | --- |
 | `soterai.liveScan.enabled` | `true` | Show local diagnostics for supported content. This is visibility, not universal interception. |
 | `soterai.protection.enabled` | `true` | Enable the central protection state; check actual route coverage separately. |
 | `soterai.broker.autoStart` | `true` | A trusted workspace can start the bundled local broker. Provider destinations start blank. |
-| `soterai.autoVaultMigration.enabled` | `true` | Offer reviewed migration. This does not approve file replacement automatically. |
+| `soterai.autoVaultMigration.enabled` | `true` | Discover secrets in saved files and show sidebar counts. Changing this setting takes effect immediately. Files change only after selection and confirmation. |
+| `soterai.notifications.secretDetection` | `off` | Optional background discovery notifications: `off` or one `summary` per window session. Local scanning and sidebar findings stay active. |
 | `soterai.lite.vaultMode` | `true` | Make optional reviewed vault workflows available. |
 | `soterai.cloud.enabled` | `false` | Keep the separate optional cloud feature preference off. |
 | `soterai.telemetry.redactedEvents` | `off` | Keep optional redacted-event telemetry off. |

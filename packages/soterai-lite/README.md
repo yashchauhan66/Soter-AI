@@ -1,115 +1,146 @@
 # SoterAI Secret Guard
 
+**Check secrets before your next AI prompt.**
+
 ## [Install in VS Code →](https://marketplace.visualstudio.com/items?itemName=soterai.soterai-ide-guard)
 
 ## [Download from Open VSX →](https://open-vsx.org/extension/soterai/soterai-ide-guard)
 
-**Open VSX IDEs: [Antigravity](https://soterai.in/extensions/ide?editor=antigravity#editors) · [Kiro](https://soterai.in/extensions/ide?editor=kiro#editors) · [Windsurf](https://soterai.in/extensions/ide?editor=windsurf#editors) · [VSCodium](https://soterai.in/extensions/ide?editor=vscodium#editors)**
+## Open VSX IDEs: [Antigravity](https://soterai.in/extensions/ide?editor=antigravity#editors) · [Kiro](https://soterai.in/extensions/ide?editor=kiro#editors) · [Windsurf](https://soterai.in/extensions/ide?editor=windsurf#editors) · [VSCodium](https://soterai.in/extensions/ide?editor=vscodium#editors)
 
-For manual VSIX installation: **[Cursor](https://soterai.in/extensions/ide?editor=cursor#editors)** and **[other compatible desktop editors](https://soterai.in/extensions/ide?editor=other#editors)**, where supported.
+Manual VSIX installation: **[Cursor](https://soterai.in/extensions/ide?editor=cursor#editors)** and **[other compatible desktop editors](https://soterai.in/extensions/ide?editor=other#editors)**, where supported.
 
 **[Choose your IDE on SoterAI →](https://soterai.in/extensions/ide)**
 
+**0.7.1 preview · Windows x64 · VS Code 1.85 or later**
+
+Local scanning and reviewed copy need **no SoterAI account or AI provider key**. Install separately in each editor you use.
+
 ---
 
-![SoterAI Secret Guard — check secrets before your next AI prompt.](https://raw.githubusercontent.com/yashchauhan66/Soter-AI/main/packages/soterai-lite/media/readme-hero.png)
+Scan code and logs for recognized secrets. Review redacted context before sharing with AI. Use an optional encrypted vault to keep approved values recoverable.
 
-**Review your code before it becomes an AI prompt.**
+[Quick start](#quick-start) · [Installation](#install) · [User guide](https://github.com/yashchauhan66/Soter-AI/blob/main/packages/soterai-lite/USER-GUIDE.md) · [Privacy](https://github.com/yashchauhan66/Soter-AI/blob/main/packages/soterai-lite/PRIVACY.md)
 
-SoterAI checks code and logs locally for recognized secrets, then helps you review redacted text before pasting it into an AI assistant. Optional vault workflows replace approved values in saved files with placeholders and retain encrypted recovery.
+## What you can do
 
-[Quick start](#quick-start) · [User guide](https://github.com/yashchauhan66/Soter-AI/blob/main/packages/soterai-lite/USER-GUIDE.md)
+| Your next task | Start with SoterAI |
+| --- | --- |
+| Check code before sharing it | Scan the current file and review findings for recognized credentials and supported sensitive patterns. |
+| Ask AI about an error | Prepare reviewed code, environment or debug context with recognized secrets redacted. |
+| Review project credentials | Inspect selected files and approve optional vault migration with encrypted recovery. |
+| Understand your setup | Open the workspace dashboard for local controls, settings, broker status and coverage. |
 
-**Windows x64 · VS Code 1.85 or later · 0.7.0 preview**
+## Quick start
 
-Local scanning needs no SoterAI account. This preview is still undergoing release verification; installation does not automatically protect other AI tools.
+1. **Open a local Windows project.** Use a test folder and synthetic values for your first check. Trust a workspace only if you trust its contents.
+2. **Open the dashboard.** Press `Ctrl+Shift+P` and run `SoterAI: Open Control Panel`.
+3. **Try a scan.** Run `SoterAI: Run Safe Demo Scan`, or use `SoterAI: Scan Current File` on the file you have open.
+4. **Review before copying.** On a finding, open the lightbulb and choose **Preview sanitized lines before copying**. Inspect the preview, then choose **Copy reviewed text** when it is suitable to share.
+
+You can scan and prepare reviewed context without configuring an AI provider. Preparing or copying context leaves the source file unchanged; you choose where to paste it.
+
+### Keep the useful context. Review the sensitive parts.
+
+An illustrative example using a **documentation-only password**:
+
+**Before review**
+
+```text
+DB_PASSWORD="BlueMango7!"
+Error: database connection refused (ECONNREFUSED).
+```
+
+**Reviewed context**
+
+```text
+DB_PASSWORD="[REDACTED]"
+Error: database connection refused (ECONNREFUSED).
+```
+
+Marker text can vary. Check the names, paths and private business information that remains. Editing the source or preview requires a fresh review.
+
+## Your workspace dashboard
+
+The Control Panel brings four useful views together:
+
+- **Overview:** local controls, warnings, broker status and your next action.
+- **Controls:** what each control does and whether it is available.
+- **Settings:** scanning, notifications, vault, privacy and AI connections.
+- **Coverage:** managed routes and checks still needing verification.
+
+The Protection Center retains saved restrictions, activity and detailed coverage. Status reflects observed setup; verify your assistant's actual route separately.
+
+## Optional encrypted vault
+
+Vault migration starts with a **file-specific review**. Approved values become placeholders, with encrypted recovery outside the normal workspace. A names-only environment example is created or retained; existing examples are preserved.
+
+**Migration changes the file on disk.** Applications reading it receive placeholders. Review how your app loads secrets first; the documented **Vault App** workflow has specific CommonJS and dependency requirements.
+
+Cancellation preserves the source. Raw-value restoration needs a separate disclosure review. Keep encrypted records and the profile's SecretStorage key until recovery is verified.
+
+[Vault, application loading and recovery →](https://github.com/yashchauhan66/Soter-AI/blob/main/packages/soterai-lite/USER-GUIDE.md#advanced-workflows)
+
+## AI connections and coverage
+
+Local scans and reviewed copy work without AI accounts. Optional adapters and the local broker support **version-specific configurations** for tools such as Cline, Claude Code, Codex and Gemini. Verify the route you use.
+
+| Workflow | Current scope |
+| --- | --- |
+| Local scans and reviewed context | Check recognized secrets without provider setup. |
+| Managed gateway | Checks supported bounded requests and outputs actually routed through it. |
+
+**Coverage currently marks live AI-tool routes as Uncovered.** Setup and broker self-tests do not prove assistant coverage. Cached tasks, native tools and direct provider traffic can remain outside verified controls.
+
+Advanced workflows include checked Windows shells, Git/history reviews, isolated Docker tasks and portable vault recovery. Cloud connection and policy sync are unavailable in this preview.
+
+[Supported integrations and their requirements →](https://github.com/yashchauhan66/Soter-AI/blob/main/packages/soterai-lite/USER-GUIDE.md#supported-integrations)
 
 ## Install
 
+**Store name:** SoterAI Secret Guard · **Publisher:** `soterai` · **Extension ID:** `soterai.soterai-ide-guard`
+
+This README describes the **0.7.1 Windows x64 preview**, also known in source as SoterAI Lite. Registry links may serve an older version until this candidate is published. Use a maintainer-provided VSIX when the required preview is unavailable.
+
 ### VS Code
 
-Open the [Marketplace listing](https://marketplace.visualstudio.com/items?itemName=soterai.soterai-ide-guard) and choose **Install Pre-Release** when available. Or run:
+Open the [Marketplace listing](https://marketplace.visualstudio.com/items?itemName=soterai.soterai-ide-guard), choose **Install Pre-Release** when available, and finish installation in VS Code.
+
+Optional terminal shortcut:
 
 ```sh
 code --install-extension soterai.soterai-ide-guard --pre-release
 ```
 
-### Open VSX or a preview VSIX
+### Antigravity, Kiro, Windsurf, VSCodium and Cursor
 
-[Choose your IDE on SoterAI](https://soterai.in/extensions/ide#editors) for Antigravity, Kiro, Windsurf, VSCodium, Cursor or another compatible desktop editor. Install separately in each IDE.
+[Open the SoterAI IDE installation page](https://soterai.in/extensions/ide#editors), choose your editor and follow its steps. In Antigravity, use the editor window. For Kiro, use the desktop IDE.
 
-Use the [Open VSX listing](https://open-vsx.org/extension/soterai/soterai-ide-guard) in an editor that supports that registry. A compatible registry does not establish that the editor itself is supported.
+### Install a VSIX manually
 
-If you received the preview package directly from the maintainer, open the Command Palette and choose **Extensions: Install from VSIX...**, then select that `.vsix` file. Only install a package from a source you trust.
+1. Open [SoterAI on Open VSX](https://open-vsx.org/extension/soterai/soterai-ide-guard). Choose the required version and **Windows x64 / `win32-x64`** where offered, then **Download**.
+2. In your chosen IDE, press `Ctrl+Shift+P` and run **Extensions: Install from VSIX…**. Select the saved `.vsix` file without unzipping it.
+3. Reload if prompted, check the installed version in Extensions and follow [Quick start](#quick-start).
 
-> **Check the version after installing.** This page describes the 0.7.0 preview. Registry links may serve an older version until the maintainer publishes this candidate. If the preview is unavailable, use a maintainer-provided VSIX rather than assuming the registry version has these features.
+No repository clone or Node.js setup is required. Installation does not verify every editor version or protect its built-in AI assistant. Linux, macOS, remote and virtual workspaces are outside this preview's tested scope.
 
-[Installation details and updates →](https://github.com/yashchauhan66/Soter-AI/blob/main/packages/soterai-lite/USER-GUIDE.md#installation-and-updates)
+[Installation, updates and troubleshooting →](https://github.com/yashchauhan66/Soter-AI/blob/main/packages/soterai-lite/USER-GUIDE.md#installation-and-updates)
 
-## Quick start
+## Privacy and scope
 
-1. **Open a local Windows project.** Start with a test folder and synthetic credentials. Trust a workspace only if you trust its contents.
-2. **Open the guided setup.** Press `Ctrl+Shift+P` and run `SoterAI: Protect This Project Step by Step`. It offers the next action for your project; opening it does not approve changes.
-3. **Try a local check.** Run `SoterAI: Run Safe Demo Scan` for the built-in sample, or `SoterAI: Scan Current File` for the file you have open.
-4. **Review before sharing.** On a current live finding, open the lightbulb and choose **Preview sanitized lines before copying**. Inspect the preview, then choose **Copy reviewed text** only if it is suitable to share.
-
-The reviewed-copy action filters recognized secrets in the affected lines. Check the remaining names, paths and private business information yourself. Editing the source or preview requires a new review.
-
-## Choose the workflow you need
-
-| I want to… | Start here |
-| --- | --- |
-| Ask an AI assistant about selected code | `SoterAI: Prepare Reviewed AI Context` |
-| Share a log or stack trace for debugging | `SoterAI: Preview Debug Context from Selection` |
-| Describe an environment without its real values | Choose the environment-contract option in **Prepare Reviewed AI Context** |
-| Review secrets stored in project files | `SoterAI: Protect Workspace Secrets` |
-| Inspect protected items and local check results | `SoterAI: Open Control Panel`, then **Coverage → Verify my setup** |
-| Undo owned configuration before uninstalling | `SoterAI: Restore changes before removal` |
-
-You can scan and prepare context without configuring an AI provider. The preview actions above do not send it to an AI service; you choose whether and where to paste it.
-
-[Step-by-step workflows →](https://github.com/yashchauhan66/Soter-AI/blob/main/packages/soterai-lite/USER-GUIDE.md#everyday-workflows)
-
-## Local by default, integrations by choice
-
-Live scanning is enabled by default. Local checks can inspect supported documents and sensitive files without asking before every scan. Vault migration and configuration changes require their own review.
-
-For supported AI tools, optional reviewed adapters and a local gateway can inspect supported traffic routed through SoterAI. Setup depends on the exact supported tool version and configuration.
-
-**The current Coverage view marks live AI-tool routes as Uncovered.** Local checks and a healthy broker do not verify Cline, Claude Code, Codex or Gemini traffic. Verify the actual configured route separately before relying on it.
-
-The documentation distinguishes these route types; they are not automatic passing states in Coverage:
-
-| Route type | What it means |
-| --- | --- |
-| **Gateway-routed** | Supported requests use the configured managed gateway; actual routing still needs verification. |
-| **Vendor-controls-only** | Controls rely on reviewed vendor configuration, not gateway inspection of every request. |
-| **Uncovered / NOT_TESTED** | The stated protection has not been established. |
-
-Cline, Claude Code, Codex and Gemini integrations have version-specific requirements. Checked Windows shells, Git/history reviews, isolated Docker tasks and portable vault recovery are optional advanced workflows, not prerequisites for a first scan.
-
-[Integrations, requirements and limits →](https://github.com/yashchauhan66/Soter-AI/blob/main/packages/soterai-lite/USER-GUIDE.md#supported-integrations)
-
-## Know the boundary
-
-- Detection is heuristic. Unknown secrets, unsupported formats and private prose can remain. Always review output before sharing.
-- Diagnostics are not interception. Other extensions, direct file reads, unmanaged terminals and independent uploads can bypass the managed routes.
-- Configured provider requests go to the provider you select. Dependency-advisory lookups have separate consent. Cloud and telemetry settings do not disable an independently configured provider route.
-- Keep recovery records and keys. An application given a secret can still disclose it; redaction cannot undo an earlier upload.
-- Linux, macOS, remote and virtual workspaces are not supported by this Windows x64 release. It is not an OS security boundary against other processes running as you.
+- Scanning runs locally by default. Unknown secrets and unmarked private information can remain; review output before sharing.
+- Configured provider requests can reach your provider. Cloud and telemetry preferences do not disable that route.
+- Original buffers, unmanaged terminals, other extensions and independent uploads remain outside these controls.
+- Encrypted storage does not create an OS boundary against same-user software. Redaction cannot undo an earlier disclosure.
 
 [Privacy and data handling](https://github.com/yashchauhan66/Soter-AI/blob/main/packages/soterai-lite/PRIVACY.md) · [Recovery and removal](https://github.com/yashchauhan66/Soter-AI/blob/main/packages/soterai-lite/USER-GUIDE.md#recovery-and-removal)
 
-## Documentation and help
+## Documentation and support
 
-| Resource | What you will find |
-| --- | --- |
-| [User guide](https://github.com/yashchauhan66/Soter-AI/blob/main/packages/soterai-lite/USER-GUIDE.md) | Installation, everyday tasks, settings, integrations and troubleshooting |
-| [Privacy](https://github.com/yashchauhan66/Soter-AI/blob/main/packages/soterai-lite/PRIVACY.md) | Local processing, network routes, storage and retention |
-| [Changelog](https://github.com/yashchauhan66/Soter-AI/blob/main/packages/soterai-lite/CHANGELOG.md) | What changed in the preview |
-| [Report an issue](https://github.com/yashchauhan66/Soter-AI/issues) | Bugs and reproducible problems; include sanitized details only |
-| [Product information](https://soterai.in/vscode-ai-security) | SoterAI Secret Guard overview |
+[Changelog](https://github.com/yashchauhan66/Soter-AI/blob/main/packages/soterai-lite/CHANGELOG.md) · [Report an issue](https://github.com/yashchauhan66/Soter-AI/issues) · [Product overview](https://soterai.in/vscode-ai-security)
 
-**Release status:** this candidate is not release-ready or independently reviewed. Exact-package installed lifecycle checks, real-tool/provider checks and required human evidence remain publication requirements. A passing local self-check is not a coverage score or a universal protection guarantee.
+For support, include your IDE name and version, SoterAI version, and sanitized reproduction steps. Omit secrets.
 
-Free local use is subject to the [Business Source License 1.1](https://github.com/yashchauhan66/Soter-AI/blob/main/packages/soterai-lite/LICENSE.md); this is not an OSI-approved open-source license. The package includes third-party notices (`THIRD-PARTY-NOTICES.md`) and an offline software inventory (`SBOM.cdx.json`).
+**Preview status:** this candidate is not release-ready or independently reviewed. Real-provider routes, broader platforms, release provenance and required human acceptance remain publication gates. Local checks do not establish enterprise certification or universal protection.
+
+Free local use is subject to the [Business Source License 1.1](https://github.com/yashchauhan66/Soter-AI/blob/main/packages/soterai-lite/LICENSE.md), which is not an OSI-approved open-source license. The VSIX includes `THIRD-PARTY-NOTICES.md` and an offline software inventory (`SBOM.cdx.json`).
